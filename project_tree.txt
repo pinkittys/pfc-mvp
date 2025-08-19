@@ -1,0 +1,169 @@
+.
+├── .env
+├── .env.example
+├── .gitignore
+├── API_RESPONSE_EXAMPLE.md
+├── Dockerfile
+├── GOOGLE_DRIVE_SETUP.md
+├── README.md
+├── README_GOOGLE_DRIVE.md
+├── README_SYNC.md
+├── SUPABASE_SETUP.md
+├── admin_panel.html
+├── admin_panel_backup.html
+├── api_test.html
+├── app
+│   ├── api
+│   │   └── v1
+│   │       ├── endpoints
+│   │       │   ├── admin.py
+│   │       │   ├── context_extraction.py
+│   │       │   ├── keywords.py
+│   │       │   ├── realtime_context.py
+│   │       │   ├── recommend.py
+│   │       │   └── samples.py
+│   │       └── router.py
+│   ├── core
+│   │   └── config.py
+│   ├── main.py
+│   ├── models
+│   │   └── schemas.py
+│   ├── pipelines
+│   │   ├── advanced_chains.py
+│   │   ├── chains.py
+│   │   └── integrated_recommendation_chain.py
+│   ├── services
+│   │   ├── advanced_recommender.py
+│   │   ├── calli_sync.py
+│   │   ├── comfort_flower_matcher.py
+│   │   ├── composition_recommender.py
+│   │   ├── data_loader.py
+│   │   ├── design_flower_matcher.py
+│   │   ├── emotion_analyzer.py
+│   │   ├── enhanced_flower_matcher.py
+│   │   ├── flower_blend_recommender.py
+│   │   ├── flower_dictionary.py
+│   │   ├── flower_info_collector.py
+│   │   ├── flower_matcher.py
+│   │   ├── flower_matcher.py.backup.20250816_224100
+│   │   ├── flower_matcher.py.backup.20250816_224632
+│   │   ├── flower_matcher.py.backup.20250816_225932
+│   │   ├── flower_matcher.py.backup.20250817_052102
+│   │   ├── flower_matcher.py.backup.20250817_053748
+│   │   ├── flower_matcher.py.backup.20250817_054350
+│   │   ├── image_matcher.py
+│   │   ├── keyword_extractor.py
+│   │   ├── llm_keyword_extractor.py
+│   │   ├── mvp_image_matcher.py
+│   │   ├── realtime_context_extractor.py
+│   │   ├── recommendation_logger.py
+│   │   ├── recommendation_reason_generator.py
+│   │   ├── recommender.py
+│   │   ├── rules_engine.py
+│   │   └── story_classifier.py
+│   └── utils
+│       ├── __init__.py
+│       ├── color_mapping.py
+│       └── text_norm.py
+├── base64_images.json
+├── calli_metadata.json
+├── convert_images_to_base64.py
+├── create_service_account.py
+├── credentials.json
+├── docs
+│   ├── README.md
+│   ├── api_reference.md
+│   ├── api_specification.md
+│   ├── data_schema.md
+│   ├── data_schema_for_frontend.md
+│   ├── design_system_guide.md
+│   ├── developer_guide.md
+│   ├── final_project_summary.md
+│   ├── flower_prompt_designer_guide.md
+│   ├── main_flower_image_request.md
+│   ├── midjourney_batch_commands.md
+│   ├── midjourney_batch_commands_with_english.md
+│   ├── midjourney_natural_commands.md
+│   ├── priority_guide.md
+│   ├── prompt_comparison.md
+│   ├── rose_variety_comparison.md
+│   └── scientific_name_comparison_test.md
+├── interactive_test.html
+├── ngrok.log
+├── prepare_images.py
+├── project_tree.txt
+├── requirements-lock.txt
+├── requirements.app.txt
+├── requirements.txt
+├── requirements_google_drive.txt
+├── scripts
+│   ├── add_missing_colors.py
+│   ├── add_new_flower.py
+│   ├── auto_expand_flower_dictionary.py
+│   ├── build_images_index.py
+│   ├── clean_duplicates.py
+│   ├── comprehensive_prompt_generator.py
+│   ├── comprehensive_prompt_generator_with_scientific_names.py
+│   ├── convert_and_organize_images.py
+│   ├── convert_with_deduplication.py
+│   ├── create_dummy_calli.py
+│   ├── create_enhanced_image_index.py
+│   ├── create_local_image_index.py
+│   ├── create_missing_main_flowers_csv.py
+│   ├── debug_image_matching.py
+│   ├── enhance_flower_database.py
+│   ├── enhance_flower_database_v2.py
+│   ├── final_prompt_generator_4x5.py
+│   ├── final_prompt_generator_4x5_natural.py
+│   ├── final_prompt_generator_4x5_with_english.py
+│   ├── fix_color_mapping.py
+│   ├── fix_color_mapping_v2.py
+│   ├── fix_folders.py
+│   ├── fix_specific_failed_files.py
+│   ├── google_drive_api_sync.py
+│   ├── google_drive_sync.py
+│   ├── interactive_test.py
+│   ├── midjourney_prompt_generator.py
+│   ├── midjourney_prompt_generator_v2.py
+│   ├── quick_convert.py
+│   ├── rename_colors.py
+│   ├── retry_failed_conversions.py
+│   ├── retry_korean_colors.py
+│   ├── rose_variety_comparison.py
+│   ├── scientific_name_comparison_test.py
+│   ├── setup_cron.py
+│   ├── setup_google_drive.py
+│   ├── setup_supabase.py
+│   ├── sync_calli_images.py
+│   ├── sync_flower_database.py
+│   ├── sync_is_main_from_google_sheet.py
+│   ├── test_advanced_chain.py
+│   ├── test_advanced_recommender.py
+│   ├── test_complete_chain_with_logging.py
+│   ├── test_complete_recommendation.py
+│   ├── test_context_extraction.py
+│   ├── test_enhanced_system.py
+│   ├── test_image_matching.py
+│   ├── test_integrated_system.py
+│   ├── test_keyword_extraction.py
+│   ├── test_llm_extraction.py
+│   ├── test_new_apis.py
+│   ├── test_realtime_extraction.py
+│   ├── update_base64_images.py
+│   └── update_flower_matcher_from_images.py
+├── server.log
+├── service-account-key.json
+├── simple_test.html
+├── test_base64_image.html
+├── test_base64_validity.py
+├── test_comprehensive.py
+├── test_emotion_analysis.html
+├── test_flower_coverage.py
+├── test_frontend.html
+├── test_frontend_backup.html
+├── test_hydrangea.webp
+├── test_simple_base64.html
+├── test_webp_file.py
+└── upload_images_to_supabase.py
+
+12 directories, 155 files

@@ -1,0 +1,1537 @@
+"""
+LLM 기반 꽃 매칭 서비스
+"""
+import os
+import json
+import re
+from typing import List, Dict
+from app.models.schemas import EmotionAnalysis, FlowerMatch
+from app.services.realtime_context_extractor import RealtimeContextExtractor
+
+class FlowerMatcher:
+    def __init__(self):
+        self.openai_api_key = os.getenv("OPENAI_API_KEY")
+        self.context_extractor = RealtimeContextExtractor()
+        
+        # Base64 이미지 데이터 로드
+        self.base64_images = self._load_base64_images()
+        
+        # 꽃 데이터베이스 (Base64 이미지 포함)
+        self.flower_database = {
+            "Lathyrus Odoratus": {
+                "korean_name": "스위트피",
+                "scientific_name": "Lathyrus Odoratus",
+                "image_url": self.base64_images.get("lathyrus-odoratus", {}).get("핑크", ""),
+                "keywords": ['우아한 추억', '나를 기억해 주세요', '즐거움', '떠나는 당신을 배웅하며', '달콤한 향기'],
+                "colors": ['핑크', '화이트', '퍼플'],
+                "emotions": ['추억', '그리움', '사랑', '우정', '기억'],
+                "default_color": "핑크"
+            },
+            "Garden Peony": {
+                "korean_name": "작약",
+                "scientific_name": "Paeonia lactiflora",
+                "image_url": self.base64_images.get("garden-peony", {}).get("화이트", ""),
+                "keywords": ['우아함', '클래식', '세련됨', '추억', '그리움'],
+                "colors": ['화이트', '핑크'],
+                "emotions": ['우아함', '클래식', '세련됨', '추억', '그리움'],
+                "default_color": "화이트"
+            },
+            "Alstroemeria Spp": {
+                "korean_name": "Alstroemeria Spp",
+                "scientific_name": "Alstroemeria Spp",
+                "image_url": self.base64_images.get("alstroemeria-spp", {}).get("화이트", ""),
+                "keywords": ['아름다움', '자연스러움'],
+                "colors": ['화이트', '핑크', '오렌지'],
+                "emotions": ['아름다움', '자연스러움'],
+                "default_color": "화이트"
+            },
+            "Iris Sanguinea": {
+                "korean_name": "Iris Sanguinea",
+                "scientific_name": "Iris Sanguinea",
+                "image_url": self.base64_images.get("iris-sanguinea", {}).get("퍼플", ""),
+                "keywords": ['아름다움', '자연스러움'],
+                "colors": ['퍼플'],
+                "emotions": ['아름다움', '자연스러움'],
+                "default_color": "퍼플"
+            },
+            "Ranunculus": {
+                "korean_name": "라넌큘러스",
+                "scientific_name": "Ranunculus",
+                "image_url": self.base64_images.get("ranunculus", {}).get("화이트", ""),
+                "keywords": ['우아함', '아름다움', '자연스러움', '순수함'],
+                "colors": ['화이트', '핑크', '오렌지', '옐로우'],
+                "emotions": ['우아함', '아름다움', '순수함', '자연스러움'],
+                "default_color": "화이트"
+            },
+            "Bouvardia": {
+                "korean_name": "부바르디아",
+                "scientific_name": "Bouvardia",
+                "image_url": self.base64_images.get("bouvardia", {}).get("화이트", ""),
+                "keywords": ['아름다움', '자연스러움'],
+                "colors": ['화이트'],
+                "emotions": ['아름다움', '자연스러움'],
+                "default_color": "화이트"
+            },
+            "Iberis Sempervirens": {
+                "korean_name": "Iberis Sempervirens",
+                "scientific_name": "Iberis Sempervirens",
+                "image_url": self.base64_images.get("iberis-sempervirens", {}).get("화이트", ""),
+                "keywords": ['아름다움', '자연스러움'],
+                "colors": ['화이트'],
+                "emotions": ['아름다움', '자연스러움'],
+                "default_color": "화이트"
+            },
+            "Dianthus Caryophyllus": {
+                "korean_name": "Dianthus Caryophyllus",
+                "scientific_name": "Dianthus Caryophyllus",
+                "image_url": self.base64_images.get("dianthus-caryophyllus", {}).get("레드", ""),
+                "keywords": ['아름다움', '자연스러움'],
+                "colors": ['레드'],
+                "emotions": ['아름다움', '자연스러움'],
+                "default_color": "레드"
+            },
+            "Anthurium Andraeanum": {
+                "korean_name": "Anthurium Andraeanum",
+                "scientific_name": "Anthurium Andraeanum",
+                "image_url": self.base64_images.get("anthurium-andraeanum", {}).get("레드", ""),
+                "keywords": ['아름다움', '자연스러움'],
+                "colors": ['레드', '그린'],
+                "emotions": ['아름다움', '자연스러움'],
+                "default_color": "레드"
+            },
+            "Anemone Coronaria": {
+                "korean_name": "Anemone Coronaria",
+                "scientific_name": "Anemone Coronaria",
+                "image_url": self.base64_images.get("anemone-coronaria", {}).get("레드", ""),
+                "keywords": ['아름다움', '자연스러움'],
+                "colors": ['레드', '퍼플'],
+                "emotions": ['아름다움', '자연스러움'],
+                "default_color": "레드"
+            },
+            "Stock Flower": {
+                "korean_name": "스톡플라워",
+                "scientific_name": "Matthiola incana",
+                "image_url": self.base64_images.get("stock-flower", {}).get("퍼플", ""),
+                "keywords": ['아름다움', '자연스러움'],
+                "colors": ['퍼플'],
+                "emotions": ['아름다움', '자연스러움'],
+                "default_color": "퍼플"
+            },
+            "Scabiosa": {
+                "korean_name": "스카비오사",
+                "scientific_name": "Scabiosa atropurpurea",
+                "image_url": self.base64_images.get("scabiosa", {}).get("화이트", ""),
+                "keywords": ['아름다움', '자연스러움'],
+                "colors": ['화이트', '블루'],
+                "emotions": ['아름다움', '자연스러움'],
+                "default_color": "화이트"
+            },
+            "Ranunculus Asiaticus": {
+                "korean_name": "Ranunculus Asiaticus",
+                "scientific_name": "Ranunculus Asiaticus",
+                "image_url": self.base64_images.get("ranunculus-asiaticus", {}).get("오렌지", ""),
+                "keywords": ['아름다움', '자연스러움'],
+                "colors": ['오렌지'],
+                "emotions": ['아름다움', '자연스러움'],
+                "default_color": "오렌지"
+            },
+            "Drumstick Flower": {
+                "korean_name": "드럼스틱플라워",
+                "scientific_name": "Craspedia globosa",
+                "image_url": self.base64_images.get("drumstick-flower", {}).get("옐로우", ""),
+                "keywords": ['독특함', '모던', '포인트', '재미'],
+                "colors": ['옐로우'],
+                "emotions": ['재미', '독특함', '모던'],
+                "default_color": "옐로우"
+            },
+            "Freesia Refracta": {
+                "korean_name": "프리지아",
+                "scientific_name": "Freesia Refracta",
+                "image_url": self.base64_images.get("freesia-refracta", {}).get("옐로우", ""),
+                "keywords": ['희망', '새로운 시작', '격려', '응원', '신뢰', '우정'],
+                "colors": ['옐로우', '화이트', '핑크', '퍼플'],
+                "emotions": ['희망', '격려', '응원', '신뢰', '우정'],
+                "default_color": "옐로우"
+            },
+            "Cymbidium Spp": {
+                "korean_name": "Cymbidium Spp",
+                "scientific_name": "Cymbidium Spp",
+                "image_url": self.base64_images.get("cymbidium-spp", {}).get("화이트", ""),
+                "keywords": ['아름다움', '자연스러움'],
+                "colors": ['화이트', '그린', '핑크'],
+                "emotions": ['아름다움', '자연스러움'],
+                "default_color": "화이트"
+            },
+            "Dahlia": {
+                "korean_name": "달리아",
+                "scientific_name": "Dahlia pinnata",
+                "image_url": self.base64_images.get("dahlia", {}).get("옐로우", ""),
+                "keywords": ['아름다움', '자연스러움'],
+                "colors": ['옐로우', '핑크'],
+                "emotions": ['아름다움', '자연스러움'],
+                "default_color": "옐로우"
+            },
+            "Rose": {
+                "korean_name": "장미",
+                "scientific_name": "Rosa",
+                "image_url": self.base64_images.get("rose", {}).get("레드", ""),
+                "keywords": ['아름다움', '자연스러움'],
+                "colors": ['레드', '블루', '핑크', '오렌지'],
+                "emotions": ['아름다움', '자연스러움'],
+                "default_color": "레드"
+            },
+            "Lily": {
+                "korean_name": "백합",
+                "scientific_name": "Lilium",
+                "image_url": self.base64_images.get("lily", {}).get("화이트", ""),
+                "keywords": ['아름다움', '자연스러움'],
+                "colors": ['화이트'],
+                "emotions": ['아름다움', '자연스러움'],
+                "default_color": "화이트"
+            },
+            "Marguerite Daisy": {
+                "korean_name": "마가렛데이지",
+                "scientific_name": "Argyranthemum frutescens",
+                "image_url": self.base64_images.get("marguerite-daisy", {}).get("화이트", ""),
+                "keywords": ['아름다움', '자연스러움'],
+                "colors": ['화이트'],
+                "emotions": ['아름다움', '자연스러움'],
+                "default_color": "화이트"
+            },
+            "Tulip": {
+                "korean_name": "튤립",
+                "scientific_name": "Tulipa",
+                "image_url": self.base64_images.get("tulip", {}).get("화이트", ""),
+                "keywords": ['희망', '새로운 시작', '완벽한 사랑', '기쁨', '활력'],
+                "colors": ['화이트', '레드', '옐로우', '핑크', '퍼플'],
+                "emotions": ['희망', '완벽한 사랑', '기쁨', '활력'],
+                "default_color": "화이트"
+            },
+            "Gerbera Daisy": {
+                "korean_name": "거베라",
+                "scientific_name": "Gerbera jamesonii",
+                "image_url": self.base64_images.get("gerbera-daisy", {}).get("옐로우", ""),
+                "keywords": ['희망', '활력', '기쁨', '격려', '응원', '새로운 시작'],
+                "colors": ['옐로우', '오렌지', '핑크', '화이트', '레드'],
+                "emotions": ['희망', '활력', '기쁨', '격려', '응원'],
+                "default_color": "옐로우"
+            },
+            "Astilbe Japonica": {
+                "korean_name": "Astilbe Japonica",
+                "scientific_name": "Astilbe Japonica",
+                "image_url": self.base64_images.get("astilbe-japonica", {}).get("화이트", ""),
+                "keywords": ['아름다움', '자연스러움'],
+                "colors": ['화이트', '핑크'],
+                "emotions": ['아름다움', '자연스러움'],
+                "default_color": "화이트"
+            },
+            "Cockscomb": {
+                "korean_name": "맨드라미",
+                "scientific_name": "Celosia cristata",
+                "image_url": self.base64_images.get("cockscomb", {}).get("레드", ""),
+                "keywords": ['독특함', '포인트', '화려함'],
+                "colors": ['레드', '오렌지'],
+                "emotions": ['독특함', '화려함', '포인트'],
+                "default_color": "레드"
+            },
+            "Cotton Plant": {
+                "korean_name": "목화",
+                "scientific_name": "Gossypium",
+                "image_url": self.base64_images.get("cotton-plant", {}).get("화이트", ""),
+                "keywords": ['아름다움', '자연스러움'],
+                "colors": ['화이트'],
+                "emotions": ['아름다움', '자연스러움'],
+                "default_color": "화이트"
+            },
+            "Ammi Majus": {
+                "korean_name": "Ammi Majus",
+                "scientific_name": "Ammi Majus",
+                "image_url": self.base64_images.get("ammi-majus", {}).get("화이트", ""),
+                "keywords": ['아름다움', '자연스러움'],
+                "colors": ['화이트'],
+                "emotions": ['아름다움', '자연스러움'],
+                "default_color": "화이트"
+            },
+            "Lisianthus": {
+                "korean_name": "리시안셔스",
+                "scientific_name": "Eustoma grandiflorum",
+                "image_url": self.base64_images.get("lisianthus", {}).get("핑크", ""),
+                "keywords": ['사랑', '감사', '따뜻함', '우아함', '세련됨'],
+                "colors": ['핑크', '화이트', '라일락'],
+                "emotions": ['사랑', '감사', '따뜻함', '우아함'],
+                "default_color": "핑크"
+            },
+            "Gladiolus": {
+                "korean_name": "글라디올러스",
+                "scientific_name": "Gladiolus",
+                "image_url": self.base64_images.get("gladiolus", {}).get("레드", ""),
+                "keywords": ['정렬적 사랑', '젊음', '향이 없음이 특징', '강렬함'],
+                "colors": ['레드', '핑크', '화이트', '옐로우'],
+                "emotions": ['정렬적 사랑', '젊음', '강렬함', '열정'],
+                "default_color": "레드"
+            },
+            "Gentiana Andrewsii": {
+                "korean_name": "Gentiana Andrewsii",
+                "scientific_name": "Gentiana Andrewsii",
+                "image_url": self.base64_images.get("gentiana-andrewsii", {}).get("블루", ""),
+                "keywords": ['아름다움', '자연스러움'],
+                "colors": ['블루'],
+                "emotions": ['아름다움', '자연스러움'],
+                "default_color": "블루"
+            },
+            "Babys Breath": {
+                "korean_name": "베이비스브레스",
+                "scientific_name": "Gypsophila paniculata",
+                "image_url": self.base64_images.get("babys-breath", {}).get("화이트", ""),
+                "keywords": ['부드러움', '우아함', '필러'],
+                "colors": ['화이트'],
+                "emotions": ['부드러움', '우아함', '순수'],
+                "default_color": "화이트"
+            },
+            "Zinnia Elegans": {
+                "korean_name": "Zinnia Elegans",
+                "scientific_name": "Zinnia Elegans",
+                "image_url": self.base64_images.get("zinnia-elegans", {}).get("레드", ""),
+                "keywords": ['아름다움', '자연스러움'],
+                "colors": ['레드', '핑크'],
+                "emotions": ['아름다움', '자연스러움'],
+                "default_color": "레드"
+            },
+            "Tagetes Erecta": {
+                "korean_name": "Tagetes Erecta",
+                "scientific_name": "Tagetes Erecta",
+                "image_url": self.base64_images.get("tagetes-erecta", {}).get("옐로우", ""),
+                "keywords": ['아름다움', '자연스러움'],
+                "colors": ['옐로우', '오렌지'],
+                "emotions": ['아름다움', '자연스러움'],
+                "default_color": "옐로우"
+            },
+            "Veronica Spicata": {
+                "korean_name": "Veronica Spicata",
+                "scientific_name": "Veronica Spicata",
+                "image_url": self.base64_images.get("veronica-spicata", {}).get("화이트", ""),
+                "keywords": ['아름다움', '자연스러움'],
+                "colors": ['화이트', '퍼플'],
+                "emotions": ['아름다움', '자연스러움'],
+                "default_color": "화이트"
+            },
+            "Globe Amaranth": {
+                "korean_name": "천일홍",
+                "scientific_name": "Gomphrena globosa",
+                "image_url": self.base64_images.get("globe-amaranth", {}).get("퍼플", ""),
+                "keywords": ['지속성', '내구성', '포인트'],
+                "colors": ['퍼플'],
+                "emotions": ['지속성', '포인트', '내구성'],
+                "default_color": "퍼플"
+            },
+            "Hydrangea": {
+                "korean_name": "수국",
+                "scientific_name": "Hydrangea macrophylla",
+                "image_url": self.base64_images.get("hydrangea", {}).get("블루", ""),
+                "keywords": ['아름다움', '자연스러움'],
+                "colors": ['블루', '그린', '핑크'],
+                "emotions": ['아름다움', '자연스러움'],
+                "default_color": "블루"
+            },
+            "Gerbera Daisy": {
+                "korean_name": "거베라",
+                "scientific_name": "Gerbera jamesonii",
+                "image_url": self.base64_images.get("gerbera-daisy", {}).get("노랑", ""),
+                "keywords": ["희망", "활력", "긍정", "새로운 시작", "기쁨"],
+                "colors": ["노랑", "오렌지", "빨강", "핑크"],
+                "emotions": ["희망", "기쁨", "활력", "긍정"]
+            },
+            "Dahlia": {
+                "korean_name": "다알리아",
+                "scientific_name": "Dahlia pinnata",
+                "image_url": self.base64_images.get("dahlia", {}).get("핑크", ""),
+                "keywords": ["화려함", "에너지", "포인트", "현대적"],
+                "colors": ["노랑", "오렌지", "빨강", "보라"],
+                "emotions": ["기쁨", "축하", "화려함", "에너지"]
+            },
+            "Rose": {
+                "korean_name": "장미",
+                "scientific_name": "Rosa",
+                "image_url": self.base64_images.get("rose", {}).get("핑크", ""),
+                "keywords": ["사랑", "로맨스", "우아함", "클래식", "아름다움"],
+                "colors": ["핑크", "레드", "블루", "오렌지"],
+                "emotions": ["로맨스", "사랑", "우아함", "감사"],
+                "available_colors": {
+                    "핑크": True,
+                    "레드": True,
+                    "블루": True,
+                    "오렌지": True
+                },
+                "color_meanings": {
+                    "핑크": {
+                        "emotions": ["설렘", "기쁨", "애틋함"],
+                        "moods": ["러블리", "파스텔", "로맨틱"],
+                        "contexts": ["고백", "생일", "감사전달"],
+                        "meaning": "사랑의 고백, 수줍음"
+                    },
+                    "레드": {
+                        "emotions": ["용기", "자부심", "설렘"],
+                        "moods": ["비비드", "시크", "로맨틱"],
+                        "contexts": ["고백", "승진·합격", "기념일"],
+                        "meaning": "열정, 진심"
+                    },
+                    "블루": {
+                        "emotions": ["신비", "우아함", "고급스러움"],
+                        "moods": ["시크", "우아함", "클래식"],
+                        "contexts": ["고급스러운 선물", "특별한 날"],
+                        "meaning": "신비로운 사랑, 특별함"
+                    },
+                    "오렌지": {
+                        "emotions": ["열정", "에너지", "기쁨"],
+                        "moods": ["비비드", "모던", "강렬함"],
+                        "contexts": ["축하", "응원", "격려"],
+                        "meaning": "열정적인 사랑, 에너지"
+                    }
+                }
+            },
+            "Lily": {
+                "korean_name": "백합",
+                "scientific_name": "Lilium",
+                "image_url": self.base64_images.get("lily", {}).get("화이트", ""),
+                "keywords": ["순수", "고귀함", "우아함", "클래식", "순결"],
+                "colors": ["화이트"],  # 실제 파일에 맞게 수정
+                "emotions": ["순수", "고귀함", "우아함"]
+            },
+            "Tulip": {
+                "korean_name": "튤립",
+                "scientific_name": "Tulipa",
+                "image_url": self.base64_images.get("tulip", {}).get("화이트", ""),
+                "keywords": ["봄", "신선함", "새로운 시작", "희망", "완벽한 사랑"],
+                "colors": ["노랑", "핑크", "화이트", "보라"],
+                "emotions": ["희망", "신선함", "새로운 시작"]
+            },
+            "Garden Peony": {
+                "korean_name": "작약",
+                "scientific_name": "Paeonia lactiflora",
+                "image_url": self.base64_images.get("garden-peony", {}).get("핑크", ""),
+                "keywords": ["우아함", "클래식", "세련됨", "포인트", "수줍음", "부끄러움"],
+                "colors": ["핑크", "화이트", "크림", "연보라"],
+                "emotions": ["우아함", "세련됨", "클래식"]
+            },
+            "Lisianthus": {
+                "korean_name": "리시안셔스",
+                "scientific_name": "Eustoma grandiflorum",
+                "image_url": self.base64_images.get("lisianthus", {}).get("화이트", ""),
+                "keywords": ["우아함", "세련됨", "고급스러움", "은은한 사랑", "고귀함", "감사"],
+                "colors": ["화이트", "크림", "연핑크", "라벤더"],
+                "emotions": ["우아함", "세련됨", "고급스러움", "은은한 사랑", "고귀함"]
+            },
+            "Hydrangea": {
+                "korean_name": "수국",
+                "scientific_name": "Hydrangea macrophylla",
+                "image_url": self.base64_images.get("hydrangea", {}).get("핑크", ""),
+                "keywords": ["풍성함", "우아함", "자연스러움"],
+                "colors": ["핑크", "블루", "퍼플"],  # 폴백 로직으로 블루/퍼플도 지원
+                "emotions": ["풍성함", "우아함", "자연스러움"]
+            },
+            "Scabiosa": {
+                "korean_name": "스카비오사",
+                "scientific_name": "Scabiosa atropurpurea",
+                "image_url": self.base64_images.get("scabiosa", {}).get("블루", ""),
+                "keywords": ["우아함", "세련됨", "포인트", "모던", "그리움"],
+                "colors": ["블루", "화이트", "퍼플"],
+                "emotions": ["우아함", "세련됨", "모던", "그리움"]
+            },
+            "Bouvardia": {
+                "korean_name": "부바르디아",
+                "scientific_name": "Bouvardia",
+                "image_url": self.base64_images.get("bouvardia", {}).get("화이트", ""),
+                "keywords": ["우아함", "세련됨", "고급스러움"],
+                "colors": ["화이트"],
+                "emotions": ["감사", "애틋함", "평온", "설렘", "기쁨"],
+                "moods": ["로맨틱", "우아함", "내추럴", "러블리", "파스텔"],
+                "available": True,
+                "color_meanings": {
+                    "화이트": {
+                        "emotions": ["감사", "애틋함", "평온"],
+                        "moods": ["로맨틱", "우아함", "내추럴"],
+                        "contexts": ["감사전달", "생일", "위로·쾌유"],
+                        "meaning": "순수한 사랑, 감사"
+                    }
+                }
+            },
+            "Stock Flower": {
+                "korean_name": "스톡플라워",
+                "scientific_name": "Matthiola incana",
+                "image_url": self.base64_images.get("stock-flower", {}).get("퍼플", ""),
+                "keywords": ["우아함", "클래식", "세련됨", "추억", "그리움"],
+                "colors": ["퍼플", "화이트", "핑크"],
+                "emotions": ["우아함", "클래식", "세련됨", "추억", "그리움"]
+            },
+            "Drumstick Flower": {
+                "korean_name": "드럼스틱플라워",
+                "scientific_name": "Craspedia globosa",
+                "image_url": self.base64_images.get("drumstick-flower", {}).get("옐로우", ""),
+                "keywords": ["독특함", "모던", "포인트", "재미"],
+                "colors": ["옐로우"],
+                "emotions": ["재미", "독특함", "모던"],
+                "default_color": "옐로우"
+            },
+            "Cotton Plant": {
+                "korean_name": "목화",
+                "scientific_name": "Gossypium",
+                "image_url": self.base64_images.get("cotton-plant", {}).get("화이트", ""),
+                "keywords": ["자연스러움", "내추럴", "부드러움"],
+                "colors": ["화이트", "크림"],
+                "emotions": ["자연스러움", "부드러움", "내추럴"]
+            },
+            "Cockscomb": {
+                "korean_name": "맨드라미",
+                "scientific_name": "Celosia cristata",
+                "image_url": self.base64_images.get("cockscomb", {}).get("레드", ""),
+                "keywords": ["독특함", "포인트", "화려함"],
+                "colors": ["레드", "오렌지"],
+                "emotions": ["축하", "격려", "기쁨", "용기", "자부심"],
+                "moods": ["비비드", "시크", "모던"],
+                "default_color": "레드"
+            },
+            "Globe Amaranth": {
+                "korean_name": "천일홍",
+                "scientific_name": "Gomphrena globosa",
+                "image_url": self.base64_images.get("globe-amaranth", {}).get("퍼플", ""),
+                "keywords": ["지속성", "내구성", "포인트"],
+                "colors": ["퍼플"],
+                "emotions": ["지속성", "포인트", "내구성"],
+                "default_color": "퍼플"
+            },
+            "Marguerite Daisy": {
+                "korean_name": "마가렛",
+                "scientific_name": "Argyranthemum frutescens",
+                "image_url": self.base64_images.get("marguerite-daisy", {}).get("화이트", ""),
+                "keywords": ["순수", "신선함", "자연스러움", "진심", "순결한 사랑", "은은한 매력"],
+                "colors": ["화이트"],
+                "emotions": ["감사", "평온", "애틋함", "설렘", "기쁨"],
+                "moods": ["로맨틱", "내추럴", "우아함", "러블리", "파스텔"],
+                "available_colors": {
+                    "화이트": True
+                },
+                "color_meanings": {
+                    "화이트": {
+                        "emotions": ["감사", "평온", "애틋함"],
+                        "moods": ["로맨틱", "내추럴", "우아함"],
+                        "contexts": ["감사전달", "고백", "인테리어"],
+                        "meaning": "진심, 순결한 사랑"
+                    }
+                }
+            },
+            "Babys Breath": {
+                "korean_name": "베이비스브레스",
+                "scientific_name": "Gypsophila paniculata",
+                "image_url": self.base64_images.get("babys-breath", {}).get("화이트", ""),
+                "keywords": ["부드러움", "우아함", "필러", "순수", "고요함", "평온"],
+                "colors": ["화이트"],
+                "emotions": ["부드러움", "우아함", "순수", "평온", "고요함"],
+                "moods": ["로맨틱", "내추럴", "우아함", "미니멀"],
+                "available": True,
+                "color_meanings": {
+                    "화이트": {
+                        "emotions": ["감사", "애틋함", "평온"],
+                        "moods": ["로맨틱", "우아함", "내추럴"],
+                        "contexts": ["감사전달", "생일", "위로·쾌유"],
+                        "meaning": "순수한 사랑, 감사"
+                    }
+                }
+            },
+
+            "Gladiolus": {
+                "korean_name": "글라디올러스",
+                "scientific_name": "Gladiolus",
+                "image_url": self.base64_images.get("gladiolus", {}).get("레드", ""),
+                "keywords": ["강인함", "정직", "성실", "기념"],
+                "colors": ["레드", "핑크", "화이트", "옐로우"],
+                "emotions": ["강인함", "정직", "성실", "기념"]
+            },
+            "Astilbe Japonica": {
+                "korean_name": "Astilbe Japonica",
+                "scientific_name": "Astilbe Japonica",
+                "image_url": self.base64_images.get("astilbe-japonica", {}).get("핑크", ""),
+                "keywords": ["아름다움", "자연스러움"],
+                "colors": ["핑크"],
+                "emotions": ["아름다움", "자연스러움"]
+            },
+            "Cymbidium Spp": {
+                "korean_name": "심비디움",
+                "scientific_name": "Cymbidium spp.",
+                "image_url": self.base64_images.get("cymbidium-spp", {}).get("화이트", ""),
+                "keywords": ["고급스러움", "우아함", "세련됨", "클래식", "지속성", "감사", "평온", "진심"],
+                "colors": ["화이트", "핑크"],
+                "emotions": ["평온", "감사", "자부심"],
+                "moods": ["내추럴", "우아함", "미니멀"]
+            },
+            "Anemone Coronaria": {
+                "korean_name": "아네모네",
+                "scientific_name": "Anemone coronaria",
+                "image_url": self.base64_images.get("anemone-coronaria", {}).get("레드", ""),
+                "keywords": ["희망", "기대", "새로운 시작", "봄", "신선함"],
+                "colors": ["레드", "퍼플"],
+                "emotions": ["희망", "기대", "새로운 시작", "신선함"]
+            },
+            "Anthurium Andraeanum": {
+                "korean_name": "안스리움",
+                "scientific_name": "Anthurium andraeanum",
+                "image_url": self.base64_images.get("anthurium-andraeanum", {}).get("레드", ""),
+                "keywords": ["정열", "열정적인 사랑", "화려함", "트로피컬", "강렬함", "정열적인 사랑"],
+                "colors": ["레드", "그린"],
+                "emotions": ["정열", "열정적인 사랑", "화려함", "강렬함", "정열적인 사랑"]
+            },
+            "Ammi Majus": {
+                "korean_name": "아미 마주스",
+                "scientific_name": "Ammi majus",
+                "image_url": self.base64_images.get("ammi-majus", {}).get("화이트", ""),
+                "keywords": ["자연스러움", "부드러움", "필러", "우아함", "순수"],
+                "colors": ["화이트"],
+                "emotions": ["자연스러움", "부드러움", "우아함", "순수"]
+            },
+            "Veronica Spicata": {
+                "korean_name": "베로니카",
+                "scientific_name": "Veronica spicata",
+                "image_url": self.base64_images.get("veronica-spicata", {}).get("퍼플", ""),
+                "keywords": ["충성", "신뢰", "우정", "지속성", "안정감", "애틋함", "그리움"],
+                "colors": ["퍼플"],
+                "emotions": ["그리움", "애틋함", "위로", "희망", "평온"],
+                "moods": ["시크", "우아함", "클래식", "미니멀", "시크"]
+            },
+            "Alstroemeria Spp": {
+                "korean_name": "알스트로메리아",
+                "scientific_name": "Alstroemeria spp.",
+                "image_url": self.base64_images.get("alstroemeria-spp", {}).get("핑크", ""),
+                "keywords": ["새로운 만남", "배려", "우정", "지속성", "따뜻함"],
+                "colors": ["핑크", "화이트", "오렌지"],
+                "emotions": ["새로운 만남", "배려", "우정", "지속성", "따뜻함"],
+                "moods": ["러블리", "파스텔", "로맨틱", "내추럴", "우아함"],
+                "available_colors": {
+                    "핑크": True,
+                    "화이트": True,
+                    "오렌지": True
+                },
+                "color_meanings": {
+                    "핑크": {
+                        "emotions": ["설렘", "기쁨", "애틋함"],
+                        "moods": ["러블리", "파스텔", "로맨틱"],
+                        "contexts": ["고백", "생일", "감사전달"],
+                        "meaning": "사랑스러움, 애정"
+                    },
+                    "화이트": {
+                        "emotions": ["감사", "애틋함", "평온"],
+                        "moods": ["로맨틱", "우아함", "내추럴"],
+                        "contexts": ["감사전달", "생일", "위로·쾌유"],
+                        "meaning": "순수한 사랑, 감사"
+                    },
+                    "오렌지": {
+                        "emotions": ["기쁨", "활력", "긍정"],
+                        "moods": ["비비드", "내추럴", "러블리"],
+                        "contexts": ["생일", "응원·격려", "감사전달"],
+                        "meaning": "기쁨, 행복한 미소"
+                    }
+                }
+            },
+            "Zinnia Elegans": {
+                "korean_name": "백일홍",
+                "scientific_name": "Zinnia elegans",
+                "image_url": self.base64_images.get("zinnia-elegans", {}).get("핑크", ""),
+                "keywords": ["지속성", "기념", "추억", "화려함", "여름", "밝은 미래", "기쁨"],
+                "colors": ["핑크"],
+                "emotions": ["희망", "기쁨", "격려", "애틋함", "그리움", "위로"],
+                "moods": ["비비드", "내추럴", "클래식", "시크", "우아함"]
+            },
+            "Tagetes Erecta": {
+                "korean_name": "Tagetes Erecta",
+                "scientific_name": "Tagetes Erecta",
+                "image_url": self.base64_images.get("tagetes-erecta", {}).get("오렌지", ""),
+                "keywords": ["아름다움", "자연스러움"],
+                "colors": ["오렌지"],
+                "emotions": ["아름다움", "자연스러움"]
+            },
+            "Zinnia Elegans": {
+                "korean_name": "백일홍",
+                "scientific_name": "Zinnia elegans",
+                "image_url": self.base64_images.get("zinnia-elegans", {}).get("핑크", ""),
+                "keywords": ["지속성", "기념", "추억", "화려함", "여름"],
+                "colors": ["핑크"],
+                "emotions": ["지속성", "기념", "추억", "화려함"]
+            },
+            "Iberis Sempervirens": {
+                "korean_name": "Iberis Sempervirens",
+                "scientific_name": "Iberis Sempervirens",
+                "image_url": self.base64_images.get("iberis-sempervirens", {}).get("화이트", ""),
+                "keywords": ["아름다움", "자연스러움"],
+                "colors": ["화이트"],
+                "emotions": ["아름다움", "자연스러움"]
+            },
+            "Iris Sanguinea": {
+                "korean_name": "Iris Sanguinea",
+                "scientific_name": "Iris Sanguinea",
+                "image_url": self.base64_images.get("iris-sanguinea", {}).get("퍼플", ""),
+                "keywords": ["아름다움", "자연스러움"],
+                "colors": ["퍼플"],
+                "emotions": ["아름다움", "자연스러움"]
+            },
+            "Lathyrus Odoratus": {
+                "korean_name": "스위트피",
+                "scientific_name": "Lathyrus Odoratus",
+                "image_url": self.base64_images.get("lathyrus-odoratus", {}).get("핑크", ""),
+                "keywords": ["아름다움", "자연스러움", "감사", "설렘", "사랑"],
+                "colors": ["핑크"],
+                "emotions": ["설렘", "기쁨", "감사", "그리움", "애틋함", "위로"],
+                "moods": ["로맨틱", "러블리", "파스텔", "우아함", "시크", "내추럴"]
+            },
+            "Ranunculus Asiaticus": {
+                "korean_name": "Ranunculus Asiaticus",
+                "scientific_name": "Ranunculus Asiaticus",
+                "image_url": self.base64_images.get("ranunculus-asiaticus", {}).get("오렌지", ""),
+                "keywords": ["아름다움", "자연스러움"],
+                "colors": ["오렌지"],
+                "emotions": ["아름다움", "자연스러움"]
+            },
+            "Gentiana Andrewsii": {
+                "korean_name": "Gentiana Andrewsii",
+                "scientific_name": "Gentiana Andrewsii",
+                "image_url": self.base64_images.get("gentiana-andrewsii", {}).get("블루", ""),
+                "keywords": ["아름다움", "자연스러움"],
+                "colors": ["블루"],
+                "emotions": ["아름다움", "자연스러움"]
+            },
+            "Dianthus Caryophyllus": {
+                "korean_name": "Dianthus Caryophyllus",
+                "scientific_name": "Dianthus Caryophyllus",
+                "image_url": self.base64_images.get("dianthus-caryophyllus", {}).get("레드", ""),
+                "keywords": ["아름다움", "자연스러움"],
+                "colors": ["레드"],
+                "emotions": ["아름다움", "자연스러움"]
+            },
+            "Freesia Refracta": {
+                "korean_name": "Freesia Refracta",
+                "scientific_name": "Freesia Refracta",
+                "image_url": self.base64_images.get("freesia-refracta", {}).get("옐로우", ""),
+                "keywords": ["아름다움", "자연스러움"],
+                "colors": ["옐로우"],
+                "emotions": ["아름다움", "자연스러움"]
+            },
+            "Ranunculus": {
+                "korean_name": "라넌큘러스",
+                "scientific_name": "Ranunculus asiaticus",
+                "image_url": self.base64_images.get("ranunculus", {}).get("핑크", ""),
+                "keywords": ["매력", "우아함", "아름다움", "로맨스"],
+                "colors": ["핑크", "화이트", "옐로우", "오렌지"],
+                "emotions": ["매력", "우아함", "아름다움", "로맨스"]
+            }
+        }
+    
+    def _load_base64_images(self):
+        """Base64 이미지 데이터 로드"""
+        try:
+            # 현재 작업 디렉토리에서 직접 찾기
+            import os
+            base64_path = os.path.join(os.getcwd(), "base64_images.json")
+            
+            print(f"🔍 Base64 이미지 경로: {base64_path}")
+            print(f"🔍 현재 작업 디렉토리: {os.getcwd()}")
+            
+            if not os.path.exists(base64_path):
+                print(f"❌ 파일이 존재하지 않음: {base64_path}")
+                return {}
+            
+            with open(base64_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                print(f"✅ Base64 이미지 로드 성공: {len(data)} 개 폴더")
+                print(f"📁 사용 가능한 폴더: {list(data.keys())}")
+                return data
+        except Exception as e:
+            print(f"❌ Base64 이미지 로드 실패: {e}")
+            import traceback
+            traceback.print_exc()
+            return {}
+    
+    def _get_image_url(self, flower_name: str, color_keywords: List[str]) -> str:
+        """색상에 맞는 이미지 URL 반환"""
+        flower_folder = self._get_flower_folder(flower_name)
+        
+        print(f"🔍 이미지 매칭 디버깅:")
+        print(f"  꽃 이름: {flower_name}")
+        print(f"  폴더명: {flower_folder}")
+        print(f"  색상 키워드: {color_keywords}")
+        
+        if not flower_folder:
+            print(f"❌ 폴더를 찾을 수 없음: {flower_folder}")
+            return ""
+        
+        # 꽃별 색상 매핑 (요청 색상 → 실제 파일명)
+        color_mapping = self._get_flower_color_mapping(flower_name)
+        
+        print(f"  색상 매핑 테이블: {color_mapping}")
+        
+        # 색상 키워드 정리 (따옴표 제거)
+        clean_color_keywords = []
+        for color in color_keywords:
+            clean_color = color.strip("'\"")
+            clean_color_keywords.append(clean_color)
+        
+        print(f"  정리된 색상 키워드: {clean_color_keywords}")
+        
+        # 1차: 정확한 색상 매칭 시도
+        for clean_keyword in clean_color_keywords:
+            actual_color = color_mapping.get(clean_keyword, clean_keyword)
+            image_url = f"/images/{flower_folder}/{actual_color}.webp"
+            
+            print(f"  🔍 1차 시도: {clean_keyword} → {actual_color} → {image_url}")
+            
+            # 특정 꽃의 색상 폴백 규칙 적용
+            if self._is_color_available(flower_name, actual_color):
+                print(f"✅ 이미지 URL 생성: {image_url} (요청: {clean_keyword} → 실제: {actual_color})")
+                return image_url
+            else:
+                print(f"❌ 색상 파일 없음: {actual_color}")
+        
+        # 2차: 색상 폴백 로직
+        fallback_color = self._get_fallback_color(flower_name, clean_color_keywords)
+        if fallback_color:
+            fallback_url = f"/images/{flower_folder}/{fallback_color}.webp"
+            print(f"🔄 폴백 색상 사용: {fallback_url} (원본: {clean_color_keywords} → 폴백: {fallback_color})")
+            return fallback_url
+        
+        # 3차: 기본 색상 사용 (꽃별로 다르게)
+        flower_data = self.flower_database.get(flower_name, {})
+        default_color = flower_data.get("default_color", "화이트")
+        default_url = f"/images/{flower_folder}/{default_color}.webp"
+        print(f"✅ 기본 이미지 URL: {default_url}")
+        return default_url
+    
+    def _is_color_available(self, flower_name: str, color: str) -> bool:
+        """특정 꽃의 특정 색상이 사용 가능한지 확인"""
+        if flower_name not in self.flower_database:
+            return False
+        
+        flower_data = self.flower_database[flower_name]
+        
+        # available_colors가 있으면 해당 컬러 확인
+        if "available_colors" in flower_data:
+            return color in flower_data["available_colors"] and flower_data["available_colors"][color]
+        
+        # available 정보가 있으면 기본 확인
+        if "available" in flower_data:
+            return flower_data["available"]
+        
+        # available 정보가 없으면 기본적으로 사용 가능
+        return True
+    
+    def _get_flower_color_mapping(self, flower_name: str) -> Dict[str, str]:
+        """꽃별 색상 매핑 반환"""
+        # 색상 매핑 (새로운 색상 코드 시스템)
+        base_mapping = {
+            # 강렬한/비비드 색상 요청
+            "알록달록": "레드",
+            "화려한": "레드",
+            "형형색색": "레드",
+            "비비드": "레드",
+            "선명한": "레드",
+            "강렬한": "레드",
+            "포인트": "레드",
+            "포인트 컬러": "레드",
+            
+            # 기본 색상들 (통일된 색상명 사용)
+            "화이트": "화이트", "white": "화이트", "흰색": "화이트", "wh": "화이트",
+            "아이보리": "아이보리", "ivory": "아이보리", "iv": "아이보리",
+            "베이지": "베이지", "beige": "베이지", "be": "베이지",
+            "옐로우": "옐로우", "yellow": "옐로우", "yl": "옐로우", "노랑": "옐로우",
+            "오렌지": "오렌지", "orange": "오렌지", "or": "오렌지",
+            "코랄": "코랄", "coral": "코랄", "cr": "코랄",
+            "핑크": "핑크", "pink": "핑크", "pk": "핑크",
+            "레드": "레드", "red": "레드", "rd": "레드", "빨강": "레드",
+            "라일락": "라일락", "lilac": "라일락", "ll": "라일락", "라벤더": "라일락",
+            "퍼플": "퍼플", "purple": "퍼플", "pu": "퍼플", "보라": "퍼플",
+            "블루": "블루", "blue": "블루", "bl": "블루", "파랑": "블루", "옅은 블루": "블루",
+            "그린": "그린", "green": "그린", "gn": "그린", "초록": "그린",
+            
+            # 기존 호환성 유지
+            "크림": "아이보리", "cream": "아이보리",
+            "연핑크": "핑크", "light-pink": "핑크",
+            "연보라": "라일락"
+        }
+        
+        # 꽃별 특별 매핑 (기존 호환성 유지)
+        flower_specific_mapping = {
+            "Alstroemeria Spp": {
+                "옐로우": "오렌지",
+                "yellow": "오렌지",
+                "노랑": "오렌지",
+                "블루": "화이트",
+                "blue": "화이트",
+                "파랑": "화이트"
+            },
+            "Gerbera Daisy": {
+                "옐로우": "옐로우",
+                "yellow": "옐로우",
+                "노랑": "옐로우",
+                "오렌지": "오렌지",
+                "orange": "오렌지"
+            },
+            "Dahlia": {
+                "옐로우": "옐로우",
+                "yellow": "옐로우",
+                "노랑": "옐로우",
+                "오렌지": "오렌지",
+                "orange": "오렌지"
+            },
+            "Tulip": {
+                "옐로우": "옐로우",
+                "yellow": "옐로우",
+                "노랑": "옐로우",
+                "그린": "그린",
+                "green": "그린"
+            },
+            "Lily": {
+                "크림": "아이보리",
+                "cream": "아이보리",
+                "아이보리": "아이보리",
+                "ivory": "아이보리",
+                "연핑크": "핑크",
+                "light-pink": "핑크",
+                "연보라": "라일락"
+            }
+        }
+        
+        # 기본 매핑에 꽃별 특별 매핑 추가
+        if flower_name in flower_specific_mapping:
+            base_mapping.update(flower_specific_mapping[flower_name])
+        
+        return base_mapping
+    
+    def _is_color_available(self, flower_name: str, color: str) -> bool:
+        """해당 꽃의 색상이 실제로 사용 가능한지 확인"""
+        # 실제 파일 존재 여부를 확인하는 로직
+        # 현재는 간단한 매핑으로 처리
+        available_colors = {
+            "gerbera-daisy": ["옐로우", "오렌지", "레드", "핑크"],
+            "tulip": ["레드", "화이트", "옐로우", "핑크", "퍼플"],
+            "lily": ["화이트", "아이보리", "핑크", "라일락"],
+            "hydrangea": ["핑크", "블루", "퍼플", "라일락"],
+            "scabiosa": ["화이트", "블루", "퍼플", "라일락"],
+            "stock-flower": ["퍼플", "화이트", "핑크", "라일락"],
+            "rose": ["레드", "핑크", "화이트", "퍼플", "라일락"],
+            "garden-peony": ["화이트", "핑크", "아이보리", "라일락"],
+            "lisianthus": ["화이트", "아이보리", "핑크", "라일락"],
+            "bouvardia": ["화이트", "아이보리", "핑크"],
+            "drumstick-flower": ["옐로우", "오렌지"],
+            "cotton-plant": ["화이트", "아이보리", "베이지"],
+            "cockscomb": ["레드", "오렌지", "옐로우"],
+            "globe-amaranth": ["퍼플", "핑크", "화이트", "라일락"],
+            "marguerite-daisy": ["화이트", "아이보리"],
+            "babys-breath": ["화이트", "아이보리"],
+            "dahlia": ["옐로우", "핑크", "오렌지", "레드"],
+            
+            "gladiolus": ["레드", "핑크", "화이트", "옐로우"],
+            "astilbe-japonica": ["핑크"],
+            "ranunculus": ["핑크", "화이트", "옐로우", "오렌지"],
+            "alstroemeria-spp": ["핑크"],
+            "ammi-majus": ["화이트"],
+            "anemone-coronaria": ["레드", "퍼플"],
+            "anthurium-andraeanum": ["레드", "그린", "화이트"],
+            "cymbidium-spp": ["화이트", "핑크", "그린"],
+            "veronica-spicata": ["퍼플"],
+            "zinnia-elegans": ["핑크"]
+        }
+        
+        flower_folder = self._get_flower_folder(flower_name)
+        return color in available_colors.get(flower_folder, [])
+    
+    def _get_fallback_color(self, flower_name: str, requested_colors: List[str]) -> str:
+        """색상 폴백 로직"""
+        flower_folder = self._get_flower_folder(flower_name)
+        
+        # 블루 → 퍼플 폴백 규칙
+        if "블루" in requested_colors or "blue" in requested_colors:
+            if self._is_color_available(flower_name, "퍼플"):
+                return "퍼플"
+            elif self._is_color_available(flower_name, "핑크"):
+                return "핑크"
+        
+        # 퍼플 → 블루 폴백 규칙
+        if "퍼플" in requested_colors or "purple" in requested_colors:
+            if self._is_color_available(flower_name, "블루"):
+                return "블루"
+            elif self._is_color_available(flower_name, "핑크"):
+                return "핑크"
+        
+        # 핑크 → 화이트 폴백 규칙
+        if "핑크" in requested_colors or "pink" in requested_colors:
+            if self._is_color_available(flower_name, "화이트"):
+                return "화이트"
+        
+        # 노랑 → 화이트 폴백 규칙
+        if "노랑" in requested_colors or "yellow" in requested_colors:
+            if self._is_color_available(flower_name, "화이트"):
+                return "화이트"
+        
+        # 오렌지 → 노랑 폴백 규칙
+        if "오렌지" in requested_colors or "orange" in requested_colors:
+            if self._is_color_available(flower_name, "노랑"):
+                return "노랑"
+            elif self._is_color_available(flower_name, "화이트"):
+                return "화이트"
+        
+        # 레드 → 핑크 폴백 규칙
+        if "레드" in requested_colors or "red" in requested_colors:
+            if self._is_color_available(flower_name, "핑크"):
+                return "핑크"
+            elif self._is_color_available(flower_name, "화이트"):
+                return "화이트"
+        
+        return None
+    
+    def _get_flower_folder(self, flower_name: str) -> str:
+        """꽃 이름을 폴더명으로 변환"""
+        folder_mapping = {
+            "Gerbera Daisy": "gerbera-daisy",
+            "Dahlia": "dahlia",
+            "Rose": "rose",
+            "Lily": "lily",
+            "Tulip": "tulip",
+            "Garden Peony": "garden-peony",
+            "Lisianthus": "lisianthus",
+            "Hydrangea": "hydrangea",
+            "Scabiosa": "scabiosa",
+            "Bouvardia": "bouvardia",
+            "Stock Flower": "stock-flower",
+            "Drumstick Flower": "drumstick-flower",
+            "Cotton Plant": "cotton-plant",
+            "Cockscomb": "cockscomb",
+            "Globe Amaranth": "globe-amaranth",
+            "Marguerite Daisy": "marguerite-daisy",
+            "Babys Breath": "babys-breath",
+
+            "Gladiolus": "gladiolus",
+            "Astilbe Japonica": "astilbe-japonica",
+            "Cymbidium Spp": "cymbidium-spp",
+            "Anemone Coronaria": "anemone-coronaria",
+            "Anthurium Andraeanum": "anthurium-andraeanum",
+            "Ammi Majus": "ammi-majus",
+            "Veronica Spicata": "veronica-spicata",
+            "Alstroemeria Spp": "alstroemeria-spp",
+            "Zinnia Elegans": "zinnia-elegans",
+            "Tagetes Erecta": "tagetes-erecta",
+            "Iberis Sempervirens": "iberis-sempervirens",
+            "Iris Sanguinea": "iris-sanguinea",
+            "Lathyrus Odoratus": "lathyrus-odoratus",
+            "Ranunculus Asiaticus": "ranunculus-asiaticus",
+            "Gentiana Andrewsii": "gentiana-andrewsii",
+            "Dianthus Caryophyllus": "dianthus-caryophyllus",
+            "Freesia Refracta": "freesia-refracta",
+            "Ranunculus": "ranunculus"
+        }
+        return folder_mapping.get(flower_name, "")
+    
+    def _check_image_exists(self, folder_name: str, color: str) -> bool:
+        """이미지 파일이 실제로 존재하는지 확인"""
+        import os
+        image_path = f"data/images_webp/{folder_name}/{color}.webp"
+        return os.path.exists(image_path)
+    
+    def match(self, emotions: List[EmotionAnalysis], story: str) -> FlowerMatch:
+        """감정과 사연을 기반으로 꽃 매칭"""
+        if not self.openai_api_key:
+            return self._fallback_match(emotions, story)
+        
+        try:
+            import openai
+            client = openai.OpenAI(api_key=self.openai_api_key)
+            
+            # 실시간 컨텍스트 추출기에서 색상 가져오기
+            from app.services.realtime_context_extractor import RealtimeContextExtractor
+            context_extractor = RealtimeContextExtractor()
+            context = context_extractor.extract_context_realtime(story)
+            
+            # 실시간 추출된 색상 우선 사용, 없으면 기존 방식 사용
+            color_keywords = context.colors if context.colors else self._extract_contextual_colors(story)
+            print(f"🎨 실시간 추출된 색상 키워드: {color_keywords}")
+            
+            # 웨딩 부케 특별 처리
+            if self._is_wedding_bouquet(story):
+                return self._match_wedding_bouquet(emotions, story, color_keywords)
+            
+            prompt = self._create_matching_prompt(emotions, story, color_keywords)
+            
+            response = client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "당신은 감정과 색상 선호도에 맞는 꽃을 매칭하는 전문가입니다."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.1,
+                max_tokens=300
+            )
+            
+            result = response.choices[0].message.content
+            return self._parse_matching_response(result, emotions, story)
+            
+        except Exception as e:
+            print(f"❌ 꽃 매칭 실패: {e}")
+            return self._fallback_match(emotions, story)
+    
+    def _create_matching_prompt(self, emotions: List[EmotionAnalysis], story: str, color_keywords: List[str]) -> str:
+        """꽃 매칭 프롬프트 생성"""
+        emotion_text = ", ".join([f"{e.emotion}({e.percentage}%)" for e in emotions])
+        
+        # 사용 가능한 꽃 목록을 동적으로 생성
+        available_flowers = []
+        for flower_name, flower_data in self.flower_database.items():
+            colors = ", ".join(flower_data.get("colors", []))
+            keywords = ", ".join(flower_data.get("keywords", []))
+            available_flowers.append(f"{flower_name}: {keywords} - {colors}")
+        
+        flowers_list = "\n".join([f"{i+1}. {flower}" for i, flower in enumerate(available_flowers)])
+        
+        return f"""
+다음 고객의 사연과 감정에 가장 적합한 꽃을 선택해주세요:
+
+고객 사연: "{story}"
+감정 분석: {emotion_text}
+색상 선호도: {', '.join(color_keywords) if color_keywords else '없음'}
+
+사용 가능한 꽃들:
+{flowers_list}
+
+**색상별 사용 가능한 꽃들:**
+- 블루 계열 (블루, 옅은 블루, 파랑): Scabiosa (스카비오사), Rose (장미)
+- 화이트 계열 (화이트, 흰색, 아이보리): 대부분의 꽃들이 보유
+- 핑크 계열 (핑크, 연핑크, 옅은 핑크): Rose, Alstroemeria, Lisianthus, Ranunculus, Tulip, Gerbera Daisy, Hydrangea 등
+- 레드 계열 (레드, 빨강): Rose, Anthurium, Anemone, Tulip, Zinnia 등
+- 옐로우/오렌지 계열 (옐로우, 노랑, 오렌지): Gerbera Daisy, Dahlia, Tagetes, Ranunculus 등
+- 퍼플 계열 (퍼플, 보라, 라일락): Lisianthus, Veronica, Stock Flower, Globe Amaranth 등
+
+다음 JSON 형식으로 응답해주세요:
+
+```json
+{{
+    "flower_name": "선택된 꽃 이름",
+    "reason": "선택 이유"
+}}
+```
+
+**꽃 선택 기준 (우선순위 순서):**
+
+1. **색상 절대 우선**: 색상 선호도가 명시된 경우 해당 색상이 포함된 꽃을 반드시 선택하세요
+   - 색상이 요청되었다면 해당 색상을 가진 꽃 중에서만 선택
+   - 색상이 없는 꽃은 절대 선택하지 마세요
+   - 예: "핑크" 요청 시 핑크 색상이 있는 꽃만 고려
+   - 예: "옅은 블루" 요청 시 블루 계열 색상이 있는 꽃만 고려
+   - **색상이 있으면 다른 모든 조건보다 우선합니다**
+   - **산후 우울증/출산 후**: Lisianthus (리시안셔스) - 사랑, 감사, 따뜻함을 상징하는 우아한 꽃
+   - **따뜻한 우정/지속성**: Alstroemeria (알스트로메리아), Veronica (베로니카), Zinnia (백일홍)
+   - **희망과 새로운 시작**: Anemone (아네모네), Gerbera Daisy (거베라), Tulip (튤립)
+   - **고급스럽고 세련된**: Cymbidium (심비디움), Lisianthus (리시안셔스), Garden Peony (작약)
+   - **사랑의 종류별 세밀한 매칭**:
+     * **은은하고 우아한 사랑**: Lisianthus (리시안셔스), Garden Peony (작약), Cymbidium (심비디움)
+     * **정열적이고 열정적인 사랑**: Anthurium (안스리움), Rose (장미), Ranunculus (라넌큘러스)
+     * **순수하고 깨끗한 사랑**: Tulip (튤립), Lily (백합), Babys Breath (베이비스브레스)
+     * **로맨틱하고 달콤한 사랑**: Ranunculus (라넌큘러스), Rose (장미), Garden Peony (작약)
+   - **자연스럽고 부드러운**: Ammi Majus (아미 마주스), Babys Breath (베이비스브레스), Cotton Plant (목화)
+   - **독특하고 모던한**: Astilbe Japonica (아스틸베), Scabiosa (스카비오사), Drumstick Flower (드럼스틱)
+
+3. **특별한 요청 반영**:
+   - "독특한", "유니크한", "특별한", "모던한", "포인트" → 독특한 형태의 꽃들
+   - "따뜻한", "위로", "응원" → 따뜻한 감정의 꽃들
+   - "신선한", "밝은", "활기찬" → 밝고 생동감 있는 꽃들
+   - "우아한", "세련된", "고급스러운" → 우아하고 세련된 꽃들
+   - **사랑 관련 세밀한 구분**:
+     * "은은한", "우아한", "고귀한", "세련된" → Lisianthus, Garden Peony, Cymbidium
+     * "정열적인", "열정적인", "강렬한", "화려한" → Anthurium, Rose, Ranunculus
+     * "순수한", "깨끗한", "순결한" → Tulip, Lily, Babys Breath
+     * "로맨틱한", "달콤한", "부드러운" → Ranunculus, Rose, Garden Peony
+
+4. **일반적 꽃 회피**: "장미는 너무 일반적", "클래식하지 않은" 등의 표현이 있으면 Rose, Lily, Garden Peony 등 일반적인 꽃은 피하세요
+
+5. **사연에서 언급된 꽃**: 특정 꽃을 언급했다면 해당 꽃을 우선적으로 고려하세요
+
+**핵심 원칙**: 
+1. **색상이 요청되었다면 반드시 해당 색상을 가진 꽃을 선택하세요**
+2. **색상이 없는 꽃은 절대 선택하지 마세요**
+3. **"핑크" 요청 시 핑크 색상이 있는 꽃만 선택하세요**
+4. **"옅은 핑크" 요청 시 핑크 계열 꽃만 선택하세요**
+5. **"옅은 블루" 요청 시 블루 계열 꽃만 선택하세요**
+6. **핑크 계열에서는 Rose, Alstroemeria, Lisianthus, Ranunculus, Tulip, Gerbera Daisy, Hydrangea 중에서 선택하세요**
+7. **색상 우선순위가 모든 다른 조건보다 높습니다**
+8. 사용자의 사연과 감정에 가장 따뜻하고 의미있는 꽃을 선택하세요
+9. 특히 사랑의 경우 은은한 우아함과 정열적인 열정을 정확히 구분하여 매칭하세요
+
+**중요**: 색상 선호도가 명시된 경우, 해당 색상을 가진 꽃들 중에서만 선택하세요!
+"""
+
+    def _parse_matching_response(self, response: str, emotions: List[EmotionAnalysis], story: str) -> FlowerMatch:
+        """LLM 응답 파싱"""
+        try:
+            import json
+            # JSON 부분 추출
+            start = response.find('{')
+            end = response.rfind('}') + 1
+            if start != -1 and end != 0:
+                json_str = response[start:end]
+                data = json.loads(json_str)
+                
+                flower_name = data.get("flower_name", "")
+                
+                # 꽃 이름에서 괄호 제거 (예: "Lily (백합)" → "Lily")
+                if "(" in flower_name:
+                    flower_name = flower_name.split("(")[0].strip()
+                
+                if flower_name in self.flower_database:
+                    flower_data = self.flower_database[flower_name]
+                    
+                    # 색상에 맞는 이미지 URL 생성
+                    color_keywords = self._extract_contextual_colors(story)
+                    image_url = self._get_image_url(flower_name, color_keywords)
+                    
+                    hashtags = self._generate_emotion_hashtags(emotions)
+                    
+                    return FlowerMatch(
+                        flower_name=flower_name,
+                        korean_name=flower_data["korean_name"],
+                        scientific_name=flower_data["scientific_name"],
+                        image_url=image_url,
+                        keywords=flower_data["keywords"],
+                        hashtags=hashtags,
+                        color_keywords=color_keywords
+                    )
+            
+            print(f"❌ 꽃 매칭 응답 파싱 실패: {response}")
+            return self._fallback_match(emotions, story)
+            
+        except Exception as e:
+            print(f"❌ 꽃 매칭 응답 파싱 실패: {e}")
+            return self._fallback_match(emotions, story)
+    
+    def _fallback_match(self, emotions: List[EmotionAnalysis], story: str) -> FlowerMatch:
+        """폴백 매칭 로직"""
+        # 실시간 컨텍스트 추출기에서 색상 가져오기
+        try:
+            from app.services.realtime_context_extractor import RealtimeContextExtractor
+            context_extractor = RealtimeContextExtractor()
+            context = context_extractor.extract_context_realtime(story)
+            color_keywords = context.colors if context.colors else self._extract_contextual_colors(story)
+        except:
+            color_keywords = self._extract_contextual_colors(story)
+        
+        print(f"🎨 폴백 - 실시간 추출된 색상 키워드: {color_keywords}")
+        
+        # 색상 우선 매칭 - 절대 우선순위
+        if color_keywords:
+            color_flower_map = {
+                "블루": ["Scabiosa", "Rose", "Hydrangea", "Veronica Spicata"],
+                "옅은 블루": ["Scabiosa", "Rose", "Hydrangea", "Veronica Spicata"],
+                "파랑": ["Scabiosa", "Rose", "Hydrangea", "Veronica Spicata"],
+                "핑크": ["Rose", "Alstroemeria Spp", "Lisianthus", "Ranunculus", "Tulip", "Gerbera Daisy", "Hydrangea", "Garden Peony", "Dahlia"],
+                "연핑크": ["Rose", "Alstroemeria Spp", "Lisianthus", "Ranunculus", "Hydrangea", "Garden Peony"],
+                "옅은 핑크": ["Rose", "Alstroemeria Spp", "Lisianthus", "Ranunculus", "Hydrangea", "Garden Peony"],
+                "레드": ["Rose", "Anthurium Andraeanum", "Anemone Coronaria", "Tulip", "Zinnia Elegans", "Cockscomb", "Gladiolus"],
+                "빨강": ["Rose", "Anthurium Andraeanum", "Anemone Coronaria", "Tulip", "Zinnia Elegans", "Cockscomb", "Gladiolus"],
+                "옐로우": ["Gerbera Daisy", "Dahlia", "Tagetes Erecta", "Ranunculus", "Drumstick Flower"],
+                "노랑": ["Gerbera Daisy", "Dahlia", "Tagetes Erecta", "Ranunculus", "Drumstick Flower"],
+                "오렌지": ["Gerbera Daisy", "Dahlia", "Tagetes Erecta", "Ranunculus", "Drumstick Flower"],
+                "퍼플": ["Lisianthus", "Veronica Spicata", "Stock Flower", "Globe Amaranth", "Hydrangea"],
+                "보라": ["Lisianthus", "Veronica Spicata", "Stock Flower", "Globe Amaranth", "Hydrangea"],
+                "라일락": ["Lisianthus", "Veronica Spicata", "Stock Flower", "Globe Amaranth", "Hydrangea"],
+                "화이트": ["Lily", "Lisianthus", "Garden Peony", "Babys Breath", "Marguerite Daisy", "Cotton Plant", "Bouvardia"],
+                "흰색": ["Lily", "Lisianthus", "Garden Peony", "Babys Breath", "Marguerite Daisy", "Cotton Plant", "Bouvardia"]
+            }
+            
+            # 색상에 맞는 꽃들 찾기 (이미지가 있는 컬러만)
+            available_flowers = []
+            for color in color_keywords:
+                if color in color_flower_map:
+                    for flower_name in color_flower_map[color]:
+                        if flower_name in self.flower_database:
+                            flower_data = self.flower_database[flower_name]
+                            # available_colors가 있으면 해당 컬러 확인, 없으면 기본 available 확인
+                            if "available_colors" in flower_data:
+                                if color in flower_data["available_colors"] and flower_data["available_colors"][color]:
+                                    available_flowers.append(flower_name)
+                            elif "available" in flower_data and flower_data["available"]:
+                                available_flowers.append(flower_name)
+                            elif "available" not in flower_data:  # available 정보가 없으면 기본적으로 사용 가능
+                                available_flowers.append(flower_name)
+            
+            if available_flowers:
+                import random
+                # 가중치를 적용하여 다양한 꽃이 선택되도록 함
+                weights = []
+                for flower in available_flowers:
+                    # 최근에 많이 선택된 꽃들은 가중치를 낮춤
+                    if flower in ["Rose", "Lisianthus", "Gerbera Daisy"]:
+                        weights.append(0.5)  # 가중치 낮춤
+                    else:
+                        weights.append(1.0)  # 일반 가중치
+                
+                # 가중치가 적용된 랜덤 선택
+                if weights and sum(weights) > 0:
+                    flower_name = random.choices(available_flowers, weights=weights)[0]
+                else:
+                    flower_name = random.choice(available_flowers)
+                
+                print(f"🎨 색상 우선 매칭: {color_keywords} → {flower_name}")
+                # 색상이 있으면 무조건 색상 우선 매칭 사용
+            else:
+                # 색상에 맞는 꽃이 없으면 다른 색상으로 fallback
+                print(f"⚠️ 요청된 색상 {color_keywords}에 맞는 꽃이 없어 다른 색상으로 fallback")
+                flower_name = self._get_fallback_flower_by_context(story)
+        else:
+            # 색상 요청이 없으면 일반 로직 사용
+            flower_name = self._get_fallback_flower_by_context(story)
+        
+        flower_data = self.flower_database[flower_name]
+        image_url = self._get_image_url(flower_name, color_keywords)
+        hashtags = self._generate_emotion_hashtags(emotions)
+        
+        return FlowerMatch(
+            flower_name=flower_name,
+            korean_name=flower_data["korean_name"],
+            scientific_name=flower_data["scientific_name"],
+            image_url=image_url,
+            keywords=flower_data["keywords"],
+            hashtags=hashtags,
+            color_keywords=color_keywords
+        )
+    
+    def _get_fallback_flower_by_context(self, story: str) -> str:
+        """컨텍스트 기반 폴백 꽃 선택"""
+        # 우선순위 규칙
+        if any(keyword in story.lower() for keyword in ["알록달록", "화려한", "형형색색", "비비드", "선명한"]):
+            # 알록달록/비비드 색상 요청 - 가장 밝고 선명한 꽃들 우선
+            vivid_flowers = ["Gerbera Daisy", "Dahlia", "Cockscomb", "Drumstick Flower"]
+            import random
+            return random.choice(vivid_flowers)
+        elif any(keyword in story.lower() for keyword in ["해외 유학", "유학 완료", "돌아왔어", "여행지"]):
+            # 해외 유학 완료 환영 - 밝고 경쾌한 꽃 우선
+            celebration_flowers = ["Gerbera Daisy", "Dahlia", "Tulip", "Cockscomb", "Drumstick Flower"]
+            import random
+            return random.choice(celebration_flowers)
+        elif any(keyword in story.lower() for keyword in ["형형색색", "화려한", "축하", "합격", "성취"]):
+            return "Dahlia"
+        elif any(keyword in story.lower() for keyword in ["우드톤", "내추럴", "인테리어"]):
+            # 내추럴한 꽃들 중에서 선택
+            natural_flowers = ["Lily", "Lisianthus", "Garden Peony", "Cotton Plant", "Babys Breath"]
+            import random
+            return random.choice(natural_flowers)
+        elif any(keyword in story.lower() for keyword in ["독특한", "모던한", "포인트"]):
+            # 독특한 꽃들 중에서 선택
+            unique_flowers = ["Scabiosa", "Drumstick Flower", "Cockscomb", "Globe Amaranth"]
+            import random
+            return random.choice(unique_flowers)
+        elif any(keyword in story.lower() for keyword in ["부드러운", "자연스러운", "순수한"]):
+            # 부드러운 꽃들 중에서 선택
+            soft_flowers = ["Babys Breath", "Marguerite Daisy", "Cotton Plant", "Lily"]
+            import random
+            return random.choice(soft_flowers)
+        elif any(keyword in story.lower() for keyword in ["그리움", "추억", "이사", "떠남", "20년지기", "만남", "기념"]):
+            # 그리움/추억 관련 꽃들 중에서 선택
+            memory_flowers = ["Scabiosa", "Stock Flower", "Hydrangea", "Lisianthus", "Lathyrus Odoratus", "Garden Peony"]
+            import random
+            return random.choice(memory_flowers)
+        elif any(keyword in story.lower() for keyword in ["위로", "응원", "힘들어", "격려", "후배", "발표", "긴장"]):
+            # 격려/응원 관련 꽃들 중에서 선택
+            encouragement_flowers = ["Freesia Refracta", "Gerbera Daisy", "Tulip", "Dahlia"]
+            import random
+            return random.choice(encouragement_flowers)
+        else:
+            # 점수 기반 선택
+            scores = self._calculate_flower_scores(emotions, story)
+            return max(scores, key=scores.get)
+    
+    def _calculate_flower_scores(self, emotions: List[EmotionAnalysis], story: str) -> dict:
+        """꽃 점수 계산"""
+        scores = {}
+        color_keywords = self._extract_contextual_colors(story)
+        
+        # 그리움/추억 사연에서는 장미 제외
+        excluded_flowers = []
+        if any(keyword in story.lower() for keyword in ["그리움", "추억", "이사", "떠나", "20년지기"]):
+            excluded_flowers = ["Rose"]
+        
+        # 작업실/인테리어 사연에서는 적합한 꽃들 우선
+        preferred_flowers = []
+        if any(keyword in story.lower() for keyword in ["작업실", "인테리어", "커피", "책", "공간", "분위기"]):
+            preferred_flowers = ["Lily", "Lisianthus", "Garden Peony", "Cotton Plant", "Babys Breath", "Hydrangea"]
+        
+        for flower_name, flower_data in self.flower_database.items():
+            # 제외된 꽃은 점수 계산에서 제외
+            if flower_name in excluded_flowers:
+                continue
+                
+            score = 0.0
+            
+            # 감정 매칭 점수
+            for emotion in emotions:
+                if emotion.emotion in flower_data.get("emotions", []):
+                    score += emotion.percentage * 0.01
+            
+            # 색상 매칭 점수
+            for color in color_keywords:
+                if color in flower_data.get("colors", []):
+                    score += 0.3
+            
+            # 사연 키워드 매칭 점수
+            story_lower = story.lower()
+            for keyword in flower_data.get("keywords", []):
+                if keyword in story_lower:
+                    score += 0.2
+            
+            # 선호하는 꽃들에 추가 점수
+            if flower_name in preferred_flowers:
+                score += 0.5
+                print(f"⭐ 선호 꽃 추가 점수: {flower_name}")
+            
+            scores[flower_name] = score
+        
+        print(f"📊 꽃 점수: {scores}")
+        return scores
+    
+    def _is_wedding_bouquet(self, story: str) -> bool:
+        """웨딩 부케 관련 사연인지 확인"""
+        wedding_keywords = ["결혼식", "부케", "웨딩", "신부", "드레스", "미니멀", "심플", "포인트 컬러"]
+        story_lower = story.lower()
+        return any(keyword in story_lower for keyword in wedding_keywords)
+    
+    def _match_wedding_bouquet(self, emotions: List[EmotionAnalysis], story: str, color_keywords: List[str]) -> FlowerMatch:
+        """웨딩 부케 특별 매칭"""
+        # 웨딩 부케용 고급 꽃들 (우선순위 순서)
+        wedding_flowers = [
+            "Garden Peony",  # 작약 - 가장 고급스럽고 우아함
+            "Lisianthus",    # 리시안셔스 - 세련되고 고급스러움
+            "Rose",          # 장미 - 클래식하고 우아함
+            "Lily",          # 백합 - 순수하고 고귀함
+            "Hydrangea",     # 수국 - 풍성하고 우아함
+            "Scabiosa",      # 스카비오사 - 모던하고 세련됨
+            "Bouvardia",     # 부바르디아 - 우아하고 세련됨
+            "Tulip",         # 튤립 - 신선하고 우아함
+            "Dahlia",        # 다알리아 - 화려하고 현대적
+            "Gerbera Daisy"  # 거베라 - 밝고 활기참
+        ]
+        
+        # 포인트 컬러가 있는 경우 비비드한 색상으로 매핑
+        if color_keywords:
+            for color in color_keywords:
+                if "포인트" in color or "컬러" in color:
+                    # 포인트 컬러는 비비드한 색상으로 매핑 (화이트 제외)
+                    vivid_colors = ["핑크", "레드", "오렌지", "옐로우", "퍼플", "블루"]
+                    for vivid_color in vivid_colors:
+                        for flower_name in wedding_flowers:
+                            flower_data = self.flower_database.get(flower_name, {})
+                            available_colors = flower_data.get("colors", [])
+                            if vivid_color in available_colors:
+                                # 실제 이미지 파일이 있는지 확인
+                                image_folder = self._get_flower_folder(flower_name)
+                                if self._check_image_exists(image_folder, vivid_color):
+                                    print(f"🎨 웨딩 부케 포인트 컬러 매칭: {flower_name} - {vivid_color}")
+                                    return self._create_flower_match(flower_name, [vivid_color], story)
+        
+        # 기본적으로 가장 고급스러운 꽃 선택 (실제 이미지가 있는 색상으로)
+        return self._fallback_match(emotions, story)
+    
+    def _extract_contextual_colors(self, story: str) -> List[str]:
+        """맥락 기반 색상 추출"""
+        try:
+            # RealtimeContextExtractor의 올바른 메서드 호출
+            context = self.context_extractor.extract_context_realtime(story)
+            return context.colors
+        except Exception as e:
+            print(f"❌ 컨텍스트 추출 실패: {e}")
+            # 폴백 색상 추출
+            return self._fallback_color_extraction(story)
+    
+    def _fallback_color_extraction(self, story: str) -> List[str]:
+        """폴백 색상 추출 로직"""
+        story_lower = story.lower()
+        
+        # 명시적 색상 요청 우선 처리
+        explicit_colors = self._extract_explicit_colors(story)
+        if explicit_colors:
+            return explicit_colors
+        
+        # 맥락 기반 색상 추천
+        contextual_colors = []
+        
+        # 위로/힐링 관련 색상
+        if any(word in story_lower for word in ["위로", "힐링", "편안", "차분", "가벼운", "한결"]):
+            contextual_colors = ["블루", "퍼플", "크림", "화이트"]
+        
+        # 희망/기쁨/축하 관련 색상
+        elif any(word in story_lower for word in ["희망", "기쁨", "밝", "활기", "경쾌", "축하", "합격", "성취"]):
+            contextual_colors = ["노랑", "오렌지", "핑크", "레드"]
+        
+        # 형형색색/화려한 색상
+        elif any(word in story_lower for word in ["형형색색", "화려", "다양한", "컬러풀"]):
+            contextual_colors = ["노랑", "오렌지", "핑크", "레드", "퍼플"]
+        
+        # 사랑/로맨스 관련 색상
+        elif any(word in story_lower for word in ["사랑", "로맨스", "고백", "연인"]):
+            contextual_colors = ["핑크", "레드", "화이트"]
+        
+        # 그린톤 소파와 어울리는 색상
+        elif "그린" in story_lower or "green" in story_lower:
+            contextual_colors = ["그린", "화이트", "크림"]
+        
+        # 우드톤/내추럴 관련 색상
+        elif "우드톤" in story_lower or "내추럴" in story_lower:
+            contextual_colors = ["그린", "화이트", "크림", "베이지"]
+        
+        # 강렬한 포인트 색상
+        elif any(word in story_lower for word in ["강렬", "포인트", "대비"]):
+            contextual_colors = ["노랑", "오렌지", "빨강"]
+        
+        # 기본 위로 색상 (아무 조건도 만족하지 않을 때)
+        if not contextual_colors:
+            contextual_colors = ["크림", "화이트", "연핑크"]
+        
+        return contextual_colors[:2]  # 최대 2개 색상 추출
+    
+    def _extract_explicit_colors(self, story: str) -> List[str]:
+        """명시적 색상 요청 추출"""
+        import re
+        color_mapping = {
+            "그린": "그린", "green": "그린",
+            "옐로우": "옐로우", "yellow": "옐로우", "노랑": "옐로우",
+            "핑크": "핑크", "pink": "핑크",
+            "화이트": "화이트", "white": "화이트", "흰색": "화이트",
+            "블루": "블루", "blue": "블루", "파랑": "블루",
+            "레드": "레드", "red": "레드", "빨강": "레드",
+            "퍼플": "퍼플", "purple": "퍼플", "보라": "퍼플",
+            "오렌지": "오렌지", "orange": "오렌지"
+        }
+
+        extracted_colors = []
+
+        # "그린·옐로우" 같은 조합 패턴 찾기
+        patterns = [
+            r'그린[·\s]*옐로우',
+            r'옐로우[·\s]*그린',
+            r'green[·\s]*yellow',
+            r'yellow[·\s]*green',
+            r'그린[·\s]*노랑',
+            r'노랑[·\s]*그린'
+        ]
+
+        for pattern in patterns:
+            if re.search(pattern, story, re.IGNORECASE):
+                if "그린" in pattern or "green" in pattern:
+                    extracted_colors.append("그린")
+                if "옐로우" in pattern or "yellow" in pattern or "노랑" in pattern:
+                    extracted_colors.append("옐로우")
+                return extracted_colors
+
+        # 개별 색상 키워드 찾기
+        for keyword, color in color_mapping.items():
+            if keyword in story.lower():
+                if color not in extracted_colors:
+                    extracted_colors.append(color)
+
+        return extracted_colors[:3]  # 최대 3개
+    
+    def _generate_emotion_hashtags(self, emotions: List[EmotionAnalysis]) -> List[str]:
+        """감정 기반 해시태그 생성"""
+        hashtags = []
+        for emotion in emotions[:3]:  # 상위 3개 감정
+            hashtags.append(f"#{emotion.emotion}")
+        return hashtags

@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>꽃 추천 시스템 관리자</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .stats-container {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .stats-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            color: white;
+        }
+        
+        .stats-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .stats-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-right: 10px;
+        }
+        
+        .stats-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 8px;
+            border-radius: 6px;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #4ECDC4;
+            padding-bottom: 10px;
+        }
+        
+        .flower-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .flower-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        
+        .flower-card:hover {
+            border-color: #4ECDC4;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .raw-images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .raw-image-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        
+        .raw-image-card.webp-exists {
+            border-color: #28a745;
+            background: #f8fff9;
+        }
+        
+        .raw-image-card.webp-missing {
+            border-color: #dc3545;
+            background: #fff8f8;
+        }
+        
+        .raw-image-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        .raw-image-info h4 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .raw-image-info p {
+            margin: 4px 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .flower-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .flower-images {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .flower-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 2px solid #e9ecef;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .flower-image:hover {
+            border-color: #4ECDC4;
+            transform: scale(1.1);
+        }
+        
+        .flower-colors {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .color-tag {
+            background: #4ECDC4;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .flower-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .upload-form {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            border: 2px dashed #4ECDC4;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #4ECDC4;
+        }
+        
+        .file-input {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .file-input input[type=file] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .file-input-label {
+            display: block;
+            padding: 15px;
+            background: #4ECDC4;
+            color: white;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .file-input-label:hover {
+            background: #44A08D;
+        }
+        
+        .btn {
+            background: #4ECDC4;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #44A08D;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background: #ff6b6b;
+        }
+        
+        .btn-danger:hover {
+            background: #ee5a52;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .status {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4ECDC4;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+        }
+        
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        
+        .close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #4ECDC4;
+        }
+
+        .image-preview {
+            margin-top: 15px;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 10px;
+            border: 1px solid #dee2e6;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .image-preview img {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 8px;
+            object-fit: contain;
+        }
+
+        .preview-info {
+            font-size: 0.9rem;
+            color: #666;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .preview-info span {
+            display: block;
+        }
+        
+        .preview-info button {
+            margin-top: 10px;
+        }
+
+        /* 동기화 섹션 스타일 */
+        .sync-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 2px solid #e9ecef;
+        }
+
+        .sync-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .sync-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sync-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .sync-btn.success {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+        }
+
+        .sync-btn.warning {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌸 꽃 추천 시스템 관리자</h1>
+            <p>꽃 이미지 업로드 및 관리</p>
+            <div class="stats-container">
+                <div class="stats-item">
+                    <span class="stats-label">총 꽃 종류</span>
+                    <span class="stats-value" id="totalFlowerTypes">-</span>
+                </div>
+                <div class="stats-item">
+                    <span class="stats-label">총 이미지</span>
+                    <span class="stats-value" id="totalImages">-</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div id="status"></div>
+            
+            <!-- 동기화 섹션 -->
+            <div class="sync-section">
+                <h2>🔄 데이터 동기화</h2>
+                <div class="sync-buttons">
+                    <button class="sync-btn" onclick="syncSpreadsheet()">
+                        📊 스프레드시트 동기화
+                    </button>
+                    <button class="sync-btn success" onclick="autoSync()">
+                        🔄 자동 동기화
+                    </button>
+                    <button class="sync-btn warning" onclick="fullSync()">
+                        🌟 전체 동기화
+                    </button>
+                </div>
+                <div id="syncStatus"></div>
+            </div>
+            
+            <div class="section">
+                <h2>📊 현재 등록된 꽃 목록</h2>
+                <div class="actions">
+                    <button class="btn btn-secondary" onclick="loadFlowers()">새로고침</button>
+                    <button class="btn" onclick="scanImages()">이미지 스캔</button>
+                </div>
+                <div id="flowerGrid" class="flower-grid"></div>
+                <div id="loading" class="loading">
+                    <div class="spinner"></div>
+                    <p>로딩 중...</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>🖼️ Raw 이미지 관리</h2>
+                <div class="actions">
+                    <button class="btn btn-info" onclick="scanRawImages()">Raw 이미지 스캔</button>
+                    <button class="btn btn-success" onclick="convertRawToWebp()">Raw → WebP 일괄 변환</button>
+                </div>
+                <div id="rawImagesContainer" class="raw-images-container"></div>
+            </div>
+            
+            <div class="section">
+                <h2>📤 새 꽃 이미지 업로드</h2>
+                <div class="upload-form">
+                    <div class="form-group">
+                        <label for="flowerName">꽃 이름</label>
+                        <input type="text" id="flowerName" placeholder="예: Rose, Lily, Tulip" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="flowerColor">색상</label>
+                        <select id="flowerColor" required>
+                            <option value="">색상을 선택하세요</option>
+                            <option value="화이트">화이트</option>
+                            <option value="아이보리">아이보리</option>
+                            <option value="베이지">베이지</option>
+                            <option value="옐로우">옐로우</option>
+                            <option value="오렌지">오렌지</option>
+                            <option value="코랄">코랄</option>
+                            <option value="핑크">핑크</option>
+                            <option value="레드">레드</option>
+                            <option value="라일락">라일락</option>
+                            <option value="퍼플">퍼플</option>
+                            <option value="블루">블루</option>
+                            <option value="그린">그린</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="flowerImage">이미지 파일 (WebP 형식 권장)</label>
+                        <div class="file-input">
+                            <input type="file" id="flowerImage" accept="image/*" required>
+                            <label for="flowerImage" class="file-input-label">
+                                📁 이미지 파일 선택
+                            </label>
+                        </div>
+                        <div id="imagePreview" class="image-preview" style="display: none;">
+                            <img id="previewImg" src="" alt="미리보기">
+                            <div class="preview-info">
+                                <span id="fileName"></span>
+                                <span id="fileSize"></span>
+                                <span id="fileType"></span>
+                                <button id="convertToWebp" class="btn btn-secondary" style="display: none;">WebP로 변환</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn" onclick="uploadFlower()">업로드</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 이미지 미리보기 모달 -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <span id="closeModal" class="close">&times;</span>
+            <img id="modalImg" src="" alt="이미지 미리보기">
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8002/api/v1';
+        
+        // 페이지 로드 시 꽃 목록 로드
+        document.addEventListener('DOMContentLoaded', () => {
+            loadFlowers();
+        });
+        
+        // 꽃 목록 로드
+        async function loadFlowers() {
+            showLoading(true);
+            try {
+                const response = await fetch(`${API_BASE}/admin/flowers`);
+                const flowers = await response.json();
+                displayFlowers(flowers);
+                updateStats(flowers);
+                showStatus('꽃 목록을 성공적으로 로드했습니다.', 'success');
+            } catch (error) {
+                console.error('꽃 목록 로드 실패:', error);
+                showStatus('꽃 목록 로드에 실패했습니다.', 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        // 통계 업데이트
+        function updateStats(flowers) {
+            const totalFlowerTypes = flowers.length;
+            const totalImages = flowers.reduce((sum, flower) => sum + flower.image_count, 0);
+            
+            document.getElementById('totalFlowerTypes').textContent = totalFlowerTypes;
+            document.getElementById('totalImages').textContent = totalImages;
+        }
+        
+        // 꽃 목록 표시
+        function displayFlowers(flowers) {
+            const grid = document.getElementById('flowerGrid');
+            grid.innerHTML = '';
+            
+            flowers.forEach(flower => {
+                const card = document.createElement('div');
+                card.className = 'flower-card';
+                card.innerHTML = `
+                    <div class="flower-name">${flower.display_name}</div>
+                    <div class="flower-images">
+                        ${flower.images.map(image => `
+                            <img src="${image.url}" alt="${image.name}" class="flower-image" onclick="showImagePreview('${image.url}')">
+                        `).join('')}
+                    </div>
+                    <div class="flower-colors">
+                        ${flower.colors.map(color => `<span class="color-tag">${color}</span>`).join('')}
+                    </div>
+                    <div class="flower-stats">
+                        <span>이미지: ${flower.image_count}개</span>
+                        <button class="btn btn-danger" onclick="deleteFlower('${flower.name}')">삭제</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+        
+        // 꽃 이미지 업로드
+        async function uploadFlower() {
+            const flowerName = document.getElementById('flowerName').value.trim();
+            const flowerColor = document.getElementById('flowerColor').value;
+            const flowerImage = document.getElementById('flowerImage').files[0];
+            
+            if (!flowerName || !flowerColor || !flowerImage) {
+                showStatus('모든 필드를 입력해주세요.', 'error');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('flower_name', flowerName);
+            formData.append('color', flowerColor);
+            formData.append('image', flowerImage);
+            
+            try {
+                const response = await fetch(`${API_BASE}/admin/upload-flower`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showStatus(result.message, 'success');
+                    // 폼 초기화
+                    document.getElementById('flowerName').value = '';
+                    document.getElementById('flowerColor').value = '';
+                    document.getElementById('flowerImage').value = '';
+                    // 꽃 목록 새로고침
+                    loadFlowers();
+                } else {
+                    showStatus('업로드에 실패했습니다.', 'error');
+                }
+            } catch (error) {
+                console.error('업로드 실패:', error);
+                showStatus('업로드 중 오류가 발생했습니다.', 'error');
+            }
+        }
+        
+        // 꽃 삭제
+        async function deleteFlower(flowerName) {
+            if (!confirm(`정말로 "${flowerName}" 꽃을 삭제하시겠습니까?`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/admin/delete-flower/${flowerName}`, {
+                    method: 'DELETE'
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showStatus(result.message, 'success');
+                    loadFlowers();
+                } else {
+                    showStatus('삭제에 실패했습니다.', 'error');
+                }
+            } catch (error) {
+                console.error('삭제 실패:', error);
+                showStatus('삭제 중 오류가 발생했습니다.', 'error');
+            }
+        }
+        
+        // 이미지 스캔
+        async function scanImages() {
+            showLoading(true);
+            try {
+                const response = await fetch(`${API_BASE}/admin/scan-images`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    showStatus(result.message, 'success');
+                    loadFlowers();
+                } else {
+                    showStatus('스캔에 실패했습니다.', 'error');
+                }
+            } catch (error) {
+                console.error('스캔 실패:', error);
+                showStatus('스캔 중 오류가 발생했습니다.', 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        // 상태 메시지 표시
+        function showStatus(message, type) {
+            const status = document.getElementById('status');
+            status.innerHTML = `<div class="status ${type}">${message}</div>`;
+            
+            // 5초 후 자동 제거
+            setTimeout(() => {
+                status.innerHTML = '';
+            }, 5000);
+        }
+        
+        // 로딩 표시
+        function showLoading(show) {
+            const loading = document.getElementById('loading');
+            loading.style.display = show ? 'block' : 'none';
+        }
+        
+        // 파일 선택 시 라벨 업데이트
+        document.getElementById('flowerImage').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const label = document.querySelector('.file-input-label');
+            const preview = document.getElementById('imagePreview');
+            const previewImg = document.getElementById('previewImg');
+            const fileName = document.getElementById('fileName');
+            const fileSize = document.getElementById('fileSize');
+            const fileType = document.getElementById('fileType');
+            const convertButton = document.getElementById('convertToWebp');
+
+            console.log('파일 선택됨:', file); // 디버깅 로그
+
+            if (file) {
+                label.textContent = `📁 ${file.name}`;
+                preview.style.display = 'flex';
+                previewImg.src = URL.createObjectURL(file);
+                fileName.textContent = `파일: ${file.name}`;
+                fileSize.textContent = `크기: ${Math.round(file.size / 1024)}KB`;
+                fileType.textContent = `형식: ${file.type || '알 수 없음'}`;
+                
+                console.log('파일 타입:', file.type); // 디버깅 로그
+                
+                // WebP가 아닌 이미지 파일인 경우에만 변환 버튼 표시
+                if (file.type.startsWith('image/') && !file.type.includes('webp')) {
+                    convertButton.style.display = 'inline-block';
+                    console.log('WebP 변환 버튼 표시'); // 디버깅 로그
+                } else {
+                    convertButton.style.display = 'none';
+                    console.log('WebP 변환 버튼 숨김'); // 디버깅 로그
+                }
+            } else {
+                label.textContent = '📁 이미지 파일 선택';
+                preview.style.display = 'none';
+                previewImg.src = '';
+                fileName.textContent = '';
+                fileSize.textContent = '';
+                fileType.textContent = '';
+                convertButton.style.display = 'none'; // WebP 변환 버튼 숨김
+            }
+        });
+
+        // WebP 변환 버튼 클릭 시 실행될 함수
+        async function convertToWebp() {
+            const fileInput = document.getElementById('flowerImage');
+            const file = fileInput.files[0];
+            const fileName = file.name;
+            const fileSize = Math.round(file.size / 1024);
+
+            if (!confirm(`"${fileName}" 파일을 WebP 형식으로 변환하시겠습니까?`)) {
+                return;
+            }
+
+            showLoading(true);
+            try {
+                const formData = new FormData();
+                formData.append('image', file);
+                formData.append('filename', fileName);
+
+                const response = await fetch(`${API_BASE}/admin/convert-to-webp`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showStatus(result.message, 'success');
+                    // 파일 입력 필드 값 업데이트
+                    fileInput.value = ''; // 파일 입력 필드 초기화
+                    // 라벨 업데이트
+                    const label = document.querySelector('.file-input-label');
+                    label.textContent = `📁 ${result.filename}`;
+                    // 미리보기 업데이트
+                    const previewImg = document.getElementById('previewImg');
+                    previewImg.src = URL.createObjectURL(result.file);
+                    // 파일 정보 업데이트
+                    const fileNameSpan = document.getElementById('fileName');
+                    fileNameSpan.textContent = `파일: ${result.filename}`;
+                    const fileSizeSpan = document.getElementById('fileSize');
+                    fileSizeSpan.textContent = `크기: ${Math.round(result.file.size / 1024)}KB`;
+                    const fileTypeSpan = document.getElementById('fileType');
+                    fileTypeSpan.textContent = `형식: ${result.file.type}`;
+                    // WebP 변환 버튼 숨김 처리
+                    const convertButton = document.getElementById('convertToWebp');
+                    convertButton.style.display = 'none';
+                } else {
+                    showStatus(result.message, 'error');
+                }
+            } catch (error) {
+                console.error('WebP 변환 실패:', error);
+                showStatus('WebP 변환 중 오류가 발생했습니다.', 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // 이미지 미리보기 표시
+        function showImagePreview(imageUrl) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            modalImg.src = imageUrl;
+            modal.style.display = 'block';
+        }
+
+        // 모달 닫기
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('imageModal').style.display = 'none';
+        });
+        
+        // WebP 변환 버튼 이벤트 리스너
+        document.getElementById('convertToWebp').addEventListener('click', convertToWebp);
+        
+        // Raw 이미지 스캔
+        async function scanRawImages() {
+            showLoading(true);
+            try {
+                const response = await fetch(`${API_BASE}/admin/scan-raw-images`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    displayRawImages(result.raw_flowers);
+                    showStatus(`Raw 이미지 스캔 완료: ${result.raw_flowers.length}개 파일 발견`, 'success');
+                } else {
+                    showStatus('Raw 이미지 스캔에 실패했습니다.', 'error');
+                }
+            } catch (error) {
+                console.error('Raw 이미지 스캔 실패:', error);
+                showStatus('Raw 이미지 스캔에 실패했습니다.', 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        // Raw 이미지 일괄 변환
+        async function convertRawToWebp() {
+            if (!confirm('Raw 이미지를 WebP로 일괄 변환하시겠습니까?')) {
+                return;
+            }
+            
+            showLoading(true);
+            try {
+                const response = await fetch(`${API_BASE}/admin/convert-raw-to-webp`, {
+                    method: 'POST'
+                });
+                const result = await response.json();
+                
+                if (result.success) {
+                    showStatus(result.message, 'success');
+                    // 변환 후 꽃 목록 새로고침 (통계도 함께 업데이트)
+                    loadFlowers();
+                } else {
+                    showStatus(result.message, 'error');
+                }
+            } catch (error) {
+                console.error('Raw 이미지 변환 실패:', error);
+                showStatus('Raw 이미지 변환에 실패했습니다.', 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        // Raw 이미지 목록 표시
+        function displayRawImages(rawFlowers) {
+            const container = document.getElementById('rawImagesContainer');
+            
+            if (rawFlowers.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">Raw 이미지가 없습니다.</p>';
+                return;
+            }
+            
+            let html = '<div class="raw-images-grid">';
+            rawFlowers.forEach(flower => {
+                const statusClass = flower.webp_exists ? 'webp-exists' : 'webp-missing';
+                const statusText = flower.webp_exists ? '✅ WebP 존재' : '❌ WebP 없음';
+                
+                html += `
+                    <div class="raw-image-card ${statusClass}">
+                        <div class="raw-image-info">
+                            <h4>${flower.flower_name}</h4>
+                            <p><strong>파일:</strong> ${flower.filename}</p>
+                            <p><strong>색상:</strong> ${flower.color}</p>
+                            <p><strong>크기:</strong> ${Math.round(flower.file_size / 1024)}KB</p>
+                            <p><strong>상태:</strong> ${statusText}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            
+            container.innerHTML = html;
+        }
+
+        // 스프레드시트 동기화
+        async function syncSpreadsheet() {
+            showStatus('스프레드시트 동기화 중...', 'success');
+            try {
+                const response = await fetch(`${API_BASE}/admin/sync-spreadsheet`, {
+                    method: 'POST'
+                });
+                const result = await response.json();
+                
+                if (result.success) {
+                    showStatus(result.message, 'success');
+                    loadFlowers();
+                } else {
+                    showStatus('동기화 실패', 'error');
+                }
+            } catch (error) {
+                showStatus(`오류: ${error.message}`, 'error');
+            }
+        }
+
+        // 자동 동기화
+        async function autoSync() {
+            showStatus('자동 동기화 중...', 'success');
+            try {
+                const response = await fetch(`${API_BASE}/admin/auto-sync`, {
+                    method: 'POST'
+                });
+                const result = await response.json();
+                
+                if (result.success) {
+                    showStatus(result.message, 'success');
+                    loadFlowers();
+                } else {
+                    showStatus('동기화 실패', 'error');
+                }
+            } catch (error) {
+                showStatus(`오류: ${error.message}`, 'error');
+            }
+        }
+
+        // 전체 동기화
+        async function fullSync() {
+            showStatus('전체 동기화 중...', 'success');
+            try {
+                const response = await fetch(`${API_BASE}/admin/full-sync`, {
+                    method: 'POST'
+                });
+                const result = await response.json();
+                
+                if (result.success) {
+                    showStatus(result.message, 'success');
+                    loadFlowers();
+                } else {
+                    showStatus('동기화 실패', 'error');
+                }
+            } catch (error) {
+                showStatus(`오류: ${error.message}`, 'error');
+            }
+        }
+    </script>
+</body>
+</html>
+

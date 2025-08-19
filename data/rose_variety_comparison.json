@@ -1,0 +1,935 @@
+{
+  "rose_varieties": {
+    "하이브리드 티 로즈": {
+      "scientific_name": "Rosa hybrida",
+      "description": "가장 일반적인 장미, 큰 꽃과 긴 줄기",
+      "characteristics": "large blooms, long stems, classic form, hybrid tea characteristics"
+    },
+    "잉글리시 로즈": {
+      "scientific_name": "Rosa 'English Rose'",
+      "description": "데이비드 오스틴이 개발한 낭만적인 장미",
+      "characteristics": "romantic form, full blooms, old-fashioned charm, cup-shaped"
+    },
+    "피에르 드 롱사르": {
+      "scientific_name": "Rosa 'Pierre de Ronsard'",
+      "description": "에덴 로즈의 대표적인 품종, 크림과 핑크의 그라데이션",
+      "characteristics": "climbing habit, cream to pink gradient, romantic old rose form, abundant blooms"
+    },
+    "미니어처 로즈": {
+      "scientific_name": "Rosa chinensis 'Minima'",
+      "description": "작고 귀여운 미니어처 장미",
+      "characteristics": "small blooms, compact form, delicate petals, miniature size"
+    },
+    "클라이밍 로즈": {
+      "scientific_name": "Rosa climbing",
+      "description": "벽이나 울타리를 타고 올라가는 등반 장미",
+      "characteristics": "climbing habit, cascading blooms, vine-like growth, abundant flowers"
+    },
+    "와일드 로즈": {
+      "scientific_name": "Rosa canina",
+      "description": "자연산 야생 장미, 단순하고 자연스러운 아름다움",
+      "characteristics": "simple form, natural beauty, wild appearance, single petals"
+    },
+    "부시 로즈": {
+      "scientific_name": "Rosa floribunda",
+      "description": "덤불처럼 자라는 다화성 장미",
+      "characteristics": "cluster blooms, bushy growth, multiple flowers, compact habit"
+    },
+    "그랜디플로라 로즈": {
+      "scientific_name": "Rosa grandiflora",
+      "description": "하이브리드 티와 플로리분다의 교배종",
+      "characteristics": "large clusters, tall stems, hybrid vigor, abundant blooms"
+    },
+    "폴리안타 로즈": {
+      "scientific_name": "Rosa polyantha",
+      "description": "작은 꽃이 많이 피는 다화성 장미",
+      "characteristics": "small blooms, profuse flowering, cluster form, continuous bloom"
+    }
+  },
+  "color_traits": {
+    "레드": {
+      "english": "deep crimson red",
+      "background": "deep crimson mist and rich burgundy",
+      "mood": "passionate, romantic, dramatic"
+    },
+    "핑크": {
+      "english": "soft romantic pink",
+      "background": "soft rose mist and pale blush",
+      "mood": "romantic, gentle, sweet"
+    },
+    "크림핑크": {
+      "english": "cream to pink gradient",
+      "background": "soft cream mist and pale pink blush",
+      "mood": "romantic, elegant, dreamy"
+    },
+    "화이트": {
+      "english": "pure white",
+      "background": "alabaster mist and pale pearl",
+      "mood": "pure, elegant, serene"
+    },
+    "옐로우": {
+      "english": "bright golden yellow",
+      "background": "golden mist and warm amber",
+      "mood": "cheerful, bright, optimistic"
+    }
+  },
+  "all_comparisons": [
+    {
+      "rose_type": "하이브리드 티 로즈",
+      "color": "레드",
+      "scientific_name": "Rosa hybrida",
+      "description": "가장 일반적인 장미, 큰 꽃과 긴 줄기",
+      "characteristics": "large blooms, long stems, classic form, hybrid tea characteristics",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single deep crimson red 하이브리드 티 로즈 (Rosa hybrida) bloom, with large blooms, long stems, classic form, hybrid tea characteristics, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single deep crimson red 하이브리드 티 로즈 (Rosa hybrida) bloom, with large blooms, long stems, classic form, hybrid tea characteristics, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 634
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single deep crimson red 하이브리드 티 로즈 bloom, with large blooms, long stems, classic form, hybrid tea characteristics, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single deep crimson red 하이브리드 티 로즈 bloom, with large blooms, long stems, classic form, hybrid tea characteristics, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 619
+      },
+      "difference": 15
+    },
+    {
+      "rose_type": "잉글리시 로즈",
+      "color": "레드",
+      "scientific_name": "Rosa 'English Rose'",
+      "description": "데이비드 오스틴이 개발한 낭만적인 장미",
+      "characteristics": "romantic form, full blooms, old-fashioned charm, cup-shaped",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single deep crimson red 잉글리시 로즈 (Rosa 'English Rose') bloom, with romantic form, full blooms, old-fashioned charm, cup-shaped, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single deep crimson red 잉글리시 로즈 (Rosa 'English Rose') bloom, with romantic form, full blooms, old-fashioned charm, cup-shaped, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 631
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single deep crimson red 잉글리시 로즈 bloom, with romantic form, full blooms, old-fashioned charm, cup-shaped, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single deep crimson red 잉글리시 로즈 bloom, with romantic form, full blooms, old-fashioned charm, cup-shaped, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 609
+      },
+      "difference": 22
+    },
+    {
+      "rose_type": "피에르 드 롱사르",
+      "color": "레드",
+      "scientific_name": "Rosa 'Pierre de Ronsard'",
+      "description": "에덴 로즈의 대표적인 품종, 크림과 핑크의 그라데이션",
+      "characteristics": "climbing habit, cream to pink gradient, romantic old rose form, abundant blooms",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single deep crimson red 피에르 드 롱사르 (Rosa 'Pierre de Ronsard') bloom, with climbing habit, cream to pink gradient, romantic old rose form, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single deep crimson red 피에르 드 롱사르 (Rosa 'Pierre de Ronsard') bloom, with climbing habit, cream to pink gradient, romantic old rose form, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 658
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single deep crimson red 피에르 드 롱사르 bloom, with climbing habit, cream to pink gradient, romantic old rose form, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single deep crimson red 피에르 드 롱사르 bloom, with climbing habit, cream to pink gradient, romantic old rose form, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 631
+      },
+      "difference": 27
+    },
+    {
+      "rose_type": "미니어처 로즈",
+      "color": "레드",
+      "scientific_name": "Rosa chinensis 'Minima'",
+      "description": "작고 귀여운 미니어처 장미",
+      "characteristics": "small blooms, compact form, delicate petals, miniature size",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single deep crimson red 미니어처 로즈 (Rosa chinensis 'Minima') bloom, with small blooms, compact form, delicate petals, miniature size, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single deep crimson red 미니어처 로즈 (Rosa chinensis 'Minima') bloom, with small blooms, compact form, delicate petals, miniature size, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 635
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single deep crimson red 미니어처 로즈 bloom, with small blooms, compact form, delicate petals, miniature size, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single deep crimson red 미니어처 로즈 bloom, with small blooms, compact form, delicate petals, miniature size, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 609
+      },
+      "difference": 26
+    },
+    {
+      "rose_type": "클라이밍 로즈",
+      "color": "레드",
+      "scientific_name": "Rosa climbing",
+      "description": "벽이나 울타리를 타고 올라가는 등반 장미",
+      "characteristics": "climbing habit, cascading blooms, vine-like growth, abundant flowers",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single deep crimson red 클라이밍 로즈 (Rosa climbing) bloom, with climbing habit, cascading blooms, vine-like growth, abundant flowers, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single deep crimson red 클라이밍 로즈 (Rosa climbing) bloom, with climbing habit, cascading blooms, vine-like growth, abundant flowers, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 634
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single deep crimson red 클라이밍 로즈 bloom, with climbing habit, cascading blooms, vine-like growth, abundant flowers, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single deep crimson red 클라이밍 로즈 bloom, with climbing habit, cascading blooms, vine-like growth, abundant flowers, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 618
+      },
+      "difference": 16
+    },
+    {
+      "rose_type": "와일드 로즈",
+      "color": "레드",
+      "scientific_name": "Rosa canina",
+      "description": "자연산 야생 장미, 단순하고 자연스러운 아름다움",
+      "characteristics": "simple form, natural beauty, wild appearance, single petals",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single deep crimson red 와일드 로즈 (Rosa canina) bloom, with simple form, natural beauty, wild appearance, single petals, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single deep crimson red 와일드 로즈 (Rosa canina) bloom, with simple form, natural beauty, wild appearance, single petals, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 622
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single deep crimson red 와일드 로즈 bloom, with simple form, natural beauty, wild appearance, single petals, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single deep crimson red 와일드 로즈 bloom, with simple form, natural beauty, wild appearance, single petals, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 608
+      },
+      "difference": 14
+    },
+    {
+      "rose_type": "부시 로즈",
+      "color": "레드",
+      "scientific_name": "Rosa floribunda",
+      "description": "덤불처럼 자라는 다화성 장미",
+      "characteristics": "cluster blooms, bushy growth, multiple flowers, compact habit",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single deep crimson red 부시 로즈 (Rosa floribunda) bloom, with cluster blooms, bushy growth, multiple flowers, compact habit, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single deep crimson red 부시 로즈 (Rosa floribunda) bloom, with cluster blooms, bushy growth, multiple flowers, compact habit, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 627
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single deep crimson red 부시 로즈 bloom, with cluster blooms, bushy growth, multiple flowers, compact habit, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single deep crimson red 부시 로즈 bloom, with cluster blooms, bushy growth, multiple flowers, compact habit, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 609
+      },
+      "difference": 18
+    },
+    {
+      "rose_type": "그랜디플로라 로즈",
+      "color": "레드",
+      "scientific_name": "Rosa grandiflora",
+      "description": "하이브리드 티와 플로리분다의 교배종",
+      "characteristics": "large clusters, tall stems, hybrid vigor, abundant blooms",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single deep crimson red 그랜디플로라 로즈 (Rosa grandiflora) bloom, with large clusters, tall stems, hybrid vigor, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single deep crimson red 그랜디플로라 로즈 (Rosa grandiflora) bloom, with large clusters, tall stems, hybrid vigor, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 628
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single deep crimson red 그랜디플로라 로즈 bloom, with large clusters, tall stems, hybrid vigor, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single deep crimson red 그랜디플로라 로즈 bloom, with large clusters, tall stems, hybrid vigor, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 609
+      },
+      "difference": 19
+    },
+    {
+      "rose_type": "폴리안타 로즈",
+      "color": "레드",
+      "scientific_name": "Rosa polyantha",
+      "description": "작은 꽃이 많이 피는 다화성 장미",
+      "characteristics": "small blooms, profuse flowering, cluster form, continuous bloom",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single deep crimson red 폴리안타 로즈 (Rosa polyantha) bloom, with small blooms, profuse flowering, cluster form, continuous bloom, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single deep crimson red 폴리안타 로즈 (Rosa polyantha) bloom, with small blooms, profuse flowering, cluster form, continuous bloom, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 630
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single deep crimson red 폴리안타 로즈 bloom, with small blooms, profuse flowering, cluster form, continuous bloom, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single deep crimson red 폴리안타 로즈 bloom, with small blooms, profuse flowering, cluster form, continuous bloom, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 613
+      },
+      "difference": 17
+    },
+    {
+      "rose_type": "하이브리드 티 로즈",
+      "color": "핑크",
+      "scientific_name": "Rosa hybrida",
+      "description": "가장 일반적인 장미, 큰 꽃과 긴 줄기",
+      "characteristics": "large blooms, long stems, classic form, hybrid tea characteristics",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single soft romantic pink 하이브리드 티 로즈 (Rosa hybrida) bloom, with large blooms, long stems, classic form, hybrid tea characteristics, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single soft romantic pink 하이브리드 티 로즈 (Rosa hybrida) bloom, with large blooms, long stems, classic form, hybrid tea characteristics, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 623
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single soft romantic pink 하이브리드 티 로즈 bloom, with large blooms, long stems, classic form, hybrid tea characteristics, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single soft romantic pink 하이브리드 티 로즈 bloom, with large blooms, long stems, classic form, hybrid tea characteristics, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 608
+      },
+      "difference": 15
+    },
+    {
+      "rose_type": "잉글리시 로즈",
+      "color": "핑크",
+      "scientific_name": "Rosa 'English Rose'",
+      "description": "데이비드 오스틴이 개발한 낭만적인 장미",
+      "characteristics": "romantic form, full blooms, old-fashioned charm, cup-shaped",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single soft romantic pink 잉글리시 로즈 (Rosa 'English Rose') bloom, with romantic form, full blooms, old-fashioned charm, cup-shaped, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single soft romantic pink 잉글리시 로즈 (Rosa 'English Rose') bloom, with romantic form, full blooms, old-fashioned charm, cup-shaped, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 620
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single soft romantic pink 잉글리시 로즈 bloom, with romantic form, full blooms, old-fashioned charm, cup-shaped, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single soft romantic pink 잉글리시 로즈 bloom, with romantic form, full blooms, old-fashioned charm, cup-shaped, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 598
+      },
+      "difference": 22
+    },
+    {
+      "rose_type": "피에르 드 롱사르",
+      "color": "핑크",
+      "scientific_name": "Rosa 'Pierre de Ronsard'",
+      "description": "에덴 로즈의 대표적인 품종, 크림과 핑크의 그라데이션",
+      "characteristics": "climbing habit, cream to pink gradient, romantic old rose form, abundant blooms",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single soft romantic pink 피에르 드 롱사르 (Rosa 'Pierre de Ronsard') bloom, with climbing habit, cream to pink gradient, romantic old rose form, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single soft romantic pink 피에르 드 롱사르 (Rosa 'Pierre de Ronsard') bloom, with climbing habit, cream to pink gradient, romantic old rose form, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 647
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single soft romantic pink 피에르 드 롱사르 bloom, with climbing habit, cream to pink gradient, romantic old rose form, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single soft romantic pink 피에르 드 롱사르 bloom, with climbing habit, cream to pink gradient, romantic old rose form, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 620
+      },
+      "difference": 27
+    },
+    {
+      "rose_type": "미니어처 로즈",
+      "color": "핑크",
+      "scientific_name": "Rosa chinensis 'Minima'",
+      "description": "작고 귀여운 미니어처 장미",
+      "characteristics": "small blooms, compact form, delicate petals, miniature size",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single soft romantic pink 미니어처 로즈 (Rosa chinensis 'Minima') bloom, with small blooms, compact form, delicate petals, miniature size, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single soft romantic pink 미니어처 로즈 (Rosa chinensis 'Minima') bloom, with small blooms, compact form, delicate petals, miniature size, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 624
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single soft romantic pink 미니어처 로즈 bloom, with small blooms, compact form, delicate petals, miniature size, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single soft romantic pink 미니어처 로즈 bloom, with small blooms, compact form, delicate petals, miniature size, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 598
+      },
+      "difference": 26
+    },
+    {
+      "rose_type": "클라이밍 로즈",
+      "color": "핑크",
+      "scientific_name": "Rosa climbing",
+      "description": "벽이나 울타리를 타고 올라가는 등반 장미",
+      "characteristics": "climbing habit, cascading blooms, vine-like growth, abundant flowers",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single soft romantic pink 클라이밍 로즈 (Rosa climbing) bloom, with climbing habit, cascading blooms, vine-like growth, abundant flowers, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single soft romantic pink 클라이밍 로즈 (Rosa climbing) bloom, with climbing habit, cascading blooms, vine-like growth, abundant flowers, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 623
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single soft romantic pink 클라이밍 로즈 bloom, with climbing habit, cascading blooms, vine-like growth, abundant flowers, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single soft romantic pink 클라이밍 로즈 bloom, with climbing habit, cascading blooms, vine-like growth, abundant flowers, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 607
+      },
+      "difference": 16
+    },
+    {
+      "rose_type": "와일드 로즈",
+      "color": "핑크",
+      "scientific_name": "Rosa canina",
+      "description": "자연산 야생 장미, 단순하고 자연스러운 아름다움",
+      "characteristics": "simple form, natural beauty, wild appearance, single petals",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single soft romantic pink 와일드 로즈 (Rosa canina) bloom, with simple form, natural beauty, wild appearance, single petals, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single soft romantic pink 와일드 로즈 (Rosa canina) bloom, with simple form, natural beauty, wild appearance, single petals, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 611
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single soft romantic pink 와일드 로즈 bloom, with simple form, natural beauty, wild appearance, single petals, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single soft romantic pink 와일드 로즈 bloom, with simple form, natural beauty, wild appearance, single petals, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 597
+      },
+      "difference": 14
+    },
+    {
+      "rose_type": "부시 로즈",
+      "color": "핑크",
+      "scientific_name": "Rosa floribunda",
+      "description": "덤불처럼 자라는 다화성 장미",
+      "characteristics": "cluster blooms, bushy growth, multiple flowers, compact habit",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single soft romantic pink 부시 로즈 (Rosa floribunda) bloom, with cluster blooms, bushy growth, multiple flowers, compact habit, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single soft romantic pink 부시 로즈 (Rosa floribunda) bloom, with cluster blooms, bushy growth, multiple flowers, compact habit, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 616
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single soft romantic pink 부시 로즈 bloom, with cluster blooms, bushy growth, multiple flowers, compact habit, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single soft romantic pink 부시 로즈 bloom, with cluster blooms, bushy growth, multiple flowers, compact habit, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 598
+      },
+      "difference": 18
+    },
+    {
+      "rose_type": "그랜디플로라 로즈",
+      "color": "핑크",
+      "scientific_name": "Rosa grandiflora",
+      "description": "하이브리드 티와 플로리분다의 교배종",
+      "characteristics": "large clusters, tall stems, hybrid vigor, abundant blooms",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single soft romantic pink 그랜디플로라 로즈 (Rosa grandiflora) bloom, with large clusters, tall stems, hybrid vigor, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single soft romantic pink 그랜디플로라 로즈 (Rosa grandiflora) bloom, with large clusters, tall stems, hybrid vigor, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 617
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single soft romantic pink 그랜디플로라 로즈 bloom, with large clusters, tall stems, hybrid vigor, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single soft romantic pink 그랜디플로라 로즈 bloom, with large clusters, tall stems, hybrid vigor, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 598
+      },
+      "difference": 19
+    },
+    {
+      "rose_type": "폴리안타 로즈",
+      "color": "핑크",
+      "scientific_name": "Rosa polyantha",
+      "description": "작은 꽃이 많이 피는 다화성 장미",
+      "characteristics": "small blooms, profuse flowering, cluster form, continuous bloom",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single soft romantic pink 폴리안타 로즈 (Rosa polyantha) bloom, with small blooms, profuse flowering, cluster form, continuous bloom, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single soft romantic pink 폴리안타 로즈 (Rosa polyantha) bloom, with small blooms, profuse flowering, cluster form, continuous bloom, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 619
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single soft romantic pink 폴리안타 로즈 bloom, with small blooms, profuse flowering, cluster form, continuous bloom, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single soft romantic pink 폴리안타 로즈 bloom, with small blooms, profuse flowering, cluster form, continuous bloom, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 602
+      },
+      "difference": 17
+    },
+    {
+      "rose_type": "하이브리드 티 로즈",
+      "color": "크림핑크",
+      "scientific_name": "Rosa hybrida",
+      "description": "가장 일반적인 장미, 큰 꽃과 긴 줄기",
+      "characteristics": "large blooms, long stems, classic form, hybrid tea characteristics",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single cream to pink gradient 하이브리드 티 로즈 (Rosa hybrida) bloom, with large blooms, long stems, classic form, hybrid tea characteristics, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single cream to pink gradient 하이브리드 티 로즈 (Rosa hybrida) bloom, with large blooms, long stems, classic form, hybrid tea characteristics, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 635
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single cream to pink gradient 하이브리드 티 로즈 bloom, with large blooms, long stems, classic form, hybrid tea characteristics, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single cream to pink gradient 하이브리드 티 로즈 bloom, with large blooms, long stems, classic form, hybrid tea characteristics, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 620
+      },
+      "difference": 15
+    },
+    {
+      "rose_type": "잉글리시 로즈",
+      "color": "크림핑크",
+      "scientific_name": "Rosa 'English Rose'",
+      "description": "데이비드 오스틴이 개발한 낭만적인 장미",
+      "characteristics": "romantic form, full blooms, old-fashioned charm, cup-shaped",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single cream to pink gradient 잉글리시 로즈 (Rosa 'English Rose') bloom, with romantic form, full blooms, old-fashioned charm, cup-shaped, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single cream to pink gradient 잉글리시 로즈 (Rosa 'English Rose') bloom, with romantic form, full blooms, old-fashioned charm, cup-shaped, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 632
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single cream to pink gradient 잉글리시 로즈 bloom, with romantic form, full blooms, old-fashioned charm, cup-shaped, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single cream to pink gradient 잉글리시 로즈 bloom, with romantic form, full blooms, old-fashioned charm, cup-shaped, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 610
+      },
+      "difference": 22
+    },
+    {
+      "rose_type": "피에르 드 롱사르",
+      "color": "크림핑크",
+      "scientific_name": "Rosa 'Pierre de Ronsard'",
+      "description": "에덴 로즈의 대표적인 품종, 크림과 핑크의 그라데이션",
+      "characteristics": "climbing habit, cream to pink gradient, romantic old rose form, abundant blooms",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single cream to pink gradient 피에르 드 롱사르 (Rosa 'Pierre de Ronsard') bloom, with climbing habit, cream to pink gradient, romantic old rose form, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single cream to pink gradient 피에르 드 롱사르 (Rosa 'Pierre de Ronsard') bloom, with climbing habit, cream to pink gradient, romantic old rose form, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 659
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single cream to pink gradient 피에르 드 롱사르 bloom, with climbing habit, cream to pink gradient, romantic old rose form, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single cream to pink gradient 피에르 드 롱사르 bloom, with climbing habit, cream to pink gradient, romantic old rose form, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 632
+      },
+      "difference": 27
+    },
+    {
+      "rose_type": "미니어처 로즈",
+      "color": "크림핑크",
+      "scientific_name": "Rosa chinensis 'Minima'",
+      "description": "작고 귀여운 미니어처 장미",
+      "characteristics": "small blooms, compact form, delicate petals, miniature size",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single cream to pink gradient 미니어처 로즈 (Rosa chinensis 'Minima') bloom, with small blooms, compact form, delicate petals, miniature size, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single cream to pink gradient 미니어처 로즈 (Rosa chinensis 'Minima') bloom, with small blooms, compact form, delicate petals, miniature size, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 636
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single cream to pink gradient 미니어처 로즈 bloom, with small blooms, compact form, delicate petals, miniature size, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single cream to pink gradient 미니어처 로즈 bloom, with small blooms, compact form, delicate petals, miniature size, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 610
+      },
+      "difference": 26
+    },
+    {
+      "rose_type": "클라이밍 로즈",
+      "color": "크림핑크",
+      "scientific_name": "Rosa climbing",
+      "description": "벽이나 울타리를 타고 올라가는 등반 장미",
+      "characteristics": "climbing habit, cascading blooms, vine-like growth, abundant flowers",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single cream to pink gradient 클라이밍 로즈 (Rosa climbing) bloom, with climbing habit, cascading blooms, vine-like growth, abundant flowers, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single cream to pink gradient 클라이밍 로즈 (Rosa climbing) bloom, with climbing habit, cascading blooms, vine-like growth, abundant flowers, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 635
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single cream to pink gradient 클라이밍 로즈 bloom, with climbing habit, cascading blooms, vine-like growth, abundant flowers, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single cream to pink gradient 클라이밍 로즈 bloom, with climbing habit, cascading blooms, vine-like growth, abundant flowers, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 619
+      },
+      "difference": 16
+    },
+    {
+      "rose_type": "와일드 로즈",
+      "color": "크림핑크",
+      "scientific_name": "Rosa canina",
+      "description": "자연산 야생 장미, 단순하고 자연스러운 아름다움",
+      "characteristics": "simple form, natural beauty, wild appearance, single petals",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single cream to pink gradient 와일드 로즈 (Rosa canina) bloom, with simple form, natural beauty, wild appearance, single petals, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single cream to pink gradient 와일드 로즈 (Rosa canina) bloom, with simple form, natural beauty, wild appearance, single petals, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 623
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single cream to pink gradient 와일드 로즈 bloom, with simple form, natural beauty, wild appearance, single petals, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single cream to pink gradient 와일드 로즈 bloom, with simple form, natural beauty, wild appearance, single petals, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 609
+      },
+      "difference": 14
+    },
+    {
+      "rose_type": "부시 로즈",
+      "color": "크림핑크",
+      "scientific_name": "Rosa floribunda",
+      "description": "덤불처럼 자라는 다화성 장미",
+      "characteristics": "cluster blooms, bushy growth, multiple flowers, compact habit",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single cream to pink gradient 부시 로즈 (Rosa floribunda) bloom, with cluster blooms, bushy growth, multiple flowers, compact habit, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single cream to pink gradient 부시 로즈 (Rosa floribunda) bloom, with cluster blooms, bushy growth, multiple flowers, compact habit, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 628
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single cream to pink gradient 부시 로즈 bloom, with cluster blooms, bushy growth, multiple flowers, compact habit, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single cream to pink gradient 부시 로즈 bloom, with cluster blooms, bushy growth, multiple flowers, compact habit, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 610
+      },
+      "difference": 18
+    },
+    {
+      "rose_type": "그랜디플로라 로즈",
+      "color": "크림핑크",
+      "scientific_name": "Rosa grandiflora",
+      "description": "하이브리드 티와 플로리분다의 교배종",
+      "characteristics": "large clusters, tall stems, hybrid vigor, abundant blooms",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single cream to pink gradient 그랜디플로라 로즈 (Rosa grandiflora) bloom, with large clusters, tall stems, hybrid vigor, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single cream to pink gradient 그랜디플로라 로즈 (Rosa grandiflora) bloom, with large clusters, tall stems, hybrid vigor, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 629
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single cream to pink gradient 그랜디플로라 로즈 bloom, with large clusters, tall stems, hybrid vigor, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single cream to pink gradient 그랜디플로라 로즈 bloom, with large clusters, tall stems, hybrid vigor, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 610
+      },
+      "difference": 19
+    },
+    {
+      "rose_type": "폴리안타 로즈",
+      "color": "크림핑크",
+      "scientific_name": "Rosa polyantha",
+      "description": "작은 꽃이 많이 피는 다화성 장미",
+      "characteristics": "small blooms, profuse flowering, cluster form, continuous bloom",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single cream to pink gradient 폴리안타 로즈 (Rosa polyantha) bloom, with small blooms, profuse flowering, cluster form, continuous bloom, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single cream to pink gradient 폴리안타 로즈 (Rosa polyantha) bloom, with small blooms, profuse flowering, cluster form, continuous bloom, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 631
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single cream to pink gradient 폴리안타 로즈 bloom, with small blooms, profuse flowering, cluster form, continuous bloom, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single cream to pink gradient 폴리안타 로즈 bloom, with small blooms, profuse flowering, cluster form, continuous bloom, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 614
+      },
+      "difference": 17
+    },
+    {
+      "rose_type": "하이브리드 티 로즈",
+      "color": "화이트",
+      "scientific_name": "Rosa hybrida",
+      "description": "가장 일반적인 장미, 큰 꽃과 긴 줄기",
+      "characteristics": "large blooms, long stems, classic form, hybrid tea characteristics",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single pure white 하이브리드 티 로즈 (Rosa hybrida) bloom, with large blooms, long stems, classic form, hybrid tea characteristics, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single pure white 하이브리드 티 로즈 (Rosa hybrida) bloom, with large blooms, long stems, classic form, hybrid tea characteristics, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 613
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single pure white 하이브리드 티 로즈 bloom, with large blooms, long stems, classic form, hybrid tea characteristics, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single pure white 하이브리드 티 로즈 bloom, with large blooms, long stems, classic form, hybrid tea characteristics, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 598
+      },
+      "difference": 15
+    },
+    {
+      "rose_type": "잉글리시 로즈",
+      "color": "화이트",
+      "scientific_name": "Rosa 'English Rose'",
+      "description": "데이비드 오스틴이 개발한 낭만적인 장미",
+      "characteristics": "romantic form, full blooms, old-fashioned charm, cup-shaped",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single pure white 잉글리시 로즈 (Rosa 'English Rose') bloom, with romantic form, full blooms, old-fashioned charm, cup-shaped, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single pure white 잉글리시 로즈 (Rosa 'English Rose') bloom, with romantic form, full blooms, old-fashioned charm, cup-shaped, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 610
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single pure white 잉글리시 로즈 bloom, with romantic form, full blooms, old-fashioned charm, cup-shaped, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single pure white 잉글리시 로즈 bloom, with romantic form, full blooms, old-fashioned charm, cup-shaped, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 588
+      },
+      "difference": 22
+    },
+    {
+      "rose_type": "피에르 드 롱사르",
+      "color": "화이트",
+      "scientific_name": "Rosa 'Pierre de Ronsard'",
+      "description": "에덴 로즈의 대표적인 품종, 크림과 핑크의 그라데이션",
+      "characteristics": "climbing habit, cream to pink gradient, romantic old rose form, abundant blooms",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single pure white 피에르 드 롱사르 (Rosa 'Pierre de Ronsard') bloom, with climbing habit, cream to pink gradient, romantic old rose form, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single pure white 피에르 드 롱사르 (Rosa 'Pierre de Ronsard') bloom, with climbing habit, cream to pink gradient, romantic old rose form, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 637
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single pure white 피에르 드 롱사르 bloom, with climbing habit, cream to pink gradient, romantic old rose form, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single pure white 피에르 드 롱사르 bloom, with climbing habit, cream to pink gradient, romantic old rose form, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 610
+      },
+      "difference": 27
+    },
+    {
+      "rose_type": "미니어처 로즈",
+      "color": "화이트",
+      "scientific_name": "Rosa chinensis 'Minima'",
+      "description": "작고 귀여운 미니어처 장미",
+      "characteristics": "small blooms, compact form, delicate petals, miniature size",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single pure white 미니어처 로즈 (Rosa chinensis 'Minima') bloom, with small blooms, compact form, delicate petals, miniature size, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single pure white 미니어처 로즈 (Rosa chinensis 'Minima') bloom, with small blooms, compact form, delicate petals, miniature size, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 614
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single pure white 미니어처 로즈 bloom, with small blooms, compact form, delicate petals, miniature size, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single pure white 미니어처 로즈 bloom, with small blooms, compact form, delicate petals, miniature size, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 588
+      },
+      "difference": 26
+    },
+    {
+      "rose_type": "클라이밍 로즈",
+      "color": "화이트",
+      "scientific_name": "Rosa climbing",
+      "description": "벽이나 울타리를 타고 올라가는 등반 장미",
+      "characteristics": "climbing habit, cascading blooms, vine-like growth, abundant flowers",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single pure white 클라이밍 로즈 (Rosa climbing) bloom, with climbing habit, cascading blooms, vine-like growth, abundant flowers, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single pure white 클라이밍 로즈 (Rosa climbing) bloom, with climbing habit, cascading blooms, vine-like growth, abundant flowers, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 613
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single pure white 클라이밍 로즈 bloom, with climbing habit, cascading blooms, vine-like growth, abundant flowers, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single pure white 클라이밍 로즈 bloom, with climbing habit, cascading blooms, vine-like growth, abundant flowers, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 597
+      },
+      "difference": 16
+    },
+    {
+      "rose_type": "와일드 로즈",
+      "color": "화이트",
+      "scientific_name": "Rosa canina",
+      "description": "자연산 야생 장미, 단순하고 자연스러운 아름다움",
+      "characteristics": "simple form, natural beauty, wild appearance, single petals",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single pure white 와일드 로즈 (Rosa canina) bloom, with simple form, natural beauty, wild appearance, single petals, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single pure white 와일드 로즈 (Rosa canina) bloom, with simple form, natural beauty, wild appearance, single petals, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 601
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single pure white 와일드 로즈 bloom, with simple form, natural beauty, wild appearance, single petals, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single pure white 와일드 로즈 bloom, with simple form, natural beauty, wild appearance, single petals, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 587
+      },
+      "difference": 14
+    },
+    {
+      "rose_type": "부시 로즈",
+      "color": "화이트",
+      "scientific_name": "Rosa floribunda",
+      "description": "덤불처럼 자라는 다화성 장미",
+      "characteristics": "cluster blooms, bushy growth, multiple flowers, compact habit",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single pure white 부시 로즈 (Rosa floribunda) bloom, with cluster blooms, bushy growth, multiple flowers, compact habit, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single pure white 부시 로즈 (Rosa floribunda) bloom, with cluster blooms, bushy growth, multiple flowers, compact habit, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 606
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single pure white 부시 로즈 bloom, with cluster blooms, bushy growth, multiple flowers, compact habit, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single pure white 부시 로즈 bloom, with cluster blooms, bushy growth, multiple flowers, compact habit, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 588
+      },
+      "difference": 18
+    },
+    {
+      "rose_type": "그랜디플로라 로즈",
+      "color": "화이트",
+      "scientific_name": "Rosa grandiflora",
+      "description": "하이브리드 티와 플로리분다의 교배종",
+      "characteristics": "large clusters, tall stems, hybrid vigor, abundant blooms",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single pure white 그랜디플로라 로즈 (Rosa grandiflora) bloom, with large clusters, tall stems, hybrid vigor, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single pure white 그랜디플로라 로즈 (Rosa grandiflora) bloom, with large clusters, tall stems, hybrid vigor, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 607
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single pure white 그랜디플로라 로즈 bloom, with large clusters, tall stems, hybrid vigor, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single pure white 그랜디플로라 로즈 bloom, with large clusters, tall stems, hybrid vigor, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 588
+      },
+      "difference": 19
+    },
+    {
+      "rose_type": "폴리안타 로즈",
+      "color": "화이트",
+      "scientific_name": "Rosa polyantha",
+      "description": "작은 꽃이 많이 피는 다화성 장미",
+      "characteristics": "small blooms, profuse flowering, cluster form, continuous bloom",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single pure white 폴리안타 로즈 (Rosa polyantha) bloom, with small blooms, profuse flowering, cluster form, continuous bloom, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single pure white 폴리안타 로즈 (Rosa polyantha) bloom, with small blooms, profuse flowering, cluster form, continuous bloom, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 609
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single pure white 폴리안타 로즈 bloom, with small blooms, profuse flowering, cluster form, continuous bloom, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single pure white 폴리안타 로즈 bloom, with small blooms, profuse flowering, cluster form, continuous bloom, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 592
+      },
+      "difference": 17
+    },
+    {
+      "rose_type": "하이브리드 티 로즈",
+      "color": "옐로우",
+      "scientific_name": "Rosa hybrida",
+      "description": "가장 일반적인 장미, 큰 꽃과 긴 줄기",
+      "characteristics": "large blooms, long stems, classic form, hybrid tea characteristics",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single bright golden yellow 하이브리드 티 로즈 (Rosa hybrida) bloom, with large blooms, long stems, classic form, hybrid tea characteristics, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single bright golden yellow 하이브리드 티 로즈 (Rosa hybrida) bloom, with large blooms, long stems, classic form, hybrid tea characteristics, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 627
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single bright golden yellow 하이브리드 티 로즈 bloom, with large blooms, long stems, classic form, hybrid tea characteristics, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single bright golden yellow 하이브리드 티 로즈 bloom, with large blooms, long stems, classic form, hybrid tea characteristics, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 612
+      },
+      "difference": 15
+    },
+    {
+      "rose_type": "잉글리시 로즈",
+      "color": "옐로우",
+      "scientific_name": "Rosa 'English Rose'",
+      "description": "데이비드 오스틴이 개발한 낭만적인 장미",
+      "characteristics": "romantic form, full blooms, old-fashioned charm, cup-shaped",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single bright golden yellow 잉글리시 로즈 (Rosa 'English Rose') bloom, with romantic form, full blooms, old-fashioned charm, cup-shaped, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single bright golden yellow 잉글리시 로즈 (Rosa 'English Rose') bloom, with romantic form, full blooms, old-fashioned charm, cup-shaped, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 624
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single bright golden yellow 잉글리시 로즈 bloom, with romantic form, full blooms, old-fashioned charm, cup-shaped, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single bright golden yellow 잉글리시 로즈 bloom, with romantic form, full blooms, old-fashioned charm, cup-shaped, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 602
+      },
+      "difference": 22
+    },
+    {
+      "rose_type": "피에르 드 롱사르",
+      "color": "옐로우",
+      "scientific_name": "Rosa 'Pierre de Ronsard'",
+      "description": "에덴 로즈의 대표적인 품종, 크림과 핑크의 그라데이션",
+      "characteristics": "climbing habit, cream to pink gradient, romantic old rose form, abundant blooms",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single bright golden yellow 피에르 드 롱사르 (Rosa 'Pierre de Ronsard') bloom, with climbing habit, cream to pink gradient, romantic old rose form, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single bright golden yellow 피에르 드 롱사르 (Rosa 'Pierre de Ronsard') bloom, with climbing habit, cream to pink gradient, romantic old rose form, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 651
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single bright golden yellow 피에르 드 롱사르 bloom, with climbing habit, cream to pink gradient, romantic old rose form, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single bright golden yellow 피에르 드 롱사르 bloom, with climbing habit, cream to pink gradient, romantic old rose form, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 624
+      },
+      "difference": 27
+    },
+    {
+      "rose_type": "미니어처 로즈",
+      "color": "옐로우",
+      "scientific_name": "Rosa chinensis 'Minima'",
+      "description": "작고 귀여운 미니어처 장미",
+      "characteristics": "small blooms, compact form, delicate petals, miniature size",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single bright golden yellow 미니어처 로즈 (Rosa chinensis 'Minima') bloom, with small blooms, compact form, delicate petals, miniature size, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single bright golden yellow 미니어처 로즈 (Rosa chinensis 'Minima') bloom, with small blooms, compact form, delicate petals, miniature size, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 628
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single bright golden yellow 미니어처 로즈 bloom, with small blooms, compact form, delicate petals, miniature size, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single bright golden yellow 미니어처 로즈 bloom, with small blooms, compact form, delicate petals, miniature size, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 602
+      },
+      "difference": 26
+    },
+    {
+      "rose_type": "클라이밍 로즈",
+      "color": "옐로우",
+      "scientific_name": "Rosa climbing",
+      "description": "벽이나 울타리를 타고 올라가는 등반 장미",
+      "characteristics": "climbing habit, cascading blooms, vine-like growth, abundant flowers",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single bright golden yellow 클라이밍 로즈 (Rosa climbing) bloom, with climbing habit, cascading blooms, vine-like growth, abundant flowers, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single bright golden yellow 클라이밍 로즈 (Rosa climbing) bloom, with climbing habit, cascading blooms, vine-like growth, abundant flowers, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 627
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single bright golden yellow 클라이밍 로즈 bloom, with climbing habit, cascading blooms, vine-like growth, abundant flowers, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single bright golden yellow 클라이밍 로즈 bloom, with climbing habit, cascading blooms, vine-like growth, abundant flowers, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 611
+      },
+      "difference": 16
+    },
+    {
+      "rose_type": "와일드 로즈",
+      "color": "옐로우",
+      "scientific_name": "Rosa canina",
+      "description": "자연산 야생 장미, 단순하고 자연스러운 아름다움",
+      "characteristics": "simple form, natural beauty, wild appearance, single petals",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single bright golden yellow 와일드 로즈 (Rosa canina) bloom, with simple form, natural beauty, wild appearance, single petals, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single bright golden yellow 와일드 로즈 (Rosa canina) bloom, with simple form, natural beauty, wild appearance, single petals, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 615
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single bright golden yellow 와일드 로즈 bloom, with simple form, natural beauty, wild appearance, single petals, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single bright golden yellow 와일드 로즈 bloom, with simple form, natural beauty, wild appearance, single petals, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 601
+      },
+      "difference": 14
+    },
+    {
+      "rose_type": "부시 로즈",
+      "color": "옐로우",
+      "scientific_name": "Rosa floribunda",
+      "description": "덤불처럼 자라는 다화성 장미",
+      "characteristics": "cluster blooms, bushy growth, multiple flowers, compact habit",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single bright golden yellow 부시 로즈 (Rosa floribunda) bloom, with cluster blooms, bushy growth, multiple flowers, compact habit, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single bright golden yellow 부시 로즈 (Rosa floribunda) bloom, with cluster blooms, bushy growth, multiple flowers, compact habit, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 620
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single bright golden yellow 부시 로즈 bloom, with cluster blooms, bushy growth, multiple flowers, compact habit, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single bright golden yellow 부시 로즈 bloom, with cluster blooms, bushy growth, multiple flowers, compact habit, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 602
+      },
+      "difference": 18
+    },
+    {
+      "rose_type": "그랜디플로라 로즈",
+      "color": "옐로우",
+      "scientific_name": "Rosa grandiflora",
+      "description": "하이브리드 티와 플로리분다의 교배종",
+      "characteristics": "large clusters, tall stems, hybrid vigor, abundant blooms",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single bright golden yellow 그랜디플로라 로즈 (Rosa grandiflora) bloom, with large clusters, tall stems, hybrid vigor, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single bright golden yellow 그랜디플로라 로즈 (Rosa grandiflora) bloom, with large clusters, tall stems, hybrid vigor, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 621
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single bright golden yellow 그랜디플로라 로즈 bloom, with large clusters, tall stems, hybrid vigor, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single bright golden yellow 그랜디플로라 로즈 bloom, with large clusters, tall stems, hybrid vigor, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 602
+      },
+      "difference": 19
+    },
+    {
+      "rose_type": "폴리안타 로즈",
+      "color": "옐로우",
+      "scientific_name": "Rosa polyantha",
+      "description": "작은 꽃이 많이 피는 다화성 장미",
+      "characteristics": "small blooms, profuse flowering, cluster form, continuous bloom",
+      "prompt_with_scientific": {
+        "prompt": "a fine art portrait of a single bright golden yellow 폴리안타 로즈 (Rosa polyantha) bloom, with small blooms, profuse flowering, cluster form, continuous bloom, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single bright golden yellow 폴리안타 로즈 (Rosa polyantha) bloom, with small blooms, profuse flowering, cluster form, continuous bloom, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 623
+      },
+      "prompt_without_scientific": {
+        "prompt": "a fine art portrait of a single bright golden yellow 폴리안타 로즈 bloom, with small blooms, profuse flowering, cluster form, continuous bloom, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+        "midjourney": "/imagine prompt: a fine art portrait of a single bright golden yellow 폴리안타 로즈 bloom, with small blooms, profuse flowering, cluster form, continuous bloom, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+        "length": 606
+      },
+      "difference": 17
+    }
+  ],
+  "sample_prompts": [
+    {
+      "rose_type": "하이브리드 티 로즈",
+      "color": "레드",
+      "scientific_name": "Rosa hybrida",
+      "prompt_with": "a fine art portrait of a single deep crimson red 하이브리드 티 로즈 (Rosa hybrida) bloom, with large blooms, long stems, classic form, hybrid tea characteristics, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+      "prompt_without": "a fine art portrait of a single deep crimson red 하이브리드 티 로즈 bloom, with large blooms, long stems, classic form, hybrid tea characteristics, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+      "midjourney_with": "/imagine prompt: a fine art portrait of a single deep crimson red 하이브리드 티 로즈 (Rosa hybrida) bloom, with large blooms, long stems, classic form, hybrid tea characteristics, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+      "midjourney_without": "/imagine prompt: a fine art portrait of a single deep crimson red 하이브리드 티 로즈 bloom, with large blooms, long stems, classic form, hybrid tea characteristics, symbolizing eternal love, passion, beauty, romance, evoking passionate, romantic, dramatic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750"
+    },
+    {
+      "rose_type": "잉글리시 로즈",
+      "color": "핑크",
+      "scientific_name": "Rosa 'English Rose'",
+      "prompt_with": "a fine art portrait of a single soft romantic pink 잉글리시 로즈 (Rosa 'English Rose') bloom, with romantic form, full blooms, old-fashioned charm, cup-shaped, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+      "prompt_without": "a fine art portrait of a single soft romantic pink 잉글리시 로즈 bloom, with romantic form, full blooms, old-fashioned charm, cup-shaped, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+      "midjourney_with": "/imagine prompt: a fine art portrait of a single soft romantic pink 잉글리시 로즈 (Rosa 'English Rose') bloom, with romantic form, full blooms, old-fashioned charm, cup-shaped, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+      "midjourney_without": "/imagine prompt: a fine art portrait of a single soft romantic pink 잉글리시 로즈 bloom, with romantic form, full blooms, old-fashioned charm, cup-shaped, symbolizing eternal love, passion, beauty, romance, evoking romantic, gentle, sweet atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750"
+    },
+    {
+      "rose_type": "피에르 드 롱사르",
+      "color": "크림핑크",
+      "scientific_name": "Rosa 'Pierre de Ronsard'",
+      "prompt_with": "a fine art portrait of a single cream to pink gradient 피에르 드 롱사르 (Rosa 'Pierre de Ronsard') bloom, with climbing habit, cream to pink gradient, romantic old rose form, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+      "prompt_without": "a fine art portrait of a single cream to pink gradient 피에르 드 롱사르 bloom, with climbing habit, cream to pink gradient, romantic old rose form, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+      "midjourney_with": "/imagine prompt: a fine art portrait of a single cream to pink gradient 피에르 드 롱사르 (Rosa 'Pierre de Ronsard') bloom, with climbing habit, cream to pink gradient, romantic old rose form, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+      "midjourney_without": "/imagine prompt: a fine art portrait of a single cream to pink gradient 피에르 드 롱사르 bloom, with climbing habit, cream to pink gradient, romantic old rose form, abundant blooms, symbolizing eternal love, passion, beauty, romance, evoking romantic, elegant, dreamy atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft cream mist and pale pink blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750"
+    },
+    {
+      "rose_type": "미니어처 로즈",
+      "color": "화이트",
+      "scientific_name": "Rosa chinensis 'Minima'",
+      "prompt_with": "a fine art portrait of a single pure white 미니어처 로즈 (Rosa chinensis 'Minima') bloom, with small blooms, compact form, delicate petals, miniature size, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+      "prompt_without": "a fine art portrait of a single pure white 미니어처 로즈 bloom, with small blooms, compact form, delicate petals, miniature size, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+      "midjourney_with": "/imagine prompt: a fine art portrait of a single pure white 미니어처 로즈 (Rosa chinensis 'Minima') bloom, with small blooms, compact form, delicate petals, miniature size, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+      "midjourney_without": "/imagine prompt: a fine art portrait of a single pure white 미니어처 로즈 bloom, with small blooms, compact form, delicate petals, miniature size, symbolizing eternal love, passion, beauty, romance, evoking pure, elegant, serene atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750"
+    },
+    {
+      "rose_type": "와일드 로즈",
+      "color": "옐로우",
+      "scientific_name": "Rosa canina",
+      "prompt_with": "a fine art portrait of a single bright golden yellow 와일드 로즈 (Rosa canina) bloom, with simple form, natural beauty, wild appearance, single petals, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+      "prompt_without": "a fine art portrait of a single bright golden yellow 와일드 로즈 bloom, with simple form, natural beauty, wild appearance, single petals, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+      "midjourney_with": "/imagine prompt: a fine art portrait of a single bright golden yellow 와일드 로즈 (Rosa canina) bloom, with simple form, natural beauty, wild appearance, single petals, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+      "midjourney_without": "/imagine prompt: a fine art portrait of a single bright golden yellow 와일드 로즈 bloom, with simple form, natural beauty, wild appearance, single petals, symbolizing eternal love, passion, beauty, romance, evoking cheerful, bright, optimistic atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750"
+    }
+  ]
+}

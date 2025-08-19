@@ -1,0 +1,1829 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlainFlowerClub FLOWER 관리자</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 0;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+        }
+
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .tab-button {
+            padding: 18px 35px;
+            margin: 0 8px;
+            border: none;
+            background: transparent;
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .tab-button:hover::before {
+            left: 100%;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .tab-button:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+            color: #2c3e50;
+            transform: translateY(-1px);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .stats-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            transform: rotate(45deg);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .stat-card:hover::before {
+            transform: rotate(45deg) scale(1.2);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section h2::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+        }
+
+        .upload-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .upload-form {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px dashed #dee2e6;
+        }
+
+        .upload-form h3 {
+            color: #495057;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 15px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #43a3f5 0%, #00e6f2 100%);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #f9658a 0%, #fed030 100%);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            color: #2c3e50;
+        }
+
+        .btn-warning:hover {
+            background: linear-gradient(135deg, #ffe4c4 0%, #fbb08f 100%);
+        }
+
+        .upload-hint {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .preview-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .preview-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .preview-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .preview-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .preview-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .preview-card:hover img {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .preview-card .card-content {
+            padding: 20px;
+        }
+
+        .preview-card h4 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .preview-card p {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .preview-card .flower-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .preview-card .flower-color {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .delete-btn:hover {
+            background: linear-gradient(135deg, #f9658a 0%, #fed030 100%);
+            transform: scale(1.15) rotate(90deg);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .status-message {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            z-index: 1000;
+        }
+
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #007bff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 꽃 사전 카드 스타일 */
+        .dictionary-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .dictionary-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .dictionary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f8f9fa;
+        }
+
+        .dictionary-header h3 {
+            margin: 0;
+            color: #2c3e50;
+            font-size: 1.2rem;
+        }
+
+        .dictionary-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+
+        .dictionary-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .dictionary-section {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .dictionary-section h4 {
+            margin: 0 0 10px 0;
+            color: #495057;
+            font-size: 1rem;
+        }
+
+        .dictionary-section p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .dictionary-section strong {
+            color: #495057;
+        }
+
+        .flower-count {
+            background: #e9ecef;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+
+        .dictionary-variant-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 2px solid #f8f9fa;
+        }
+
+        .variant-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .variant-header h3 {
+            margin: 0;
+            color: #2c3e50;
+            font-size: 1.3rem;
+        }
+
+        .variant-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .edit-section {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .edit-section h4 {
+            margin: 0 0 15px 0;
+            color: #495057;
+            font-size: 1.1rem;
+        }
+
+        .edit-field {
+            margin-bottom: 15px;
+        }
+
+        .edit-field label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .edit-field input,
+        .edit-field textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+
+        .edit-field textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        
+        /* 새로운 필드들을 위한 스타일 */
+        .edit-field-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .edit-field-row select {
+            width: 120px;
+            flex-shrink: 0;
+        }
+        
+        .edit-field-row input {
+            flex: 1;
+        }
+        
+        .edit-section h4 {
+            color: #34495e;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+
+        .edit-field input:focus,
+        .edit-field textarea:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+        }
+
+        .edit-actions {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header {
+                padding: 25px 0;
+                margin-bottom: 25px;
+            }
+            
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .tab-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .tab-button {
+                margin: 0;
+                padding: 15px 20px;
+            }
+            
+            .upload-section {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .preview-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 15px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .dictionary-content {
+                grid-template-columns: 1fr;
+            }
+
+            .dictionary-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .btn {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .preview-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .preview-card {
+                margin: 0 10px;
+            }
+            
+            .tab-button {
+                font-size: 1rem;
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>PlainFlowerClub FLOWER 관리자</h1>
+            <p>꽃 이미지 및 캘리그래피 관리 시스템</p>
+        </div>
+
+        <div class="tab-container">
+            <button class="tab-button active" onclick="showTab('flowers')">🌸 꽃 이미지 관리</button>
+            <button class="tab-button" onclick="showTab('calligraphy')">✍️ 캘리그래피 관리</button>
+            <button class="tab-button" onclick="showTab('dictionary')">📚 꽃 사전 관리</button>
+        </div>
+
+        <!-- 꽃 이미지 관리 탭 -->
+        <div id="flowers-tab" class="tab-content active">
+            <div class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="flower-count">0</div>
+                        <div class="stat-label">등록된 꽃 이미지</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="flower-folder-count">0</div>
+                        <div class="stat-label">꽃 폴더 수</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📤 꽃 이미지 업로드</h2>
+                <div class="upload-section">
+                    <div class="upload-form">
+                        <h3>개별 업로드</h3>
+                        <div class="form-group">
+                            <label for="flowerName">꽃 이름:</label>
+                            <select id="flowerName">
+                                <option value="">꽃을 선택하세요</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="flowerImage">이미지 파일:</label>
+                            <input type="file" id="flowerImage" accept="image/*">
+                        </div>
+                        <button class="btn btn-primary" onclick="uploadFlower()">개별 업로드</button>
+                    </div>
+                    <div class="upload-form">
+                        <h3>일괄 업로드</h3>
+                        <div class="form-group">
+                            <label for="flowerImages">이미지 파일들:</label>
+                            <input type="file" id="flowerImages" multiple accept="image/*">
+                        </div>
+                        <button class="btn btn-success" onclick="uploadFlowersBatch()">일괄 업로드</button>
+                        <div class="upload-hint">여러 파일을 선택하여 한 번에 업로드할 수 있습니다.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🔄 동기화 및 관리</h2>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <button class="btn btn-warning" onclick="syncFlowers()">🔄 꽃 이미지 동기화</button>
+                    <button class="btn btn-primary" onclick="loadFlowers()">🔄 새로고침</button>
+                    <button class="btn btn-danger" onclick="clearFlowers()">🗑️ 모든 꽃 이미지 삭제</button>
+                </div>
+            </div>
+            
+
+
+            <div class="section">
+                <h2>👀 꽃 이미지 미리보기</h2>
+                <div class="loading" id="flower-loading">
+                    <div class="spinner"></div>
+                    <p>꽃 이미지를 불러오는 중...</p>
+                </div>
+                <div class="preview-grid" id="flower-grid"></div>
+            </div>
+        </div>
+
+        <!-- 캘리그래피 관리 탭 -->
+        <div id="calligraphy-tab" class="tab-content">
+            <div class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="calligraphy-count">0</div>
+                        <div class="stat-label">등록된 캘리그래피</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="calligraphy-flower-count">0</div>
+                        <div class="stat-label">캘리그래피 꽃 종류</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📤 캘리그래피 업로드</h2>
+                <div class="upload-section">
+                    <div class="upload-form">
+                        <h3>개별 업로드</h3>
+                        <div class="form-group">
+                            <label for="calligraphyFlowerName">꽃 이름:</label>
+                            <select id="calligraphyFlowerName">
+                                <option value="">꽃을 선택하세요</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="calligraphyImage">캘리그래피 이미지:</label>
+                            <input type="file" id="calligraphyImage" accept="image/*">
+                        </div>
+                        <button class="btn btn-primary" onclick="uploadCalligraphy()">개별 업로드</button>
+                    </div>
+                    <div class="upload-form">
+                        <h3>일괄 업로드</h3>
+                        <div class="form-group">
+                            <label for="calligraphyImages">캘리그래피 이미지들:</label>
+                            <input type="file" id="calligraphyImages" multiple accept="image/*">
+                        </div>
+                        <button class="btn btn-success" onclick="uploadBatchCalligraphy()">일괄 업로드</button>
+                        <div class="upload-hint">파일명에서 꽃 이름을 자동으로 추출합니다.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🔄 동기화 및 관리</h2>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <button class="btn btn-warning" onclick="syncCalligraphy()">🔄 캘리그래피 동기화</button>
+                    <button class="btn btn-primary" onclick="loadCalligraphy()">🔄 새로고침</button>
+                    <button class="btn btn-danger" onclick="clearDummyCalligraphy()">🗑️ 더미 데이터 삭제</button>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>👀 캘리그래피 미리보기</h2>
+                <div class="loading" id="calligraphy-loading">
+                    <div class="spinner"></div>
+                    <p>캘리그래피를 불러오는 중...</p>
+                </div>
+                <div class="preview-grid" id="calligraphy-grid"></div>
+            </div>
+        </div>
+
+        <!-- 꽃 사전 관리 탭 -->
+        <div id="dictionary-tab" class="tab-content">
+            <div class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="dictionary-count">0</div>
+                        <div class="stat-label">등록된 꽃 사전</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="dictionary-updated">-</div>
+                        <div class="stat-label">마지막 업데이트</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📚 꽃 사전 관리</h2>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <button class="btn btn-success" onclick="autoExpandDictionary()">🔄 꽃 사전 자동 확장</button>
+                    <button class="btn btn-primary" onclick="batchCollectInfo()">📝 일괄 정보 수집</button>
+                    <button class="btn btn-warning" onclick="loadDictionary()">🔄 새로고침</button>
+                </div>
+                <div class="upload-hint">
+                    자동 확장: 등록된 이미지 기준으로 꽃 사전을 자동으로 확장합니다.<br>
+                    일괄 정보 수집: LLM을 통해 모든 꽃의 상세 정보를 수집합니다.
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🔍 꽃 사전 검색</h2>
+                <div class="form-group">
+                    <input type="text" id="dictionary-search" placeholder="꽃 이름이나 키워드로 검색..." style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                </div>
+                <button class="btn btn-primary" onclick="searchDictionary()">🔍 검색</button>
+            </div>
+
+            <div class="section">
+                <h2>📖 꽃 사전 목록</h2>
+                <div class="loading" id="dictionary-loading">
+                    <div class="spinner"></div>
+                    <p>꽃 사전을 불러오는 중...</p>
+                </div>
+                <div id="dictionary-list"></div>
+                <div id="dictionary-detail" style="display: none;">
+                    <button class="btn btn-secondary" onclick="backToDictionaryList()">← 목록으로 돌아가기</button>
+                    <div id="dictionary-detail-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 탭 전환
+        function showTab(tabName) {
+            // 모든 탭 버튼 비활성화
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // 모든 탭 콘텐츠 숨기기
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // 선택된 탭 활성화
+            event.target.classList.add('active');
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // 해당 탭 데이터 로드
+            if (tabName === 'flowers') {
+                loadFlowers();
+            } else if (tabName === 'calligraphy') {
+                loadCalligraphy();
+            } else if (tabName === 'dictionary') {
+                loadDictionary();
+            }
+        }
+
+        // 상태 메시지 표시
+        function showStatus(message, type = 'info') {
+            const statusDiv = document.createElement('div');
+            statusDiv.className = `status-message status-${type}`;
+            statusDiv.textContent = message;
+            
+            // 기존 상태 메시지 제거
+            document.querySelectorAll('.status-message').forEach(el => el.remove());
+            
+            // 새 상태 메시지 추가 - 더 눈에 띄는 위치로 변경
+            const activeTab = document.querySelector('.tab-content.active');
+            if (activeTab) {
+                activeTab.insertBefore(statusDiv, activeTab.firstChild);
+            } else {
+                document.querySelector('.container').insertBefore(statusDiv, document.querySelector('.tab-container'));
+            }
+            
+            // 5초 후 자동 제거 (더 오래 보이도록)
+            setTimeout(() => {
+                statusDiv.remove();
+            }, 5000);
+        }
+
+        // 로딩 표시
+        function showLoading(type) {
+            document.getElementById(type + '-loading').classList.add('show');
+        }
+
+        function hideLoading(type) {
+            document.getElementById(type + '-loading').classList.remove('show');
+        }
+
+        // 꽃 이름 옵션 로드
+        async function loadFlowerOptions() {
+            try {
+                const response = await fetch('/api/v1/admin/flowers');
+                const data = await response.json();
+                
+                const flowerSelect = document.getElementById('flowerName');
+                const calligraphySelect = document.getElementById('calligraphyFlowerName');
+                
+                // 기존 옵션 제거 (첫 번째 옵션 제외)
+                flowerSelect.innerHTML = '<option value="">꽃을 선택하세요</option>';
+                calligraphySelect.innerHTML = '<option value="">꽃을 선택하세요</option>';
+                
+                // 새 옵션 추가
+                data.forEach(flower => {
+                    const option1 = document.createElement('option');
+                    option1.value = flower.name;
+                    option1.textContent = flower.name;
+                    flowerSelect.appendChild(option1);
+                    
+                    const option2 = document.createElement('option');
+                    option2.value = flower.name;
+                    option2.textContent = flower.name;
+                    calligraphySelect.appendChild(option2);
+                });
+            } catch (error) {
+                console.error('꽃 이름 로드 실패:', error);
+                showStatus('꽃 이름을 불러오는데 실패했습니다.', 'error');
+            }
+        }
+
+        // 꽃 이미지 관리
+        async function loadFlowers() {
+            showLoading('flower');
+            try {
+                const response = await fetch('/api/v1/admin/flowers');
+                const flowers = await response.json();
+                
+                document.getElementById('flower-count').textContent = flowers.length;
+                document.getElementById('flower-folder-count').textContent = flowers.length;
+                
+                const grid = document.getElementById('flower-grid');
+                grid.innerHTML = '';
+                
+                flowers.forEach(flower => {
+                    const card = document.createElement('div');
+                    card.className = 'preview-card';
+                    card.innerHTML = `
+                        <img src="/images/${flower.folder}/${flower.default_color}.webp" alt="${flower.name}" onerror="this.src='/images/placeholder.webp'">
+                        <div class="card-content">
+                            <h4>🌸 ${flower.name}</h4>
+                            <p><strong>📁 폴더:</strong> ${flower.folder}</p>
+                            <div class="flower-info">
+                                <span class="flower-color">🎨 ${flower.default_color}</span>
+                                <span style="font-size: 0.8rem; color: #6c757d;">${flower.colors ? flower.colors.length : 1}개 색상</span>
+                            </div>
+                        </div>
+                        <button class="delete-btn" onclick="deleteFlower('${flower.name}')" title="삭제">🗑️</button>
+                    `;
+                    grid.appendChild(card);
+                });
+            } catch (error) {
+                console.error('꽃 이미지 로드 실패:', error);
+                showStatus('꽃 이미지를 불러오는데 실패했습니다.', 'error');
+            } finally {
+                hideLoading('flower');
+            }
+        }
+
+        async function uploadFlower() {
+            const flowerName = document.getElementById('flowerName').value;
+            const fileInput = document.getElementById('flowerImage');
+            
+            if (!flowerName || !fileInput.files[0]) {
+                showStatus('꽃 이름과 이미지 파일을 선택해주세요.', 'error');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('flower_name', flowerName);
+            formData.append('image', fileInput.files[0]);
+            
+            try {
+                const response = await fetch('/api/v1/admin/flowers/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    showStatus('꽃 이미지 업로드 성공!', 'success');
+                    loadFlowers();
+                    fileInput.value = '';
+                } else {
+                    const error = await response.text();
+                    showStatus(`업로드 실패: ${error}`, 'error');
+                }
+            } catch (error) {
+                console.error('업로드 실패:', error);
+                showStatus('업로드 중 오류가 발생했습니다.', 'error');
+            }
+        }
+
+        async function uploadFlowersBatch() {
+            const fileInput = document.getElementById('flowerImages');
+            
+            if (!fileInput.files.length) {
+                showStatus('업로드할 이미지 파일을 선택해주세요.', 'error');
+                return;
+            }
+            
+            const formData = new FormData();
+            for (let file of fileInput.files) {
+                formData.append('images', file);
+            }
+            
+            try {
+                const response = await fetch('/api/v1/admin/flowers/upload-batch', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    showStatus(`일괄 업로드 완료: ${result.success_count}개 성공, ${result.error_count}개 실패`, 'success');
+                    loadFlowers();
+                    fileInput.value = '';
+                } else {
+                    const error = await response.text();
+                    showStatus(`업로드 실패: ${error}`, 'error');
+                }
+            } catch (error) {
+                console.error('일괄 업로드 실패:', error);
+                showStatus('일괄 업로드 중 오류가 발생했습니다.', 'error');
+            }
+        }
+
+        async function deleteFlower(flowerName) {
+            if (!confirm(`"${flowerName}" 꽃 이미지를 삭제하시겠습니까?`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/v1/admin/flowers/${encodeURIComponent(flowerName)}`, {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    showStatus(`${flowerName} 삭제 완료!`, 'success');
+                    loadFlowers();
+                } else {
+                    const error = await response.text();
+                    showStatus(`삭제 실패: ${error}`, 'error');
+                }
+            } catch (error) {
+                console.error('삭제 실패:', error);
+                showStatus('삭제 중 오류가 발생했습니다.', 'error');
+            }
+        }
+
+        async function syncFlowers() {
+            try {
+                const response = await fetch('/api/v1/admin/flowers/sync', {
+                    method: 'POST'
+                });
+                
+                if (response.ok) {
+                    showStatus('꽃 이미지 동기화 완료!', 'success');
+                    loadFlowers();
+                } else {
+                    const error = await response.text();
+                    showStatus(`동기화 실패: ${error}`, 'error');
+                }
+            } catch (error) {
+                console.error('동기화 실패:', error);
+                showStatus('동기화 중 오류가 발생했습니다.', 'error');
+            }
+        }
+
+        async function clearFlowers() {
+            if (!confirm('모든 꽃 이미지를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/v1/admin/flowers/clear', {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    showStatus('모든 꽃 이미지 삭제 완료!', 'success');
+                    loadFlowers();
+                } else {
+                    const error = await response.text();
+                    showStatus(`삭제 실패: ${error}`, 'error');
+                }
+            } catch (error) {
+                console.error('삭제 실패:', error);
+                showStatus('삭제 중 오류가 발생했습니다.', 'error');
+            }
+        }
+
+        // 캘리그래피 관리
+        async function loadCalligraphy() {
+            showLoading('calligraphy');
+            try {
+                const response = await fetch('/api/v1/admin/calligraphy/list');
+                const data = await response.json();
+                
+                document.getElementById('calligraphy-count').textContent = data.total_count;
+                document.getElementById('calligraphy-flower-count').textContent = data.flowers.length;
+                
+                const grid = document.getElementById('calligraphy-grid');
+                grid.innerHTML = '';
+                
+                Object.entries(data.files).forEach(([filename, info]) => {
+                    const card = document.createElement('div');
+                    card.className = 'preview-card';
+                    card.innerHTML = `
+                        <img src="/data/calli_images/${filename}" alt="${info.flower_name}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhmOWZhIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzZjNzU3ZCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlPC90ZXh0Pjwvc3ZnPg=='">
+                        <div class="card-content">
+                            <h4>${info.flower_name}</h4>
+                            <p>파일: ${filename}</p>
+                            <p>크기: ${(info.size / 1024).toFixed(1)} KB</p>
+                        </div>
+                        <button class="delete-btn" onclick="deleteCalligraphy('${info.flower_name}')" title="삭제">×</button>
+                    `;
+                    grid.appendChild(card);
+                });
+            } catch (error) {
+                console.error('캘리그래피 로드 실패:', error);
+                showStatus('캘리그래피를 불러오는데 실패했습니다.', 'error');
+            } finally {
+                hideLoading('calligraphy');
+            }
+        }
+
+        async function uploadCalligraphy() {
+            const flowerName = document.getElementById('calligraphyFlowerName').value;
+            const fileInput = document.getElementById('calligraphyImage');
+            
+            if (!flowerName || !fileInput.files[0]) {
+                showStatus('꽃 이름과 캘리그래피 이미지를 선택해주세요.', 'error');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('flower_name', flowerName);
+            formData.append('file', fileInput.files[0]);
+            
+            try {
+                const response = await fetch('/api/v1/admin/calligraphy/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    showStatus('캘리그래피 업로드 성공!', 'success');
+                    loadCalligraphy();
+                    fileInput.value = '';
+                } else {
+                    const error = await response.text();
+                    showStatus(`업로드 실패: ${error}`, 'error');
+                }
+            } catch (error) {
+                console.error('업로드 실패:', error);
+                showStatus('업로드 중 오류가 발생했습니다.', 'error');
+            }
+        }
+
+        async function uploadBatchCalligraphy() {
+            const fileInput = document.getElementById('calligraphyImages');
+            
+            if (!fileInput.files.length) {
+                showStatus('업로드할 캘리그래피 이미지를 선택해주세요.', 'error');
+                return;
+            }
+            
+            const formData = new FormData();
+            for (let file of fileInput.files) {
+                formData.append('files', file);
+            }
+            
+            try {
+                const response = await fetch('/api/v1/admin/calligraphy/upload-batch', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    showStatus(`일괄 업로드 완료: ${result.data.successful.length}개 성공, ${result.data.errors.length}개 실패`, 'success');
+                    loadCalligraphy();
+                    fileInput.value = '';
+                } else {
+                    const error = await response.text();
+                    showStatus(`업로드 실패: ${error}`, 'error');
+                }
+            } catch (error) {
+                console.error('일괄 업로드 실패:', error);
+                showStatus('일괄 업로드 중 오류가 발생했습니다.', 'error');
+            }
+        }
+
+        async function deleteCalligraphy(flowerName) {
+            if (!confirm(`"${flowerName}" 캘리그래피를 삭제하시겠습니까?`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/v1/admin/calligraphy/${encodeURIComponent(flowerName)}`, {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    showStatus(`${flowerName} 캘리그래피 삭제 완료!`, 'success');
+                    loadCalligraphy();
+                } else {
+                    const error = await response.text();
+                    showStatus(`삭제 실패: ${error}`, 'error');
+                }
+            } catch (error) {
+                console.error('삭제 실패:', error);
+                showStatus('삭제 중 오류가 발생했습니다.', 'error');
+            }
+        }
+
+        async function syncCalligraphy() {
+            try {
+                const response = await fetch('/api/v1/admin/calligraphy/sync', {
+                    method: 'POST'
+                });
+                
+                if (response.ok) {
+                    showStatus('캘리그래피 동기화 완료!', 'success');
+                    loadCalligraphy();
+                } else {
+                    const error = await response.text();
+                    showStatus(`동기화 실패: ${error}`, 'error');
+                }
+            } catch (error) {
+                console.error('동기화 실패:', error);
+                showStatus('동기화 중 오류가 발생했습니다.', 'error');
+            }
+        }
+
+        async function clearDummyCalligraphy() {
+            if (!confirm('더미 캘리그래피 데이터를 모두 삭제하시겠습니까?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/v1/admin/calligraphy/dummy/clear', {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    showStatus('더미 캘리그래피 데이터 삭제 완료!', 'success');
+                    loadCalligraphy();
+                } else {
+                    const error = await response.text();
+                    showStatus(`삭제 실패: ${error}`, 'error');
+                }
+            } catch (error) {
+                console.error('삭제 실패:', error);
+                showStatus('삭제 중 오류가 발생했습니다.', 'error');
+            }
+        }
+
+        async function autoExpandDictionary() {
+            if (!confirm('등록된 이미지 기준으로 꽃 사전을 자동 확장하시겠습니까?')) {
+                return;
+            }
+            
+            showLoading('꽃 사전 자동 확장 중...');
+            
+            try {
+                const response = await fetch('/api/v1/admin/dictionary/auto-expand', {
+                    method: 'POST'
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    showStatus('꽃 사전 자동 확장 완료!', 'success');
+                    console.log('확장 결과:', result.output);
+                } else {
+                    const error = await response.text();
+                    showStatus(`자동 확장 실패: ${error}`, 'error');
+                }
+            } catch (error) {
+                console.error('자동 확장 실패:', error);
+                showStatus('자동 확장 중 오류가 발생했습니다.', 'error');
+            }
+        }
+
+        async function batchCollectInfo() {
+            if (!confirm('LLM을 통해 모든 꽃의 상세 정보를 수집하시겠습니까? (시간이 오래 걸릴 수 있습니다)')) {
+                return;
+            }
+            
+            showLoading('꽃 정보 일괄 수집 중...');
+            
+            try {
+                const response = await fetch('/api/v1/admin/dictionary/batch-collect', {
+                    method: 'POST'
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    showStatus('꽃 정보 일괄 수집 완료!', 'success');
+                    console.log('수집 결과:', result);
+                } else {
+                    const error = await response.text();
+                    showStatus(`일괄 수집 실패: ${error}`, 'error');
+                }
+            } catch (error) {
+                console.error('일괄 수집 실패:', error);
+                showStatus('일괄 수집 중 오류가 발생했습니다.', 'error');
+            }
+        }
+
+        // 꽃 사전 관리
+        async function loadDictionary() {
+            showLoading('dictionary');
+            try {
+                const response = await fetch('/api/v1/admin/dictionary/flowers');
+                const flowers = await response.json();
+                
+                document.getElementById('dictionary-count').textContent = flowers.length;
+                
+                const list = document.getElementById('dictionary-list');
+                list.innerHTML = '';
+                
+                // 꽃별로 그룹화
+                const flowerGroups = {};
+                flowers.forEach(flower => {
+                    const key = flower.korean_name;
+                    if (!flowerGroups[key]) {
+                        flowerGroups[key] = [];
+                    }
+                    flowerGroups[key].push(flower);
+                });
+                
+                // 꽃별로 카드 생성
+                Object.keys(flowerGroups).forEach(flowerName => {
+                    const card = document.createElement('div');
+                    card.className = 'dictionary-card';
+                    
+                    const colors = flowerGroups[flowerName].map(f => f.color).join(', ');
+                    const count = flowerGroups[flowerName].length;
+                    
+                    card.innerHTML = `
+                        <div class="dictionary-header">
+                            <h3>${flowerName} (${colors})</h3>
+                            <div class="dictionary-actions">
+                                <span class="flower-count">${count}개 색상</span>
+                                <button class="btn btn-sm btn-primary" onclick="viewDictionaryDetail('${flowerName}')">👁️ 상세보기</button>
+                            </div>
+                        </div>
+                    `;
+                    list.appendChild(card);
+                });
+                
+                // 메타데이터 업데이트
+                const metaResponse = await fetch('/api/v1/admin/dictionary/metadata');
+                const meta = await metaResponse.json();
+                document.getElementById('dictionary-updated').textContent = new Date(meta.last_updated).toLocaleString();
+                
+            } catch (error) {
+                console.error('꽃 사전 로드 실패:', error);
+                showStatus('꽃 사전을 불러오는데 실패했습니다.', 'error');
+            } finally {
+                hideLoading('dictionary');
+            }
+        }
+
+        async function searchDictionary() {
+            const query = document.getElementById('dictionary-search').value;
+            if (!query.trim()) {
+                loadDictionary();
+                return;
+            }
+            
+            showLoading('dictionary');
+            try {
+                const response = await fetch('/api/v1/admin/dictionary/search', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ query: query })
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    const list = document.getElementById('dictionary-list');
+                    list.innerHTML = '';
+                    
+                    if (result && result.length > 0) {
+                        // 검색 결과도 꽃별로 그룹화
+                        const flowerGroups = {};
+                        result.forEach(flower => {
+                            const key = flower.korean_name;
+                            if (!flowerGroups[key]) {
+                                flowerGroups[key] = [];
+                            }
+                            flowerGroups[key].push(flower);
+                        });
+                        
+                        Object.keys(flowerGroups).forEach(flowerName => {
+                            const card = document.createElement('div');
+                            card.className = 'dictionary-card';
+                            
+                            const colors = flowerGroups[flowerName].map(f => f.color).join(', ');
+                            const count = flowerGroups[flowerName].length;
+                            
+                            card.innerHTML = `
+                                <div class="dictionary-header">
+                                    <h3>${flowerName} (${colors})</h3>
+                                    <div class="dictionary-actions">
+                                        <span class="flower-count">${count}개 색상</span>
+                                        <button class="btn btn-sm btn-primary" onclick="viewDictionaryDetail('${flowerName}')">👁️ 상세보기</button>
+                                    </div>
+                                </div>
+                            `;
+                            list.appendChild(card);
+                        });
+                    } else {
+                        list.innerHTML = '<p>검색 결과가 없습니다.</p>';
+                    }
+                } else {
+                    const error = await response.text();
+                    showStatus(`검색 실패: ${error}`, 'error');
+                }
+            } catch (error) {
+                console.error('검색 실패:', error);
+                showStatus('검색 중 오류가 발생했습니다.', 'error');
+            } finally {
+                hideLoading('dictionary');
+            }
+        }
+
+        async function viewDictionaryDetail(flowerName) {
+            showLoading('dictionary');
+            try {
+                const response = await fetch('/api/v1/admin/dictionary/flowers');
+                const flowers = await response.json();
+                
+                const flowerVariants = flowers.filter(f => f.korean_name === flowerName);
+                
+                document.getElementById('dictionary-list').style.display = 'none';
+                document.getElementById('dictionary-detail').style.display = 'block';
+                
+                const detailContent = document.getElementById('dictionary-detail-content');
+                detailContent.innerHTML = `<h2>${flowerName} 상세 정보</h2>`;
+                
+                flowerVariants.forEach(flower => {
+                    const variantCard = document.createElement('div');
+                    variantCard.className = 'dictionary-variant-card';
+                    variantCard.innerHTML = `
+                        <div class="variant-header">
+                            <h3>${flower.korean_name} (${flower.color})</h3>
+                            <div class="variant-actions">
+                                <button class="btn btn-sm btn-primary" onclick="editDictionaryVariant('${flower.id}')">✏️ 수정</button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteDictionary('${flower.id}')">🗑️ 삭제</button>
+                            </div>
+                        </div>
+                        <div class="variant-content">
+                            <div class="edit-section">
+                                <h4>🌸 꽃말</h4>
+                                <div class="edit-field">
+                                    <label>주요 꽃말:</label>
+                                    <input type="text" id="primary-${flower.id}" value="${flower.flower_meanings.primary.join(', ')}" placeholder="쉼표로 구분">
+                                </div>
+                                <div class="edit-field">
+                                    <label>보조 꽃말:</label>
+                                    <input type="text" id="secondary-${flower.id}" value="${flower.flower_meanings.secondary.join(', ')}" placeholder="쉼표로 구분">
+                                </div>
+                                <div class="edit-field">
+                                    <label>문장형 꽃말:</label>
+                                    <textarea id="phrases-${flower.id}" placeholder="한 줄씩 입력">${flower.flower_meanings.phrases.join('\n')}</textarea>
+                                </div>
+                            </div>
+                            <div class="edit-section">
+                                <h4>🎨 무드</h4>
+                                <div class="edit-field">
+                                    <label>주요 무드:</label>
+                                    <input type="text" id="mood-primary-${flower.id}" value="${flower.moods.primary.join(', ')}" placeholder="쉼표로 구분">
+                                </div>
+                                <div class="edit-field">
+                                    <label>보조 무드:</label>
+                                    <input type="text" id="mood-secondary-${flower.id}" value="${flower.moods.secondary.join(', ')}" placeholder="쉼표로 구분">
+                                </div>
+                            </div>
+                            <div class="edit-section">
+                                <h4>📚 문화적 참조</h4>
+                                <div class="edit-field">
+                                    <label>영화:</label>
+                                    <textarea id="movies-${flower.id}" placeholder="한 줄씩 입력">${flower.cultural_references.movies.join('\n')}</textarea>
+                                </div>
+                                <div class="edit-field">
+                                    <label>문학:</label>
+                                    <textarea id="literature-${flower.id}" placeholder="한 줄씩 입력">${flower.cultural_references.literature.join('\n')}</textarea>
+                                </div>
+                            </div>
+                            <div class="edit-section">
+                                <h4>🎯 상황별 사용 빈도</h4>
+                                <div class="edit-field">
+                                    <label>졸업식:</label>
+                                    <div class="edit-field-row">
+                                        <select id="graduation-${flower.id}">
+                                            <option value="high" ${flower.usage_contexts?.graduation?.frequency === 'high' ? 'selected' : ''}>높음</option>
+                                            <option value="medium" ${flower.usage_contexts?.graduation?.frequency === 'medium' ? 'selected' : ''}>보통</option>
+                                            <option value="low" ${flower.usage_contexts?.graduation?.frequency === 'low' ? 'selected' : ''}>낮음</option>
+                                        </select>
+                                        <input type="text" id="graduation-desc-${flower.id}" value="${flower.usage_contexts?.graduation?.description || ''}" placeholder="설명">
+                                    </div>
+                                </div>
+                                <div class="edit-field">
+                                    <label>어버이날:</label>
+                                    <div class="edit-field-row">
+                                        <select id="parents-day-${flower.id}">
+                                            <option value="high" ${flower.usage_contexts?.parents_day?.frequency === 'high' ? 'selected' : ''}>높음</option>
+                                            <option value="medium" ${flower.usage_contexts?.parents_day?.frequency === 'medium' ? 'selected' : ''}>보통</option>
+                                            <option value="low" ${flower.usage_contexts?.parents_day?.frequency === 'low' ? 'selected' : ''}>낮음</option>
+                                        </select>
+                                        <input type="text" id="parents-day-desc-${flower.id}" value="${flower.usage_contexts?.parents_day?.description || ''}" placeholder="설명">
+                                    </div>
+                                </div>
+                                <div class="edit-field">
+                                    <label>웨딩:</label>
+                                    <select id="wedding-${flower.id}">
+                                        <option value="high" ${flower.usage_contexts?.wedding?.frequency === 'high' ? 'selected' : ''}>높음</option>
+                                        <option value="medium" ${flower.usage_contexts?.wedding?.frequency === 'medium' ? 'selected' : ''}>보통</option>
+                                        <option value="low" ${flower.usage_contexts?.wedding?.frequency === 'low' ? 'selected' : ''}>낮음</option>
+                                    </select>
+                                    <input type="text" id="wedding-desc-${flower.id}" value="${flower.usage_contexts?.wedding?.description || ''}" placeholder="설명">
+                                </div>
+                                <div class="edit-field">
+                                    <label>격려:</label>
+                                    <select id="encouragement-${flower.id}">
+                                        <option value="high" ${flower.usage_contexts?.encouragement?.frequency === 'high' ? 'selected' : ''}>높음</option>
+                                        <option value="medium" ${flower.usage_contexts?.encouragement?.frequency === 'medium' ? 'selected' : ''}>보통</option>
+                                        <option value="low" ${flower.usage_contexts?.encouragement?.frequency === 'low' ? 'selected' : ''}>낮음</option>
+                                    </select>
+                                    <input type="text" id="encouragement-desc-${flower.id}" value="${flower.usage_contexts?.encouragement?.description || ''}" placeholder="설명">
+                                </div>
+                            </div>
+                            <div class="edit-section">
+                                <h4>👥 관계별 적합성</h4>
+                                <div class="edit-field">
+                                    <label>선생님-학생:</label>
+                                    <select id="teacher-student-${flower.id}">
+                                        <option value="excellent" ${flower.relationship_suitability?.teacher_student?.suitability === 'excellent' ? 'selected' : ''}>매우 적합</option>
+                                        <option value="good" ${flower.relationship_suitability?.teacher_student?.suitability === 'good' ? 'selected' : ''}>적합</option>
+                                        <option value="neutral" ${flower.relationship_suitability?.teacher_student?.suitability === 'neutral' ? 'selected' : ''}>보통</option>
+                                        <option value="poor" ${flower.relationship_suitability?.teacher_student?.suitability === 'poor' ? 'selected' : ''}>부적합</option>
+                                    </select>
+                                    <input type="text" id="teacher-student-context-${flower.id}" value="${flower.relationship_suitability?.teacher_student?.context || ''}" placeholder="이유">
+                                </div>
+                                <div class="edit-field">
+                                    <label>부모-자식:</label>
+                                    <select id="parent-child-${flower.id}">
+                                        <option value="excellent" ${flower.relationship_suitability?.parent_child?.suitability === 'excellent' ? 'selected' : ''}>매우 적합</option>
+                                        <option value="good" ${flower.relationship_suitability?.parent_child?.suitability === 'good' ? 'selected' : ''}>적합</option>
+                                        <option value="neutral" ${flower.relationship_suitability?.parent_child?.suitability === 'neutral' ? 'selected' : ''}>보통</option>
+                                        <option value="poor" ${flower.relationship_suitability?.parent_child?.suitability === 'poor' ? 'selected' : ''}>부적합</option>
+                                    </select>
+                                    <input type="text" id="parent-child-context-${flower.id}" value="${flower.relationship_suitability?.parent_child?.context || ''}" placeholder="이유">
+                                </div>
+                                <div class="edit-field">
+                                    <label>연인:</label>
+                                    <select id="romantic-${flower.id}">
+                                        <option value="excellent" ${flower.relationship_suitability?.romantic?.suitability === 'excellent' ? 'selected' : ''}>매우 적합</option>
+                                        <option value="good" ${flower.relationship_suitability?.romantic?.suitability === 'good' ? 'selected' : ''}>적합</option>
+                                        <option value="neutral" ${flower.relationship_suitability?.romantic?.suitability === 'neutral' ? 'selected' : ''}>보통</option>
+                                        <option value="poor" ${flower.relationship_suitability?.romantic?.suitability === 'poor' ? 'selected' : ''}>부적합</option>
+                                    </select>
+                                    <input type="text" id="romantic-context-${flower.id}" value="${flower.relationship_suitability?.romantic?.context || ''}" placeholder="이유">
+                                </div>
+                            </div>
+                            <div class="edit-section">
+                                <h4>🌱 계절별 이벤트</h4>
+                                <div class="edit-field">
+                                    <label>계절별 주요 이벤트:</label>
+                                    <textarea id="seasonal-events-${flower.id}" placeholder="예: 봄 졸업식, 가을 입학식">${flower.seasonal_events?.join('\n') || ''}</textarea>
+                                </div>
+                            </div>
+                            <div class="edit-actions">
+                                <button class="btn btn-success" onclick="saveDictionaryVariant('${flower.id}')">💾 저장</button>
+                            </div>
+                        </div>
+                    `;
+                    detailContent.appendChild(variantCard);
+                });
+                
+            } catch (error) {
+                console.error('상세 정보 로드 실패:', error);
+                showStatus('상세 정보를 불러오는데 실패했습니다.', 'error');
+            } finally {
+                hideLoading('dictionary');
+            }
+        }
+
+        function backToDictionaryList() {
+            document.getElementById('dictionary-list').style.display = 'block';
+            document.getElementById('dictionary-detail').style.display = 'none';
+        }
+
+        async function editDictionaryVariant(flowerId) {
+            // 상세보기에서 수정 모드로 전환 (이미 구현됨)
+            showStatus('수정 모드입니다. 각 필드를 편집하고 저장 버튼을 클릭하세요.', 'info');
+        }
+
+        async function saveDictionaryVariant(flowerId) {
+            showLoading('dictionary');
+            try {
+                const primaryMeanings = document.getElementById(`primary-${flowerId}`).value.split(',').map(s => s.trim()).filter(s => s);
+                const secondaryMeanings = document.getElementById(`secondary-${flowerId}`).value.split(',').map(s => s.trim()).filter(s => s);
+                const phrases = document.getElementById(`phrases-${flowerId}`).value.split('\n').map(s => s.trim()).filter(s => s);
+                const moodPrimary = document.getElementById(`mood-primary-${flowerId}`).value.split(',').map(s => s.trim()).filter(s => s);
+                const moodSecondary = document.getElementById(`mood-secondary-${flowerId}`).value.split(',').map(s => s.trim()).filter(s => s);
+                const movies = document.getElementById(`movies-${flowerId}`).value.split('\n').map(s => s.trim()).filter(s => s);
+                const literature = document.getElementById(`literature-${flowerId}`).value.split('\n').map(s => s.trim()).filter(s => s);
+                
+                // 새로운 필드들
+                const graduationFreq = document.getElementById(`graduation-${flowerId}`).value;
+                const graduationDesc = document.getElementById(`graduation-desc-${flowerId}`).value;
+                const parentsDayFreq = document.getElementById(`parents-day-${flowerId}`).value;
+                const parentsDayDesc = document.getElementById(`parents-day-desc-${flowerId}`).value;
+                const weddingFreq = document.getElementById(`wedding-${flowerId}`).value;
+                const weddingDesc = document.getElementById(`wedding-desc-${flowerId}`).value;
+                const encouragementFreq = document.getElementById(`encouragement-${flowerId}`).value;
+                const encouragementDesc = document.getElementById(`encouragement-desc-${flowerId}`).value;
+                
+                const teacherStudentSuit = document.getElementById(`teacher-student-${flowerId}`).value;
+                const teacherStudentContext = document.getElementById(`teacher-student-context-${flowerId}`).value;
+                const parentChildSuit = document.getElementById(`parent-child-${flowerId}`).value;
+                const parentChildContext = document.getElementById(`parent-child-context-${flowerId}`).value;
+                const romanticSuit = document.getElementById(`romantic-${flowerId}`).value;
+                const romanticContext = document.getElementById(`romantic-context-${flowerId}`).value;
+                
+                const seasonalEvents = document.getElementById(`seasonal-events-${flowerId}`).value.split('\n').map(s => s.trim()).filter(s => s);
+
+                const response = await fetch(`/api/v1/admin/dictionary/flowers/${encodeURIComponent(flowerId)}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        flower_id: flowerId,
+                        update_fields: {
+                            "flower_meanings.primary": primaryMeanings,
+                            "flower_meanings.secondary": secondaryMeanings,
+                            "flower_meanings.phrases": phrases,
+                            "moods.primary": moodPrimary,
+                            "moods.secondary": moodSecondary,
+                            "cultural_references.movies": movies,
+                            "cultural_references.literature": literature,
+                            
+                            // 새로운 필드들
+                            "usage_contexts.graduation": { frequency: graduationFreq, description: graduationDesc },
+                            "usage_contexts.parents_day": { frequency: parentsDayFreq, description: parentsDayDesc },
+                            "usage_contexts.wedding": { frequency: weddingFreq, description: weddingDesc },
+                            "usage_contexts.encouragement": { frequency: encouragementFreq, description: encouragementDesc },
+                            
+                            "relationship_suitability.teacher_student": { suitability: teacherStudentSuit, context: teacherStudentContext },
+                            "relationship_suitability.parent_child": { suitability: parentChildSuit, context: parentChildContext },
+                            "relationship_suitability.romantic": { suitability: romanticSuit, context: romanticContext },
+                            
+                            "seasonal_events": seasonalEvents
+                        }
+                    })
+                });
+                
+                if (response.ok) {
+                    showStatus('꽃 사전 수정 완료!', 'success');
+                    // 현재 상세보기 화면을 새로고침
+                    const currentFlowerName = document.querySelector('#dictionary-detail-content h2').textContent.replace(' 상세 정보', '');
+                    await viewDictionaryDetail(currentFlowerName);
+                } else {
+                    const error = await response.text();
+                    showStatus(`수정 실패: ${error}`, 'error');
+                }
+                            } catch (error) {
+                    console.error('수정 실패:', error);
+                    showStatus('수정 중 오류가 발생했습니다.', 'error');
+                } finally {
+                    hideLoading('dictionary');
+                }
+        }
+
+        async function deleteDictionary(flowerId) {
+            if (!confirm(`"${flowerId}" 꽃 사전을 삭제하시겠습니까?`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/v1/admin/dictionary/flowers/${encodeURIComponent(flowerId)}`, {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    showStatus(`${flowerId} 꽃 사전 삭제 완료!`, 'success');
+                    loadDictionary();
+                } else {
+                    const error = await response.text();
+                    showStatus(`삭제 실패: ${error}`, 'error');
+                }
+            } catch (error) {
+                console.error('삭제 실패:', error);
+                showStatus('삭제 중 오류가 발생했습니다.', 'error');
+            }
+        }
+
+        // 페이지 로드 시 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            loadFlowerOptions();
+            loadFlowers();
+        });
+    </script>
+</body>
+</html>

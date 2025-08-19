@@ -1,0 +1,28 @@
+{
+  "test_flower": {
+    "name": "장미",
+    "scientific_name": "Rosa hybrida",
+    "color": "레드",
+    "color_english": "deep crimson red",
+    "traits": {
+      "visual_traits": "velvety petals, deep rich colors, classic romantic form, elegant curves",
+      "symbolism": "eternal love, passion, beauty, romance",
+      "mood": "romantic, passionate, elegant, timeless",
+      "composition": "dramatic, centered, full bloom emphasis"
+    }
+  },
+  "prompt_without_scientific_name": {
+    "prompt": "a fine art portrait of a single deep crimson red 장미 bloom, symbolizing eternal love, passion, beauty, romance, with velvety petals, deep rich colors, classic romantic form, elegant curves, evoking romantic, passionate, elegant, timeless atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney": "/imagine prompt: a fine art portrait of a single deep crimson red 장미 bloom, symbolizing eternal love, passion, beauty, romance, with velvety petals, deep rich colors, classic romantic form, elegant curves, evoking romantic, passionate, elegant, timeless atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "length": 625
+  },
+  "prompt_with_scientific_name": {
+    "prompt": "a fine art portrait of a single deep crimson red 장미 (Rosa hybrida) bloom, symbolizing eternal love, passion, beauty, romance, with velvety petals, deep rich colors, classic romantic form, elegant curves, evoking romantic, passionate, elegant, timeless atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney": "/imagine prompt: a fine art portrait of a single deep crimson red 장미 (Rosa hybrida) bloom, symbolizing eternal love, passion, beauty, romance, with velvety petals, deep rich colors, classic romantic form, elegant curves, evoking romantic, passionate, elegant, timeless atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "length": 640
+  },
+  "difference": {
+    "length_diff": 15,
+    "scientific_name_added": "Rosa hybrida"
+  }
+}

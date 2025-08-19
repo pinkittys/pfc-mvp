@@ -1,0 +1,11 @@
+# Supabase 설정 예시
+# .env 파일에 다음 내용을 추가하세요:
+
+SUPABASE_URL=https://your-project-id.supabase.co
+SUPABASE_ANON_KEY=your-anon-key-here
+
+# Supabase 프로젝트 설정 방법:
+# 1. https://supabase.com 에서 새 프로젝트 생성
+# 2. Settings > API에서 URL과 anon key 복사
+# 3. SQL Editor에서 supabase_schema.sql 실행
+# 4. 환경변수 설정 후 스크립트 실행

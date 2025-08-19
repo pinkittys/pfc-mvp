@@ -1,0 +1,242 @@
+[
+  {
+    "flower_name": "장미",
+    "color_name": "화이트",
+    "artistic_prompt": "a fine art portrait of a single white 장미 bloom, symbolizing eternal love, passion, beauty, romance, with velvety petals, deep rich colors, classic romantic form, elegant curves, evoking romantic, passionate, elegant, timeless atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single white 장미 bloom, symbolizing eternal love, passion, beauty, romance, with velvety petals, deep rich colors, classic romantic form, elegant curves, evoking romantic, passionate, elegant, timeless atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "장미_화이트.webp",
+    "folder": "장미"
+  },
+  {
+    "flower_name": "장미",
+    "color_name": "옐로우",
+    "artistic_prompt": "a fine art portrait of a single yellow 장미 bloom, symbolizing eternal love, passion, beauty, romance, with velvety petals, deep rich colors, classic romantic form, elegant curves, evoking romantic, passionate, elegant, timeless atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single yellow 장미 bloom, symbolizing eternal love, passion, beauty, romance, with velvety petals, deep rich colors, classic romantic form, elegant curves, evoking romantic, passionate, elegant, timeless atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "장미_옐로우.webp",
+    "folder": "장미"
+  },
+  {
+    "flower_name": "장미",
+    "color_name": "오렌지",
+    "artistic_prompt": "a fine art portrait of a single orange 장미 bloom, symbolizing eternal love, passion, beauty, romance, with velvety petals, deep rich colors, classic romantic form, elegant curves, evoking romantic, passionate, elegant, timeless atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of warm orange mist and golden amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single orange 장미 bloom, symbolizing eternal love, passion, beauty, romance, with velvety petals, deep rich colors, classic romantic form, elegant curves, evoking romantic, passionate, elegant, timeless atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of warm orange mist and golden amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "장미_오렌지.webp",
+    "folder": "장미"
+  },
+  {
+    "flower_name": "장미",
+    "color_name": "퍼플",
+    "artistic_prompt": "a fine art portrait of a single purple 장미 bloom, symbolizing eternal love, passion, beauty, romance, with velvety petals, deep rich colors, classic romantic form, elegant curves, evoking romantic, passionate, elegant, timeless atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of lavender mist and soft violet, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single purple 장미 bloom, symbolizing eternal love, passion, beauty, romance, with velvety petals, deep rich colors, classic romantic form, elegant curves, evoking romantic, passionate, elegant, timeless atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of lavender mist and soft violet, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "장미_퍼플.webp",
+    "folder": "장미"
+  },
+  {
+    "flower_name": "장미",
+    "color_name": "블루",
+    "artistic_prompt": "a fine art portrait of a single blue 장미 bloom, symbolizing eternal love, passion, beauty, romance, with velvety petals, deep rich colors, classic romantic form, elegant curves, evoking romantic, passionate, elegant, timeless atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of pale sky blue and soft slate, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single blue 장미 bloom, symbolizing eternal love, passion, beauty, romance, with velvety petals, deep rich colors, classic romantic form, elegant curves, evoking romantic, passionate, elegant, timeless atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of pale sky blue and soft slate, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "장미_블루.webp",
+    "folder": "장미"
+  },
+  {
+    "flower_name": "장미",
+    "color_name": "블랙",
+    "artistic_prompt": "a fine art portrait of a single 블랙 장미 bloom, symbolizing eternal love, passion, beauty, romance, with velvety petals, deep rich colors, classic romantic form, elegant curves, evoking romantic, passionate, elegant, timeless atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft ivory mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single 블랙 장미 bloom, symbolizing eternal love, passion, beauty, romance, with velvety petals, deep rich colors, classic romantic form, elegant curves, evoking romantic, passionate, elegant, timeless atmosphere, arranged in dramatic, centered, full bloom emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft ivory mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "장미_블랙.webp",
+    "folder": "장미"
+  },
+  {
+    "flower_name": "거베라",
+    "color_name": "빨강",
+    "artistic_prompt": "a fine art portrait of a single red 거베라 bloom, symbolizing pure joy, positive energy, happiness, cheerfulness, with bold circular form, vibrant colors, clean geometric petals, modern simplicity, evoking bright, cheerful, modern, energetic atmosphere, arranged in bold, centered, geometric clarity composition, softly illuminated with diffused glow, background a dreamy gradient of warm red mist and deep scarlet, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single red 거베라 bloom, symbolizing pure joy, positive energy, happiness, cheerfulness, with bold circular form, vibrant colors, clean geometric petals, modern simplicity, evoking bright, cheerful, modern, energetic atmosphere, arranged in bold, centered, geometric clarity composition, softly illuminated with diffused glow, background a dreamy gradient of warm red mist and deep scarlet, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "거베라_빨강.webp",
+    "folder": "거베라"
+  },
+  {
+    "flower_name": "거베라",
+    "color_name": "주황",
+    "artistic_prompt": "a fine art portrait of a single orange 거베라 bloom, symbolizing pure joy, positive energy, happiness, cheerfulness, with bold circular form, vibrant colors, clean geometric petals, modern simplicity, evoking bright, cheerful, modern, energetic atmosphere, arranged in bold, centered, geometric clarity composition, softly illuminated with diffused glow, background a dreamy gradient of soft orange mist and warm peach, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single orange 거베라 bloom, symbolizing pure joy, positive energy, happiness, cheerfulness, with bold circular form, vibrant colors, clean geometric petals, modern simplicity, evoking bright, cheerful, modern, energetic atmosphere, arranged in bold, centered, geometric clarity composition, softly illuminated with diffused glow, background a dreamy gradient of soft orange mist and warm peach, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "거베라_주황.webp",
+    "folder": "거베라"
+  },
+  {
+    "flower_name": "거베라",
+    "color_name": "분홍",
+    "artistic_prompt": "a fine art portrait of a single pink 거베라 bloom, symbolizing pure joy, positive energy, happiness, cheerfulness, with bold circular form, vibrant colors, clean geometric petals, modern simplicity, evoking bright, cheerful, modern, energetic atmosphere, arranged in bold, centered, geometric clarity composition, softly illuminated with diffused glow, background a dreamy gradient of gentle pink mist and soft rose, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single pink 거베라 bloom, symbolizing pure joy, positive energy, happiness, cheerfulness, with bold circular form, vibrant colors, clean geometric petals, modern simplicity, evoking bright, cheerful, modern, energetic atmosphere, arranged in bold, centered, geometric clarity composition, softly illuminated with diffused glow, background a dreamy gradient of gentle pink mist and soft rose, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "거베라_분홍.webp",
+    "folder": "거베라"
+  },
+  {
+    "flower_name": "거베라",
+    "color_name": "흰색",
+    "artistic_prompt": "a fine art portrait of a single white 거베라 bloom, symbolizing pure joy, positive energy, happiness, cheerfulness, with bold circular form, vibrant colors, clean geometric petals, modern simplicity, evoking bright, cheerful, modern, energetic atmosphere, arranged in bold, centered, geometric clarity composition, softly illuminated with diffused glow, background a dreamy gradient of ivory mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single white 거베라 bloom, symbolizing pure joy, positive energy, happiness, cheerfulness, with bold circular form, vibrant colors, clean geometric petals, modern simplicity, evoking bright, cheerful, modern, energetic atmosphere, arranged in bold, centered, geometric clarity composition, softly illuminated with diffused glow, background a dreamy gradient of ivory mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "거베라_흰색.webp",
+    "folder": "거베라"
+  },
+  {
+    "flower_name": "거베라",
+    "color_name": "보라",
+    "artistic_prompt": "a fine art portrait of a single purple 거베라 bloom, symbolizing pure joy, positive energy, happiness, cheerfulness, with bold circular form, vibrant colors, clean geometric petals, modern simplicity, evoking bright, cheerful, modern, energetic atmosphere, arranged in bold, centered, geometric clarity composition, softly illuminated with diffused glow, background a dreamy gradient of gentle purple mist and deep plum, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single purple 거베라 bloom, symbolizing pure joy, positive energy, happiness, cheerfulness, with bold circular form, vibrant colors, clean geometric petals, modern simplicity, evoking bright, cheerful, modern, energetic atmosphere, arranged in bold, centered, geometric clarity composition, softly illuminated with diffused glow, background a dreamy gradient of gentle purple mist and deep plum, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "거베라_보라.webp",
+    "folder": "거베라"
+  },
+  {
+    "flower_name": "거베라",
+    "color_name": "살구",
+    "artistic_prompt": "a fine art portrait of a single 살구 거베라 bloom, symbolizing pure joy, positive energy, happiness, cheerfulness, with bold circular form, vibrant colors, clean geometric petals, modern simplicity, evoking bright, cheerful, modern, energetic atmosphere, arranged in bold, centered, geometric clarity composition, softly illuminated with diffused glow, background a dreamy gradient of soft ivory mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single 살구 거베라 bloom, symbolizing pure joy, positive energy, happiness, cheerfulness, with bold circular form, vibrant colors, clean geometric petals, modern simplicity, evoking bright, cheerful, modern, energetic atmosphere, arranged in bold, centered, geometric clarity composition, softly illuminated with diffused glow, background a dreamy gradient of soft ivory mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "거베라_살구.webp",
+    "folder": "거베라"
+  },
+  {
+    "flower_name": "거베라",
+    "color_name": "핫핑크",
+    "artistic_prompt": "a fine art portrait of a single 핫핑크 거베라 bloom, symbolizing pure joy, positive energy, happiness, cheerfulness, with bold circular form, vibrant colors, clean geometric petals, modern simplicity, evoking bright, cheerful, modern, energetic atmosphere, arranged in bold, centered, geometric clarity composition, softly illuminated with diffused glow, background a dreamy gradient of soft ivory mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single 핫핑크 거베라 bloom, symbolizing pure joy, positive energy, happiness, cheerfulness, with bold circular form, vibrant colors, clean geometric petals, modern simplicity, evoking bright, cheerful, modern, energetic atmosphere, arranged in bold, centered, geometric clarity composition, softly illuminated with diffused glow, background a dreamy gradient of soft ivory mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "거베라_핫핑크.webp",
+    "folder": "거베라"
+  },
+  {
+    "flower_name": "마가렛",
+    "color_name": "분홍",
+    "artistic_prompt": "a fine art portrait of a single pink 마가렛 bloom, symbolizing purity, truth, innocence, simplicity, with simple daisy form, clean white petals, bright center, natural simplicity, evoking pure, innocent, simple, natural atmosphere, arranged in simple, centered, natural beauty composition, softly illuminated with diffused glow, background a dreamy gradient of gentle pink mist and soft rose, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single pink 마가렛 bloom, symbolizing purity, truth, innocence, simplicity, with simple daisy form, clean white petals, bright center, natural simplicity, evoking pure, innocent, simple, natural atmosphere, arranged in simple, centered, natural beauty composition, softly illuminated with diffused glow, background a dreamy gradient of gentle pink mist and soft rose, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "마가렛_분홍.webp",
+    "folder": "마가렛"
+  },
+  {
+    "flower_name": "마가렛",
+    "color_name": "노랑",
+    "artistic_prompt": "a fine art portrait of a single yellow 마가렛 bloom, symbolizing purity, truth, innocence, simplicity, with simple daisy form, clean white petals, bright center, natural simplicity, evoking pure, innocent, simple, natural atmosphere, arranged in simple, centered, natural beauty composition, softly illuminated with diffused glow, background a dreamy gradient of soft yellow mist and golden glow, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single yellow 마가렛 bloom, symbolizing purity, truth, innocence, simplicity, with simple daisy form, clean white petals, bright center, natural simplicity, evoking pure, innocent, simple, natural atmosphere, arranged in simple, centered, natural beauty composition, softly illuminated with diffused glow, background a dreamy gradient of soft yellow mist and golden glow, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "마가렛_노랑.webp",
+    "folder": "마가렛"
+  },
+  {
+    "flower_name": "마가렛",
+    "color_name": "연보라",
+    "artistic_prompt": "a fine art portrait of a single 연보라 마가렛 bloom, symbolizing purity, truth, innocence, simplicity, with simple daisy form, clean white petals, bright center, natural simplicity, evoking pure, innocent, simple, natural atmosphere, arranged in simple, centered, natural beauty composition, softly illuminated with diffused glow, background a dreamy gradient of soft ivory mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single 연보라 마가렛 bloom, symbolizing purity, truth, innocence, simplicity, with simple daisy form, clean white petals, bright center, natural simplicity, evoking pure, innocent, simple, natural atmosphere, arranged in simple, centered, natural beauty composition, softly illuminated with diffused glow, background a dreamy gradient of soft ivory mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "마가렛_연보라.webp",
+    "folder": "마가렛"
+  },
+  {
+    "flower_name": "마가렛",
+    "color_name": "진분홍",
+    "artistic_prompt": "a fine art portrait of a single 진분홍 마가렛 bloom, symbolizing purity, truth, innocence, simplicity, with simple daisy form, clean white petals, bright center, natural simplicity, evoking pure, innocent, simple, natural atmosphere, arranged in simple, centered, natural beauty composition, softly illuminated with diffused glow, background a dreamy gradient of soft ivory mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single 진분홍 마가렛 bloom, symbolizing purity, truth, innocence, simplicity, with simple daisy form, clean white petals, bright center, natural simplicity, evoking pure, innocent, simple, natural atmosphere, arranged in simple, centered, natural beauty composition, softly illuminated with diffused glow, background a dreamy gradient of soft ivory mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "마가렛_진분홍.webp",
+    "folder": "마가렛"
+  },
+  {
+    "flower_name": "수국",
+    "color_name": "블루",
+    "artistic_prompt": "a fine art portrait of a single blue 수국 bloom, symbolizing sincerity, gratitude, understanding, harmony, with cluster of small blooms, soft rounded form, gentle colors, natural arrangement, evoking sincere, harmonious, gentle, natural atmosphere, arranged in clustered, rounded, natural form composition, softly illuminated with diffused glow, background a dreamy gradient of pale sky blue and soft slate, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single blue 수국 bloom, symbolizing sincerity, gratitude, understanding, harmony, with cluster of small blooms, soft rounded form, gentle colors, natural arrangement, evoking sincere, harmonious, gentle, natural atmosphere, arranged in clustered, rounded, natural form composition, softly illuminated with diffused glow, background a dreamy gradient of pale sky blue and soft slate, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "수국_블루.webp",
+    "folder": "수국"
+  },
+  {
+    "flower_name": "수국",
+    "color_name": "화이트",
+    "artistic_prompt": "a fine art portrait of a single white 수국 bloom, symbolizing sincerity, gratitude, understanding, harmony, with cluster of small blooms, soft rounded form, gentle colors, natural arrangement, evoking sincere, harmonious, gentle, natural atmosphere, arranged in clustered, rounded, natural form composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single white 수국 bloom, symbolizing sincerity, gratitude, understanding, harmony, with cluster of small blooms, soft rounded form, gentle colors, natural arrangement, evoking sincere, harmonious, gentle, natural atmosphere, arranged in clustered, rounded, natural form composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "수국_화이트.webp",
+    "folder": "수국"
+  },
+  {
+    "flower_name": "수국",
+    "color_name": "퍼플",
+    "artistic_prompt": "a fine art portrait of a single purple 수국 bloom, symbolizing sincerity, gratitude, understanding, harmony, with cluster of small blooms, soft rounded form, gentle colors, natural arrangement, evoking sincere, harmonious, gentle, natural atmosphere, arranged in clustered, rounded, natural form composition, softly illuminated with diffused glow, background a dreamy gradient of lavender mist and soft violet, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single purple 수국 bloom, symbolizing sincerity, gratitude, understanding, harmony, with cluster of small blooms, soft rounded form, gentle colors, natural arrangement, evoking sincere, harmonious, gentle, natural atmosphere, arranged in clustered, rounded, natural form composition, softly illuminated with diffused glow, background a dreamy gradient of lavender mist and soft violet, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "수국_퍼플.webp",
+    "folder": "수국"
+  },
+  {
+    "flower_name": "수국",
+    "color_name": "라임그린",
+    "artistic_prompt": "a fine art portrait of a single 라임그린 수국 bloom, symbolizing sincerity, gratitude, understanding, harmony, with cluster of small blooms, soft rounded form, gentle colors, natural arrangement, evoking sincere, harmonious, gentle, natural atmosphere, arranged in clustered, rounded, natural form composition, softly illuminated with diffused glow, background a dreamy gradient of soft ivory mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single 라임그린 수국 bloom, symbolizing sincerity, gratitude, understanding, harmony, with cluster of small blooms, soft rounded form, gentle colors, natural arrangement, evoking sincere, harmonious, gentle, natural atmosphere, arranged in clustered, rounded, natural form composition, softly illuminated with diffused glow, background a dreamy gradient of soft ivory mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "수국_라임그린.webp",
+    "folder": "수국"
+  },
+  {
+    "flower_name": "수국",
+    "color_name": "다색",
+    "artistic_prompt": "a fine art portrait of a single 다색 수국 bloom, symbolizing sincerity, gratitude, understanding, harmony, with cluster of small blooms, soft rounded form, gentle colors, natural arrangement, evoking sincere, harmonious, gentle, natural atmosphere, arranged in clustered, rounded, natural form composition, softly illuminated with diffused glow, background a dreamy gradient of soft ivory mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single 다색 수국 bloom, symbolizing sincerity, gratitude, understanding, harmony, with cluster of small blooms, soft rounded form, gentle colors, natural arrangement, evoking sincere, harmonious, gentle, natural atmosphere, arranged in clustered, rounded, natural form composition, softly illuminated with diffused glow, background a dreamy gradient of soft ivory mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "수국_다색.webp",
+    "folder": "수국"
+  },
+  {
+    "flower_name": "스토크",
+    "color_name": "연보라",
+    "artistic_prompt": "a fine art portrait of a single 연보라 스토크 bloom, symbolizing eternal love, loyalty, truth, beauty, with tall elegant spikes, delicate blooms, graceful lines, ethereal beauty, evoking ethereal, loyal, graceful, serene atmosphere, arranged in tall, elegant, vertical grace composition, softly illuminated with diffused glow, background a dreamy gradient of soft ivory mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single 연보라 스토크 bloom, symbolizing eternal love, loyalty, truth, beauty, with tall elegant spikes, delicate blooms, graceful lines, ethereal beauty, evoking ethereal, loyal, graceful, serene atmosphere, arranged in tall, elegant, vertical grace composition, softly illuminated with diffused glow, background a dreamy gradient of soft ivory mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "스토크_연보라.webp",
+    "folder": "스토크"
+  },
+  {
+    "flower_name": "스토크",
+    "color_name": "핑크",
+    "artistic_prompt": "a fine art portrait of a single pink 스토크 bloom, symbolizing eternal love, loyalty, truth, beauty, with tall elegant spikes, delicate blooms, graceful lines, ethereal beauty, evoking ethereal, loyal, graceful, serene atmosphere, arranged in tall, elegant, vertical grace composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single pink 스토크 bloom, symbolizing eternal love, loyalty, truth, beauty, with tall elegant spikes, delicate blooms, graceful lines, ethereal beauty, evoking ethereal, loyal, graceful, serene atmosphere, arranged in tall, elegant, vertical grace composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "스토크_핑크.webp",
+    "folder": "스토크"
+  },
+  {
+    "flower_name": "스토크",
+    "color_name": "화이트",
+    "artistic_prompt": "a fine art portrait of a single white 스토크 bloom, symbolizing eternal love, loyalty, truth, beauty, with tall elegant spikes, delicate blooms, graceful lines, ethereal beauty, evoking ethereal, loyal, graceful, serene atmosphere, arranged in tall, elegant, vertical grace composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single white 스토크 bloom, symbolizing eternal love, loyalty, truth, beauty, with tall elegant spikes, delicate blooms, graceful lines, ethereal beauty, evoking ethereal, loyal, graceful, serene atmosphere, arranged in tall, elegant, vertical grace composition, softly illuminated with diffused glow, background a dreamy gradient of alabaster mist and pale pearl, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "스토크_화이트.webp",
+    "folder": "스토크"
+  },
+  {
+    "flower_name": "스토크",
+    "color_name": "옐로우",
+    "artistic_prompt": "a fine art portrait of a single yellow 스토크 bloom, symbolizing eternal love, loyalty, truth, beauty, with tall elegant spikes, delicate blooms, graceful lines, ethereal beauty, evoking ethereal, loyal, graceful, serene atmosphere, arranged in tall, elegant, vertical grace composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single yellow 스토크 bloom, symbolizing eternal love, loyalty, truth, beauty, with tall elegant spikes, delicate blooms, graceful lines, ethereal beauty, evoking ethereal, loyal, graceful, serene atmosphere, arranged in tall, elegant, vertical grace composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "스토크_옐로우.webp",
+    "folder": "스토크"
+  },
+  {
+    "flower_name": "백합",
+    "color_name": "핑크",
+    "artistic_prompt": "a fine art portrait of a single pink 백합 bloom, symbolizing purity, beauty, majesty, eternal love, with trumpet-shaped blooms, smooth silky petals, elegant form, pure colors, evoking majestic, pure, elegant, serene atmosphere, arranged in elegant, vertical, trumpet emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single pink 백합 bloom, symbolizing purity, beauty, majesty, eternal love, with trumpet-shaped blooms, smooth silky petals, elegant form, pure colors, evoking majestic, pure, elegant, serene atmosphere, arranged in elegant, vertical, trumpet emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of soft rose mist and pale blush, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "백합_핑크.webp",
+    "folder": "백합"
+  },
+  {
+    "flower_name": "백합",
+    "color_name": "오렌지",
+    "artistic_prompt": "a fine art portrait of a single orange 백합 bloom, symbolizing purity, beauty, majesty, eternal love, with trumpet-shaped blooms, smooth silky petals, elegant form, pure colors, evoking majestic, pure, elegant, serene atmosphere, arranged in elegant, vertical, trumpet emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of warm orange mist and golden amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single orange 백합 bloom, symbolizing purity, beauty, majesty, eternal love, with trumpet-shaped blooms, smooth silky petals, elegant form, pure colors, evoking majestic, pure, elegant, serene atmosphere, arranged in elegant, vertical, trumpet emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of warm orange mist and golden amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "백합_오렌지.webp",
+    "folder": "백합"
+  },
+  {
+    "flower_name": "백합",
+    "color_name": "옐로우",
+    "artistic_prompt": "a fine art portrait of a single yellow 백합 bloom, symbolizing purity, beauty, majesty, eternal love, with trumpet-shaped blooms, smooth silky petals, elegant form, pure colors, evoking majestic, pure, elegant, serene atmosphere, arranged in elegant, vertical, trumpet emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single yellow 백합 bloom, symbolizing purity, beauty, majesty, eternal love, with trumpet-shaped blooms, smooth silky petals, elegant form, pure colors, evoking majestic, pure, elegant, serene atmosphere, arranged in elegant, vertical, trumpet emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of golden mist and warm amber, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "백합_옐로우.webp",
+    "folder": "백합"
+  },
+  {
+    "flower_name": "백합",
+    "color_name": "레드",
+    "artistic_prompt": "a fine art portrait of a single red 백합 bloom, symbolizing purity, beauty, majesty, eternal love, with trumpet-shaped blooms, smooth silky petals, elegant form, pure colors, evoking majestic, pure, elegant, serene atmosphere, arranged in elegant, vertical, trumpet emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction",
+    "midjourney_prompt": "/imagine prompt: a fine art portrait of a single red 백합 bloom, symbolizing purity, beauty, majesty, eternal love, with trumpet-shaped blooms, smooth silky petals, elegant form, pure colors, evoking majestic, pure, elegant, serene atmosphere, arranged in elegant, vertical, trumpet emphasis composition, softly illuminated with diffused glow, background a dreamy gradient of deep crimson mist and rich burgundy, cinematic softness with radiant clarity, glowing with gentle elegance and timeless charm, visible grain and subtle texture for tactile realism, minimalist and poetic composition with symbolic abstraction --ar 1:1 --v 6 --s 750",
+    "filename": "백합_레드.webp",
+    "folder": "백합"
+  }
+]

@@ -1,0 +1,218 @@
+{
+  "zinnia.png": {
+    "flower_name": "Zinnia Elegans",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.897233Z",
+    "size": 32080,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/zinnia.png"
+  },
+  "veronica.png": {
+    "flower_name": "Veronica Spicata",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.898241Z",
+    "size": 27514,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/veronica.png"
+  },
+  "tulip.png": {
+    "flower_name": "Tulip",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.899448Z",
+    "size": 49424,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/tulip.png"
+  },
+  "sweet-pea.png": {
+    "flower_name": "Lathyrus Odoratus",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.900447Z",
+    "size": 45902,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/sweet-pea.png"
+  },
+  "stock-flower.png": {
+    "flower_name": "Stock Flower",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.900922Z",
+    "size": 43652,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/stock-flower.png"
+  },
+  "scabiosa.png": {
+    "flower_name": "Scabiosa",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.901784Z",
+    "size": 34818,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/scabiosa.png"
+  },
+  "rose.png": {
+    "flower_name": "Rose",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.903425Z",
+    "size": 45170,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/rose.png"
+  },
+  "ranunculus.png": {
+    "flower_name": "Ranunculus",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.903945Z",
+    "size": 30430,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/ranunculus.png"
+  },
+  "patrinia.png": {
+    "flower_name": "Gentiana Andrewsii",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.904925Z",
+    "size": 29082,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/patrinia.png"
+  },
+  "marigold.png": {
+    "flower_name": "Tagetes Erecta",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.905694Z",
+    "size": 44478,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/marigold.png"
+  },
+  "marguerite-daisy.png": {
+    "flower_name": "Marguerite Daisy",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.906811Z",
+    "size": 46832,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/marguerite-daisy.png"
+  },
+  "lisianthus.png": {
+    "flower_name": "Lisianthus",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.908474Z",
+    "size": 28266,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/lisianthus.png"
+  },
+  "lily.png": {
+    "flower_name": "Lily",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.910237Z",
+    "size": 37860,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/lily.png"
+  },
+  "hydrangea.png": {
+    "flower_name": "Hydrangea",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.911318Z",
+    "size": 28154,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/hydrangea.png"
+  },
+  "globe-amaranth.png": {
+    "flower_name": "Globe Amaranth",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.913671Z",
+    "size": 58750,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/globe-amaranth.png"
+  },
+  "gladiolus.png": {
+    "flower_name": "Gladiolus",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.915003Z",
+    "size": 32704,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/gladiolus.png"
+  },
+  "gerbera-daisy.png": {
+    "flower_name": "Gerbera Daisy",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.917808Z",
+    "size": 51854,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/gerbera-daisy.png"
+  },
+  "garden-peony.png": {
+    "flower_name": "Garden Peony",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.919054Z",
+    "size": 53336,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/garden-peony.png"
+  },
+  "drumstick-flower.png": {
+    "flower_name": "Drumstick Flower",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.919778Z",
+    "size": 36686,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/drumstick-flower.png"
+  },
+  "dahlia.png": {
+    "flower_name": "Dahlia",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.920728Z",
+    "size": 35786,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/dahlia.png"
+  },
+  "cymbidium.png": {
+    "flower_name": "Cymbidium Spp",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.921511Z",
+    "size": 35874,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/cymbidium.png"
+  },
+  "cotton-plant.png": {
+    "flower_name": "Cotton Plant",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.923080Z",
+    "size": 47716,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/cotton-plant.png"
+  },
+  "cockscomb.png": {
+    "flower_name": "Cockscomb",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.925082Z",
+    "size": 44498,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/cockscomb.png"
+  },
+  "bouvardia.png": {
+    "flower_name": "Bouvardia",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.927067Z",
+    "size": 30104,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/bouvardia.png"
+  },
+  "baby-breath.png": {
+    "flower_name": "Babys Breath",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.928772Z",
+    "size": 40622,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/baby-breath.png"
+  },
+  "anemone.png": {
+    "flower_name": "Anemone Coronaria",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.930088Z",
+    "size": 31096,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/anemone.png"
+  },
+  "ammi-majus.png": {
+    "flower_name": "Ammi Majus",
+    "drive_id": "manual_1755368971",
+    "modified_time": "2025-08-17T03:29:31.931219Z",
+    "size": 35670,
+    "mime_type": "image/jpeg",
+    "local_path": "/Users/lucy/Documents/플플클/floiy-reco/data/calli_images/ammi-majus.png"
+  }
+}

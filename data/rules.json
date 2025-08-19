@@ -1,0 +1,15 @@
+{
+  "price_policy": {
+    "tolerance_ratio": 0.2
+  },
+  "exclusions": {
+    "국화": [
+      "조문",
+      "추모"
+    ]
+  },
+  "copy_templates": {
+    "bright": "밝은 색감을 중심으로 기분 전환을 돕는 구성",
+    "soft": "은은한 톤으로 편안한 분위기를 전하는 구성"
+  }
+}

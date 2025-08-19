@@ -1,0 +1,217 @@
+{
+  "info": {
+    "name": "Floiy Recommendation API",
+    "description": "Floiy 꽃 추천 API 테스트 컬렉션",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://your-domain.com/api/v1",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": ["{{base_url}}"],
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "Emotion Analysis",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"story\": \"친구의 생일을 축하하고 싶어요. 밝고 활기찬 분위기의 꽃다발을 원해요.\",\n  \"recipient_emotion\": \"기쁨\",\n  \"relationship\": \"친구\",\n  \"occasion\": \"생일\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/emotion-analysis",
+          "host": ["{{base_url}}"],
+          "path": ["emotion-analysis"]
+        }
+      }
+    },
+    {
+      "name": "Extract Context",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"story\": \"새해 첫날, 가족과 함께 시작을 기념할 수 있는 희망적인 꽃이 필요해요.\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/extract-context",
+          "host": ["{{base_url}}"],
+          "path": ["extract-context"]
+        }
+      }
+    },
+    {
+      "name": "Get Flower Info",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/flower-info/Rose",
+          "host": ["{{base_url}}"],
+          "path": ["flower-info", "Rose"]
+        }
+      }
+    },
+    {
+      "name": "Get Flower Season",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/flower-season/Tulip",
+          "host": ["{{base_url}}"],
+          "path": ["flower-season", "Tulip"]
+        }
+      }
+    },
+    {
+      "name": "Get Flower Images",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/flower-images/Rose",
+          "host": ["{{base_url}}"],
+          "path": ["flower-images", "Rose"]
+        }
+      }
+    },
+    {
+      "name": "Test Cases",
+      "item": [
+        {
+          "name": "Birthday Celebration",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"story\": \"친구의 생일을 축하하고 싶어요. 밝고 활기찬 분위기의 꽃다발을 원해요.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/emotion-analysis",
+              "host": ["{{base_url}}"],
+              "path": ["emotion-analysis"]
+            }
+          }
+        },
+        {
+          "name": "Romantic Confession",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"story\": \"첫사랑에게 고백할 때 줄 꽃을 찾고 있어요. 로맨틱하고 진심 어린 마음을 전달할 수 있는 꽃이면 좋겠어요.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/emotion-analysis",
+              "host": ["{{base_url}}"],
+              "path": ["emotion-analysis"]
+            }
+          }
+        },
+        {
+          "name": "Pet Loss Comfort",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"story\": \"반려견이 무지개다리를 건넜어요. 위로와 슬픔을 표현할 수 있는 꽃을 찾고 있어요.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/emotion-analysis",
+              "host": ["{{base_url}}"],
+              "path": ["emotion-analysis"]
+            }
+          }
+        },
+        {
+          "name": "New Year Celebration",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"story\": \"새해 첫날, 가족과 함께 시작을 기념할 수 있는 희망적인 꽃이 필요해요.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/emotion-analysis",
+              "host": ["{{base_url}}"],
+              "path": ["emotion-analysis"]
+            }
+          }
+        },
+        {
+          "name": "Interior Decoration",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"story\": \"아주 화려한 무드의 꽃다발을 인테리어에 포인트로 쓰고 싶어. 주황색 톤이면 좋겠어.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/emotion-analysis",
+              "host": ["{{base_url}}"],
+              "path": ["emotion-analysis"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+

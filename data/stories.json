@@ -1,0 +1,378 @@
+{
+  "S250820-ZIN-000001": {
+    "story_id": "S250820-ZIN-000001",
+    "original_story": "아내가 마라톤 완주 메달을 땄어요. 그 성취감을 더 빛내줄 강렬한 컬러면 좋겠어요.",
+    "created_at": "2025-08-20 00:07:47.023122",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "축하",
+        "percentage": 50.0,
+        "description": ""
+      },
+      {
+        "emotion": "기쁨",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "희망",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Zinnia Elegans",
+    "flower_name_en": "백일홍",
+    "scientific_name": "Zinnia Elegans",
+    "flower_card_message": "\"Success is not final, failure is not fatal.\"\\n- Winston S. Churchill -",
+    "flower_blend": {
+      "main_flower": "Zinnia Elegans",
+      "sub_flowers": [
+        "오렌지 거베라",
+        "핑크 데이지"
+      ],
+      "composition_name": "Colorful Celebration"
+    },
+    "season_info": "여름, 가을",
+    "recommendation_reason": "아내의 마라톤 완주를 축하하기 위해 레드 백일홍이 존경과 충성을 담아줄 거예요. 이 강렬한 색상은 아내의 성취감과 기쁨을 더욱 빛내주며, 그녀의 노력에 대한 깊은 존경을 표현하는 데 도움이 될 거예요.",
+    "flower_image_url": "/images/zinnia-elegans/레드.webp",
+    "keywords": [
+      "축하",
+      "기쁨",
+      "희망",
+      "기분전환",
+      "활기찬",
+      "레드"
+    ],
+    "hashtags": [
+      "#백일홍",
+      "#축하",
+      "#기쁨",
+      "#희망"
+    ],
+    "color_keywords": [
+      "레드"
+    ],
+    "excluded_keywords": []
+  },
+  "S250820-ROS-000001": {
+    "story_id": "S250820-ROS-000001",
+    "original_story": "여자친구가 좋아하는 하늘색을 담아 고백하고 싶어요. 설레고 순수한 느낌이면 좋겠어요.",
+    "created_at": "2025-08-20 00:45:14.716625",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "사랑/로맨스",
+        "percentage": 60.0,
+        "description": ""
+      },
+      {
+        "emotion": "기쁨",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 10.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Rose",
+    "flower_name_en": "장미",
+    "scientific_name": "Rose",
+    "flower_card_message": "\"You had me at hello.\"\\n- Jerry Maguire -",
+    "flower_blend": {
+      "main_flower": "Rose",
+      "sub_flowers": [
+        "화이트 베이비 브레스",
+        "크림 로즈"
+      ],
+      "composition_name": "Wedding Elegance"
+    },
+    "season_info": "봄, 여름",
+    "recommendation_reason": "여자친구에게 고백하는 특별한 순간에 하늘색 블루 장미가 기적과 불가능의 극복을 담아줄 거예요. 설레는 사랑의 마음을 전하면서 그녀의 순수함을 더욱 빛나게 해줄 수 있을 거예요.",
+    "flower_image_url": "/images/rose/블루.webp",
+    "keywords": [
+      "사랑/로맨스",
+      "기쁨",
+      "축하",
+      "고백",
+      "설레는",
+      "블루"
+    ],
+    "hashtags": [
+      "#장미",
+      "#사랑/로맨스",
+      "#기쁨",
+      "#축하"
+    ],
+    "color_keywords": [
+      "블루"
+    ],
+    "excluded_keywords": []
+  },
+  "S250820-ROS-000002": {
+    "story_id": "S250820-ROS-000002",
+    "original_story": "여자친구가 좋아하는 하늘색을 담아 고백하고 싶어요. 설레고 순수한 느낌이면 좋겠어요.",
+    "created_at": "2025-08-20 00:47:14.966917",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "사랑/로맨스",
+        "percentage": 60.0,
+        "description": ""
+      },
+      {
+        "emotion": "기쁨",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 10.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Rose",
+    "flower_name_en": "장미",
+    "scientific_name": "Rose",
+    "flower_card_message": "\"I love you to the moon and back.\"\\n- Guess How Much I Love You -",
+    "flower_blend": {
+      "main_flower": "Rose",
+      "sub_flowers": [
+        "화이트 베이비 브레스",
+        "크림 로즈"
+      ],
+      "composition_name": "Wedding Elegance"
+    },
+    "season_info": "봄, 여름",
+    "recommendation_reason": "\"여자친구에게 하늘색 블루 장미를 선물하면, 사랑의 고백이 더욱 특별해질 거예요. 기적과 불가능의 극복을 상징하는 이 꽃은, 설레고 순수한 감정을 통해 그녀의 마음에 깊은 감동을 줄 수 있을 거예요.\"",
+    "flower_image_url": "/images/rose/블루.webp",
+    "keywords": [
+      "사랑/로맨스",
+      "기쁨",
+      "축하",
+      "고백",
+      "설레는",
+      "블루"
+    ],
+    "hashtags": [
+      "#장미",
+      "#사랑/로맨스",
+      "#기쁨",
+      "#축하"
+    ],
+    "color_keywords": [
+      "블루"
+    ],
+    "excluded_keywords": []
+  },
+  "S250820-ROS-000003": {
+    "story_id": "S250820-ROS-000003",
+    "original_story": "여자친구가 좋아하는 하늘색을 담아 고백하고 싶어요. 설레고 순수한 느낌이면 좋겠어요.",
+    "created_at": "2025-08-20 00:55:14.246891",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "사랑/로맨스",
+        "percentage": 60.0,
+        "description": ""
+      },
+      {
+        "emotion": "기쁨",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 10.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Rose",
+    "flower_name_en": "장미",
+    "scientific_name": "Rose",
+    "flower_card_message": "\"You had me at hello.\"\\n- Jerry Maguire -",
+    "flower_blend": {
+      "main_flower": "Rose",
+      "sub_flowers": [
+        "화이트 베이비 브레스",
+        "크림 로즈"
+      ],
+      "composition_name": "Wedding Elegance"
+    },
+    "season_info": "봄, 여름",
+    "recommendation_reason": "\"여자친구에게 고백하는 순간에, 하늘색 장미가 기적과 불가능의 극복을 담아줄 거예요. 사랑과 기쁨의 감정을 이 특별한 색채와 꽃말로 표현하면, 그녀에게 진정한 설렘과 순수한 마음이 전해질 수 있을 거예요.\"",
+    "flower_image_url": "/images/rose/블루.webp",
+    "keywords": [
+      "사랑/로맨스",
+      "기쁨",
+      "축하",
+      "고백",
+      "설레는",
+      "블루"
+    ],
+    "hashtags": [
+      "#장미",
+      "#사랑/로맨스",
+      "#기쁨",
+      "#축하"
+    ],
+    "color_keywords": [
+      "블루"
+    ],
+    "excluded_keywords": []
+  },
+  "S250820-ROS-000004": {
+    "story_id": "S250820-ROS-000004",
+    "original_story": "여자친구가 좋아하는 하늘색을 담아 고백하고 싶어요. 설레고 순수한 느낌이면 좋겠어요.",
+    "created_at": "2025-08-20 01:18:08.774048",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "사랑/로맨스",
+        "percentage": 60.0,
+        "description": ""
+      },
+      {
+        "emotion": "기쁨",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 10.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Rose",
+    "flower_name_en": "장미",
+    "scientific_name": "Rose",
+    "flower_card_message": "\"To me, you are perfect.\"\\n- Love Actually -",
+    "flower_blend": {
+      "main_flower": "Rose",
+      "sub_flowers": [
+        "화이트 베이비 브레스",
+        "크림 로즈"
+      ],
+      "composition_name": "Wedding Elegance"
+    },
+    "season_info": "봄, 여름",
+    "recommendation_reason": "\"여자친구에게 고백하는 특별한 순간에 하늘색 블루 장미가 '기적'과 '불가능의 극복'을 담아줘요. 사랑과 설렘을 느끼는 그 순간, 그녀에게 당신의 진솔한 마음을 전하며 특별한 기억을 만들어낼 수 있을 거예요.\"",
+    "flower_image_url": "/images/rose/블루.webp",
+    "keywords": [
+      "사랑/로맨스",
+      "기쁨",
+      "축하",
+      "고백",
+      "설레는",
+      "블루"
+    ],
+    "hashtags": [
+      "#장미",
+      "#사랑/로맨스",
+      "#기쁨",
+      "#축하"
+    ],
+    "color_keywords": [
+      "블루"
+    ],
+    "excluded_keywords": []
+  },
+  "S250820-ALS-000001": {
+    "story_id": "S250820-ALS-000001",
+    "original_story": "오늘 친구 생일인데 화이트 컬러의 꽃을 선물하고 싶어. 친구는 로맨틱한 분위기를 좋아해.",
+    "created_at": "2025-08-20 04:31:49.228780",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "기쁨",
+        "percentage": 0.8,
+        "description": "생일 축하의 기쁨"
+      },
+      {
+        "emotion": "사랑",
+        "percentage": 0.7,
+        "description": "친구에 대한 사랑"
+      }
+    ],
+    "flower_name": "Alstroemeria spp.",
+    "flower_name_en": "알스트로메리아",
+    "scientific_name": "Alstroemeria spp.",
+    "flower_card_message": "Happy Birthday! I chose this flower for you.",
+    "flower_blend": {
+      "main_flower": "알스트로메리아",
+      "sub_flowers": [],
+      "composition_name": "알스트로메리아 단일 구성"
+    },
+    "season_info": "봄",
+    "recommendation_reason": "알스트로메리아은 사랑과 우정을 상징하며, 화이트 컬러는 순수함과 깨끗함을 나타냅니다. 친구의 생일과 로맨틱한 분위기에 완벽하게 어울립니다.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/alstroemeria-spp-wh.webp",
+    "keywords": [],
+    "hashtags": [
+      "#생일",
+      "#선물",
+      "#로맨틱"
+    ],
+    "color_keywords": [
+      "화이트"
+    ],
+    "excluded_keywords": []
+  },
+  "S250820-TAG-000001": {
+    "story_id": "S250820-TAG-000001",
+    "original_story": "진짜 오랫동안 고생했던 플로이서비스를 직접 개발하고 mvp 배포를 눈앞에 두고 있어. 너무 벅차고 행복해. 진짜 이게 시작이되서 더 고도화되어 서비스를 진짜로 해보는 날이 오길 너무 바래.",
+    "created_at": "2025-08-20 04:37:30.439145",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "축하",
+        "percentage": 50.0,
+        "description": ""
+      },
+      {
+        "emotion": "기쁨",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "응원/격려",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Tagetes Erecta",
+    "flower_name_en": "태게테스",
+    "scientific_name": "Tagetes Erecta",
+    "flower_card_message": "\"Every accomplishment starts with the decision to try.\"\\n- John F. Kennedy -",
+    "flower_blend": {
+      "main_flower": "Tagetes Erecta",
+      "sub_flowers": [
+        "오렌지 거베라",
+        "핑크 데이지"
+      ],
+      "composition_name": "Colorful Celebration"
+    },
+    "season_info": "여름, 가을",
+    "recommendation_reason": "\"플로이서비스의 MVP 배포를 앞두고 느끼는 벅찬 행복과 기대에 옐로우 태게테스가 사랑의 행복과 재치 있는 사람의 의미를 담아줘요. 이 꽃이 고객의 노력과 열정을 응원하며, 앞으로의 고도화된 서비스가 더욱 빛나길 바라는 마음을 잘 표현해줄 거예요.\"",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/tagetes-erecta-yl.webp",
+    "keywords": [
+      "축하",
+      "기쁨",
+      "응원/격려",
+      "기분전환",
+      "활기찬",
+      "옐로우"
+    ],
+    "hashtags": [
+      "#태게테스",
+      "#축하",
+      "#기쁨",
+      "#응원/격려"
+    ],
+    "color_keywords": [
+      "옐로우"
+    ],
+    "excluded_keywords": []
+  }
+}
