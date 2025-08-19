@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>꽃 추천 API 테스트</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin: 10px 0;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            white-space: pre-wrap;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <h1>🌸 꽃 추천 API 테스트</h1>
+    
+    <div class="test-section">
+        <h2>1. 실시간 키워드 추출 테스트</h2>
+        <textarea id="story1" placeholder="스토리를 입력하세요...">반려견이 무지개다리를 건넌 지인에게 위로의 마음을 전하고 싶어요.</textarea>
+        <button onclick="testExtractContext()">키워드 추출 테스트</button>
+        <div id="result1" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. 꽃 추천 결과 테스트</h2>
+        <textarea id="story2" placeholder="스토리를 입력하세요...">반려견이 무지개다리를 건넌 지인에게 위로의 마음을 전하고 싶어요.</textarea>
+        <button onclick="testEmotionAnalysis()">꽃 추천 테스트</button>
+        <div id="result2" class="result"></div>
+    </div>
+
+    <script>
+        async function testExtractContext() {
+            const story = document.getElementById('story1').value;
+            const resultDiv = document.getElementById('result1');
+            
+            try {
+                const response = await fetch('http://localhost:8002/api/v1/extract-context', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ story })
+                });
+                
+                const data = await response.json();
+                resultDiv.textContent = JSON.stringify(data, null, 2);
+                resultDiv.className = 'result';
+            } catch (error) {
+                resultDiv.textContent = `에러: ${error.message}`;
+                resultDiv.className = 'result error';
+            }
+        }
+        
+        async function testEmotionAnalysis() {
+            const story = document.getElementById('story2').value;
+            const resultDiv = document.getElementById('result2');
+            
+            try {
+                const response = await fetch('http://localhost:8002/api/v1/emotion-analysis', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ story })
+                });
+                
+                const data = await response.json();
+                resultDiv.textContent = JSON.stringify(data, null, 2);
+                resultDiv.className = 'result';
+            } catch (error) {
+                resultDiv.textContent = `에러: ${error.message}`;
+                resultDiv.className = 'result error';
+            }
+        }
+    </script>
+</body>
+</html>
+
