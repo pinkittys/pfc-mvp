@@ -5,6 +5,8 @@ from fastapi.responses import FileResponse
 import os
 from datetime import datetime
 
+from app.api.v1.router import api_v1_router
+
 app = FastAPI(
     title="Floiy-Reco API",
     description="꽃 추천 시스템 API",
@@ -24,6 +26,9 @@ app.add_middleware(
 app.mount("/images", StaticFiles(directory="data/images_webp"), name="images")
 app.mount("/data", StaticFiles(directory="data"), name="data")
 
+# API 라우터 등록
+app.include_router(api_v1_router, prefix="/api/v1")
+
 @app.get("/")
 async def root():
     return {"message": "Floiy-Reco API is running!"}
@@ -41,6 +46,22 @@ async def health_check():
             "openai": "available"
         }
     }
+
+@app.get("/test")
+async def test():
+    return FileResponse("test_frontend.html")
+
+@app.get("/test_frontend.html")
+async def test_frontend():
+    return FileResponse("test_frontend.html")
+
+@app.get("/admin")
+async def admin_panel():
+    return FileResponse("admin_panel.html")
+
+@app.get("/admin_panel.html")
+async def admin_panel_html():
+    return FileResponse("admin_panel.html")
 
 @app.get("/simple_test.html")
 async def simple_test():
