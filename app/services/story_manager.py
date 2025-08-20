@@ -50,8 +50,8 @@ class StoryManager:
         # 다음 순번 계산
         next_number = len(today_stories) + 1
         
-        # 6자리 순번으로 포맷팅
-        sequence = f"{next_number:06d}"
+        # 5자리 순번으로 포맷팅
+        sequence = f"{next_number:05d}"
         
         return f"S{today}-{flower_code}-{sequence}"
     
