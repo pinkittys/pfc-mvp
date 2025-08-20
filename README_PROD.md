@@ -158,3 +158,4 @@ curl https://your-domain.com/health
 **버전**: 1.0.0  
 **최종 업데이트**: 2024년 8월
 # Force rebuild
+# Force rebuild with openai package
