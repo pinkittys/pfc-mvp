@@ -4,23 +4,45 @@ import logging
 from datetime import datetime
 from typing import Optional, Dict, Any
 from pathlib import Path
+import requests
+from dotenv import load_dotenv
 
 from app.models.schemas import StoryData, StoryCreateRequest
+
+# .env 파일 로드
+load_dotenv()
 
 # 로거 설정
 logger = logging.getLogger(__name__)
 
 
 class StoryManager:
-    """스토리 데이터 관리 서비스"""
+    """스토리 데이터 관리 서비스 - Supabase 직접 저장"""
     
     def __init__(self):
         self.stories_file = Path("data/stories.json")
         self.stories_file.parent.mkdir(exist_ok=True)
+        
+        # Supabase 설정
+        self.supabase_url = os.getenv("SUPABASE_URL")
+        self.supabase_key = os.getenv("SUPABASE_ANON_KEY")
+        
+        if not self.supabase_url or not self.supabase_key:
+            logger.warning("Supabase 환경변수가 설정되지 않았습니다. 로컬 저장 모드로 실행됩니다.")
+            self.supabase_available = False
+        else:
+            self.supabase_available = True
+            self.headers = {
+                'apikey': self.supabase_key,
+                'Authorization': f'Bearer {self.supabase_key}',
+                'Content-Type': 'application/json'
+            }
+        
+        # 로컬 백업 로드
         self._load_stories()
     
     def _load_stories(self):
-        """스토리 데이터 로드"""
+        """로컬 백업 데이터 로드"""
         if self.stories_file.exists():
             with open(self.stories_file, 'r', encoding='utf-8') as f:
                 self.stories = json.load(f)
@@ -29,9 +51,85 @@ class StoryManager:
             self._save_stories()
     
     def _save_stories(self):
-        """스토리 데이터 저장"""
+        """로컬 백업 데이터 저장"""
         with open(self.stories_file, 'w', encoding='utf-8') as f:
             json.dump(self.stories, f, ensure_ascii=False, indent=2, default=str)
+    
+    def _save_to_supabase(self, story_data: StoryData) -> bool:
+        """Supabase에 스토리 저장"""
+        if not self.supabase_available:
+            logger.warning("Supabase를 사용할 수 없습니다. 로컬에만 저장됩니다.")
+            return False
+        
+        try:
+            supabase_data = {
+                "story_id": story_data.story_id,
+                "story": story_data.original_story,
+                "emotions": json.dumps(story_data.emotions, ensure_ascii=False),
+                "matched_flower": json.dumps(story_data.matched_flower.dict(), ensure_ascii=False),
+                "recommendation_reason": story_data.recommendation_reason,
+                "flower_card_message": story_data.flower_card_message,
+                "season_info": story_data.season_info,
+                "keywords": json.dumps(story_data.keywords, ensure_ascii=False),
+                "hashtags": json.dumps(story_data.hashtags, ensure_ascii=False),
+                "color_keywords": json.dumps(story_data.color_keywords, ensure_ascii=False),
+                "created_at": story_data.created_at.isoformat(),
+                "updated_at": datetime.now().isoformat()
+            }
+            
+            response = requests.post(
+                f"{self.supabase_url}/rest/v1/stories",
+                headers=self.headers,
+                json=supabase_data
+            )
+            
+            if response.status_code == 201:
+                logger.info(f"✅ Supabase에 스토리 저장 성공: {story_data.story_id}")
+                return True
+            else:
+                logger.error(f"❌ Supabase 스토리 저장 실패: {response.status_code}")
+                return False
+                
+        except Exception as e:
+            logger.error(f"❌ Supabase 저장 오류: {e}")
+            return False
+    
+    def _get_from_supabase(self, story_id: str) -> Optional[StoryData]:
+        """Supabase에서 스토리 조회"""
+        if not self.supabase_available:
+            logger.warning("Supabase를 사용할 수 없습니다. 로컬에서 조회합니다.")
+            return None
+        
+        try:
+            response = requests.get(
+                f"{self.supabase_url}/rest/v1/stories?story_id=eq.{story_id}",
+                headers=self.headers
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data:
+                    story_dict = data[0]
+                    # JSON 문자열을 객체로 변환
+                    story_dict['emotions'] = json.loads(story_dict['emotions'])
+                    story_dict['matched_flower'] = json.loads(story_dict['matched_flower'])
+                    story_dict['keywords'] = json.loads(story_dict['keywords'])
+                    story_dict['hashtags'] = json.loads(story_dict['hashtags'])
+                    story_dict['color_keywords'] = json.loads(story_dict['color_keywords'])
+                    
+                    # datetime 변환
+                    if isinstance(story_dict.get('created_at'), str):
+                        story_dict['created_at'] = datetime.fromisoformat(story_dict['created_at'].replace('Z', '+00:00'))
+                    if story_dict.get('updated_at') and isinstance(story_dict['updated_at'], str):
+                        story_dict['updated_at'] = datetime.fromisoformat(story_dict['updated_at'].replace('Z', '+00:00'))
+                    
+                    return StoryData(**story_dict)
+            
+            return None
+            
+        except Exception as e:
+            logger.error(f"❌ Supabase 조회 오류: {e}")
+            return None
     
     def _generate_story_id(self, flower_name: str) -> str:
         """스토리 ID 생성 - 새로운 정책: S{YYMMDD}-{FLC}-{NNNNNN}"""
@@ -205,7 +303,7 @@ class StoryManager:
             return english_name.ljust(3, 'X')
     
     def create_story(self, request: StoryCreateRequest) -> StoryData:
-        """새로운 스토리 생성"""
+        """새로운 스토리 생성 - Supabase 직접 저장"""
         # 스토리 ID 생성
         story_id = self._generate_story_id(request.matched_flower.flower_name)
         
@@ -233,26 +331,43 @@ class StoryManager:
             excluded_keywords=request.excluded_keywords
         )
         
-        # 데이터베이스에 저장
+        # 1. Supabase에 직접 저장 (우선)
+        supabase_success = self._save_to_supabase(story_data)
+        
+        # 2. 로컬 백업 저장
         self.stories[story_id] = story_data.dict()
         self._save_stories()
+        
+        if supabase_success:
+            logger.info(f"✅ 스토리 생성 완료 (Supabase + 로컬 백업): {story_id}")
+        else:
+            logger.warning(f"⚠️ 스토리 생성 완료 (로컬 백업만): {story_id}")
         
         return story_data
     
     def get_story(self, story_id: str) -> Optional[StoryData]:
-        """스토리 ID로 스토리 조회"""
-        if story_id not in self.stories:
-            return None
+        """스토리 ID로 스토리 조회 - Supabase 우선, 로컬 백업"""
+        # 1. Supabase에서 우선 조회
+        story_data = self._get_from_supabase(story_id)
+        if story_data:
+            logger.info(f"✅ Supabase에서 스토리 조회 성공: {story_id}")
+            return story_data
         
-        story_dict = self.stories[story_id]
+        # 2. Supabase에서 없으면 로컬 백업에서 조회
+        if story_id in self.stories:
+            story_dict = self.stories[story_id]
+            
+            # datetime 문자열을 datetime 객체로 변환
+            if isinstance(story_dict.get('created_at'), str):
+                story_dict['created_at'] = datetime.fromisoformat(story_dict['created_at'].replace('Z', '+00:00'))
+            if story_dict.get('updated_at') and isinstance(story_dict['updated_at'], str):
+                story_dict['updated_at'] = datetime.fromisoformat(story_dict['updated_at'].replace('Z', '+00:00'))
+            
+            logger.info(f"✅ 로컬 백업에서 스토리 조회 성공: {story_id}")
+            return StoryData(**story_dict)
         
-        # datetime 문자열을 datetime 객체로 변환
-        if isinstance(story_dict.get('created_at'), str):
-            story_dict['created_at'] = datetime.fromisoformat(story_dict['created_at'].replace('Z', '+00:00'))
-        if story_dict.get('updated_at') and isinstance(story_dict['updated_at'], str):
-            story_dict['updated_at'] = datetime.fromisoformat(story_dict['updated_at'].replace('Z', '+00:00'))
-        
-        return StoryData(**story_dict)
+        logger.warning(f"❌ 스토리를 찾을 수 없음: {story_id}")
+        return None
     
     def update_story(self, story_id: str, update_data: Dict[str, Any]) -> Optional[StoryData]:
         """스토리 업데이트"""
