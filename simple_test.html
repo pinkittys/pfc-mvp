@@ -1554,6 +1554,9 @@
                     keywordElement.setAttribute('data-text', option);
                     
                     console.log('✅ 키워드 요소 업데이트됨:', keywordElement.getAttribute('data-text'));
+                    console.log('🔍 DOM 업데이트 확인:');
+                    console.log('  - span 텍스트:', keywordElement.querySelector('span').textContent);
+                    console.log('  - data-text 속성:', keywordElement.getAttribute('data-text'));
                     
                     // 옵션 컨테이너 제거
                     optionsContainer.remove();
@@ -1821,9 +1824,13 @@
                 const currentKeywords = [];
                 const keywordElements = document.querySelectorAll('.keyword-tag');
                 
-                keywordElements.forEach(element => {
+                console.log('🔍 키워드 요소 수집 디버깅:');
+                console.log('  - 총 키워드 요소 개수:', keywordElements.length);
+                
+                keywordElements.forEach((element, index) => {
                     const type = element.getAttribute('data-type');
                     const text = element.getAttribute('data-text');
+                    console.log(`  - 요소 ${index + 1}: type="${type}", text="${text}"`);
                     if (type && text) {
                         currentKeywords.push({ type, text });
                     }
