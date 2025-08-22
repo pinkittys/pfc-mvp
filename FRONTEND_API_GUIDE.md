@@ -14,7 +14,7 @@ https://api.plainflowerclub.com/docs
 
 ### 🧪 테스트 페이지:
 ```
-https://api.plainflowerclub.com/FRONTEND_TEST.html
+https://api.plainflowerclub.com/simple_test.html
 ```
 
 ---
