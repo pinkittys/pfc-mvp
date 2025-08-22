@@ -429,5 +429,61 @@
       "핑크"
     ],
     "excluded_keywords": []
+  },
+  "S250823-SWP-00001": {
+    "story_id": "S250823-SWP-00001",
+    "original_story": "정말 너무 피곤하다 며칠 째 밤새고 개발하고 있어 지친 나를 위한 선물이 필요해",
+    "created_at": "2025-08-23 00:01:02.384733",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "위로",
+        "percentage": 45.0,
+        "description": ""
+      },
+      {
+        "emotion": "따뜻함",
+        "percentage": 35.0,
+        "description": ""
+      },
+      {
+        "emotion": "응원",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Lathyrus Odoratus",
+    "flower_name_en": "스위트피",
+    "scientific_name": "Lathyrus Odoratus",
+    "flower_card_message": "\"Just keep swimming, just keep swimming.\"\\n- Finding Nemo -",
+    "flower_blend": {
+      "main_flower": "Lathyrus Odoratus",
+      "sub_flowers": [
+        "화이트 베이비 브레스",
+        "크림 로즈"
+      ],
+      "composition_name": "Gentle Comfort"
+    },
+    "season_info": "봄, 여름",
+    "recommendation_reason": "\"며칠째 밤새면서 개발하는 힘든 시간을 보내고 계신 만큼, 파스텔톤의 스위트피가 당신에게 따뜻한 위로를 전해줄 거예요. 이 꽃은 '행복한 추억'과 '달콤한 사랑'의 의미를 담고 있어, 지친 마음에 작은 행복을 선사하고 응원의 메시지를 전할 수 있을 거예요.\"",
+    "flower_image_url": "/images/lathyrus-odoratus/핑크.webp",
+    "keywords": [
+      "위로",
+      "따뜻함",
+      "응원",
+      "자기위로",
+      "편안한",
+      "파스텔톤"
+    ],
+    "hashtags": [
+      "#스위트피",
+      "#위로",
+      "#따뜻함",
+      "#응원"
+    ],
+    "color_keywords": [
+      "파스텔톤"
+    ],
+    "excluded_keywords": []
   }
 }

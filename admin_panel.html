@@ -819,6 +819,16 @@
                     <button class="btn btn-danger" onclick="clearFlowers()">🗑️ 모든 꽃 이미지 삭제</button>
                 </div>
             </div>
+
+            <div class="section">
+                <h2>🔍 이미지 검수 및 Supabase 업로드</h2>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <button class="btn btn-info" onclick="validateImages()">🔍 이미지 검수</button>
+                    <button class="btn btn-success" onclick="uploadToSupabase()">☁️ Supabase 업로드</button>
+                    <button class="btn btn-primary" onclick="validateAndUpload()">🚀 검수 후 업로드</button>
+                </div>
+                <div id="validation-results" style="margin-top: 20px;"></div>
+            </div>
             
 
 
@@ -1817,6 +1827,170 @@
                 console.error('삭제 실패:', error);
                 showStatus('삭제 중 오류가 발생했습니다.', 'error');
             }
+        }
+
+        // ===== 이미지 검수 및 Supabase 업로드 함수들 =====
+
+        async function validateImages() {
+            try {
+                showLoading('validation');
+                const response = await fetch('/api/v1/admin/validate-images', {
+                    method: 'GET'
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    displayValidationResults(data.validation_results);
+                    showStatus('이미지 검수 완료!', 'success');
+                } else {
+                    const error = await response.text();
+                    showStatus(`검수 실패: ${error}`, 'error');
+                }
+            } catch (error) {
+                console.error('검수 실패:', error);
+                showStatus('검수 중 오류가 발생했습니다.', 'error');
+            } finally {
+                hideLoading('validation');
+            }
+        }
+
+        async function uploadToSupabase() {
+            try {
+                showLoading('upload');
+                const response = await fetch('/api/v1/admin/upload-to-supabase', {
+                    method: 'POST'
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    displayUploadResults(data.upload_results);
+                    showStatus('Supabase 업로드 완료!', 'success');
+                } else {
+                    const error = await response.text();
+                    showStatus(`업로드 실패: ${error}`, 'error');
+                }
+            } catch (error) {
+                console.error('업로드 실패:', error);
+                showStatus('업로드 중 오류가 발생했습니다.', 'error');
+            } finally {
+                hideLoading('upload');
+            }
+        }
+
+        async function validateAndUpload() {
+            try {
+                showLoading('validation-upload');
+                const response = await fetch('/api/v1/admin/validate-and-upload', {
+                    method: 'POST'
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    displayValidationResults(data.validation);
+                    displayUploadResults(data.upload);
+                    displaySummary(data.summary);
+                    showStatus('검수 및 업로드 완료!', 'success');
+                } else {
+                    const error = await response.text();
+                    showStatus(`검수 및 업로드 실패: ${error}`, 'error');
+                }
+            } catch (error) {
+                console.error('검수 및 업로드 실패:', error);
+                showStatus('검수 및 업로드 중 오류가 발생했습니다.', 'error');
+            } finally {
+                hideLoading('validation-upload');
+            }
+        }
+
+        function displayValidationResults(results) {
+            const container = document.getElementById('validation-results');
+            container.innerHTML = `
+                <div class="validation-summary" style="background: rgba(255, 255, 255, 0.95); padding: 20px; border-radius: 15px; margin-bottom: 20px;">
+                    <h3>🔍 검수 결과 요약</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                        <div style="text-align: center; padding: 15px; background: #e8f5e8; border-radius: 10px;">
+                            <div style="font-size: 2rem; font-weight: bold; color: #2e7d32;">${results.total_files}</div>
+                            <div>총 파일 수</div>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: #e3f2fd; border-radius: 10px;">
+                            <div style="font-size: 2rem; font-weight: bold; color: #1976d2;">${results.valid_files}</div>
+                            <div>유효한 파일</div>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: #fff3e0; border-radius: 10px;">
+                            <div style="font-size: 2rem; font-weight: bold; color: #f57c00;">${results.invalid_files}</div>
+                            <div>잘못된 파일</div>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: #fce4ec; border-radius: 10px;">
+                            <div style="font-size: 2rem; font-weight: bold; color: #c2185b;">${results.missing_in_spreadsheet}</div>
+                            <div>스프레드시트 누락</div>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: #f3e5f5; border-radius: 10px;">
+                            <div style="font-size: 2rem; font-weight: bold; color: #7b1fa2;">${results.duplicate_files}</div>
+                            <div>중복 파일</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function displayUploadResults(results) {
+            const container = document.getElementById('validation-results');
+            const existingContent = container.innerHTML;
+            container.innerHTML = existingContent + `
+                <div class="upload-summary" style="background: rgba(255, 255, 255, 0.95); padding: 20px; border-radius: 15px; margin-bottom: 20px;">
+                    <h3>☁️ Supabase 업로드 결과</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                        <div style="text-align: center; padding: 15px; background: #e8f5e8; border-radius: 10px;">
+                            <div style="font-size: 2rem; font-weight: bold; color: #2e7d32;">${results.uploaded}</div>
+                            <div>업로드 성공</div>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: #e3f2fd; border-radius: 10px;">
+                            <div style="font-size: 2rem; font-weight: bold; color: #1976d2;">${results.skipped_existing}</div>
+                            <div>기존 파일 스킵</div>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: #fff3e0; border-radius: 10px;">
+                            <div style="font-size: 2rem; font-weight: bold; color: #f57c00;">${results.skipped_invalid}</div>
+                            <div>잘못된 파일 스킵</div>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: #fce4ec; border-radius: 10px;">
+                            <div style="font-size: 2rem; font-weight: bold; color: #c2185b;">${results.skipped_not_in_spreadsheet}</div>
+                            <div>스프레드시트 누락 스킵</div>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: #ffebee; border-radius: 10px;">
+                            <div style="font-size: 2rem; font-weight: bold; color: #d32f2f;">${results.failed}</div>
+                            <div>업로드 실패</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function displaySummary(summary) {
+            const container = document.getElementById('validation-results');
+            const existingContent = container.innerHTML;
+            container.innerHTML = existingContent + `
+                <div class="final-summary" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 15px; margin-bottom: 20px;">
+                    <h3>🎉 최종 결과 요약</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                        <div style="text-align: center; padding: 15px; background: rgba(255, 255, 255, 0.2); border-radius: 10px;">
+                            <div style="font-size: 2rem; font-weight: bold;">${summary.total_files}</div>
+                            <div>총 파일 수</div>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: rgba(255, 255, 255, 0.2); border-radius: 10px;">
+                            <div style="font-size: 2rem; font-weight: bold;">${summary.uploaded_files}</div>
+                            <div>업로드 성공</div>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: rgba(255, 255, 255, 0.2); border-radius: 10px;">
+                            <div style="font-size: 2rem; font-weight: bold;">${summary.skipped_files}</div>
+                            <div>스킵된 파일</div>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: rgba(255, 255, 255, 0.2); border-radius: 10px;">
+                            <div style="font-size: 2rem; font-weight: bold;">${summary.failed_files}</div>
+                            <div>실패한 파일</div>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
         // 페이지 로드 시 초기화

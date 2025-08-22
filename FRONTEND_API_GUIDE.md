@@ -207,17 +207,14 @@ GET /api/v1/stories/share/{encoded_id}
 
 ### 기본 설정:
 ```javascript
-const API_BASE = 'https://port-0-plainflowerclub-mej0wlho47c6df8c.sel5.cloudtype.app/api/v1';
-
-// 향후 변경 시:
-// const API_BASE = 'https://api.plainflowerclub.com/api/v1';
+const API_BASE = 'https://api.plainflowerclub.com';
 ```
 
 ### Health Check:
 ```javascript
 async function checkHealth() {
   try {
-    const response = await fetch('https://port-0-plainflowerclub-mej0wlho47c6df8c.sel5.cloudtype.app/health');
+    const response = await fetch('https://api.plainflowerclub.com/health');
     const data = await response.json();
     console.log('API 상태:', data);
     return data;
@@ -231,7 +228,7 @@ async function checkHealth() {
 ```javascript
 async function extractKeywords(story) {
   try {
-    const response = await fetch(`${API_BASE}/fast-context`, {
+    const response = await fetch(`${API_BASE}/api/v1/fast-context`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -250,7 +247,7 @@ async function extractKeywords(story) {
 ```javascript
 async function recommendFlowers(story, preferred_colors = [], excluded_flowers = [], top_k = 3) {
   try {
-    const response = await fetch(`${API_BASE}/recommendations`, {
+    const response = await fetch(`${API_BASE}/api/v1/recommendations`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -274,7 +271,7 @@ async function recommendFlowers(story, preferred_colors = [], excluded_flowers =
 ```javascript
 async function shareStory(storyId) {
   try {
-    const response = await fetch(`${API_BASE}/stories/share`, {
+    const response = await fetch(`${API_BASE}/api/v1/stories/share`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -290,7 +287,7 @@ async function shareStory(storyId) {
 
 async function getSharedStory(encodedId) {
   try {
-    const response = await fetch(`${API_BASE}/stories/share/${encodedId}`);
+    const response = await fetch(`${API_BASE}/api/v1/stories/share/${encodedId}`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -307,7 +304,7 @@ async function getSharedStory(encodedId) {
 ```javascript
 import { useState, useEffect } from 'react';
 
-const API_BASE = 'https://port-0-plainflowerclub-mej0wlho47c6df8c.sel5.cloudtype.app/api/v1';
+const API_BASE = 'https://api.plainflowerclub.com';
 
 export function useFlowerRecommendation() {
   const [loading, setLoading] = useState(false);
@@ -320,7 +317,7 @@ export function useFlowerRecommendation() {
     
     try {
       // 1. 키워드 추출
-      const contextResponse = await fetch(`${API_BASE}/fast-context`, {
+      const contextResponse = await fetch(`${API_BASE}/api/v1/fast-context`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ story })
@@ -328,7 +325,7 @@ export function useFlowerRecommendation() {
       const contextData = await contextResponse.json();
       
       // 2. 꽃 추천
-      const recommendResponse = await fetch(`${API_BASE}/recommendations`, {
+      const recommendResponse = await fetch(`${API_BASE}/api/v1/recommendations`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -379,5 +376,5 @@ API 관련 문의사항이 있으시면 백엔드 개발팀에 연락해주세�
 ## 🔄 업데이트 내역
 
 - **2025-08-22**: API 가이드 최초 작성
-- **현재 URL**: Cloudtype 임시 URL 사용 중
-- **향후 업데이트**: SSL 인증서 해결 후 도메인 변경 예정
+- **2025-08-23**: SSL 인증서 해결 완료, 도메인 URL로 변경
+- **현재 URL**: `https://api.plainflowerclub.com`

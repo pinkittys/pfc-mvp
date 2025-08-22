@@ -1180,3 +1180,243 @@ async def update_base64_images():
     except Exception as e:
         print(f"❌ base64_images.json 업데이트 실패: {e}")
         raise e
+
+@router.get("/validate-images")
+async def validate_images():
+    """로컬 이미지와 구글 스프레드시트 규칙 검증"""
+    try:
+        from scripts.upload_local_images import sanitize_filename
+        import requests
+        
+        # 구글 스프레드시트에서 flower_id 목록 가져오기
+        spreadsheet_flower_ids = []
+        try:
+            from scripts.sync_flower_database import FlowerDatabaseSync
+            syncer = FlowerDatabaseSync()
+            spreadsheet_data = syncer.get_spreadsheet_data()
+            if spreadsheet_data:
+                spreadsheet_flower_ids = [item.get('flower_id', '') for item in spreadsheet_data if item.get('flower_id')]
+        except Exception as e:
+            print(f"스프레드시트 데이터 가져오기 실패: {e}")
+        
+        # 로컬 이미지 스캔
+        image_dirs = ['data/images_webp']
+        validation_results = {
+            "total_files": 0,
+            "valid_files": 0,
+            "invalid_files": 0,
+            "missing_in_spreadsheet": 0,
+            "duplicate_files": 0,
+            "files": []
+        }
+        
+        seen_filenames = set()
+        
+        for image_dir in image_dirs:
+            if not os.path.exists(image_dir):
+                continue
+                
+            for file_path in Path(image_dir).rglob("*.webp"):
+                relative_path = file_path.relative_to(Path(image_dir))
+                original_filename = str(relative_path)
+                
+                validation_results["total_files"] += 1
+                
+                # 파일명 검증
+                sanitized_filename = sanitize_filename(original_filename)
+                
+                file_info = {
+                    "original_filename": original_filename,
+                    "sanitized_filename": sanitized_filename,
+                    "is_valid_format": sanitized_filename is not None,
+                    "exists_in_spreadsheet": False,
+                    "is_duplicate": False,
+                    "file_size": os.path.getsize(file_path),
+                    "file_path": str(file_path)
+                }
+                
+                # 중복 체크
+                if sanitized_filename and sanitized_filename in seen_filenames:
+                    file_info["is_duplicate"] = True
+                    validation_results["duplicate_files"] += 1
+                elif sanitized_filename:
+                    seen_filenames.add(sanitized_filename)
+                
+                # 스프레드시트 존재 여부 체크
+                if sanitized_filename:
+                    flower_id = sanitized_filename.replace('.webp', '')
+                    if flower_id in spreadsheet_flower_ids:
+                        file_info["exists_in_spreadsheet"] = True
+                        validation_results["valid_files"] += 1
+                    else:
+                        validation_results["missing_in_spreadsheet"] += 1
+                else:
+                    validation_results["invalid_files"] += 1
+                
+                validation_results["files"].append(file_info)
+        
+        return {
+            "success": True,
+            "validation_results": validation_results,
+            "spreadsheet_flower_count": len(spreadsheet_flower_ids)
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/upload-to-supabase")
+async def upload_to_supabase():
+    """검증된 이미지를 Supabase Storage에 업로드"""
+    try:
+        from scripts.upload_local_images import sanitize_filename, check_file_exists
+        import requests
+        
+        # 환경 변수 확인
+        supabase_url = os.getenv("SUPABASE_URL")
+        supabase_key = os.getenv("SUPABASE_ANON_KEY")
+        bucket_name = os.getenv("SUPABASE_BUCKET", "flowers")
+        
+        if not supabase_url or not supabase_key:
+            raise HTTPException(status_code=500, detail="Supabase 설정이 없습니다")
+        
+        # 구글 스프레드시트에서 flower_id 목록 가져오기
+        spreadsheet_flower_ids = []
+        try:
+            from scripts.sync_flower_database import FlowerDatabaseSync
+            syncer = FlowerDatabaseSync()
+            spreadsheet_data = syncer.get_spreadsheet_data()
+            if spreadsheet_data:
+                spreadsheet_flower_ids = [item.get('flower_id', '') for item in spreadsheet_data if item.get('flower_id')]
+        except Exception as e:
+            print(f"스프레드시트 데이터 가져오기 실패: {e}")
+        
+        # 업로드 결과
+        upload_results = {
+            "total_processed": 0,
+            "uploaded": 0,
+            "skipped_existing": 0,
+            "skipped_invalid": 0,
+            "skipped_not_in_spreadsheet": 0,
+            "failed": 0,
+            "details": []
+        }
+        
+        # 로컬 이미지 처리
+        image_dirs = ['data/images_webp']
+        
+        for image_dir in image_dirs:
+            if not os.path.exists(image_dir):
+                continue
+                
+            for file_path in Path(image_dir).rglob("*.webp"):
+                relative_path = file_path.relative_to(Path(image_dir))
+                original_filename = str(relative_path)
+                
+                upload_results["total_processed"] += 1
+                
+                # 파일명 검증
+                sanitized_filename = sanitize_filename(original_filename)
+                
+                file_result = {
+                    "original_filename": original_filename,
+                    "sanitized_filename": sanitized_filename,
+                    "status": "unknown",
+                    "message": ""
+                }
+                
+                # 유효하지 않은 파일명 스킵
+                if not sanitized_filename:
+                    file_result["status"] = "skipped_invalid"
+                    file_result["message"] = "잘못된 파일명 형식"
+                    upload_results["skipped_invalid"] += 1
+                    upload_results["details"].append(file_result)
+                    continue
+                
+                # 스프레드시트에 없는 파일 스킵
+                flower_id = sanitized_filename.replace('.webp', '')
+                if flower_id not in spreadsheet_flower_ids:
+                    file_result["status"] = "skipped_not_in_spreadsheet"
+                    file_result["message"] = "스프레드시트에 존재하지 않음"
+                    upload_results["skipped_not_in_spreadsheet"] += 1
+                    upload_results["details"].append(file_result)
+                    continue
+                
+                # 이미 존재하는 파일 스킵
+                if check_file_exists(sanitized_filename):
+                    file_result["status"] = "skipped_existing"
+                    file_result["message"] = "이미 Supabase에 존재"
+                    upload_results["skipped_existing"] += 1
+                    upload_results["details"].append(file_result)
+                    continue
+                
+                # Supabase에 업로드
+                try:
+                    with open(file_path, 'rb') as f:
+                        file_content = f.read()
+                    
+                    upload_url = f"{supabase_url}/storage/v1/object/{bucket_name}/{sanitized_filename}"
+                    upload_headers = {
+                        'apikey': supabase_key,
+                        'Authorization': f'Bearer {supabase_key}',
+                        'Content-Type': 'image/webp'
+                    }
+                    
+                    response = requests.post(
+                        upload_url,
+                        headers=upload_headers,
+                        data=file_content
+                    )
+                    
+                    if response.status_code == 200:
+                        file_result["status"] = "uploaded"
+                        file_result["message"] = "업로드 성공"
+                        upload_results["uploaded"] += 1
+                    else:
+                        file_result["status"] = "failed"
+                        file_result["message"] = f"업로드 실패: {response.status_code}"
+                        upload_results["failed"] += 1
+                        
+                except Exception as e:
+                    file_result["status"] = "failed"
+                    file_result["message"] = f"업로드 오류: {str(e)}"
+                    upload_results["failed"] += 1
+                
+                upload_results["details"].append(file_result)
+        
+        return {
+            "success": True,
+            "upload_results": upload_results,
+            "spreadsheet_flower_count": len(spreadsheet_flower_ids)
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/validate-and-upload")
+async def validate_and_upload():
+    """이미지 검증 후 Supabase 업로드 (통합 프로세스)"""
+    try:
+        # 1. 이미지 검증
+        validation_response = await validate_images()
+        validation_results = validation_response["validation_results"]
+        
+        # 2. Supabase 업로드
+        upload_response = await upload_to_supabase()
+        upload_results = upload_response["upload_results"]
+        
+        return {
+            "success": True,
+            "message": "검증 및 업로드 완료",
+            "validation": validation_results,
+            "upload": upload_results,
+            "summary": {
+                "total_files": validation_results["total_files"],
+                "valid_files": validation_results["valid_files"],
+                "uploaded_files": upload_results["uploaded"],
+                "skipped_files": upload_results["skipped_existing"] + upload_results["skipped_invalid"] + upload_results["skipped_not_in_spreadsheet"],
+                "failed_files": upload_results["failed"]
+            }
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

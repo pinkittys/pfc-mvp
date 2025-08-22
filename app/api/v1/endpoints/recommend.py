@@ -22,6 +22,7 @@ from app.services.story_classifier import StoryClassifier
 from app.services.design_flower_matcher import DesignFlowerMatcher
 from app.services.realtime_context_extractor import RealtimeContextExtractor
 from app.services.story_manager import story_manager
+from app.utils.request_deduplication import request_deduplicator
 
 router = APIRouter()
 
@@ -30,20 +31,84 @@ def get_chain():
 
 @router.post("/recommendations", response_model=RecommendResponse)
 def recommendations(req: RecommendRequest, chain: IntegratedRecommendationChain = Depends(get_chain)):
-    """통합 추천 엔드포인트"""
+    """통합 추천 엔드포인트 (중복 요청 방지 포함)"""
     try:
+        # 요청 ID 생성
+        request_id = request_deduplicator.generate_request_id(
+            req.story, 
+            req.preferred_colors, 
+            req.excluded_flowers
+        )
+        
+        print(f"🔍 요청 ID 생성: {request_id}")
+        
+        # 캐시된 결과가 있는지 확인
+        cached_result = request_deduplicator.get_cached_result(request_id)
+        if cached_result:
+            print(f"📋 캐시된 결과 반환: {request_id}")
+            return RecommendResponse(**cached_result)
+        
+        # 중복 요청인지 확인
+        if not request_deduplicator.should_process_request(request_id):
+            print(f"⏳ 중복 요청 대기 중: {request_id}")
+            # 잠시 대기 후 다시 확인
+            import time
+            time.sleep(0.1)
+            cached_result = request_deduplicator.get_cached_result(request_id)
+            if cached_result:
+                return RecommendResponse(**cached_result)
+            else:
+                raise HTTPException(status_code=429, detail="요청이 너무 빠릅니다. 잠시 후 다시 시도해주세요.")
+        
+        # 실제 요청 처리
+        print(f"🚀 새로운 요청 처리 시작: {request_id}")
         result = chain.run(req)
+        
+        # 결과 캐시에 저장
+        request_deduplicator.mark_request_completed(request_id, result.dict())
+        
         return result
+        
     except Exception as e:
+        print(f"❌ 추천 API 오류: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 
 
 @router.post("/emotion-analysis", response_model=EmotionAnalysisResponse)
 def emotion_analysis(req: RecommendRequest):
-    """감정 분석 + 꽃 매칭 + 구성 추천 (사연 유형 분류 포함)"""
+    """감정 분석 + 꽃 매칭 + 구성 추천 (사연 유형 분류 포함) - 중복 요청 방지 포함"""
     
     try:
+        # 요청 ID 생성 (emotion-analysis용)
+        request_id = request_deduplicator.generate_request_id(
+            req.story, 
+            req.preferred_colors, 
+            req.excluded_flowers
+        ) + "_emotion"  # emotion-analysis와 구분
+        
+        print(f"🔍 Emotion Analysis 요청 ID 생성: {request_id}")
+        
+        # 캐시된 결과가 있는지 확인
+        cached_result = request_deduplicator.get_cached_result(request_id)
+        if cached_result:
+            print(f"📋 Emotion Analysis 캐시된 결과 반환: {request_id}")
+            return EmotionAnalysisResponse(**cached_result)
+        
+        # 중복 요청인지 확인
+        if not request_deduplicator.should_process_request(request_id):
+            print(f"⏳ Emotion Analysis 중복 요청 대기 중: {request_id}")
+            # 잠시 대기 후 다시 확인
+            import time
+            time.sleep(0.1)
+            cached_result = request_deduplicator.get_cached_result(request_id)
+            if cached_result:
+                return EmotionAnalysisResponse(**cached_result)
+            else:
+                raise HTTPException(status_code=429, detail="요청이 너무 빠릅니다. 잠시 후 다시 시도해주세요.")
+        
+        # 실제 요청 처리
+        print(f"🚀 Emotion Analysis 새로운 요청 처리 시작: {request_id}")
         # 1. 감정 분석 (사연에 맞는 감정 비중)
         emotion_analyzer = EmotionAnalyzer()
         emotions = emotion_analyzer.analyze(req.story)
@@ -139,7 +204,8 @@ def emotion_analysis(req: RecommendRequest):
             print(f"⚠️ 스토리 저장 실패: {e}")
             # 스토리 저장 실패해도 추천 결과는 반환
         
-        return EmotionAnalysisResponse(
+        # 결과 생성
+        result = EmotionAnalysisResponse(
             emotions=emotions,
             matched_flower=matched_flower,
             composition=composition,
@@ -147,6 +213,11 @@ def emotion_analysis(req: RecommendRequest):
             flower_card_message=flower_card_message,
             story_id=story_data.story_id if 'story_data' in locals() else None
         )
+        
+        # 결과 캐시에 저장
+        request_deduplicator.mark_request_completed(request_id, result.dict())
+        
+        return result
         
     except Exception as e:
         print(f"❌ 감정 분석 API 오류: {e}")
