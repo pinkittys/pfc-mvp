@@ -505,23 +505,36 @@ def _get_season_info(flower_name: str) -> str:
 def extract_context(req: RecommendRequest):
     """맥락 키워드 추출 엔드포인트 (중복 요청 방지 포함)"""
     try:
-        # 요청 ID 생성 (extract-context용)
-        request_id = request_deduplicator.generate_request_id(
+        # 요청 ID 생성 (extract-context용) - updated_context 포함
+        base_request_id = request_deduplicator.generate_request_id(
             req.story, 
             req.preferred_colors, 
             req.excluded_flowers
-        ) + "_context"  # extract-context와 구분
+        )
+        
+        # 업데이트된 컨텍스트가 있으면 요청 ID에 포함
+        if hasattr(req, 'updated_context') and req.updated_context:
+            import hashlib
+            context_str = str(req.updated_context)
+            context_hash = hashlib.md5(context_str.encode()).hexdigest()[:8]
+            request_id = f"{base_request_id}_{context_hash}_context"
+        else:
+            request_id = f"{base_request_id}_context"
         
         print(f"🔍 Extract Context 요청 ID 생성: {request_id}")
         
-        # 캐시된 결과가 있는지 확인
-        cached_result = request_deduplicator.get_cached_result(request_id)
-        if cached_result:
-            print(f"📋 Extract Context 캐시된 결과 반환: {request_id}")
-            return cached_result
+        # 업데이트된 컨텍스트가 있으면 캐시 무시하고 새로 처리
+        has_updated_context = hasattr(req, 'updated_context') and req.updated_context
         
-        # 중복 요청인지 확인
-        if not request_deduplicator.should_process_request(request_id):
+        # 캐시된 결과가 있는지 확인 (업데이트된 컨텍스트가 없을 때만)
+        if not has_updated_context:
+            cached_result = request_deduplicator.get_cached_result(request_id)
+            if cached_result:
+                print(f"📋 Extract Context 캐시된 결과 반환: {request_id}")
+                return cached_result
+        
+        # 중복 요청인지 확인 (업데이트된 컨텍스트가 없을 때만)
+        if not has_updated_context and not request_deduplicator.should_process_request(request_id):
             print(f"⏳ Extract Context 중복 요청 대기 중: {request_id}")
             # 잠시 대기 후 다시 확인
             import time
