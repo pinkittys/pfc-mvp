@@ -47,14 +47,6 @@ async def health_check():
         }
     }
 
-@app.get("/test")
-async def test():
-    return FileResponse("test_frontend.html")
-
-@app.get("/test_frontend.html")
-async def test_frontend():
-    return FileResponse("test_frontend.html")
-
 @app.get("/admin")
 async def admin_panel():
     return FileResponse("admin_panel.html")
@@ -66,15 +58,3 @@ async def admin_panel_html():
 @app.get("/simple_test.html")
 async def simple_test():
     return FileResponse("simple_test.html")
-
-@app.get("/FRONTEND_TEST.html")
-async def frontend_test():
-    import os
-    file_path = os.path.join(os.getcwd(), "FRONTEND_TEST.html")
-    return FileResponse(file_path)
-
-@app.get("/frontend_test.html")
-async def frontend_test_lower():
-    import os
-    file_path = os.path.join(os.getcwd(), "FRONTEND_TEST.html")
-    return FileResponse(file_path)
