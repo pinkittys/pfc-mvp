@@ -69,8 +69,12 @@ async def simple_test():
 
 @app.get("/FRONTEND_TEST.html")
 async def frontend_test():
-    return FileResponse("./FRONTEND_TEST.html")
+    import os
+    file_path = os.path.join(os.getcwd(), "FRONTEND_TEST.html")
+    return FileResponse(file_path)
 
 @app.get("/frontend_test.html")
 async def frontend_test_lower():
-    return FileResponse("./FRONTEND_TEST.html")
+    import os
+    file_path = os.path.join(os.getcwd(), "FRONTEND_TEST.html")
+    return FileResponse(file_path)
