@@ -1865,6 +1865,9 @@
                 };
                 
                 console.log('📤 API 요청 데이터:', requestBody);
+                console.log('🎨 컬러 변경 디버깅:');
+                console.log('  - 요청 컬러:', updatedContext.colors);
+                console.log('  - preferred_colors:', requestBody.preferred_colors);
                 
                 const response = await fetch(`${API_BASE}/recommendations`, {
                     method: 'POST',
@@ -1878,6 +1881,13 @@
                     const newData = await response.json();
                     
                     console.log('📥 API 응답 데이터:', newData);
+                    console.log('🌸 추천된 꽃 정보:');
+                    if (newData.recommendations && newData.recommendations.length > 0) {
+                        console.log('  - 꽃 이름:', newData.recommendations[0].flower_name);
+                        console.log('  - 한국어 이름:', newData.recommendations[0].korean_name);
+                        console.log('  - 이미지 URL:', newData.recommendations[0].image_url);
+                        console.log('  - 색상 테마:', newData.recommendations[0].color_theme);
+                    }
                     
                     // recommendations API 응답 형식에 맞게 변환
                     const convertedData = {
