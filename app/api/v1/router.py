@@ -10,11 +10,19 @@ api_v1_router.include_router(admin.router, prefix="/admin", tags=["admin"])
 api_v1_router.include_router(fast_context.router, tags=["fast-context"])
 
 # Stories 라우터 등록 - 명시적으로 확인
-print("🔧 Stories 라우터 등록 중...")
-api_v1_router.include_router(stories.router, prefix="/stories", tags=["stories"])
-print("✅ Stories 라우터 등록 완료")
-
-# 등록된 라우터 확인
-print("📋 등록된 라우터:")
-for route in api_v1_router.routes:
-    print(f"  - {route.path} [{', '.join(route.methods)}]")
+try:
+    print("🔧 Stories 라우터 등록 중...")
+    print(f"Stories router: {stories.router}")
+    print(f"Stories router routes: {stories.router.routes}")
+    
+    api_v1_router.include_router(stories.router, prefix="/stories", tags=["stories"])
+    print("✅ Stories 라우터 등록 완료")
+    
+    # 등록된 라우터 확인
+    print("📋 등록된 라우터:")
+    for route in api_v1_router.routes:
+        print(f"  - {route.path} [{', '.join(route.methods)}]")
+        
+except Exception as e:
+    print(f"❌ Stories 라우터 등록 실패: {e}")
+    raise e
