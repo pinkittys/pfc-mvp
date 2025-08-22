@@ -318,15 +318,15 @@ class RealtimeContextExtractor:
             "노랑": ["노랑", "옐로우", "골드", "밝은"],
             "오렌지": ["오렌지", "주황", "따뜻한", "활기"],
             "그린": ["그린", "초록", "자연", "내추럴"],
-            "파스텔톤": ["파스텔톤", "파스텔", "부드러운 색", "연한 색", "부드러운"]
+            # "파스텔톤": ["파스텔톤", "파스텔", "부드러운 색", "연한 색", "부드러운"]  # 파스텔톤은 색상이 아닌 톤이므로 제외
         }
         
         # 명시적 색상 요청 우선 처리
         story_lower = story.lower()
         
         # 명시적 색상 요청이 있으면 최우선 처리
-        if any(keyword in story_lower for keyword in ["옅은 핑크", "파스텔", "부드러운 색감", "연한 핑크"]):
-            colors = ["파스텔톤"]
+        if any(keyword in story_lower for keyword in ["옅은 핑크", "부드러운 색감", "연한 핑크"]):
+            colors = ["핑크"]  # 파스텔톤 대신 핑크로 매핑
         # 성공/창업 관련 키워드 (최우선) - 맥락에 따라 색상 결정
         elif any(keyword in story_lower for keyword in ["성공", "창업", "합격", "졸업", "승리", "성취", "축하"]):
             # 화려한 + 합격/성공 → 레드 (화려한 축하)
@@ -340,8 +340,8 @@ class RealtimeContextExtractor:
         # 새로운 시작/응원 관련 키워드
         elif any(keyword in story_lower for keyword in ["새로운 시작", "응원", "희망", "미래", "앞으로", "시작", "도전", "다시", "괜찮아", "격려", "힘내", "화이팅"]):
             # 명시적 색상 요청이 있으면 우선
-            if any(keyword in story_lower for keyword in ["핑크", "파스텔", "부드러운", "옅은"]):
-                colors = ["파스텔톤"]
+            if any(keyword in story_lower for keyword in ["핑크", "부드러운", "옅은"]):
+                colors = ["핑크"]  # 파스텔톤 대신 핑크로 매핑
             else:
                 colors = ["옐로우"]
         # 사랑 관련 키워드 - 세분화된 매핑
@@ -361,12 +361,12 @@ class RealtimeContextExtractor:
         # 우아함/고급스러움/신비로움 관련 키워드 → 퍼플
         elif any(keyword in story_lower for keyword in ["우아한", "고급스러운", "세련된", "품격 있는", "신비로운", "아름다운", "유니크한", "특별한", "독특한"]):
             colors = ["퍼플"]
-        # 위로/따뜻함 관련 키워드 → 파스텔톤/핑크 (명시적 색상 요청이 없을 때만)
-        elif any(keyword in story_lower for keyword in ["위로", "지쳐", "힘들", "피곤", "스트레스", "야근", "고생", "고민", "걱정", "따뜻한", "부드러운", "포근한", "부드러운 색감", "옅은 핑크"]) and not any(color in story_lower for color in ["블루", "파랑", "푸른", "블루톤", "파스텔톤", "파스텔", "핑크", "레드", "화이트", "노랑", "옐로우", "오렌지", "퍼플", "보라", "그린", "초록"]):
-            colors = ["파스텔톤"]  # 부드럽고 따뜻한 위로
-        # 파스텔톤 관련 키워드
+        # 위로/따뜻함 관련 키워드 → 핑크 (명시적 색상 요청이 없을 때만)
+        elif any(keyword in story_lower for keyword in ["위로", "지쳐", "힘들", "피곤", "스트레스", "야근", "고생", "고민", "걱정", "따뜻한", "부드러운", "포근한", "부드러운 색감", "옅은 핑크"]) and not any(color in story_lower for color in ["블루", "파랑", "푸른", "블루톤", "핑크", "레드", "화이트", "노랑", "옐로우", "오렌지", "퍼플", "보라", "그린", "초록"]):
+            colors = ["핑크"]  # 부드럽고 따뜻한 위로
+        # 파스텔톤 관련 키워드 → 핑크로 매핑
         elif any(keyword in story_lower for keyword in ["파스텔톤", "파스텔", "부드러운 색", "연한 색"]):
-            colors = ["파스텔톤"]
+            colors = ["핑크"]  # 파스텔톤 대신 핑크로 매핑
         # 강렬한/비비드 색상 관련 키워드
         elif any(keyword in story_lower for keyword in ["강렬한", "알록달록", "화려한", "형형색색", "비비드", "선명한", "포인트"]):
             colors = ["노랑"]  # 가장 비비드한 색상
