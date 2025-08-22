@@ -388,7 +388,7 @@ class RealtimeContextExtractor:
         
         # 사용자 의도 분석 (의미 기반 vs 디자인 기반)
         meaning_based_keywords = ["의미", "꽃말", "상징", "메시지", "마음", "감정", "사랑", "감사", "위로", "격려", "축하", "응원", "희망", "우정", "사과", "용서"]
-        design_based_keywords = ["색상", "컬러", "무드", "분위기", "디자인", "화려한", "부드러운", "따뜻한", "우아한", "세련된", "파스텔톤", "핑크", "레드", "블루", "옐로우", "화이트", "퍼플"]
+        design_based_keywords = ["색상", "컬러", "무드", "분위기", "디자인", "화려한", "부드러운", "따뜻한", "우아한", "세련된", "핑크", "레드", "블루", "옐로우", "화이트", "퍼플"]
         
         meaning_based_count = sum(1 for keyword in meaning_based_keywords if keyword in story_lower)
         design_based_count = sum(1 for keyword in design_based_keywords if keyword in story_lower)
@@ -687,8 +687,6 @@ class RealtimeContextExtractor:
                         colors.append("화이트")
                     if "퍼플" not in colors:
                         colors.append("퍼플")
-                    if "파스텔톤" not in colors:
-                        colors.append("파스텔톤")
             print(f"🎭 분위기만 지정: {colors} (3개 옵션 제안)")
         else:
             # 기본 색상이 추출된 경우: 기본 색상 추가 (긴 텍스트에서만)
