@@ -1872,6 +1872,10 @@
                 };
                 
                 console.log('📤 API 요청 데이터:', requestBody);
+                console.log('🔍 컬러 변경 디버깅 상세:');
+                console.log('  - updated_context.colors:', updatedContext.colors);
+                console.log('  - requestBody.preferred_colors:', requestBody.preferred_colors);
+                console.log('  - requestBody.updated_context.colors:', requestBody.updated_context.colors);
                 console.log('🎨 컬러 변경 디버깅:');
                 console.log('  - 요청 컬러:', updatedContext.colors);
                 console.log('  - preferred_colors:', requestBody.preferred_colors);
@@ -1888,6 +1892,11 @@
                     const newData = await response.json();
                     
                     console.log('📥 API 응답 데이터:', newData);
+                console.log('🔍 API 응답 컬러 확인:');
+                if (newData.recommendations && newData.recommendations[0]) {
+                    console.log('  - 추천된 꽃 색상:', newData.recommendations[0].color_theme);
+                    console.log('  - 요청했던 컬러:', requestBody.preferred_colors);
+                }
                     console.log('🌸 추천된 꽃 정보:');
                     if (newData.recommendations && newData.recommendations.length > 0) {
                         console.log('  - 꽃 이름:', newData.recommendations[0].flower_name);
