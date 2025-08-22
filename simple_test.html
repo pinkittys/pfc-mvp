@@ -1451,8 +1451,8 @@
                 '블루': ['퍼플', '그린', '화이트'],
                 '그린': ['블루', '화이트', '옐로우'],
                 
-                // 파스텔톤 (휴식/편안함 컨텍스트) - DB 컬러로 매핑
-                '파스텔톤': ['화이트', '핑크', '그린', '블루'],
+                        // 파스텔톤 제거 (색상이 아닌 톤이므로)
+        // '파스텔톤': ['화이트', '핑크', '그린', '블루'],
                 '하늘색': ['블루', '화이트', '퍼플'],
                 '연보라': ['퍼플', '핑크', '블루'],
                 '연핑크': ['핑크', '화이트', '퍼플'],
@@ -1819,9 +1819,18 @@
         
         // 키워드 변경 시 매칭 업데이트 함수
         let currentRequestController = null;
+        let isProcessingRequest = false;  // 요청 처리 중 플래그 추가
         
         async function updateMatchingWithNewKeywords() {
             try {
+                // 이미 요청이 처리 중이면 무시
+                if (isProcessingRequest) {
+                    console.log('⚠️ 요청이 이미 처리 중입니다. 중복 요청 무시.');
+                    return;
+                }
+                
+                isProcessingRequest = true;  // 요청 처리 시작
+                
                 // 이전 요청이 진행 중이면 취소
                 if (currentRequestController) {
                     console.log('🔄 이전 요청 취소 중...');
@@ -1939,6 +1948,7 @@
                     
                     // 요청 완료 후 controller 정리
                     currentRequestController = null;
+                    isProcessingRequest = false;  // 요청 처리 완료
                 }
                 
             } catch (error) {
@@ -1950,6 +1960,7 @@
                 
                 // 에러 발생 시에도 controller 정리
                 currentRequestController = null;
+                isProcessingRequest = false;  // 요청 처리 완료
             }
         }
         
