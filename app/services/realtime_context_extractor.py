@@ -597,11 +597,8 @@ class RealtimeContextExtractor:
         
         # 색상 우선순위 처리 (여러 색상이 추출된 경우)
         if len(colors) > 1:
-            # 파스텔톤이 있으면 우선
-            if "파스텔톤" in colors:
-                colors = ["파스텔톤"]
             # 핑크가 있으면 우선 (로맨틱/부드러운 느낌)
-            elif "핑크" in colors:
+            if "핑크" in colors:
                 colors = ["핑크"]
             # 옐로우가 있으면 우선 (희망/기쁨)
             elif "옐로우" in colors:
@@ -621,7 +618,7 @@ class RealtimeContextExtractor:
         has_idiom = any(idiom in story for idiom in idiom_expressions)
         
         # 명시적 컬러 키워드 체크 (관용어 제외)
-        explicit_color_keywords = ["핑크", "레드", "블루", "화이트", "노랑", "옐로우", "퍼플", "보라", "오렌지", "그린", "초록", "파스텔톤", "파스텔"]
+        explicit_color_keywords = ["핑크", "레드", "블루", "화이트", "노랑", "옐로우", "퍼플", "보라", "오렌지", "그린", "초록"]
         has_explicit_color = any(color in story_lower for color in explicit_color_keywords)
         
         # 관용어가 있으면 색상 추출 제외하고 위로/슬픔 감정으로 분류
@@ -652,8 +649,6 @@ class RealtimeContextExtractor:
             # 분위기만 지정된 경우: 3개 옵션 제안
             if len(colors) < 3:
                 if "부드러운" in story_lower or "부드러운 꽃" in story_lower:
-                    if "파스텔톤" not in colors:
-                        colors.append("파스텔톤")
                     if "핑크" not in colors:
                         colors.append("핑크")
                     if "화이트" not in colors:
@@ -661,13 +656,9 @@ class RealtimeContextExtractor:
                 elif "남편" in story_lower or "아내" in story_lower:
                     if "핑크" not in colors:
                         colors.append("핑크")
-                    if "파스텔톤" not in colors:
-                        colors.append("파스텔톤")
                     if "레드" not in colors:
                         colors.append("레드")
                 elif "고마워" in story_lower or "감사" in story_lower:
-                    if "파스텔톤" not in colors:
-                        colors.append("파스텔톤")
                     if "핑크" not in colors:
                         colors.append("핑크")
                     if "화이트" not in colors:
@@ -677,8 +668,6 @@ class RealtimeContextExtractor:
                         colors.append("핑크")
                     if "오렌지" not in colors:
                         colors.append("오렌지")
-                    if "파스텔톤" not in colors:
-                        colors.append("파스텔톤")
                 elif "로맨틱한" in story_lower:
                     if "핑크" not in colors:
                         colors.append("핑크")
@@ -704,7 +693,7 @@ class RealtimeContextExtractor:
         else:
             # 기본 색상이 추출된 경우: 기본 색상 추가 (긴 텍스트에서만)
             if len(colors) < 2 and len(story.strip()) > 30:
-                default_colors = ["파스텔톤", "핑크", "화이트", "레드", "블루"]
+                default_colors = ["핑크", "화이트", "레드", "블루"]
                 for color in default_colors:
                     if color not in colors and len(colors) < 3:
                         colors.append(color)
@@ -740,7 +729,7 @@ class RealtimeContextExtractor:
             situations = []  # 상황은 추출하지 않음
             moods = []  # 무드는 추출하지 않음
             # 색상은 명시적 색상 키워드가 있을 때만
-            explicit_colors = ["블루", "파랑", "푸른", "블루톤", "파스텔톤", "파스텔", "핑크", "레드", "화이트", "노랑", "옐로우", "오렌지", "퍼플", "보라", "그린", "초록"]
+            explicit_colors = ["블루", "파랑", "푸른", "블루톤", "핑크", "레드", "화이트", "노랑", "옐로우", "오렌지", "퍼플", "보라", "그린", "초록"]
             if any(color in story.lower() for color in explicit_colors):
                 colors = colors[:1] if colors else []
             else:
@@ -753,7 +742,7 @@ class RealtimeContextExtractor:
             situations = situations[:1] if situations else []
             moods = []  # 무드는 추출하지 않음
             # 색상은 명시적 색상 키워드가 있을 때만
-            explicit_colors = ["블루", "파랑", "푸른", "블루톤", "파스텔톤", "파스텔", "핑크", "레드", "화이트", "노랑", "옐로우", "오렌지", "퍼플", "보라", "그린", "초록"]
+            explicit_colors = ["블루", "파랑", "푸른", "블루톤", "핑크", "레드", "화이트", "노랑", "옐로우", "오렌지", "퍼플", "보라", "그린", "초록"]
             if any(color in story.lower() for color in explicit_colors):
                 colors = colors[:1] if colors else []
             else:
