@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlainFlowerClub - 프론트엔드 개발자 테스트</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .brand {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2C3E50;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            color: #6c757d;
+        }
+        
+        .test-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+        
+        .test-button {
+            background: #2C3E50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .test-button:hover {
+            background: #34495E;
+            transform: translateY(-1px);
+        }
+        
+        .test-button.success {
+            background: #27ae60;
+        }
+        
+        .test-button.error {
+            background: #e74c3c;
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            text-align: left;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .loading {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .story-input {
+            width: 100%;
+            min-height: 100px;
+            padding: 15px;
+            border: 2px solid #E9ECEF;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+            resize: vertical;
+            margin-bottom: 15px;
+        }
+        
+        .story-input:focus {
+            outline: none;
+            border-color: #2C3E50;
+        }
+        
+        .api-info {
+            background: #e3f2fd;
+            color: #1565c0;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .api-url {
+            font-family: monospace;
+            background: #f5f5f5;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="brand">PlainFlowerClub</div>
+            <div class="subtitle">프론트엔드 개발자 API 테스트</div>
+        </div>
+        
+        <div class="api-info">
+            <h3>📡 API 서버 정보</h3>
+            <p><strong>현재 URL:</strong></p>
+            <div class="api-url">https://port-0-plainflowerclub-mej0wlho47c6df8c.sel5.cloudtype.app/api/v1</div>
+            <p><strong>향후 URL (SSL 해결 후):</strong></p>
+            <div class="api-url">https://api.plainflowerclub.com/api/v1</div>
+        </div>
+        
+        <div class="test-section">
+            <h3>🔍 기본 API 테스트</h3>
+            <button class="test-button" onclick="testHealth()">Health Check</button>
+            <button class="test-button" onclick="testAllEndpoints()">전체 엔드포인트 테스트</button>
+            <div id="basicResult" class="result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>🌺 꽃 추천 시스템 테스트</h3>
+            <textarea class="story-input" id="storyInput" placeholder="스토리를 입력해주세요... 예: 오늘 친구와 함께 카페에 갔어요. 분위기가 정말 좋았고 커피도 맛있었어요.">오늘 친구와 함께 카페에 갔어요. 분위기가 정말 좋았고 커피도 맛있었어요.</textarea>
+            <button class="test-button" onclick="testFastContext()">빠른 키워드 추출</button>
+            <button class="test-button" onclick="testExtractContext()">상세 키워드 추출</button>
+            <button class="test-button" onclick="testEmotionAnalysis()">감정 분석</button>
+            <button class="test-button" onclick="testFullRecommendation()">전체 꽃 추천</button>
+            <div id="recommendationResult" class="result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>📤 스토리 공유 테스트</h3>
+            <button class="test-button" onclick="testShareStory()">스토리 공유 URL 생성</button>
+            <button class="test-button" onclick="testGetSharedStory()">공유된 스토리 조회</button>
+            <div id="shareResult" class="result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>📊 테스트 결과 요약</h3>
+            <div id="summaryResult" class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://port-0-plainflowerclub-mej0wlho47c6df8c.sel5.cloudtype.app/api/v1';
+        let testResults = {};
+        
+        function showResult(elementId, message, type = 'success') {
+            const resultDiv = document.getElementById(elementId);
+            resultDiv.textContent = message;
+            resultDiv.className = `result ${type}`;
+        }
+        
+        function updateButton(button, success) {
+            button.className = `test-button ${success ? 'success' : 'error'}`;
+            button.textContent = button.textContent + (success ? ' ✅' : ' ❌');
+        }
+        
+        async function testHealth() {
+            const button = event.target;
+            showResult('basicResult', 'Health Check 중...', 'loading');
+            
+            try {
+                const response = await fetch('https://port-0-plainflowerclub-mej0wlho47c6df8c.sel5.cloudtype.app/health');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult('basicResult', `✅ Health Check 성공!\n\n${JSON.stringify(data, null, 2)}`, 'success');
+                    updateButton(button, true);
+                    testResults.health = true;
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                showResult('basicResult', `❌ Health Check 실패!\n\n${error.message}`, 'error');
+                updateButton(button, false);
+                testResults.health = false;
+            }
+        }
+        
+        async function testFastContext() {
+            const button = event.target;
+            const story = document.getElementById('storyInput').value;
+            showResult('recommendationResult', '빠른 키워드 추출 중...', 'loading');
+            
+            try {
+                const response = await fetch(`${API_BASE}/fast-context`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ story })
+                });
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult('recommendationResult', `✅ 빠른 키워드 추출 성공!\n\n${JSON.stringify(data, null, 2)}`, 'success');
+                    updateButton(button, true);
+                    testResults.fastContext = true;
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                showResult('recommendationResult', `❌ 빠른 키워드 추출 실패!\n\n${error.message}`, 'error');
+                updateButton(button, false);
+                testResults.fastContext = false;
+            }
+        }
+        
+        async function testExtractContext() {
+            const button = event.target;
+            const story = document.getElementById('storyInput').value;
+            showResult('recommendationResult', '상세 키워드 추출 중...', 'loading');
+            
+            try {
+                const response = await fetch(`${API_BASE}/extract-context`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ story })
+                });
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult('recommendationResult', `✅ 상세 키워드 추출 성공!\n\n${JSON.stringify(data, null, 2)}`, 'success');
+                    updateButton(button, true);
+                    testResults.extractContext = true;
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                showResult('recommendationResult', `❌ 상세 키워드 추출 실패!\n\n${error.message}`, 'error');
+                updateButton(button, false);
+                testResults.extractContext = false;
+            }
+        }
+        
+        async function testEmotionAnalysis() {
+            const button = event.target;
+            const story = document.getElementById('storyInput').value;
+            showResult('recommendationResult', '감정 분석 중...', 'loading');
+            
+            try {
+                const response = await fetch(`${API_BASE}/emotion-analysis`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ story })
+                });
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult('recommendationResult', `✅ 감정 분석 성공!\n\n${JSON.stringify(data, null, 2)}`, 'success');
+                    updateButton(button, true);
+                    testResults.emotionAnalysis = true;
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                showResult('recommendationResult', `❌ 감정 분석 실패!\n\n${error.message}`, 'error');
+                updateButton(button, false);
+                testResults.emotionAnalysis = false;
+            }
+        }
+        
+        async function testFullRecommendation() {
+            const button = event.target;
+            const story = document.getElementById('storyInput').value;
+            showResult('recommendationResult', '전체 꽃 추천 중...', 'loading');
+            
+            try {
+                // 1. 키워드 추출
+                const contextResponse = await fetch(`${API_BASE}/fast-context`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ story })
+                });
+                const contextData = await contextResponse.json();
+                
+                if (!contextResponse.ok) {
+                    throw new Error(`키워드 추출 실패: HTTP ${contextResponse.status}`);
+                }
+                
+                // 2. 꽃 추천
+                const recommendResponse = await fetch(`${API_BASE}/recommendations`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        story: story,
+                        preferred_colors: contextData.colors || [],
+                        excluded_flowers: [],
+                        top_k: 3
+                    })
+                });
+                const recommendData = await recommendResponse.json();
+                
+                if (recommendResponse.ok) {
+                    const result = {
+                        context: contextData,
+                        recommendations: recommendData
+                    };
+                    showResult('recommendationResult', `✅ 전체 꽃 추천 성공!\n\n${JSON.stringify(result, null, 2)}`, 'success');
+                    updateButton(button, true);
+                    testResults.fullRecommendation = true;
+                } else {
+                    throw new Error(`꽃 추천 실패: HTTP ${recommendResponse.status}`);
+                }
+            } catch (error) {
+                showResult('recommendationResult', `❌ 전체 꽃 추천 실패!\n\n${error.message}`, 'error');
+                updateButton(button, false);
+                testResults.fullRecommendation = false;
+            }
+        }
+        
+        async function testAllEndpoints() {
+            const button = event.target;
+            showResult('basicResult', '전체 엔드포인트 테스트 중...', 'loading');
+            
+            const endpoints = [
+                { name: 'Health Check', path: '/health', method: 'GET', fullUrl: true },
+                { name: 'Fast Context', path: '/fast-context', method: 'POST', body: { story: '테스트 스토리' } },
+                { name: 'Extract Context', path: '/extract-context', method: 'POST', body: { story: '테스트 스토리' } },
+                { name: 'Emotion Analysis', path: '/emotion-analysis', method: 'POST', body: { story: '테스트 스토리' } }
+            ];
+            
+            const results = [];
+            
+            for (const endpoint of endpoints) {
+                try {
+                    const options = {
+                        method: endpoint.method,
+                        headers: { 'Content-Type': 'application/json' }
+                    };
+                    
+                    if (endpoint.body) {
+                        options.body = JSON.stringify(endpoint.body);
+                    }
+                    
+                    const url = endpoint.fullUrl ? 'https://port-0-plainflowerclub-mej0wlho47c6df8c.sel5.cloudtype.app' + endpoint.path : `${API_BASE}${endpoint.path}`;
+                    const response = await fetch(url, options);
+                    const data = await response.json();
+                    
+                    results.push({
+                        endpoint: endpoint.name,
+                        status: response.ok ? '✅ 성공' : '❌ 실패',
+                        statusCode: response.status,
+                        data: data
+                    });
+                    
+                    testResults[endpoint.name] = response.ok;
+                } catch (error) {
+                    results.push({
+                        endpoint: endpoint.name,
+                        status: '❌ 오류',
+                        error: error.message
+                    });
+                    testResults[endpoint.name] = false;
+                }
+            }
+            
+            const summary = results.map(r => `${r.endpoint}: ${r.status}`).join('\n');
+            showResult('basicResult', `전체 엔드포인트 테스트 완료!\n\n${summary}`, 'success');
+            updateButton(button, true);
+            
+            updateSummary();
+        }
+        
+        function updateSummary() {
+            const total = Object.keys(testResults).length;
+            const success = Object.values(testResults).filter(Boolean).length;
+            const failed = total - success;
+            
+            const summary = `📊 테스트 결과 요약\n\n` +
+                          `총 테스트: ${total}개\n` +
+                          `성공: ${success}개 ✅\n` +
+                          `실패: ${failed}개 ❌\n` +
+                          `성공률: ${Math.round((success / total) * 100)}%\n\n` +
+                          `상세 결과:\n` +
+                          Object.entries(testResults)
+                            .map(([test, result]) => `${test}: ${result ? '✅' : '❌'}`)
+                            .join('\n');
+            
+            showResult('summaryResult', summary, success === total ? 'success' : 'error');
+        }
+        
+        async function testShareStory() {
+            const button = event.target;
+            showResult('shareResult', '스토리 공유 URL 생성 중...', 'loading');
+            
+            try {
+                const response = await fetch(`${API_BASE}/stories/share`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ story_id: 'S250822-FLC-00001' })
+                });
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult('shareResult', `✅ 스토리 공유 URL 생성 성공!\n\n${JSON.stringify(data, null, 2)}`, 'success');
+                    updateButton(button, true);
+                    testResults.shareStory = true;
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                showResult('shareResult', `❌ 스토리 공유 URL 생성 실패!\n\n${error.message}`, 'error');
+                updateButton(button, false);
+                testResults.shareStory = false;
+            }
+        }
+        
+        async function testGetSharedStory() {
+            const button = event.target;
+            showResult('shareResult', '공유된 스토리 조회 중...', 'loading');
+            
+            try {
+                const response = await fetch(`${API_BASE}/stories/share/UzI1MDgyMi1GTEMtMDAwMDE=`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult('shareResult', `✅ 공유된 스토리 조회 성공!\n\n${JSON.stringify(data, null, 2)}`, 'success');
+                    updateButton(button, true);
+                    testResults.getSharedStory = true;
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                showResult('shareResult', `❌ 공유된 스토리 조회 실패!\n\n${error.message}`, 'error');
+                updateButton(button, false);
+                testResults.getSharedStory = false;
+            }
+        }
+        
+        // 페이지 로드 시 자동으로 Health Check 실행
+        window.addEventListener('load', () => {
+            setTimeout(testHealth, 1000);
+        });
+    </script>
+</body>
+</html>

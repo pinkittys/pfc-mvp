@@ -32,7 +32,7 @@ def get_chain():
 def recommendations(req: RecommendRequest, chain: IntegratedRecommendationChain = Depends(get_chain)):
     """통합 추천 엔드포인트"""
     try:
-        result = chain.run(req.story, req.preferred_colors, req.excluded_flowers, req.top_k)
+        result = chain.run(req)
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

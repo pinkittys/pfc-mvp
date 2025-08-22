@@ -374,5 +374,60 @@
       "옐로우"
     ],
     "excluded_keywords": []
+  },
+  "S250820-ALS-000002": {
+    "story_id": "S250820-ALS-000002",
+    "original_story": "정말 그동안 수고했다고 나자신에게 보내는 선물!",
+    "created_at": "2025-08-20 07:52:28.240037",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "기쁨",
+        "percentage": 50.0,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "응원/격려",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Alstroemeria spp.",
+    "flower_name_en": "알스트로메리아",
+    "scientific_name": "Alstroemeria spp.",
+    "flower_card_message": "\"You have brains in your head. You have feet in your shoes.\"  \n- Oh, The Places You'll Go -",
+    "flower_blend": {
+      "main_flower": "Alstroemeria spp.",
+      "sub_flowers": [
+        "스톡",
+        "베이비 브레스"
+      ],
+      "composition_name": "Celebration"
+    },
+    "season_info": "봄, 여름, 가을, 겨울",
+    "recommendation_reason": "\"정말 그동안 수고했다고 나 자신에게 보내는 선물로 핑크 알스트로메리아가 우정과 행운을 담아줘요. 기쁨과 축하의 마음을 이 꽃의 따뜻한 색감으로 표현하면, 앞으로의 모든 순간이 더욱 특별해질 거예요.\"",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/alstroemeria-spp-pk.webp",
+    "keywords": [
+      "기쁨",
+      "축하",
+      "자기위로",
+      "따뜻한",
+      "핑크"
+    ],
+    "hashtags": [
+      "#알스트로메리아",
+      "#기쁨",
+      "#축하",
+      "#응원/격려"
+    ],
+    "color_keywords": [
+      "핑크"
+    ],
+    "excluded_keywords": []
   }
 }
