@@ -227,8 +227,14 @@ def emotion_analysis(req: RecommendRequest):
             story_id=story_data.story_id if 'story_data' in locals() else None
         )
         
-        # 결과 캐시에 저장
-        request_deduplicator.mark_request_completed(request_id, result.dict())
+        # 결과 캐시에 저장 (updated_context가 있으면 우선순위 높게)
+        if has_updated_context:
+            # updated_context가 있는 요청은 즉시 캐시에 저장하고 다른 요청을 무효화
+            request_deduplicator.mark_request_completed(request_id, result.dict())
+            print(f"✅ Updated context 요청 완료 및 캐시 저장: {request_id}")
+        else:
+            # updated_context가 없는 요청은 기존 로직
+            request_deduplicator.mark_request_completed(request_id, result.dict())
         
         return result
         
