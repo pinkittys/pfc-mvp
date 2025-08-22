@@ -164,13 +164,16 @@ class IntegratedRecommendationChain:
         secondary = sorted_emotions[1][0] if len(sorted_emotions) > 1 else "사랑"
         tertiary = sorted_emotions[2][0] if len(sorted_emotions) > 2 else "감사"
         
-        return EmotionAnalysis(
-            primary_emotion=primary,
-            secondary_emotion=secondary,
-            tertiary_emotion=tertiary,
-            emotion_scores=emotion_scores,
-            total_emotions=len(emotion_scores)
-        )
+        # EmotionAnalysis는 List[EmotionAnalysis] 형태로 반환해야 함
+        emotions = []
+        for emotion, score in sorted_emotions[:3]:  # 상위 3개 감정만
+            emotions.append(EmotionAnalysis(
+                emotion=emotion,
+                percentage=score * 100,  # 비율을 퍼센트로 변환
+                description=f"{emotion} 감정이 {score * 100:.1f}%로 나타남"
+            ))
+        
+        return emotions
     
     def run_with_details(self, request: RecommendRequest) -> Dict[str, Any]:
         """상세 정보와 함께 추천 체인 실행 (디버깅용)"""

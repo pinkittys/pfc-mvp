@@ -65,7 +65,7 @@ class StoryManager:
             supabase_data = {
                 "story_id": story_data.story_id,
                 "story": story_data.original_story,
-                "emotions": json.dumps(story_data.emotions, ensure_ascii=False),
+                "emotions": json.dumps([emotion.dict() for emotion in story_data.emotions], ensure_ascii=False),
                 "matched_flower": json.dumps(story_data.matched_flower.dict(), ensure_ascii=False),
                 "recommendation_reason": story_data.recommendation_reason,
                 "flower_card_message": story_data.flower_card_message,
