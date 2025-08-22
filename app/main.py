@@ -69,8 +69,8 @@ async def simple_test():
 
 @app.get("/FRONTEND_TEST.html")
 async def frontend_test():
-    return FileResponse("FRONTEND_TEST.html")
+    return FileResponse("./FRONTEND_TEST.html")
 
 @app.get("/frontend_test.html")
 async def frontend_test_lower():
-    return FileResponse("FRONTEND_TEST.html")
+    return FileResponse("./FRONTEND_TEST.html")
