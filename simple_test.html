@@ -1891,7 +1891,7 @@
                 console.log('  - 요청 컬러:', updatedContext.colors);
                 console.log('  - preferred_colors:', requestBody.preferred_colors);
                 
-                const response = await fetch(`${API_BASE}/recommendations`, {
+                const response = await fetch(`${API_BASE}/emotion-analysis`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
