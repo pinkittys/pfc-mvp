@@ -2,14 +2,19 @@
 
 ## 🚀 API 서버 정보
 
-### 현재 사용 가능한 API URL:
-```
-https://port-0-plainflowerclub-mej0wlho47c6df8c.sel5.cloudtype.app/api/v1
-```
-
-### 향후 변경될 API URL (SSL 인증서 해결 후):
+### 🎉 현재 사용 가능한 API URL (SSL 인증서 완료!):
 ```
 https://api.plainflowerclub.com/api/v1
+```
+
+### 📚 API 문서:
+```
+https://api.plainflowerclub.com/docs
+```
+
+### 🧪 테스트 페이지:
+```
+https://api.plainflowerclub.com/FRONTEND_TEST.html
 ```
 
 ---

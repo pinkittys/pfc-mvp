@@ -66,3 +66,11 @@ async def admin_panel_html():
 @app.get("/simple_test.html")
 async def simple_test():
     return FileResponse("simple_test.html")
+
+@app.get("/FRONTEND_TEST.html")
+async def frontend_test():
+    return FileResponse("FRONTEND_TEST.html")
+
+@app.get("/frontend_test.html")
+async def frontend_test_lower():
+    return FileResponse("FRONTEND_TEST.html")
