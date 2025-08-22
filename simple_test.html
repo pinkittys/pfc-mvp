@@ -955,7 +955,7 @@
     </div>
 
     <script>
-        const API_BASE = '/api/v1';
+        const API_BASE = 'https://api.plainflowerclub.com/api/v1';
         
         // DOM 요소들
         const storyInput = document.getElementById('storyInput');
@@ -1855,13 +1855,14 @@
                 // 새로운 매칭 요청
                 const requestBody = {
                     story: currentStory,
-                    excluded_keywords: deselectedKeywords,
-                    updated_context: updatedContext
+                    preferred_colors: updatedContext.colors,
+                    excluded_flowers: [],
+                    top_k: 1
                 };
                 
                 console.log('📤 API 요청 데이터:', requestBody);
                 
-                const response = await fetch('/api/v1/emotion-analysis', {
+                const response = await fetch(`${API_BASE}/recommendations`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1872,8 +1873,17 @@
                 if (response.ok) {
                     const newData = await response.json();
                     
+                    // recommendations API 응답 형식에 맞게 변환
+                    const convertedData = {
+                        emotions: newData.emotions || [],
+                        matched_flower: newData.recommendations?.[0] || newData.matched_flower,
+                        composition: newData.composition || '',
+                        recommendation_reason: newData.recommendation_reason || '',
+                        flower_card_message: newData.flower_card_message || ''
+                    };
+                    
                     // 새로운 결과로 화면 업데이트
-                    updateResultDisplay(newData);
+                    updateResultDisplay(convertedData);
                     
                     console.log('✅ 키워드 변경에 따른 매칭 업데이트 완료');
                 }
