@@ -1837,6 +1837,10 @@
                     colors: currentKeywords.filter(k => k.type === 'color').map(k => k.text)
                 };
                 
+                console.log('🎨 현재 키워드 요소들:', keywordElements);
+                console.log('📝 수집된 키워드들:', currentKeywords);
+                console.log('🎯 컬러 키워드:', currentKeywords.filter(k => k.type === 'color'));
+                
                 console.log('🔄 키워드 변경으로 인한 매칭 업데이트:', updatedContext);
                 console.log('📤 전송할 데이터:', {
                     story: window.customerStory,
@@ -1873,6 +1877,8 @@
                 if (response.ok) {
                     const newData = await response.json();
                     
+                    console.log('📥 API 응답 데이터:', newData);
+                    
                     // recommendations API 응답 형식에 맞게 변환
                     const convertedData = {
                         emotions: newData.emotions || [],
@@ -1881,6 +1887,8 @@
                         recommendation_reason: newData.recommendation_reason || '',
                         flower_card_message: newData.flower_card_message || ''
                     };
+                    
+                    console.log('🔄 변환된 데이터:', convertedData);
                     
                     // 새로운 결과로 화면 업데이트
                     updateResultDisplay(convertedData);
