@@ -52,8 +52,68 @@ class FlowerDictionaryService:
             json.dump(self.dictionary_data, f, ensure_ascii=False, indent=2)
     
     def generate_flower_id(self, scientific_name: str, color: str) -> str:
-        """꽃 ID 생성 (학명-컬러 기준)"""
-        return f"{scientific_name}-{color}"
+        """꽃 ID 생성 (이미지 파일명과 일치하는 형태)"""
+        # flower_id를 기준으로 간단한 이름으로 변환 (로컬 파일명과 일치)
+        flower_id_mapping = {
+            'zinnia-elegans': 'zinnia',
+            'alstroemeria-spp': 'alstroemeria',
+            'anemone-coronaria': 'anemone-coronaria',
+            'anthurium-andraeanum': 'anthurium',
+            'astilbe-japonica': 'astilbe',
+            'bouvardia': 'bouvardia',
+            'cymbidium-spp': 'cymbidium',
+            'dahlia': 'dahlia',
+            'freesia-refracta': 'freesia',
+            'garden-peony': 'garden-peony',
+            'gentiana-andrewsii': 'gentiana-andrewsii',
+            'oxypetalum-coeruleum': 'oxypetalum',
+            'gladiolus': 'gladiolus',
+            'drumstick-flower': 'drumstick-flower',
+            'globe-amaranth': 'globe-amaranth',
+            'cockscomb': 'celosia',  # 실제 파일명이 celosia
+            'hydrangea': 'hydrangea',
+            'iberis-sempervirens': 'iberis',
+            'spiraea-prunifolia': 'spiraea',
+            'iris-sanguinea': 'iris',
+            'carnation': 'carnation',
+            'lathyrus-odoratus': 'lathyrus-odoratus',
+            'calla-lily': 'calla-lily',
+            'lisianthus': 'lisianthus',
+            'marguerite-daisy': 'marguerite-daisy',
+            'ranunculus-asiaticus': 'ranunculus',
+            'rose': 'rose',
+            'scabiosa': 'scabiosa',
+            'sunflower': 'sunflower',
+            'sweet-pea': 'sweet-pea',
+            'tagetes-erecta': 'tagetes-erecta',
+            'tulip': 'tulip',
+            'veronica-spicata': 'veronica',
+            'zantedeschia-aethiopica': 'zantedeschia',
+            'baby-breath': 'babys-breath',  # 실제 파일명
+            'cotton-plant': 'cotton-plant',  # 실제 파일명
+            'stock-flower': 'stock-flower'  # 실제 파일명
+        }
+        
+        # 색상 코드 매핑
+        color_mapping = {
+            '화이트': 'wh', '핑크': 'pk', '레드': 'rd', '옐로우': 'yl',
+            '퍼플': 'pu', '블루': 'bl', '오렌지': 'or', '그린': 'gr',
+            '크림색': 'cr', '베이지': 'be', '라일락': 'll', '네이비': 'nv',
+            'white': 'wh', 'pink': 'pk', 'red': 'rd', 'yellow': 'yl',
+            'purple': 'pu', 'blue': 'bl', 'orange': 'or', 'green': 'gr',
+            'cream': 'cr', 'beige': 'be', 'lilac': 'll', 'navy': 'nv'
+        }
+        
+        # 학명을 flower_id 형식으로 변환
+        flower_id = scientific_name.lower().replace(' ', '-').replace('.', '')
+        
+        # 간단한 이름으로 매핑
+        simple_name = flower_id_mapping.get(flower_id, flower_id)
+        
+        # 색상을 코드로 변환
+        color_code = color_mapping.get(color.lower(), color.lower())
+        
+        return f"{simple_name}-{color_code}"
     
     def get_flower_info(self, flower_id: str) -> Optional[FlowerDictionary]:
         """특정 꽃 정보 조회"""

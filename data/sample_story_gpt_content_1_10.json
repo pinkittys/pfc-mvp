@@ -1,0 +1,162 @@
+{
+  "story_001": {
+    "story_text": "아빠가 정년퇴직을 하셨어요. 오랜 세월 고생 많으셨다는 의미로, 차분하면서도 존경이 담긴 꽃을 전하고 싶어요.",
+    "flower_name": "백일홍",
+    "flower_name_en": "Zinnia Elegans",
+    "emotions": [
+      "감사",
+      "존경"
+    ],
+    "keywords": [
+      "존경",
+      "충성"
+    ],
+    "recommendation_reason": "백일홍의 존경, 충성의 의미를 담아 아빠가 정년퇴직을 하셨어에 어울리는 꽃을 선택했습니다.",
+    "flower_card_message": "Gratitude is the fairest blossom which springs from the soul.",
+    "quote_source": "Henry Ward Beecher"
+  },
+  "story_002": {
+    "story_text": "언니가 드디어 박사 학위를 받았어요. 지적인 이미지에 맞게 고급스럽고 세련된 느낌이면 좋겠어요.",
+    "flower_name": "알스트로메리아",
+    "flower_name_en": "Alstroemeria Spp",
+    "emotions": [
+      "자랑스러움",
+      "축하"
+    ],
+    "keywords": [
+      "기쁨",
+      "사랑"
+    ],
+    "recommendation_reason": "알스트로메리아의 기쁨, 사랑의 의미를 담아 언니가 드디어 박사 학위를 받았어에 어울리는 꽃을 선택했습니다.",
+    "flower_card_message": "I'm proud of you.",
+    "quote_source": "Anonymous"
+  },
+  "story_003": {
+    "story_text": "오랜만에 만난 동호회 친구의 생일 파티에 초대받았어요. 분위기를 확 살려줄 활발한 꽃다발이 필요해요.",
+    "flower_name": "거베라",
+    "flower_name_en": "Gerbera Daisy",
+    "emotions": [
+      "기쁨",
+      "축하"
+    ],
+    "keywords": [
+      "기쁨",
+      "축하"
+    ],
+    "recommendation_reason": "거베라의 기쁨, 축하의 의미를 담아 오랜만에 만난 동호회 친구의 생일 파티에 초대받았어에 어울리는 꽃을 선택했습니다.",
+    "flower_card_message": "Joy is the simplest form of gratitude.",
+    "quote_source": "Karl Barth"
+  },
+  "story_004": {
+    "story_text": "고등학교 담임 선생님 환갑을 맞으셨어요. 교실 가득 퍼질 따뜻한 향기와 함께 드리고 싶어요.",
+    "flower_name": "해바라기",
+    "flower_name_en": "Sunflower",
+    "emotions": [
+      "감사",
+      "존경"
+    ],
+    "keywords": [
+      "감사",
+      "존경"
+    ],
+    "recommendation_reason": "해바라기의 감사, 존경의 의미를 담아 고등학교 담임 선생님 환갑을 맞으셨어에 어울리는 꽃을 선택했습니다.",
+    "flower_card_message": "Gratitude is the fairest blossom which springs from the soul.",
+    "quote_source": "Henry Ward Beecher"
+  },
+  "story_005": {
+    "story_text": "첫 조카의 돌잔치라, 아기와 잘 어울리는 파스텔톤의 귀여운 꽃을 원해요.",
+    "flower_name": "백일홍",
+    "flower_name_en": "Zinnia Elegans",
+    "emotions": [
+      "기쁨",
+      "사랑"
+    ],
+    "keywords": [
+      "기쁨",
+      "사랑"
+    ],
+    "recommendation_reason": "백일홍의 기쁨, 사랑의 의미를 담아 첫 조카의 돌잔치라, 아기와 잘 어울리는 파스텔톤의 귀여운 꽃을 원해에 어울리는 꽃을 선택했습니다.",
+    "flower_card_message": "Joy is the simplest form of gratitude.",
+    "quote_source": "Karl Barth"
+  },
+  "story_006": {
+    "story_text": "사무실 후배가 드디어 대리로 승진했어요. 작지만 의미 있는 축하꽃을 책상에 놓아주고 싶어요.",
+    "flower_name": "알스트로메리아",
+    "flower_name_en": "Alstroemeria Spp",
+    "emotions": [
+      "축하",
+      "응원"
+    ],
+    "keywords": [
+      "축하",
+      "응원"
+    ],
+    "recommendation_reason": "알스트로메리아의 축하, 응원의 의미를 담아 사무실 후배가 드디어 대리로 승진했어에 어울리는 꽃을 선택했습니다.",
+    "flower_card_message": "Celebration is the joy of life.",
+    "quote_source": "Osho"
+  },
+  "story_007": {
+    "story_text": "아내가 마라톤 완주 메달을 땄어요. 그 성취감을 더 빛내줄 강렬한 컬러면 좋겠어요.",
+    "flower_name": "장미",
+    "flower_name_en": "Rose",
+    "emotions": [
+      "자랑스러움",
+      "축하"
+    ],
+    "keywords": [
+      "축하",
+      "성취"
+    ],
+    "recommendation_reason": "장미의 축하, 성취의 의미를 담아 아내가 마라톤 완주 메달을 땄어에 어울리는 꽃을 선택했습니다.",
+    "flower_card_message": "I'm proud of you.",
+    "quote_source": "Anonymous"
+  },
+  "story_008": {
+    "story_text": "친구 부부가 쌍둥이를 출산했어요. 환한 분위기의 축하 꽃바구니를 보내고 싶어요.",
+    "flower_name": "백일홍",
+    "flower_name_en": "Zinnia Elegans",
+    "emotions": [
+      "기쁨",
+      "축하"
+    ],
+    "keywords": [
+      "기쁨",
+      "축하"
+    ],
+    "recommendation_reason": "백일홍의 기쁨, 축하의 의미를 담아 친구 부부가 쌍둥이를 출산했어에 어울리는 꽃을 선택했습니다.",
+    "flower_card_message": "Joy is the simplest form of gratitude.",
+    "quote_source": "Karl Barth"
+  },
+  "story_009": {
+    "story_text": "엄마의 요리 교실이 1주년을 맞았어요. 주방에 두면 잘 어울릴 내추럴한 꽃을 원해요.",
+    "flower_name": "튤립",
+    "flower_name_en": "Tulip",
+    "emotions": [
+      "감사",
+      "축하"
+    ],
+    "keywords": [
+      "축하",
+      "성취"
+    ],
+    "recommendation_reason": "튤립의 축하, 성취의 의미를 담아 엄마의 요리 교실이 1주년을 맞았어에 어울리는 꽃을 선택했습니다.",
+    "flower_card_message": "Gratitude is the fairest blossom which springs from the soul.",
+    "quote_source": "Henry Ward Beecher"
+  },
+  "story_010": {
+    "story_text": "직장 상사가 해외 지사로 발령 났어요. 새로운 시작을 축하하는 의미의 세련된 꽃을 선물하고 싶어요.",
+    "flower_name": "카네이션",
+    "flower_name_en": "Carnation",
+    "emotions": [
+      "축하",
+      "희망"
+    ],
+    "keywords": [
+      "축하",
+      "응원"
+    ],
+    "recommendation_reason": "카네이션의 축하, 응원의 의미를 담아 직장 상사가 해외 지사로 발령 났어에 어울리는 꽃을 선택했습니다.",
+    "flower_card_message": "Celebration is the joy of life.",
+    "quote_source": "Osho"
+  }
+}

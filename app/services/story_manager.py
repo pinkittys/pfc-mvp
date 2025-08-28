@@ -132,17 +132,17 @@ class StoryManager:
             return None
     
     def _generate_story_id(self, flower_name: str) -> str:
-        """스토리 ID 생성 - 새로운 정책: S{YYMMDD}-{FLC}-{NNNNNN}"""
+        """스토리 ID 생성 - 새로운 정책: S{YYMMDD}-{FLC}-{NNNNN}"""
         # 오늘 날짜 (YYMMDD 형식)
         today = datetime.now().strftime("%y%m%d")  # 2자리 연도
         
         # 꽃 영문명에서 3자리 코드 생성
         flower_code = self._get_flower_code(flower_name)
         
-        # 오늘 날짜에 해당하는 스토리들 필터링
+        # 오늘 날짜에 해당하는 스토리들 필터링 (실제 추천만)
         today_stories = [
             story_id for story_id in self.stories.keys()
-            if story_id.startswith(f"S{today}-{flower_code}-")
+            if story_id.startswith(f"S{today}-{flower_code}-") and not story_id.endswith("S")
         ]
         
         # 다음 순번 계산

@@ -1,0 +1,162 @@
+{
+  "story_011": {
+    "story_text": "오랜만에 연락한 옛 연인에게 \"잘 지내고 있지?\"라는 따뜻한 마음을 전하고 싶어요.",
+    "flower_name": "장미",
+    "flower_name_en": "Rose",
+    "emotions": [
+      "그리움",
+      "따뜻함"
+    ],
+    "keywords": [
+      "사랑",
+      "감사"
+    ],
+    "recommendation_reason": "옛 연인에게 따뜻한 마음을 전하며, 그리웠던 시간을 아름답게 기념해요.",
+    "flower_card_message": "Love is the flower you've got to let grow.",
+    "quote_source": "John Lennon"
+  },
+  "story_012": {
+    "story_text": "아내가 요즘 회사 일로 지쳐 보여요. 고맙고 사랑한다는 메시지를 전할 꽃이 필요해요.",
+    "flower_name": "백일홍",
+    "flower_name_en": "Zinnia Elegans",
+    "emotions": [
+      "사랑",
+      "감사"
+    ],
+    "keywords": [
+      "사랑",
+      "고백"
+    ],
+    "recommendation_reason": "아내의 고생을 위로하며, 사랑과 감사의 마음을 담아 드려요.",
+    "flower_card_message": "Love is the flower you've got to let grow.",
+    "quote_source": "John Lennon"
+  },
+  "story_013": {
+    "story_text": "오래된 친구가 제 인생에서 얼마나 중요한지 표현하고 싶어요. 가볍지만 진심 어린 꽃이 필요해요.",
+    "flower_name": "알스트로메리아",
+    "flower_name_en": "Alstroemeria Spp",
+    "emotions": [
+      "감사",
+      "사랑"
+    ],
+    "keywords": [
+      "사랑",
+      "감사"
+    ],
+    "recommendation_reason": "오래된 친구에게 감사의 마음을 전하며, 소중한 우정을 기념해요.",
+    "flower_card_message": "Gratitude is the fairest blossom which springs from the soul.",
+    "quote_source": "Henry Ward Beecher"
+  },
+  "story_014": {
+    "story_text": "여자친구가 좋아하는 하늘색을 담아 고백하고 싶어요. 설레고 순수한 느낌이면 좋겠어요.",
+    "flower_name": "스위트피",
+    "flower_name_en": "Sweet Pea",
+    "emotions": [
+      "사랑",
+      "설렘"
+    ],
+    "keywords": [
+      "사랑",
+      "고백"
+    ],
+    "recommendation_reason": "여자친구에게 순수한 고백을 하며, 설레는 마음을 담아 드려요.",
+    "flower_card_message": "Love is the flower you've got to let grow.",
+    "quote_source": "John Lennon"
+  },
+  "story_015": {
+    "story_text": "딸이 고등학교 졸업을 했어요. \"고마워, 그리고 자랑스러워\"라는 마음을 전할 꽃을 원해요.",
+    "flower_name": "리시안서스",
+    "flower_name_en": "Lisianthus",
+    "emotions": [
+      "자랑스러움",
+      "감사"
+    ],
+    "keywords": [
+      "사랑",
+      "감사"
+    ],
+    "recommendation_reason": "딸의 졸업을 축하하며, 자랑스럽고 감사한 마음을 전해요.",
+    "flower_card_message": "I'm proud of you.",
+    "quote_source": "Anonymous"
+  },
+  "story_016": {
+    "story_text": "아내와의 첫 만남 20주년을 기념하고 싶어요. 기억에 남을 고급스러운 꽃이 필요해요.",
+    "flower_name": "장미",
+    "flower_name_en": "Rose",
+    "emotions": [
+      "사랑",
+      "감사"
+    ],
+    "keywords": [
+      "사랑",
+      "고백"
+    ],
+    "recommendation_reason": "아내와의 첫 만남 20주년을 기념하며, 오랜 사랑을 아름답게 표현해요.",
+    "flower_card_message": "Love is the flower you've got to let grow.",
+    "quote_source": "John Lennon"
+  },
+  "story_017": {
+    "story_text": "아이가 직접 만든 카드와 함께 선물할 소박한 꽃다발이 필요해요.",
+    "flower_name": "카네이션",
+    "flower_name_en": "Carnation",
+    "emotions": [
+      "사랑",
+      "순수함"
+    ],
+    "keywords": [
+      "사랑",
+      "감사"
+    ],
+    "recommendation_reason": "아이의 마음을 담아 가족에게 사랑을 전하며, 소박하지만 진심 어린 선물을 준비해요.",
+    "flower_card_message": "Love is the flower you've got to let grow.",
+    "quote_source": "John Lennon"
+  },
+  "story_018": {
+    "story_text": "신혼여행에서 돌아온 동생 부부에게 환영의 의미로 선물하고 싶어요.",
+    "flower_name": "백일홍",
+    "flower_name_en": "Zinnia Elegans",
+    "emotions": [
+      "기쁨",
+      "축하"
+    ],
+    "keywords": [
+      "사랑",
+      "고백"
+    ],
+    "recommendation_reason": "동생 부부의 신혼여행 환영을 위해 따뜻한 마음을 담아 드려요.",
+    "flower_card_message": "Joy is the simplest form of gratitude.",
+    "quote_source": "Karl Barth"
+  },
+  "story_019": {
+    "story_text": "할머니께 항상 챙겨주셔서 감사하다는 마음을 전할 꽃을 준비하고 싶어요.",
+    "flower_name": "알스트로메리아",
+    "flower_name_en": "Alstroemeria Spp",
+    "emotions": [
+      "감사",
+      "사랑"
+    ],
+    "keywords": [
+      "사랑",
+      "감사"
+    ],
+    "recommendation_reason": "할머니께 감사의 마음을 전하며, 오랜 세월 보살펴주신 은혜에 감사해요.",
+    "flower_card_message": "Gratitude is the fairest blossom which springs from the soul.",
+    "quote_source": "Henry Ward Beecher"
+  },
+  "story_020": {
+    "story_text": "남편에게 \"늘 든든해서 고마워\"라는 말을 전할 부드러운 꽃을 원해요.",
+    "flower_name": "스위트피",
+    "flower_name_en": "Sweet Pea",
+    "emotions": [
+      "감사",
+      "사랑"
+    ],
+    "keywords": [
+      "사랑",
+      "고백"
+    ],
+    "recommendation_reason": "남편에게 든든함에 대한 감사를 전하며, 평소 표현하지 못한 마음을 담아요.",
+    "flower_card_message": "Gratitude is the fairest blossom which springs from the soul.",
+    "quote_source": "Henry Ward Beecher"
+  }
+}

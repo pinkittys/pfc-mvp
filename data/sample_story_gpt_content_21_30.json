@@ -1,0 +1,162 @@
+{
+  "story_021": {
+    "story_text": "취업 준비로 힘들어하는 동생에게, '잘하고 있어'라는 응원을 담아 주고 싶어요.",
+    "flower_name": "부바르디아",
+    "flower_name_en": "Bouvardia",
+    "emotions": [
+      "응원",
+      "희망"
+    ],
+    "keywords": [
+      "위로",
+      "응원"
+    ],
+    "recommendation_reason": "친구의 시험 실패를 위로하며, 다시 도전할 수 있는 힘을 전해요.",
+    "flower_card_message": "I believe in you.",
+    "quote_source": "Anonymous"
+  },
+  "story_022": {
+    "story_text": "절친이 이혼을 겪고 힘들어해요. 다시 힘낼 수 있도록 따뜻한 꽃을 보내고 싶어요.",
+    "flower_name": "알스트로메리아",
+    "flower_name_en": "Alstroemeria Spp",
+    "emotions": [
+      "위로",
+      "희망"
+    ],
+    "keywords": [
+      "위로",
+      "희망"
+    ],
+    "recommendation_reason": "동생의 취업 실패를 위로하며, 새로운 기회를 응원해요.",
+    "flower_card_message": "Time heals all wounds.",
+    "quote_source": "Greek Proverb"
+  },
+  "story_023": {
+    "story_text": "직장 동료가 큰 프로젝트에서 실패했어요. 위로와 격려가 될 수 있는 차분한 꽃이 필요해요.",
+    "flower_name": "아스틸베",
+    "flower_name_en": "Astilbe Japonica",
+    "emotions": [
+      "위로",
+      "격려"
+    ],
+    "keywords": [
+      "위로",
+      "응원"
+    ],
+    "recommendation_reason": "친구의 이별을 위로하며, 시간이 치유해줄 거라고 믿어요.",
+    "flower_card_message": "Time heals all wounds.",
+    "quote_source": "Greek Proverb"
+  },
+  "story_024": {
+    "story_text": "친한 후배가 유학길에 올랐어요. '너의 길을 응원해'라는 메시지를 담은 꽃을 전하고 싶어요.",
+    "flower_name": "백일홍",
+    "flower_name_en": "Zinnia Elegans",
+    "emotions": [
+      "응원",
+      "희망"
+    ],
+    "keywords": [
+      "위로",
+      "격려"
+    ],
+    "recommendation_reason": "동료의 프로젝트 실패를 위로하며, 함께 극복해나갈 거예요.",
+    "flower_card_message": "I believe in you.",
+    "quote_source": "Anonymous"
+  },
+  "story_025": {
+    "story_text": "가족이 암 투병 중이에요. 병실이 환해지고 희망이 느껴지는 꽃이 필요해요.",
+    "flower_name": "리시안서스",
+    "flower_name_en": "Lisianthus",
+    "emotions": [
+      "희망",
+      "위로"
+    ],
+    "keywords": [
+      "위로",
+      "응원"
+    ],
+    "recommendation_reason": "친구의 건강 문제를 걱정하며, 빠른 회복을 기원해요.",
+    "flower_card_message": "Hope is the thing with feathers.",
+    "quote_source": "Emily Dickinson"
+  },
+  "story_026": {
+    "story_text": "남편이 사업 실패로 많이 지쳐있어요. '다시 시작할 수 있어'라는 의미를 전하고 싶어요.",
+    "flower_name": "부바르디아",
+    "flower_name_en": "Bouvardia",
+    "emotions": [
+      "희망",
+      "위로"
+    ],
+    "keywords": [
+      "위로",
+      "희망"
+    ],
+    "recommendation_reason": "가족의 어려움을 함께하며, 서로 의지할 수 있는 힘을 전해요.",
+    "flower_card_message": "Hope is the thing with feathers.",
+    "quote_source": "Emily Dickinson"
+  },
+  "story_027": {
+    "story_text": "아내가 출산 후 산후 우울증으로 힘들어해요. 마음이 조금이라도 밝아지는 꽃을 원해요.",
+    "flower_name": "백일홍",
+    "flower_name_en": "Zinnia Elegans",
+    "emotions": [
+      "위로",
+      "희망"
+    ],
+    "keywords": [
+      "위로",
+      "응원"
+    ],
+    "recommendation_reason": "친구의 슬픔을 나누며, 함께 울어줄 수 있는 마음을 담아요.",
+    "flower_card_message": "Time heals all wounds.",
+    "quote_source": "Greek Proverb"
+  },
+  "story_028": {
+    "story_text": "절친이 반려묘를 떠나보냈어요. 위로와 추억을 함께 담을 수 있는 꽃이 필요해요.",
+    "flower_name": "히드란지아",
+    "flower_name_en": "Hydrangea",
+    "emotions": [
+      "슬픔",
+      "위로"
+    ],
+    "keywords": [
+      "위로",
+      "격려"
+    ],
+    "recommendation_reason": "동료의 스트레스를 이해하며, 잠시 쉬어갈 수 있는 시간을 만들어요.",
+    "flower_card_message": "Love is the flower you've got to let grow.",
+    "quote_source": "John Lennon"
+  },
+  "story_029": {
+    "story_text": "후배가 중요한 발표를 앞두고 긴장하고 있어요. '넌 할 수 있어'라는 격려가 되는 꽃을 주고 싶어요.",
+    "flower_name": "아스틸베",
+    "flower_name_en": "Astilbe Japonica",
+    "emotions": [
+      "격려",
+      "응원"
+    ],
+    "keywords": [
+      "위로",
+      "응원"
+    ],
+    "recommendation_reason": "친구의 고민을 들어주며, 해결책을 함께 찾아나갈 거예요.",
+    "flower_card_message": "Love is the flower you've got to let grow.",
+    "quote_source": "John Lennon"
+  },
+  "story_030": {
+    "story_text": "친한 언니가 실직했어요. '다시 기회가 올 거야'라는 의미를 담은 꽃을 전하고 싶어요.",
+    "flower_name": "리시안서스",
+    "flower_name_en": "Lisianthus",
+    "emotions": [
+      "희망",
+      "위로"
+    ],
+    "keywords": [
+      "위로",
+      "희망"
+    ],
+    "recommendation_reason": "가족의 외로움을 달래며, 항상 곁에 있다는 마음을 전해요.",
+    "flower_card_message": "Hope is the thing with feathers.",
+    "quote_source": "Emily Dickinson"
+  }
+}

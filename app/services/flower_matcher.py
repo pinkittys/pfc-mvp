@@ -1207,10 +1207,54 @@ class FlowerMatcher:
         return self._get_local_flower_image_url(flower, color_keywords)
     
     def _generate_flower_id(self, scientific_name: str, color_keywords: List[str]) -> str:
-        """스프레드시트 형식의 flower_id 생성"""
+        """flower_id를 기준으로 간단한 이미지명 생성"""
         try:
-            # 학명을 소문자로 변환하고 공백을 하이픈으로 변경
-            base_flower = scientific_name.lower().replace(' ', '-').replace('.', '')
+            # flower_id를 기준으로 간단한 이름으로 변환 (로컬 파일명과 일치)
+            flower_id_mapping = {
+                'zinnia-elegans': 'zinnia',
+                'alstroemeria-spp': 'alstroemeria',
+                'anemone-coronaria': 'anemone-coronaria',
+                'anthurium-andraeanum': 'anthurium',
+                'astilbe-japonica': 'astilbe',
+                'bouvardia': 'bouvardia',
+                'cymbidium-spp': 'cymbidium',
+                'dahlia': 'dahlia',
+                'freesia-refracta': 'freesia',
+                'garden-peony': 'garden-peony',
+                'gentiana-andrewsii': 'gentiana-andrewsii',
+                'oxypetalum-coeruleum': 'oxypetalum',
+                'gladiolus': 'gladiolus',
+                'drumstick-flower': 'drumstick-flower',
+                'globe-amaranth': 'globe-amaranth',
+                'cockscomb': 'celosia',  # 실제 파일명이 celosia
+                'hydrangea': 'hydrangea',
+                'iberis-sempervirens': 'iberis',
+                'spiraea-prunifolia': 'spiraea',
+                'iris-sanguinea': 'iris',
+                'carnation': 'carnation',
+                'lathyrus-odoratus': 'lathyrus-odoratus',
+                'calla-lily': 'calla-lily',
+                'lisianthus': 'lisianthus',
+                'marguerite-daisy': 'marguerite-daisy',
+                'ranunculus-asiaticus': 'ranunculus',
+                'rose': 'rose',
+                'scabiosa': 'scabiosa',
+                'sunflower': 'sunflower',
+                'sweet-pea': 'sweet-pea',
+                'tagetes-erecta': 'tagetes-erecta',
+                'tulip': 'tulip',
+                'veronica-spicata': 'veronica',
+                'zantedeschia-aethiopica': 'zantedeschia',
+                'baby-breath': 'babys-breath',  # 실제 파일명
+                'cotton-plant': 'cotton-plant',  # 실제 파일명
+                'stock-flower': 'stock-flower'  # 실제 파일명
+            }
+            
+            # 학명을 flower_id 형식으로 변환
+            flower_id = scientific_name.lower().replace(' ', '-').replace('.', '')
+            
+            # 간단한 이름으로 매핑
+            simple_name = flower_id_mapping.get(flower_id, flower_id)
             
             # 색상 코드 매핑
             color_mapping = {
@@ -1231,14 +1275,14 @@ class FlowerMatcher:
                     break
             
             if color_code:
-                flower_id = f"{base_flower}-{color_code}"
-                print(f"  생성된 flower_id: {flower_id}")
-                return flower_id
+                image_name = f"{simple_name}-{color_code}"
+                print(f"  생성된 이미지명: {image_name}")
+                return image_name
             
             return None
             
         except Exception as e:
-            print(f"❌ flower_id 생성 실패: {e}")
+            print(f"❌ 이미지명 생성 실패: {e}")
             return None
     
     def _get_local_flower_image_url(self, flower, color_keywords: List[str]) -> str:
@@ -1377,6 +1421,14 @@ class FlowerMatcher:
                 "블루": "화이트",
                 "blue": "화이트",
                 "파랑": "화이트"
+            },
+            "Cymbidium Spp": {
+                "블루": "그린",
+                "blue": "그린",
+                "파랑": "그린",
+                "하늘색": "그린",
+                "sky": "그린",
+                "sky-blue": "그린"
             },
             "Gerbera Daisy": {
                 "옐로우": "옐로우",
@@ -1555,6 +1607,13 @@ class FlowerMatcher:
                 # 오렌지 계열
                 "오렌지": ["Gerbera Daisy", "Cockscomb", "Tagetes Erecta", "Alstroemeria Spp", "Rose"],
                 "주황": ["Gerbera Daisy", "Cockscomb", "Tagetes Erecta", "Alstroemeria Spp", "Rose"],
+                
+                # 블루 계열
+                "블루": ["Hydrangea", "Oxypetalum", "Gentiana Andrewsii"],
+                "파랑": ["Hydrangea", "Oxypetalum", "Gentiana Andrewsii"],
+                "하늘색": ["Hydrangea", "Oxypetalum", "Gentiana Andrewsii"],
+                "sky": ["Hydrangea", "Oxypetalum", "Gentiana Andrewsii"],
+                "sky-blue": ["Hydrangea", "Oxypetalum", "Gentiana Andrewsii"],
                 
                 # 퍼플 계열
                 "퍼플": ["Veronica Spicata", "Globe Amaranth"],
