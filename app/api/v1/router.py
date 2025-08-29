@@ -3,8 +3,21 @@ from app.api.v1.endpoints import recommend, keywords, admin, fast_context, stori
 
 api_v1_router = APIRouter()
 
-# 라우터 등록 - 단순화
+# 라우터 등록 - 핵심 API 우선
 print("🔧 라우터 등록 시작...")
+
+# 1. 핵심 API들 (먼저 등록)
+try:
+    api_v1_router.include_router(sample_stories.router, tags=["sample-stories"])
+    print("✅ Sample Stories 라우터 등록 완료")
+except Exception as e:
+    print(f"❌ Sample Stories 라우터 등록 실패: {e}")
+
+try:
+    api_v1_router.include_router(unified.router, tags=["unified"])
+    print("✅ Unified 라우터 등록 완료")
+except Exception as e:
+    print(f"❌ Unified 라우터 등록 실패: {e}")
 
 try:
     api_v1_router.include_router(recommend.router, tags=["recommendations"])
@@ -12,17 +25,12 @@ try:
 except Exception as e:
     print(f"❌ Recommend 라우터 등록 실패: {e}")
 
+# 2. 기타 API들
 try:
     api_v1_router.include_router(keywords.router, tags=["keywords"])
     print("✅ Keywords 라우터 등록 완료")
 except Exception as e:
     print(f"❌ Keywords 라우터 등록 실패: {e}")
-
-try:
-    api_v1_router.include_router(admin.router, prefix="/admin", tags=["admin"])
-    print("✅ Admin 라우터 등록 완료")
-except Exception as e:
-    print(f"❌ Admin 라우터 등록 실패: {e}")
 
 try:
     api_v1_router.include_router(fast_context.router, tags=["fast-context"])
@@ -36,16 +44,11 @@ try:
 except Exception as e:
     print(f"❌ Stories 라우터 등록 실패: {e}")
 
+# 3. 관리자 API들 (마지막에 등록)
 try:
-    api_v1_router.include_router(unified.router, tags=["unified"])
-    print("✅ Unified 라우터 등록 완료")
+    api_v1_router.include_router(admin.router, prefix="/admin", tags=["admin"])
+    print("✅ Admin 라우터 등록 완료")
 except Exception as e:
-    print(f"❌ Unified 라우터 등록 실패: {e}")
-
-try:
-    api_v1_router.include_router(sample_stories.router, tags=["sample-stories"])
-    print("✅ Sample Stories 라우터 등록 완료")
-except Exception as e:
-    print(f"❌ Sample Stories 라우터 등록 실패: {e}")
+    print(f"❌ Admin 라우터 등록 실패: {e}")
 
 print("🔧 라우터 등록 완료")
