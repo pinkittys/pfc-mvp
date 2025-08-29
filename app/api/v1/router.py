@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.api.v1.endpoints import recommend, keywords, admin, fast_context, stories, unified
+from app.api.v1.endpoints import recommend, keywords, admin, fast_context, stories, unified, sample_stories
 
 api_v1_router = APIRouter()
 
@@ -41,5 +41,11 @@ try:
     print("✅ Unified 라우터 등록 완료")
 except Exception as e:
     print(f"❌ Unified 라우터 등록 실패: {e}")
+
+try:
+    api_v1_router.include_router(sample_stories.router, tags=["sample-stories"])
+    print("✅ Sample Stories 라우터 등록 완료")
+except Exception as e:
+    print(f"❌ Sample Stories 라우터 등록 실패: {e}")
 
 print("🔧 라우터 등록 완료")

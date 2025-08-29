@@ -25,6 +25,7 @@ app.add_middleware(
 # 정적 파일 서빙 설정
 app.mount("/images", StaticFiles(directory="data/images_webp"), name="images")
 app.mount("/data", StaticFiles(directory="data"), name="data")
+app.mount("/frontend", StaticFiles(directory="frontend"), name="frontend")
 
 # API 라우터 등록
 app.include_router(api_v1_router, prefix="/api/v1")
@@ -58,3 +59,13 @@ async def admin_panel_html():
 @app.get("/simple_test.html")
 async def simple_test():
     return FileResponse("simple_test.html")
+
+@app.get("/sample_stories_demo.html")
+async def sample_stories_demo():
+    """사연 샘플 데모 페이지"""
+    return FileResponse("sample_stories_demo.html")
+
+@app.get("/demo")
+async def demo():
+    """사연 샘플 데모 페이지 (단축 URL)"""
+    return FileResponse("sample_stories_demo.html")
