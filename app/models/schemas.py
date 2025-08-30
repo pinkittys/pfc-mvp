@@ -28,6 +28,13 @@ class RecommendationItem(BaseModel):
     color_theme: List[str] = []
     reason: str
     image_url: str
+    # 추가 정보들
+    original_story: Optional[str] = None  # 원본 스토리
+    extracted_keywords: Optional[List[str]] = None  # 추출된 키워드 (해시태그)
+    flower_keywords: Optional[List[str]] = None  # 꽃 키워드 (꽃말)
+    season_info: Optional[str] = None  # 시즌 정보
+    english_message: Optional[str] = None  # 영어 메시지
+    recommendation_reason: Optional[str] = None  # 상세 추천 이유
 
 class EmotionAnalysis(BaseModel):
     emotion: str

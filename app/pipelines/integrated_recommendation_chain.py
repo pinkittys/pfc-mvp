@@ -12,6 +12,7 @@ from app.services.image_matcher import ImageMatcher
 from app.services.recommendation_logger import RecommendationLogger
 from app.services.story_manager import StoryManager
 from app.models.schemas import RecommendRequest, RecommendResponse, RecommendationItem
+import json
 
 class IntegratedRecommendationChain:
     def __init__(self):
@@ -89,7 +90,14 @@ class IntegratedRecommendationChain:
             sub_flowers=composition.sub_flowers,
             color_theme=extracted_context.colors,
             reason=recommendation_reason["professional_reason"],
-            image_url=matched_flower.image_url
+            image_url=matched_flower.image_url,
+            # 추가 정보들
+            original_story=request.story,
+            extracted_keywords=extracted_context.emotions + extracted_context.situations + extracted_context.moods + extracted_context.colors,
+            flower_keywords=matched_flower.keywords,
+            season_info=self._get_season_info(matched_flower.flower_name),
+            english_message=self._generate_english_message(matched_flower, request.story),
+            recommendation_reason=recommendation_reason["professional_reason"]
         )
         
         print(f"     📸 최종 추천: {matched_flower.flower_name} → {matched_flower.image_url}")
@@ -246,3 +254,60 @@ class IntegratedRecommendationChain:
             "tags": tags,
             "request": request
         }
+
+    def _get_season_info(self, flower_name: str) -> str:
+        """꽃의 시즌 정보 반환"""
+        try:
+            # flower_dictionary.json에서 꽃 정보 찾기
+            with open("data/flower_dictionary.json", "r", encoding="utf-8") as f:
+                flower_data = json.load(f)
+            
+            # 꽃 이름으로 검색
+            for flower_id, flower_info in flower_data["flowers"].items():
+                if (flower_info.get("korean_name") == flower_name or 
+                    flower_info.get("scientific_name") == flower_name):
+                    seasonality = flower_info.get("seasonality", [])
+                    if len(seasonality) == 4:
+                        return "All Season 01-12"
+                    elif len(seasonality) == 2:
+                        seasons = " ".join(seasonality)
+                        if "봄" in seasons and "여름" in seasons:
+                            return "Spring/Summer 03-08"
+                        elif "가을" in seasons and "겨울" in seasons:
+                            return "Fall/Winter 09-02"
+                    elif len(seasonality) == 1:
+                        season = seasonality[0]
+                        if season == "봄":
+                            return "Spring 03-05"
+                        elif season == "여름":
+                            return "Summer 06-08"
+                        elif season == "가을":
+                            return "Fall 09-11"
+                        elif season == "겨울":
+                            return "Winter 12-02"
+            
+            return "All Season 01-12"  # 기본값
+            
+        except Exception as e:
+            print(f"❌ 시즌 정보 조회 실패: {e}")
+            return "All Season 01-12"
+    
+    def _generate_english_message(self, matched_flower, story: str) -> str:
+        """영어 메시지 생성"""
+        try:
+            flower_name = matched_flower.flower_name
+            korean_name = matched_flower.korean_name
+            
+            # 간단한 영어 메시지 생성
+            if "생일" in story:
+                return f"Happy Birthday! I chose {flower_name} ({korean_name}) for you. This flower represents love and friendship."
+            elif "감사" in story or "고맙" in story:
+                return f"Thank you! I chose {flower_name} ({korean_name}) for you. This flower represents gratitude and appreciation."
+            elif "사랑" in story or "연인" in story:
+                return f"I love you! I chose {flower_name} ({korean_name}) for you. This flower represents love and romance."
+            else:
+                return f"I chose {flower_name} ({korean_name}) for you. This flower represents love and friendship."
+                
+        except Exception as e:
+            print(f"❌ 영어 메시지 생성 실패: {e}")
+            return f"I chose {matched_flower.flower_name} for you. This flower represents love and friendship."
