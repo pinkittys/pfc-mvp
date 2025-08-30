@@ -178,15 +178,17 @@ class RealtimeContextExtractor:
         # 텍스트 길이에 따라 키워드 수 조절
         text_length = len(story.strip())
         
+        # 꽃 매칭을 위해 최소 4개 차원 모두 필요
+        # 텍스트 길이에 관계없이 최소 4개 키워드 보장
         if text_length <= 15:
-            # 매우 짧은 텍스트: 확실한 것만, 중복 없이
-            max_keywords = 2
-        elif text_length <= 40:
-            # 중간 텍스트: 적당한 수
-            max_keywords = 3
-        else:
-            # 긴 텍스트: 더 많은 키워드
+            # 매우 짧은 텍스트: 4개 차원 모두 추출 (중복 허용)
             max_keywords = 4
+        elif text_length <= 40:
+            # 중간 텍스트: 4개 차원 모두 추출
+            max_keywords = 4
+        else:
+            # 긴 텍스트: 더 많은 키워드 (4개 이상)
+            max_keywords = 6
         
         # 키워드 수 제한
         unique_keywords = unique_keywords[:max_keywords]
@@ -209,7 +211,7 @@ class RealtimeContextExtractor:
             if color not in result.colors:
                 result.colors.append(color)
         
-        # 나머지 키워드를 우선순위에 따라 분배
+        # 나머지 키워드를 우선순위에 따라 분배 (4개 차원 모두 보장)
         for i, keyword in enumerate(other_keywords):
             if i == 0 and len(result.emotions) == 0:
                 result.emotions.append(keyword)
@@ -217,10 +219,28 @@ class RealtimeContextExtractor:
                 result.situations.append(keyword)
             elif i == 2 and len(result.moods) == 0:
                 result.moods.append(keyword)
+            elif i == 3 and len(result.emotions) == 0:
+                result.emotions.append(keyword)  # emotions가 비어있으면 추가
+            elif i == 4 and len(result.situations) == 0:
+                result.situations.append(keyword)  # situations가 비어있으면 추가
+            elif i == 5 and len(result.moods) == 0:
+                result.moods.append(keyword)  # moods가 비어있으면 추가
         
         print(f"🔧 중복 제거 후 키워드: {unique_keywords}")
         
-        # 색상이 비어있으면 다른 차원을 바탕으로 추천
+        # 4개 차원 모두 보장 (비어있으면 기본값 제공)
+        if not result.emotions:
+            result.emotions = self._get_default_emotions(story)
+            print(f"🔧 기본 감정 제공: {result.emotions}")
+        
+        if not result.situations:
+            result.situations = self._get_default_situations(story)
+            print(f"🔧 기본 상황 제공: {result.situations}")
+        
+        if not result.moods:
+            result.moods = self._get_default_moods(story)
+            print(f"🔧 기본 무드 제공: {result.moods}")
+        
         if not result.colors:
             recommended_color = self._recommend_color_based_on_context(
                 result.emotions, result.situations, result.moods, story
@@ -1105,3 +1125,54 @@ class RealtimeContextExtractor:
             "confidence": context.confidence,
             "total_extracted": len(context.emotions) + len(context.situations) + len(context.moods) + len(context.colors)
         }
+    
+    def _get_default_emotions(self, story: str) -> List[str]:
+        """기본 감정 제공"""
+        story_lower = story.lower()
+        
+        # 위로/힐링 관련
+        if any(word in story_lower for word in ["위로", "힐링", "편안", "차분", "쉬고", "휴식"]):
+            return ["따뜻함"]
+        # 축하/기쁨 관련
+        elif any(word in story_lower for word in ["축하", "생일", "기쁨", "행복", "합격"]):
+            return ["기쁨"]
+        # 사랑/감사 관련
+        elif any(word in story_lower for word in ["사랑", "감사", "고맙", "은혜"]):
+            return ["사랑"]
+        # 기본값
+        else:
+            return ["따뜻함"]
+    
+    def _get_default_situations(self, story: str) -> List[str]:
+        """기본 상황 제공"""
+        story_lower = story.lower()
+        
+        # 위로/힐링 관련
+        if any(word in story_lower for word in ["위로", "힐링", "편안", "차분", "쉬고", "휴식"]):
+            return ["위로"]
+        # 축하/기쁨 관련
+        elif any(word in story_lower for word in ["축하", "생일", "기쁨", "행복", "합격"]):
+            return ["축하"]
+        # 사랑/감사 관련
+        elif any(word in story_lower for word in ["사랑", "감사", "고맙", "은혜"]):
+            return ["감사"]
+        # 기본값
+        else:
+            return ["일상"]
+    
+    def _get_default_moods(self, story: str) -> List[str]:
+        """기본 무드 제공"""
+        story_lower = story.lower()
+        
+        # 위로/힐링 관련
+        if any(word in story_lower for word in ["위로", "힐링", "편안", "차분", "쉬고", "휴식"]):
+            return ["따뜻한"]
+        # 축하/기쁨 관련
+        elif any(word in story_lower for word in ["축하", "생일", "기쁨", "행복", "합격"]):
+            return ["밝은"]
+        # 사랑/감사 관련
+        elif any(word in story_lower for word in ["사랑", "감사", "고맙", "은혜"]):
+            return ["로맨틱한"]
+        # 기본값
+        else:
+            return ["따뜻한"]

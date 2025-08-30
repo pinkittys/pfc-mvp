@@ -99,9 +99,9 @@ class ComfortFlowerMatcher:
         # 2. 위로 관련 꽃말 보너스
         flower_meanings = flower_data.get('flower_meanings', {})
         all_meanings = []
-        all_meanings.extend(flower_meanings.get('primary', []))
-        all_meanings.extend(flower_meanings.get('secondary', []))
-        all_meanings.extend(flower_meanings.get('other', []))
+        all_meanings.extend(flower_meanings.get('meanings', flower_meanings.get('primary', [])))
+        all_meanings.extend(flower_meanings.get('moods', flower_meanings.get('secondary', [])))
+        all_meanings.extend(flower_meanings.get('emotions', flower_meanings.get('other', [])))
         
         comfort_meaning_count = sum(1 for meaning in all_meanings 
                                   if any(keyword in str(meaning) for keyword in self.comfort_flower_keywords))

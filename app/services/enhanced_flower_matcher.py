@@ -216,7 +216,7 @@ class EnhancedFlowerMatcher:
         """추천 이유 생성"""
         
         # 꽃의 주요 의미들
-        primary_meanings = flower.flower_meanings.get("primary", [])
+        primary_meanings = flower.flower_meanings.get("meanings", flower.flower_meanings.get("primary", []))
         primary_moods = flower.moods.get("primary", [])
         
         # 맥락과 매칭되는 요소들

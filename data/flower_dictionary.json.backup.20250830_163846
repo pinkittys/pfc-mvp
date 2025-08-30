@@ -6,17 +6,17 @@
       "korean_name": "ê±°ë² ë¼",
       "color": "ìë¡ì°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "í¬ë§",
           "ê¸°ì¨",
           "ê²©ë ¤"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ë¬ë¸ë¦¬",
           "ë´ì¶ë´"
         ],
-        "emotions": [
+        "other": [
           "ììÂ·ê²©ë ¤",
           "ìì¼",
           "ìê¸°ì ë¬¼"
@@ -67,17 +67,17 @@
       "korean_name": "ë¦¬ìììì¤",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê°ì¬",
           "íì¨",
           "ìë¶ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "ë¯¸ëë©",
           "í´ëì"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ê¸°ëì¼",
           "ì¸íë¦¬ì´"
@@ -125,15 +125,15 @@
     },
     "lathyrus-odoratus-pk": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "행복한 추억",
           "달콤한 사랑"
         ],
-        "moods": [
+        "secondary": [
           "아름다운 미소",
           "우아한 매력"
         ],
-        "emotions": [
+        "other": [
           "풍부한 향기",
           "잔잔한 아름다움"
         ],
@@ -213,15 +213,15 @@
     },
     "gladiolus-hortulanus-rd": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "강한 인상",
           "승리의 기쁨"
         ],
-        "moods": [
+        "secondary": [
           "성실",
           "첫사랑"
         ],
-        "emotions": [
+        "other": [
           "재치",
           "교양 있는 사람"
         ],
@@ -298,15 +298,15 @@
     },
     "ranunculus-asiaticus-or": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "화려한 매력",
           "빛나는 존재"
         ],
-        "moods": [
+        "secondary": [
           "꾸밈 없는 아름다움",
           "자연스러운 매력"
         ],
-        "emotions": [
+        "other": [
           "눈부신 사랑",
           "찬란한 생명력"
         ],
@@ -386,15 +386,15 @@
     },
     "zinnia-elegans-rd": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "존경",
           "충성"
         ],
-        "moods": [
+        "secondary": [
           "결단력",
           "용기"
         ],
-        "emotions": [
+        "other": [
           "친절",
           "성실"
         ],
@@ -479,17 +479,17 @@
       "korean_name": "ë§ê°ë ",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê°ì¬",
           "íì¨",
           "ì íí¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¡ë§¨í±",
           "ë´ì¶ë´",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ê³ ë°±",
           "ì¸íë¦¬ì´"
@@ -537,15 +537,15 @@
     },
     "dianthus-caryophyllus-rd": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "존경",
           "엄마에 대한 사랑"
         ],
-        "moods": [
+        "secondary": [
           "행운",
           "건강"
         ],
-        "emotions": [
+        "other": [
           "사랑의 행복",
           "순결"
         ],
@@ -632,17 +632,17 @@
       "korean_name": "ìêµ­",
       "color": "ë¸ë£¨",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê·¸ë¦¬ì",
           "ìë¡",
           "íì¨"
         ],
-        "moods": [
+        "secondary": [
           "ìí¬",
           "ëª¨ë",
           "ë¯¸ëë©"
         ],
-        "emotions": [
+        "other": [
           "ì¸íë¦¬ì´",
           "ìë¡Â·ì¾ì",
           "ìê¸°ì ë¬¼"
@@ -689,15 +689,15 @@
     },
     "anemone-coronaria-rd": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "기대",
           "기다림"
         ],
-        "moods": [
+        "secondary": [
           "포기하지 않음",
           "반짝이는 미래"
         ],
-        "emotions": [
+        "other": [
           "순수한 마음",
           "신뢰"
         ],
@@ -780,17 +780,17 @@
       "korean_name": "ë°±í©",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ìë¶ì¬",
           "íì¨",
           "ê°ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "í´ëì",
           "ë¯¸ëë©"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ì¸íë¦¬ì´",
           "ê¸°ëì¼"
@@ -841,17 +841,17 @@
       "korean_name": "ë¤ìë¦¬ì",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê°ì¬",
           "ì íí¨",
           "ê¸°ì¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¡ë§¨í±",
           "ë¬ë¸ë¦¬",
           "íì¤í"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ìì¼",
           "ìê¸°ì ë¬¼"
@@ -901,17 +901,17 @@
       "korean_name": "ìì½",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ì íí¨",
           "ê¸°ì¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¬ë¸ë¦¬",
           "íì¤í",
           "ë¡ë§¨í±"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ìì¼",
           "ìê¸°ì ë¬¼"
@@ -958,14 +958,14 @@
     },
     "iris-sanguinea-pu": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "열정",
           "강렬한 사랑"
         ],
-        "moods": [
+        "secondary": [
           "신비롭고, 깊은 우정"
         ],
-        "emotions": [
+        "other": [
           "희망과 기대"
         ],
         "phrases": [
@@ -1043,14 +1043,14 @@
     },
     "iris-ll": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "우아함",
           "부드러운 사랑"
         ],
-        "moods": [
+        "secondary": [
           "차분하고, 깊은 우정"
         ],
-        "emotions": [
+        "other": [
           "희망과 기대"
         ],
         "phrases": [
@@ -1132,17 +1132,17 @@
       "korean_name": "ì¤í í¬",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "íì¨",
           "ìë¡",
           "ê°ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ë¯¸ëë©",
           "ë´ì¶ë´",
           "í´ëì"
         ],
-        "emotions": [
+        "other": [
           "ì¸íë¦¬ì´",
           "ìë¡Â·ì¾ì",
           "ê°ì¬ì ë¬"
@@ -1192,17 +1192,17 @@
       "korean_name": "ì¤ì¹´ë¹ì¤ì¬",
       "color": "ë¸ë£¨",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì íí¨",
           "íì¨",
           "ê·¸ë¦¬ì"
         ],
-        "moods": [
+        "secondary": [
           "ìí¬",
           "ë¯¸ëë©",
           "ë´ì¶ë´"
         ],
-        "emotions": [
+        "other": [
           "ìë¡Â·ì¾ì",
           "ì¸íë¦¬ì´",
           "ê¸°ëì¼"
@@ -1249,15 +1249,15 @@
     },
     "ammi-majus-wh": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "순수함",
           "청결"
         ],
-        "moods": [
+        "secondary": [
           "비밀스러움",
           "숨겨진 아름다움"
         ],
-        "emotions": [
+        "other": [
           "자연의 선물",
           "하늘의 별"
         ],
@@ -1336,15 +1336,15 @@
     },
     "anthurium-andraeanum-rd": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "열정",
           "사랑"
         ],
-        "moods": [
+        "secondary": [
           "매혹적인 미모",
           "긍정적인 변화"
         ],
-        "emotions": [
+        "other": [
           "영원한 친구",
           "행복한 인연"
         ],
@@ -1422,15 +1422,15 @@
     },
     "astilbe-japonica-pk": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "눈부신 아름다움",
           "순수한 마음"
         ],
-        "moods": [
+        "secondary": [
           "고요한 휴식",
           "차분한 여유"
         ],
-        "emotions": [
+        "other": [
           "아름다운 추억",
           "기다림"
         ],
@@ -1505,17 +1505,17 @@
       "korean_name": "ë¶ë°ë¥´ëì",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê°ì¬",
           "ì íí¨",
           "íì¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¡ë§¨í±",
           "ì°ìí¨",
           "ë´ì¶ë´"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ìì¼",
           "ìë¡Â·ì¾ì"
@@ -1566,17 +1566,17 @@
       "korean_name": "ë§¨ëë¼ë¯¸",
       "color": "ë ë",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ì©ê¸°",
           "ì¶í"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ìí¬",
           "ë¡ë§¨í±"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ê¸°ëì¼",
           "ì¹ì§Â·í©ê²©"
@@ -1626,17 +1626,17 @@
       "korean_name": "ëª©í",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "íì¨",
           "ìë¡",
           "ê°ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ë¯¸ëë©",
           "ë´ì¶ë´",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ìë¡Â·ì¾ì",
           "ì¸íë¦¬ì´",
           "ê°ì¬ì ë¬"
@@ -1683,15 +1683,15 @@
     },
     "cymbidium-spp.-wh": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "사랑의 감정",
           "이루어질 수 없는 사랑"
         ],
-        "moods": [
+        "secondary": [
           "향기로운 추억",
           "아름다운 사랑"
         ],
-        "emotions": [
+        "other": [
           "무한한 매력",
           "고상한 아름다움"
         ],
@@ -1775,17 +1775,17 @@
       "korean_name": "ê³¨ë ë³¼",
       "color": "ìë¡ì°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê¸°ì¨",
           "í¬ë§",
           "ê°ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ë¬ë¸ë¦¬",
           "ë¯¸ëë©"
         ],
-        "emotions": [
+        "other": [
           "ìì¼",
           "ììÂ·ê²©ë ¤",
           "ì¸íë¦¬ì´"
@@ -1831,15 +1831,15 @@
     },
     "gentiana-andrewsii-bl": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "인내",
           "충성"
         ],
-        "moods": [
+        "secondary": [
           "긍정적인 변화",
           "해결"
         ],
-        "emotions": [
+        "other": [
           "극복",
           "용기"
         ],
@@ -1922,17 +1922,17 @@
       "korean_name": "ì²ì¼í",
       "color": "í¼í",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì íí¨",
           "ìë¶ì¬",
           "ì¤ë "
         ],
-        "moods": [
+        "secondary": [
           "ë¡ë§¨í±",
           "ìí¬",
           "í´ëì"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ê¸°ëì¼",
           "ì¸íë¦¬ì´"
@@ -1978,15 +1978,15 @@
     },
     "iberis-sempervirens-wh": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "천진난만함",
           "순수"
         ],
-        "moods": [
+        "secondary": [
           "기다림",
           "실력"
         ],
-        "emotions": [
+        "other": [
           "무한한 사랑"
         ],
         "phrases": [
@@ -2064,15 +2064,15 @@
     },
     "veronica-spicata-wh": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "행복한 운명",
           "붉은 사랑"
         ],
-        "moods": [
+        "secondary": [
           "진실",
           "행복"
         ],
-        "emotions": [
+        "other": [
           "순결한 마음",
           "애정"
         ],
@@ -2153,15 +2153,15 @@
     },
     "tagetes-erecta-yl": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "사랑의 행복",
           "재치있는 사람"
         ],
-        "moods": [
+        "secondary": [
           "감사함",
           "호의"
         ],
-        "emotions": [
+        "other": [
           "행운을 가져다주는"
         ],
         "phrases": [
@@ -2240,15 +2240,15 @@
     },
     "ranunculus-asiaticus-pk": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "매력적인",
           "동경"
         ],
-        "moods": [
+        "secondary": [
           "소중한 추억",
           "빛나는 아름다움"
         ],
-        "emotions": [
+        "other": [
           "사랑스러움",
           "찬란한 미래"
         ],
@@ -2331,17 +2331,17 @@
       "korean_name": "í¤ë¦½",
       "color": "ë ë",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ê¸°ì¨",
           "ì©ê¸°"
         ],
-        "moods": [
+        "secondary": [
           "ë¡ë§¨í±",
           "ë¹ë¹ë",
           "ìí¬"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ê¸°ëì¼",
           "ìì¼"
@@ -2393,17 +2393,17 @@
       "korean_name": "ìì½",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê°ì¬",
           "ìë¶ì¬",
           "ê¸°ì¨"
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "í´ëì",
           "ë¯¸ëë©"
         ],
-        "emotions": [
+        "other": [
           "ê¸°ëì¼",
           "ê°ì¬ì ë¬",
           "ì¸íë¦¬ì´"
@@ -2450,14 +2450,14 @@
     },
     "anemone-coronaria-pu": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "포기하지 않는 사랑",
           "기대"
         ],
-        "moods": [
+        "secondary": [
           "기다림"
         ],
-        "emotions": [
+        "other": [
           "증오"
         ],
         "phrases": [
@@ -2522,15 +2522,15 @@
     },
     "anthurium-andraeanum-gr": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "애정",
           "꽃의 여왕"
         ],
-        "moods": [
+        "secondary": [
           "행운",
           "친절"
         ],
-        "emotions": [
+        "other": [
           "마음의 풍요",
           "무한한 매력"
         ],
@@ -2612,15 +2612,15 @@
     },
     "cymbidium-spp.-gr": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "행복",
           "사랑의 재회"
         ],
-        "moods": [
+        "secondary": [
           "정열",
           "고요한 사랑"
         ],
-        "emotions": [
+        "other": [
           "우정",
           "성실"
         ],
@@ -2700,15 +2700,15 @@
     },
     "cymbidium-spp.-pk": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "사랑",
           "아름다움"
         ],
-        "moods": [
+        "secondary": [
           "우아함",
           "고결함"
         ],
-        "emotions": [
+        "other": [
           "존경",
           "성실"
         ],
@@ -2792,17 +2792,17 @@
       "korean_name": "ì¥ë¯¸",
       "color": "ë¸ë£¨",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "í¬ë§",
           "ì íí¨",
           "ì¤ë "
         ],
-        "moods": [
+        "secondary": [
           "ìí¬",
           "í´ëì",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ìê¸°ì ë¬¼",
           "ê¸°ëì¼"
@@ -2853,17 +2853,17 @@
       "korean_name": "ì¥ë¯¸",
       "color": "ì¤ë ì§",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ì©ê¸°",
           "ì¶í"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ë¡ë§¨í±",
           "ìí¬"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ìì¼",
           "ì¹ì§Â·í©ê²©"
@@ -2914,17 +2914,17 @@
       "korean_name": "ê±°ë² ë¼",
       "color": "ì¤ë ì§",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¶í",
           "í¬ë§",
           "ê¸°ì¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ë¬ë¸ë¦¬",
           "ë´ì¶ë´"
         ],
-        "emotions": [
+        "other": [
           "ììÂ·ê²©ë ¤",
           "ìì¼",
           "ìê¸°ì ë¬¼"
@@ -2975,17 +2975,17 @@
       "korean_name": "ìêµ­",
       "color": "ê·¸ë¦°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ìë¡",
           "ì íí¨",
           "ì±ìí¨"
         ],
-        "moods": [
+        "secondary": [
           "ë´ì¶ë´",
           "í´ëì",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ì¸íë¦¬ì´",
           "ìë¡Â·ì¾ì",
           "ìê¸°ì ë¬¼"
@@ -3035,15 +3035,15 @@
     },
     "zinnia-elegans-pk": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "정직",
           "지속되는 사랑"
         ],
-        "moods": [
+        "secondary": [
           "우정",
           "희망"
         ],
-        "emotions": [
+        "other": [
           "상냥한 마음",
           "솔직함"
         ],
@@ -3123,15 +3123,15 @@
     },
     "ranunculus-asiaticus-wh": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "환상적인 매력",
           "광채"
         ],
-        "moods": [
+        "secondary": [
           "정열",
           "자신만의 미"
         ],
-        "emotions": [
+        "other": [
           "동경",
           "참된 사랑"
         ],
@@ -3214,17 +3214,17 @@
       "korean_name": "ì¤ì¹´ë¹ì¤ì¬",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "íì¨",
           "ê°ì¬",
           "ìë¶ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ë¯¸ëë©",
           "ë´ì¶ë´",
           "í´ëì"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ì¸íë¦¬ì´",
           "ìë¡Â·ì¾ì"
@@ -3274,17 +3274,17 @@
       "korean_name": "ë¤ìë¦¬ì",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê°ì¬",
           "ìë¶ì¬",
           "íì¨"
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "ë¯¸ëë©",
           "í´ëì"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ì¸íë¦¬ì´",
           "ê¸°ëì¼"
@@ -3334,17 +3334,17 @@
       "korean_name": "ì¥ë¯¸",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê°ì¬",
           "ìë¶ì¬",
           "íì¨"
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "í´ëì",
           "ë¯¸ëë©"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ìë¡Â·ì¾ì",
           "ì¸íë¦¬ì´"
@@ -3395,17 +3395,17 @@
       "korean_name": "í¤ë¦½",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "íì¨",
           "ì íí¨",
           "ê°ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ë¯¸ëë©",
           "í´ëì",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ìë¡Â·ì¾ì",
           "ê³ ë°±"
@@ -3452,15 +3452,15 @@
     },
     "astilbe-japonica-wh": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "희망",
           "견딜 수 있는 사랑"
         ],
-        "moods": [
+        "secondary": [
           "내심의 강함",
           "고결한 마음"
         ],
-        "emotions": [
+        "other": [
           "지속적인 친절",
           "현실에 대한 믿음"
         ],
@@ -3544,17 +3544,17 @@
       "korean_name": "ë§¨ëë¼ë¯¸",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "íì¨",
           "ê°ì¬",
           "ìë¡"
         ],
-        "moods": [
+        "secondary": [
           "ë¯¸ëë©",
           "ë´ì¶ë´",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ì¸íë¦¬ì´",
           "ìë¡Â·ì¾ì",
           "ê°ì¬ì ë¬"
@@ -3604,17 +3604,17 @@
       "korean_name": "ë§¨ëë¼ë¯¸",
       "color": "ì¤ë ì§",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¶í",
           "ê²©ë ¤",
           "ê¸°ì¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ìí¬",
           "ëª¨ë"
         ],
-        "emotions": [
+        "other": [
           "ê¸°ëì¼",
           "ììÂ·ê²©ë ¤",
           "ìê¸°ì ë¬¼"
@@ -3660,14 +3660,14 @@
     },
     "tagetes-erecta-or": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "믿음",
           "신념"
         ],
-        "moods": [
+        "secondary": [
           "행복"
         ],
-        "emotions": [
+        "other": [
           "열정",
           "재생"
         ],
@@ -3744,15 +3744,15 @@
     },
     "veronica-spicata-pu": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "신념",
           "지속"
         ],
-        "moods": [
+        "secondary": [
           "완결",
           "속세의 애증"
         ],
-        "emotions": [
+        "other": [
           "헌신",
           "빠른 회복"
         ],
@@ -3836,17 +3836,17 @@
       "korean_name": "ì²ì¼í",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "íì¨",
           "ê°ì¬",
           "ìë¡"
         ],
-        "moods": [
+        "secondary": [
           "ë¯¸ëë©",
           "ë´ì¶ë´",
           "í´ëì"
         ],
-        "emotions": [
+        "other": [
           "ìë¡Â·ì¾ì",
           "ì¸íë¦¬ì´",
           "ê°ì¬ì ë¬"
@@ -3896,17 +3896,17 @@
       "korean_name": "ìêµ­",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê°ì¬",
           "íì¨",
           "ìë¡"
         ],
-        "moods": [
+        "secondary": [
           "ë¯¸ëë©",
           "ë´ì¶ë´",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ì¸íë¦¬ì´",
           "ìë¡Â·ì¾ì"
@@ -3953,15 +3953,15 @@
     },
     "freesia-refracta-yl": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "천진난만",
           "순진",
           "자기자랑"
         ],
-        "moods": [
+        "secondary": [
           "영원한 우정"
         ],
-        "emotions": [
+        "other": [
           "순박",
           "순결"
         ],
@@ -4124,16 +4124,16 @@
     },
     "alstroemeria-spp.-pk": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "우정",
           "행운",
           "열정"
         ],
-        "moods": [
+        "secondary": [
           "끈질긴 장기전",
           "무한한 활력"
         ],
-        "emotions": [
+        "other": [
           "충성",
           "기억"
         ],
@@ -4218,15 +4218,15 @@
     },
     "alstroemeria-spp.-wh": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "우정",
           "행복한 재회"
         ],
-        "moods": [
+        "secondary": [
           "열정적인 사랑",
           "격렬한 욕망"
         ],
-        "emotions": [],
+        "other": [],
         "phrases": [
           "우리의 우정이 영원하길",
           "행복한 재회를 기대하며"
@@ -4297,15 +4297,15 @@
     },
     "alstroemeria-spp.-or": {
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "친구에 대한 우정",
           "열정적인 추구"
         ],
-        "moods": [
+        "secondary": [
           "서로에 대한 관심",
           "행운"
         ],
-        "emotions": [
+        "other": [
           "잔잔한 사랑",
           "따뜻함"
         ],
@@ -4387,17 +4387,17 @@
       "korean_name": "ë§ê°ë ",
       "color": "ì°ë³´ë¼",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì íí¨",
           "íì¨",
           "ì¤ë "
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "ë¡ë§¨í±",
           "íì¤í"
         ],
-        "emotions": [
+        "other": [
           "ê¸°ëì¼",
           "ì¸íë¦¬ì´",
           "ìê¸°ì ë¬¼"
@@ -4449,17 +4449,17 @@
       "korean_name": "ë§ê°ë ",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ì íí¨",
           "ê¸°ì¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¬ë¸ë¦¬",
           "íì¤í",
           "ë¡ë§¨í±"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ìì¼",
           "ìê¸°ì ë¬¼"
@@ -4511,17 +4511,17 @@
       "korean_name": "ë§ê°ë ",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì©ê¸°",
           "ìë¶ì¬",
           "ê¸°ì¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ìí¬",
           "ë¡ë§¨í±"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ì¹ì§Â·í©ê²©",
           "ììÂ·ê²©ë ¤"
@@ -4573,17 +4573,17 @@
       "korean_name": "ë§ê°ë ",
       "color": "ìë¡ì°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê¸°ì¨",
           "ì¶í",
           "í¬ë§"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ë´ì¶ë´",
           "ë¬ë¸ë¦¬"
         ],
-        "emotions": [
+        "other": [
           "ìì¼",
           "ììÂ·ê²©ë ¤",
           "ê°ì¬ì ë¬"
@@ -4635,17 +4635,17 @@
       "korean_name": "ë¶ë°ë¥´ëì",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ê¸°ì¨",
           "ì íí¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¬ë¸ë¦¬",
           "íì¤í",
           "ë¡ë§¨í±"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ìì¼",
           "ê°ì¬ì ë¬"
@@ -4695,17 +4695,17 @@
       "korean_name": "ë¶ë°ë¥´ëì",
       "color": "ë ë",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì©ê¸°",
           "ìë¶ì¬",
           "ì¤ë "
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ìí¬",
           "ë¡ë§¨í±"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ì¹ì§Â·í©ê²©",
           "ê¸°ëì¼"
@@ -4755,17 +4755,17 @@
       "korean_name": "ë§¨ëë¼ë¯¸",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì íí¨",
           "ì¤ë ",
           "ê°ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ë¡ë§¨í±",
           "ì°ìí¨",
           "íì¤í"
         ],
-        "emotions": [
+        "other": [
           "ìì¼",
           "ê³ ë°±",
           "ì¸íë¦¬ì´"
@@ -4815,17 +4815,17 @@
       "korean_name": "ë§¨ëë¼ë¯¸",
       "color": "ìë¡ì°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê¸°ì¨",
           "ì¶í",
           "í¬ë§"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ë¬ë¸ë¦¬",
           "ë´ì¶ë´"
         ],
-        "emotions": [
+        "other": [
           "ìì¼",
           "ììÂ·ê²©ë ¤",
           "ìê¸°ì ë¬¼"
@@ -4875,17 +4875,17 @@
       "korean_name": "ê³¨ë ë³¼",
       "color": "ìë¡ì°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "í¬ë§",
           "ê¸°ì¨",
           "ê²©ë ¤"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ë´ì¶ë´",
           "ë¯¸ëë©"
         ],
-        "emotions": [
+        "other": [
           "ììÂ·ê²©ë ¤",
           "ìì¼",
           "ì¸íë¦¬ì´"
@@ -4935,17 +4935,17 @@
       "korean_name": "ë¤ìë¦¬ì",
       "color": "í¼í",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ìë¶ì¬",
           "ì¡´ê²½",
           "ì íí¨"
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "ìí¬",
           "í´ëì"
         ],
-        "emotions": [
+        "other": [
           "ê¸°ëì¼",
           "ì¸íë¦¬ì´",
           "ê°ì¬ì ë¬"
@@ -4995,17 +4995,17 @@
       "korean_name": "ë¤ìë¦¬ì",
       "color": "ë ë",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ì¶í",
           "ì©ê¸°"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ìí¬",
           "ë¡ë§¨í±"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ê¸°ëì¼",
           "ìê¸°ì ë¬¼"
@@ -5055,17 +5055,17 @@
       "korean_name": "ë¤ìë¦¬ì",
       "color": "ìë¡ì°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê¸°ì¨",
           "ì¶í",
           "í¬ë§"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ë¬ë¸ë¦¬",
           "ë¯¸ëë©"
         ],
-        "emotions": [
+        "other": [
           "ìì¼",
           "ì¹ì§Â·í©ê²©",
           "ììÂ·ê²©ë ¤"
@@ -5115,17 +5115,17 @@
       "korean_name": "ë¦¬ìììì¤",
       "color": "ì°ë³´ë¼",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì íí¨",
           "íì¨",
           "ê·¸ë¦¬ì"
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "í´ëì",
           "ë¡ë§¨í±"
         ],
-        "emotions": [
+        "other": [
           "ê¸°ëì¼",
           "ìë¡Â·ì¾ì",
           "ì¸íë¦¬ì´"
@@ -5177,17 +5177,17 @@
       "korean_name": "ë¦¬ìììì¤",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ì íí¨",
           "ê¸°ì¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¬ë¸ë¦¬",
           "ë¡ë§¨í±",
           "íì¤í"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ìì¼",
           "ìê¸°ì ë¬¼"
@@ -5239,17 +5239,17 @@
       "korean_name": "ë¦¬ìììì¤",
       "color": "í¼í",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì íí¨",
           "ìë¶ì¬",
           "íì¨"
         ],
-        "moods": [
+        "secondary": [
           "í´ëì",
           "ì°ìí¨",
           "ìí¬"
         ],
-        "emotions": [
+        "other": [
           "ê¸°ëì¼",
           "ì¸íë¦¬ì´",
           "ìë¡Â·ì¾ì"
@@ -5300,17 +5300,17 @@
       "korean_name": "ë¦¬ìììì¤",
       "color": "ìë¡ì°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê°ì¬",
           "ê¸°ì¨",
           "í¬ë§"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ë´ì¶ë´",
           "ë¬ë¸ë¦¬"
         ],
-        "emotions": [
+        "other": [
           "ìì¼",
           "ììÂ·ê²©ë ¤",
           "ê°ì¬ì ë¬"
@@ -5361,17 +5361,17 @@
       "korean_name": "ê±°ë² ë¼",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì íí¨",
           "ê¸°ì¨",
           "ì¤ë "
         ],
-        "moods": [
+        "secondary": [
           "ë¡ë§¨í±",
           "íì¤í",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ê¸°ëì¼",
           "ìì¼",
           "ê³ ë°±"
@@ -5422,17 +5422,17 @@
       "korean_name": "ê±°ë² ë¼",
       "color": "í¼í",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ìë¶ì¬",
           "ê·¸ë¦¬ì",
           "ì íí¨"
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "í´ëì",
           "ìí¬"
         ],
-        "emotions": [
+        "other": [
           "ê¸°ëì¼",
           "ì¸íë¦¬ì´",
           "ìë¡Â·ì¾ì"
@@ -5483,17 +5483,17 @@
       "korean_name": "ê±°ë² ë¼",
       "color": "ë ë",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¶í",
           "ì©ê¸°",
           "ì¤ë "
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ìí¬",
           "ë¡ë§¨í±"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ì¹ì§Â·í©ê²©",
           "ê¸°ëì¼"
@@ -5544,17 +5544,17 @@
       "korean_name": "ê±°ë² ë¼",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "íì¨",
           "ê°ì¬",
           "ìë¡"
         ],
-        "moods": [
+        "secondary": [
           "ë¯¸ëë©",
           "ë´ì¶ë´",
           "íì¤í"
         ],
-        "emotions": [
+        "other": [
           "ìë¡Â·ì¾ì",
           "ì¸íë¦¬ì´",
           "ê°ì¬ì ë¬"
@@ -5605,17 +5605,17 @@
       "korean_name": "ì²ì¼í",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê¸°ì¨",
           "ì íí¨",
           "í¬ë§"
         ],
-        "moods": [
+        "secondary": [
           "ë¬ë¸ë¦¬",
           "ë´ì¶ë´",
           "íì¤í"
         ],
-        "emotions": [
+        "other": [
           "ìì¼",
           "ììÂ·ê²©ë ¤",
           "ìê¸°ì ë¬¼"
@@ -5665,17 +5665,17 @@
       "korean_name": "ì²ì¼í",
       "color": "ë ë",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ìë¶ì¬",
           "ì¤ë ",
           "ì íí¨"
         ],
-        "moods": [
+        "secondary": [
           "ìí¬",
           "ë¡ë§¨í±",
           "í´ëì"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ê¸°ëì¼",
           "ê°ì¬ì ë¬"
@@ -5725,17 +5725,17 @@
       "korean_name": "ìêµ­",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ê°ì¬",
           "ì íí¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¡ë§¨í±",
           "ì°ìí¨",
           "íì¤í"
         ],
-        "emotions": [
+        "other": [
           "ìì¼",
           "ê¸°ëì¼",
           "ê³ ë°±"
@@ -5786,17 +5786,17 @@
       "korean_name": "ìêµ­",
       "color": "í¼í",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì íí¨",
           "ìë¶ì¬",
           "ê·¸ë¦¬ì"
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "í´ëì",
           "ìí¬"
         ],
-        "emotions": [
+        "other": [
           "ì¸íë¦¬ì´",
           "ê¸°ëì¼",
           "ìë¡Â·ì¾ì"
@@ -5847,17 +5847,17 @@
       "korean_name": "ë°±í©",
       "color": "ì¤ë ì§",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ìë¶ì¬",
           "ì©ê¸°",
           "ì¤ë "
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ìí¬",
           "í´ëì"
         ],
-        "emotions": [
+        "other": [
           "ì¹ì§Â·í©ê²©",
           "ìê¸°ì ë¬¼",
           "ê¸°ëì¼"
@@ -5908,17 +5908,17 @@
       "korean_name": "ë°±í©",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ê¸°ì¨",
           "ì íí¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¬ë¸ë¦¬",
           "íì¤í",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ìì¼",
           "ì¸íë¦¬ì´"
@@ -5969,17 +5969,17 @@
       "korean_name": "ë°±í©",
       "color": "ë ë",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ìë¶ì¬",
           "ì¶í"
         ],
-        "moods": [
+        "secondary": [
           "ë¡ë§¨í±",
           "ìí¬",
           "ë¹ë¹ë"
         ],
-        "emotions": [
+        "other": [
           "ê¸°ëì¼",
           "ê³ ë°±",
           "ìì¼"
@@ -6030,17 +6030,17 @@
       "korean_name": "ë°±í©",
       "color": "ìë¡ì°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê¸°ì¨",
           "ê°ì¬",
           "ê²©ë ¤"
         ],
-        "moods": [
+        "secondary": [
           "ë¬ë¸ë¦¬",
           "ë´ì¶ë´",
           "ë¹ë¹ë"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ìì¼",
           "ììÂ·ê²©ë ¤"
@@ -6091,17 +6091,17 @@
       "korean_name": "ì¤í í¬",
       "color": "ì°ë³´ë¼",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì íí¨",
           "íì¨",
           "ì¤ë "
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "íì¤í",
           "í´ëì"
         ],
-        "emotions": [
+        "other": [
           "ì¸íë¦¬ì´",
           "ê¸°ëì¼",
           "ìë¡Â·ì¾ì"
@@ -6151,17 +6151,17 @@
       "korean_name": "ì¤í í¬",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ì íí¨",
           "ê¸°ì¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¡ë§¨í±",
           "ë¬ë¸ë¦¬",
           "íì¤í"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ìì¼",
           "ìê¸°ì ë¬¼"
@@ -6211,17 +6211,17 @@
       "korean_name": "ì¤í í¬",
       "color": "í¼í",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ìë¶ì¬",
           "íì¨",
           "ì íí¨"
         ],
-        "moods": [
+        "secondary": [
           "í´ëì",
           "ì°ìí¨",
           "ìí¬"
         ],
-        "emotions": [
+        "other": [
           "ì¸íë¦¬ì´",
           "ê¸°ëì¼",
           "ìë¡Â·ì¾ì"
@@ -6271,17 +6271,17 @@
       "korean_name": "ì¤í í¬",
       "color": "ìë¡ì°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê²©ë ¤",
           "í¬ë§",
           "ê¸°ì¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ë´ì¶ë´",
           "ë¬ë¸ë¦¬"
         ],
-        "emotions": [
+        "other": [
           "ììÂ·ê²©ë ¤",
           "ìì¼",
           "ìê¸°ì ë¬¼"
@@ -6331,17 +6331,17 @@
       "korean_name": "ìì½",
       "color": "ë ë",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ìë¶ì¬",
           "ì íí¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¡ë§¨í±",
           "í´ëì",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ê¸°ëì¼",
           "ê³ ë°±",
           "ìê¸°ì ë¬¼"
@@ -6392,17 +6392,17 @@
       "korean_name": "ìì½",
       "color": "ìë¡ì°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "í¬ë§",
           "ê¸°ì¨",
           "ê²©ë ¤"
         ],
-        "moods": [
+        "secondary": [
           "ë¬ë¸ë¦¬",
           "ë´ì¶ë´",
           "ë¹ë¹ë"
         ],
-        "emotions": [
+        "other": [
           "ìì¼",
           "ììÂ·ê²©ë ¤",
           "ìê¸°ì ë¬¼"
@@ -6453,17 +6453,17 @@
       "korean_name": "ì¥ë¯¸",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ê°ì¬",
           "ì íí¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¬ë¸ë¦¬",
           "ë¡ë§¨í±",
           "í´ëì"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ìì¼",
           "ê¸°ëì¼"
@@ -6515,17 +6515,17 @@
       "korean_name": "ì¥ë¯¸",
       "color": "í¼í",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ìë¶ì¬",
           "ì íí¨",
           "ê°ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "í´ëì",
           "ìí¬"
         ],
-        "emotions": [
+        "other": [
           "ê¸°ëì¼",
           "ê°ì¬ì ë¬",
           "ì¸íë¦¬ì´"
@@ -6576,17 +6576,17 @@
       "korean_name": "ì¥ë¯¸",
       "color": "ë ë",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ì¶í",
           "ì©ê¸°"
         ],
-        "moods": [
+        "secondary": [
           "ë¡ë§¨í±",
           "ìí¬",
           "ë¹ë¹ë"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ê¸°ëì¼",
           "ìê¸°ì ë¬¼"
@@ -6637,17 +6637,17 @@
       "korean_name": "ì¥ë¯¸",
       "color": "ìë¡ì°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê¸°ì¨",
           "ê²©ë ¤",
           "ì¤ë "
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ë´ì¶ë´",
           "ë¬ë¸ë¦¬"
         ],
-        "emotions": [
+        "other": [
           "ìì¼",
           "ììÂ·ê²©ë ¤",
           "ìê¸°ì ë¬¼"
@@ -6698,17 +6698,17 @@
       "korean_name": "ì¤ì¹´ë¹ì¤ì¬",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ì íí¨",
           "ê¸°ì¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¬ë¸ë¦¬",
           "íì¤í",
           "ë´ì¶ë´"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ìì¼",
           "ìê¸°ì ë¬¼"
@@ -6758,17 +6758,17 @@
       "korean_name": "ì¤ì¹´ë¹ì¤ì¬",
       "color": "í¼í",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ìë¶ì¬",
           "ì íí¨",
           "ê·¸ë¦¬ì"
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "í´ëì",
           "ìí¬"
         ],
-        "emotions": [
+        "other": [
           "ê¸°ëì¼",
           "ì¸íë¦¬ì´",
           "ìë¡Â·ì¾ì"
@@ -6818,17 +6818,17 @@
       "korean_name": "í¤ë¦½",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ì íí¨",
           "ê¸°ì¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¬ë¸ë¦¬",
           "ë¡ë§¨í±",
           "íì¤í"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ìì¼",
           "ìê¸°ì ë¬¼"
@@ -6879,17 +6879,17 @@
       "korean_name": "í¤ë¦½",
       "color": "í¼í",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ìë¶ì¬",
           "ì íí¨",
           "ê°ì¬"
         ],
-        "moods": [
+        "secondary": [
           "í´ëì",
           "ì°ìí¨",
           "ìí¬"
         ],
-        "emotions": [
+        "other": [
           "ê¸°ëì¼",
           "ì¸íë¦¬ì´",
           "ê°ì¬ì ë¬"
@@ -6940,17 +6940,17 @@
       "korean_name": "í¤ë¦½",
       "color": "ìë¡ì°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ìë¶ì¬",
           "ê¸°ì¨",
           "ê²©ë ¤"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "í´ëì",
           "ë´ì¶ë´"
         ],
-        "emotions": [
+        "other": [
           "ì¹ì§Â·í©ê²©",
           "ììÂ·ê²©ë ¤",
           "ìì¼"
@@ -7002,17 +7002,17 @@
       "korean_name": "ê¸ë¼ëì¬ë¬ì¤",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ìë¶ì¬",
           "í¬ë§",
           "ìë¡"
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "í´ëì",
           "ë¯¸ëë©"
         ],
-        "emotions": [
+        "other": [
           "ìë¡Â·ì¾ì",
           "ì¬ê³¼",
           "ì¸íë¦¬ì´"
@@ -7067,17 +7067,17 @@
       "korean_name": "ê¸ë¼ëì¬ë¬ì¤",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ê¸°ì¨",
           "ê°ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ë¡ë§¨í±",
           "ë¬ë¸ë¦¬",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ê¸°ëì¼",
           "ê°ì¬ì ë¬"
@@ -7131,17 +7131,17 @@
       "korean_name": "ê¸ë¼ëì¬ë¬ì¤",
       "color": "ë ë",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ìë¶ì¬",
           "ê²©ë ¤",
           "ì¤ë "
         ],
-        "moods": [
+        "secondary": [
           "í´ëì",
           "ë¹ë¹ë",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ì¶í",
           "ì¹ì§Â·í©ê²©",
           "ììÂ·ê²©ë ¤"
@@ -7195,17 +7195,17 @@
       "korean_name": "ê¸ë¼ëì¬ë¬ì¤",
       "color": "ìë¡ì°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê¸°ì¨",
           "í¬ë§",
           "ê²©ë ¤"
         ],
-        "moods": [
+        "secondary": [
           "ë´ì¶ë´",
           "ë¹ë¹ë",
           "í´ëì"
         ],
-        "emotions": [
+        "other": [
           "ìì¼",
           "ììÂ·ê²©ë ¤",
           "ìê¸°ì ë¬¼"
@@ -7259,17 +7259,17 @@
       "korean_name": "ê¸ë¼ëì¬ë¬ì¤",
       "color": "í¼í",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì íí¨",
           "ìë¡",
           "ê·¸ë¦¬ì"
         ],
-        "moods": [
+        "secondary": [
           "ìí¬",
           "ì°ìí¨",
           "í´ëì"
         ],
-        "emotions": [
+        "other": [
           "ìë¡Â·ì¾ì",
           "ìê¸°ì ë¬¼",
           "ì¸íë¦¬ì´"
@@ -7322,17 +7322,17 @@
       "korean_name": "ê¸ë¼ëì¬ë¬ì¤",
       "color": "ì¤ë ì§",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê²©ë ¤",
           "ê¸°ì¨",
           "í¬ë§"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ëª¨ë",
           "ë¬ë¸ë¦¬"
         ],
-        "emotions": [
+        "other": [
           "ì¶í",
           "ììÂ·ê²©ë ¤",
           "ìê¸°ì ë¬¼"
@@ -7385,17 +7385,17 @@
       "korean_name": "ë¼ëíë¬ì¤",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "íì¨",
           "ê°ì¬",
           "ìë¡"
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "ë¯¸ëë©",
           "ë´ì¶ë´"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ì¸íë¦¬ì´",
           "ìë¡Â·ì¾ì"
@@ -7450,17 +7450,17 @@
       "korean_name": "ë¼ëíë¬ì¤",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ê¸°ì¨",
           "í¬ë§"
         ],
-        "moods": [
+        "secondary": [
           "ë¡ë§¨í±",
           "ë¬ë¸ë¦¬",
           "íì¤í"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ê¸°ëì¼",
           "ìì¼"
@@ -7515,17 +7515,17 @@
       "korean_name": "ë¼ëíë¬ì¤",
       "color": "ë ë",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ìë¶ì¬",
           "ì¶í"
         ],
-        "moods": [
+        "secondary": [
           "í´ëì",
           "ë¡ë§¨í±",
           "ë¹ë¹ë"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ê¸°ëì¼",
           "ì¹ì§Â·í©ê²©"
@@ -7579,17 +7579,17 @@
       "korean_name": "ë¼ëíë¬ì¤",
       "color": "ìë¡ì°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê¸°ì¨",
           "í¬ë§",
           "ê²©ë ¤"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ë´ì¶ë´",
           "ë¬ë¸ë¦¬"
         ],
-        "emotions": [
+        "other": [
           "ìì¼",
           "ììÂ·ê²©ë ¤",
           "ìê¸°ì ë¬¼"
@@ -7643,17 +7643,17 @@
       "korean_name": "ë¼ëíë¬ì¤",
       "color": "ì¤ë ì§",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê¸°ì¨",
           "ê²©ë ¤",
           "ì¤ë "
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ëª¨ë",
           "ë¬ë¸ë¦¬"
         ],
-        "emotions": [
+        "other": [
           "ì¶í",
           "ìê¸°ì ë¬¼",
           "ììÂ·ê²©ë ¤"
@@ -7707,17 +7707,17 @@
       "korean_name": "ë¼ëíë¬ì¤",
       "color": "í¼í",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê·¸ë¦¬ì",
           "ì íí¨",
           "ìë¡"
         ],
-        "moods": [
+        "secondary": [
           "ìí¬",
           "ì°ìí¨",
           "í´ëì"
         ],
-        "emotions": [
+        "other": [
           "ìë¡Â·ì¾ì",
           "ìê¸°ì ë¬¼",
           "ì¸íë¦¬ì´"
@@ -7771,17 +7771,17 @@
       "korean_name": "ë©ë¦¬ê³¨ë",
       "color": "ìë¡ì°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê¸°ì¨",
           "í¬ë§",
           "ê²©ë ¤"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ë´ì¶ë´",
           "ë¬ë¸ë¦¬"
         ],
-        "emotions": [
+        "other": [
           "ììÂ·ê²©ë ¤",
           "ìì¼",
           "ìê¸°ì ë¬¼"
@@ -7834,17 +7834,17 @@
       "korean_name": "ë©ë¦¬ê³¨ë",
       "color": "ì¤ë ì§",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê²©ë ¤",
           "ê¸°ì¨",
           "ì¶í"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ëª¨ë",
           "ë¬ë¸ë¦¬"
         ],
-        "emotions": [
+        "other": [
           "ì¶í",
           "ì¹ì§Â·í©ê²©",
           "ììÂ·ê²©ë ¤"
@@ -7897,17 +7897,17 @@
       "korean_name": "ë°±ì¼í",
       "color": "ë ë",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ìë¶ì¬",
           "ì¤ë ",
           "ì¶í"
         ],
-        "moods": [
+        "secondary": [
           "í´ëì",
           "ë¹ë¹ë",
           "ë¡ë§¨í±"
         ],
-        "emotions": [
+        "other": [
           "ê¸°ëì¼",
           "ì¹ì§Â·í©ê²©",
           "ì¶í"
@@ -7960,17 +7960,17 @@
       "korean_name": "ë°±ì¼í",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ê¸°ì¨",
           "í¬ë§"
         ],
-        "moods": [
+        "secondary": [
           "ë¡ë§¨í±",
           "ë¬ë¸ë¦¬",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ìì¼",
           "ê¸°ëì¼"
@@ -8023,17 +8023,17 @@
       "korean_name": "ë°±ì¼í",
       "color": "ì¤ë ì§",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê²©ë ¤",
           "í¬ë§",
           "ê¸°ì¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ëª¨ë",
           "ë¬ë¸ë¦¬"
         ],
-        "emotions": [
+        "other": [
           "ììÂ·ê²©ë ¤",
           "ìê¸°ì ë¬¼",
           "ìì¼"
@@ -8086,17 +8086,17 @@
       "korean_name": "ë°±ì¼í",
       "color": "ìë¡ì°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "í¬ë§",
           "ê¸°ì¨",
           "ê²©ë ¤"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ë´ì¶ë´",
           "í´ëì"
         ],
-        "emotions": [
+        "other": [
           "ìì¼",
           "ììÂ·ê²©ë ¤",
           "ìê¸°ì ë¬¼"
@@ -8149,17 +8149,17 @@
       "korean_name": "ë°±ì¼í",
       "color": "í¼í",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì íí¨",
           "ê·¸ë¦¬ì",
           "ìë¡"
         ],
-        "moods": [
+        "secondary": [
           "ìí¬",
           "ì°ìí¨",
           "í´ëì"
         ],
-        "emotions": [
+        "other": [
           "ìê¸°ì ë¬¼",
           "ìë¡Â·ì¾ì",
           "ì¸íë¦¬ì´"
@@ -8212,17 +8212,17 @@
       "korean_name": "ë² ë¡ëì¹´",
       "color": "í¼í",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê·¸ë¦¬ì",
           "ì íí¨",
           "ìë¡"
         ],
-        "moods": [
+        "secondary": [
           "ìí¬",
           "ì°ìí¨",
           "í´ëì"
         ],
-        "emotions": [
+        "other": [
           "ìë¡Â·ì¾ì",
           "ì¸íë¦¬ì´",
           "ìê¸°ì ë¬¼"
@@ -8275,17 +8275,17 @@
       "korean_name": "ë² ë¡ëì¹´",
       "color": "ë¸ë£¨",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "í¬ë§",
           "íì¨",
           "ìë¡"
         ],
-        "moods": [
+        "secondary": [
           "ë¯¸ëë©",
           "ìí¬",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ì¸íë¦¬ì´",
           "ê°ì¬ì ë¬",
           "ìë¡Â·ì¾ì"
@@ -8338,17 +8338,17 @@
       "korean_name": "ë² ë¡ëì¹´",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê°ì¬",
           "ìë¶ì¬",
           "íì¨"
         ],
-        "moods": [
+        "secondary": [
           "ëª¨ë",
           "ë¯¸ëë©",
           "ë´ì¶ë´"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ì¸íë¦¬ì´",
           "ìê¸°ì ë¬¼"
@@ -8401,17 +8401,17 @@
       "korean_name": "ì¤ìí¸í¼",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ê¸°ì¨",
           "ê°ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ë¡ë§¨í±",
           "ë¬ë¸ë¦¬",
           "íì¤í"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ê¸°ëì¼",
           "ê°ì¬ì ë¬"
@@ -8464,17 +8464,17 @@
       "korean_name": "ì¤ìí¸í¼",
       "color": "í¼í",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê·¸ë¦¬ì",
           "ì íí¨",
           "ìë¡"
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "ìí¬",
           "ë´ì¶ë´"
         ],
-        "emotions": [
+        "other": [
           "ìë¡Â·ì¾ì",
           "ìê¸°ì ë¬¼",
           "ì¸íë¦¬ì´"
@@ -8527,17 +8527,17 @@
       "korean_name": "ì¤ìí¸í¼",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê°ì¬",
           "ìë¡",
           "íì¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¯¸ëë©",
           "ë´ì¶ë´",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ìë¡Â·ì¾ì",
           "ì¸íë¦¬ì´"
@@ -8590,17 +8590,17 @@
       "korean_name": "ì¤ìí¸í¼",
       "color": "ë¸ë£¨",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "í¬ë§",
           "ìë¡",
           "ê·¸ë¦¬ì"
         ],
-        "moods": [
+        "secondary": [
           "ìí¬",
           "ì°ìí¨",
           "ëª¨ë"
         ],
-        "emotions": [
+        "other": [
           "ìê¸°ì ë¬¼",
           "ê°ì¬ì ë¬",
           "ì¸íë¦¬ì´"
@@ -8653,17 +8653,17 @@
       "korean_name": "ì¬ë¹ëì",
       "color": "ê·¸ë¦°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "íì¨",
           "ê°ì¬",
           "ìë¶ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ë´ì¶ë´",
           "ì°ìí¨",
           "ë¯¸ëë©"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ì¸íë¦¬ì´",
           "ì¹ì§Â·í©ê²©"
@@ -8716,17 +8716,17 @@
       "korean_name": "ì¬ë¹ëì",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê°ì¬",
           "ì¤ë ",
           "ê¸°ì¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¡ë§¨í±",
           "ì°ìí¨",
           "ë¬ë¸ë¦¬"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ê¸°ëì¼",
           "ìì¼"
@@ -8779,17 +8779,17 @@
       "korean_name": "ì¬ë¹ëì",
       "color": "ìë¡ì°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê²©ë ¤",
           "í¬ë§",
           "ì¶í"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "í´ëì",
           "ë´ì¶ë´"
         ],
-        "emotions": [
+        "other": [
           "ì¶í",
           "ììÂ·ê²©ë ¤",
           "ì¹ì§Â·í©ê²©"
@@ -8842,17 +8842,17 @@
       "korean_name": "ì¬ë¹ëì",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "íì¨",
           "ìë¡",
           "ê°ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "ë¯¸ëë©",
           "ëª¨ë"
         ],
-        "emotions": [
+        "other": [
           "ìë¡Â·ì¾ì",
           "ì¸íë¦¬ì´",
           "ê°ì¬ì ë¬"
@@ -8905,17 +8905,17 @@
       "korean_name": "ì¬ë¹ëì",
       "color": "ë ë",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ìë¶ì¬",
           "ì¤ë ",
           "ê°ì¬"
         ],
-        "moods": [
+        "secondary": [
           "í´ëì",
           "ìí¬",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ê¸°ëì¼",
           "ê°ì¬ì ë¬",
           "ì¹ì§Â·í©ê²©"
@@ -8968,17 +8968,17 @@
       "korean_name": "ìë¤ëª¨ë¤",
       "color": "ë ë",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ì íí¨",
           "ê·¸ë¦¬ì"
         ],
-        "moods": [
+        "secondary": [
           "ë¡ë§¨í±",
           "í´ëì",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ê¸°ëì¼",
           "ìë¡Â·ì¾ì"
@@ -9032,17 +9032,17 @@
       "korean_name": "ìë¤ëª¨ë¤",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "íì¨",
           "í¬ë§",
           "ìë¡"
         ],
-        "moods": [
+        "secondary": [
           "ë¯¸ëë©",
           "ì°ìí¨",
           "ë´ì¶ë´"
         ],
-        "emotions": [
+        "other": [
           "ìë¡Â·ì¾ì",
           "ì¸íë¦¬ì´",
           "ê°ì¬ì ë¬"
@@ -9096,17 +9096,17 @@
       "korean_name": "ìë¤ëª¨ë¤",
       "color": "í¼í",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê·¸ë¦¬ì",
           "ì íí¨",
           "ìê¸°ì±ì°°"
         ],
-        "moods": [
+        "secondary": [
           "ìí¬",
           "ì°ìí¨",
           "ëª¨ë"
         ],
-        "emotions": [
+        "other": [
           "ìê¸°ì ë¬¼",
           "ìë¡Â·ì¾ì",
           "ì¸íë¦¬ì´"
@@ -9160,17 +9160,17 @@
       "korean_name": "ìë¤ëª¨ë¤",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ê¸°ì¨",
           "ê°ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ë¬ë¸ë¦¬",
           "ë¡ë§¨í±",
           "íì¤í"
         ],
-        "emotions": [
+        "other": [
           "ìì¼",
           "ê³ ë°±",
           "ê°ì¬ì ë¬"
@@ -9224,17 +9224,17 @@
       "korean_name": "ìë¤ëª¨ë¤",
       "color": "ë¸ë£¨",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "í¬ë§",
           "ìë¡",
           "íì¨"
         ],
-        "moods": [
+        "secondary": [
           "ëª¨ë",
           "ë¯¸ëë©",
           "ìí¬"
         ],
-        "emotions": [
+        "other": [
           "ìê¸°ì ë¬¼",
           "ì¸íë¦¬ì´",
           "ìë¡Â·ì¾ì"
@@ -9288,17 +9288,17 @@
       "korean_name": "ìë¯¸ì´",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "íì¨",
           "ê°ì¬",
           "ìë¡"
         ],
-        "moods": [
+        "secondary": [
           "ë´ì¶ë´",
           "ë¯¸ëë©",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ì¸íë¦¬ì´",
           "ê°ì¬ì ë¬",
           "ìë¡Â·ì¾ì"
@@ -9352,17 +9352,17 @@
       "korean_name": "ìì¤í¸ë²",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "íì¨",
           "ìë¡",
           "ê°ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ë´ì¶ë´",
           "ì°ìí¨",
           "ë¯¸ëë©"
         ],
-        "emotions": [
+        "other": [
           "ì¸íë¦¬ì´",
           "ìë¡Â·ì¾ì",
           "ê°ì¬ì ë¬"
@@ -9416,17 +9416,17 @@
       "korean_name": "ìì¤í¸ë²",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ê¸°ì¨",
           "í¬ë§"
         ],
-        "moods": [
+        "secondary": [
           "ë¬ë¸ë¦¬",
           "ë¡ë§¨í±",
           "íì¤í"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ê¸°ëì¼",
           "ìì¼"
@@ -9480,17 +9480,17 @@
       "korean_name": "ìì¤í¸ë²",
       "color": "ë ë",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ìë¶ì¬",
           "ê°ì¬",
           "ê²©ë ¤"
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "í´ëì",
           "ë¹ë¹ë"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ì¹ì§Â·í©ê²©",
           "ììÂ·ê²©ë ¤"
@@ -9544,17 +9544,17 @@
       "korean_name": "ë¶ê½",
       "color": "í¼í",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "í¬ë§",
           "ì íí¨",
           "ì©ê¸°"
         ],
-        "moods": [
+        "secondary": [
           "ìí¬",
           "ì°ìí¨",
           "í´ëì"
         ],
-        "emotions": [
+        "other": [
           "ìë¡Â·ì¾ì",
           "ììÂ·ê²©ë ¤",
           "ìê¸°ì ë¬¼"
@@ -9608,17 +9608,17 @@
       "korean_name": "ë¶ê½",
       "color": "ë¸ë£¨",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "íì¨",
           "ìë¡",
           "ê²©ë ¤"
         ],
-        "moods": [
+        "secondary": [
           "ëª¨ë",
           "ë¯¸ëë©",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ìê¸°ì ë¬¼",
           "ì¸íë¦¬ì´",
           "ìë¡Â·ì¾ì"
@@ -9672,17 +9672,17 @@
       "korean_name": "ë¶ê½",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê°ì¬",
           "íì¨",
           "ì íí¨"
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "ë¯¸ëë©",
           "ë´ì¶ë´"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ìë¡Â·ì¾ì",
           "ì¸íë¦¬ì´"
@@ -9736,17 +9736,17 @@
       "korean_name": "ìì¤ë¦¬ì",
       "color": "ë ë",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¬ë",
           "ì¤ë ",
           "ìë¶ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ëª¨ë",
           "ìí¬",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ê¸°ëì¼",
           "ê°ì¬ì ë¬"
@@ -9800,17 +9800,17 @@
       "korean_name": "ìì¤ë¦¬ì",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê°ì¬",
           "ì¤ë ",
           "ê¸°ì¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¡ë§¨í±",
           "ë¬ë¸ë¦¬",
           "ëª¨ë"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ê¸°ëì¼",
           "ìì¼"
@@ -9864,17 +9864,17 @@
       "korean_name": "ìì¤ë¦¬ì",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê°ì¬",
           "íì¨",
           "ì¡´ê²½"
         ],
-        "moods": [
+        "secondary": [
           "ë¯¸ëë©",
           "ëª¨ë",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ì¸íë¦¬ì´",
           "ì¹ì§Â·í©ê²©"
@@ -9928,17 +9928,17 @@
       "korean_name": "ìì¤ë¦¬ì",
       "color": "ê·¸ë¦°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "íì¨",
           "ìê¸°ì±ì°°",
           "ìë¡"
         ],
-        "moods": [
+        "secondary": [
           "ë´ì¶ë´",
           "ëª¨ë",
           "ë¯¸ëë©"
         ],
-        "emotions": [
+        "other": [
           "ì¸íë¦¬ì´",
           "ìê¸°ì ë¬¼",
           "ìë¡Â·ì¾ì"
@@ -9992,17 +9992,17 @@
       "korean_name": "ìì¤í¸ë¡ë©ë¦¬ì",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê°ì¬",
           "ì¤ë ",
           "ì°ì "
         ],
-        "moods": [
+        "secondary": [
           "ë¬ë¸ë¦¬",
           "ë¡ë§¨í±",
           "íì¤í"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ê³ ë°±",
           "ìì¼"
@@ -10056,17 +10056,17 @@
       "korean_name": "ìì¤í¸ë¡ë©ë¦¬ì",
       "color": "ìë¡ì°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê¸°ì¨",
           "í¬ë§",
           "ê²©ë ¤"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ë´ì¶ë´",
           "ë¬ë¸ë¦¬"
         ],
-        "emotions": [
+        "other": [
           "ììÂ·ê²©ë ¤",
           "ìì¼",
           "ìê¸°ì ë¬¼"
@@ -10120,17 +10120,17 @@
       "korean_name": "ìì¤í¸ë¡ë©ë¦¬ì",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê°ì¬",
           "ìë¡",
           "íì¨"
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "ë´ì¶ë´",
           "ë¯¸ëë©"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ìë¡Â·ì¾ì",
           "ì¸íë¦¬ì´"
@@ -10184,17 +10184,17 @@
       "korean_name": "ìì¤í¸ë¡ë©ë¦¬ì",
       "color": "ì¤ë ì§",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê²©ë ¤",
           "ì¤ë ",
           "ê¸°ì¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ëª¨ë",
           "ë¬ë¸ë¦¬"
         ],
-        "emotions": [
+        "other": [
           "ì¶í",
           "ììÂ·ê²©ë ¤",
           "ìê¸°ì ë¬¼"
@@ -10248,17 +10248,17 @@
       "korean_name": "ìì¤í¸ë¡ë©ë¦¬ì",
       "color": "í¼í",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì íí¨",
           "ê·¸ë¦¬ì",
           "ê°ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "í´ëì",
           "ìí¬"
         ],
-        "emotions": [
+        "other": [
           "ìê¸°ì ë¬¼",
           "ìë¡Â·ì¾ì",
           "ê°ì¬ì ë¬"
@@ -10312,17 +10312,17 @@
       "korean_name": "ì¥ìííë¼",
       "color": "ë¸ë£¨",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "í¬ë§",
           "ì¤ë ",
           "ê²©ë ¤"
         ],
-        "moods": [
+        "secondary": [
           "ë´ì¶ë´",
           "íì¤í",
           "ë¬ë¸ë¦¬"
         ],
-        "emotions": [
+        "other": [
           "ììÂ·ê²©ë ¤",
           "ìê¸°ì ë¬¼",
           "ê³ ë°±"
@@ -10375,17 +10375,17 @@
       "korean_name": "ì©ë´",
       "color": "ë¸ë£¨",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ìë¡",
           "ì±ìí¨",
           "ì§ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ë¯¸ëë©",
           "ì°ìí¨",
           "ìí¬"
         ],
-        "emotions": [
+        "other": [
           "ìë¡Â·ì¾ì",
           "ìê¸°ì ë¬¼",
           "ì¸íë¦¬ì´"
@@ -10439,17 +10439,17 @@
       "korean_name": "ì´ë² ë¦¬ì¤",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ìì",
           "ê°ì¬",
           "íì¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¯¸ëë©",
           "ë´ì¶ë´",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ì¸íë¦¬ì´",
           "ìë¡Â·ì¾ì"
@@ -10503,17 +10503,17 @@
       "korean_name": "ì¡°íëë¬´",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ìì",
           "ì íí¨",
           "íì¨"
         ],
-        "moods": [
+        "secondary": [
           "ë´ì¶ë´",
           "ì°ìí¨",
           "ë¯¸ëë©"
         ],
-        "emotions": [
+        "other": [
           "ì¸íë¦¬ì´",
           "ìë¡Â·ì¾ì",
           "ìê¸°ì ë¬¼"
@@ -10567,17 +10567,17 @@
       "korean_name": "ì¹´ë¤ì´ì",
       "color": "ë ë",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¬ë",
           "ìë¶ì¬",
           "ê°ì¬"
         ],
-        "moods": [
+        "secondary": [
           "í´ëì",
           "ë¡ë§¨í±",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ê¸°ëì¼",
           "ì¹ì§Â·í©ê²©"
@@ -10631,17 +10631,17 @@
       "korean_name": "ì¹´ë¤ì´ì",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê°ì¬",
           "ê¸°ì¨",
           "ì¤ë "
         ],
-        "moods": [
+        "secondary": [
           "ë¡ë§¨í±",
           "ë¬ë¸ë¦¬",
           "íì¤í"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ìì¼",
           "ê¸°ëì¼"
@@ -10695,17 +10695,17 @@
       "korean_name": "ì¹´ë¤ì´ì",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "íì¨",
           "ìë¡",
           "ì§ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "ë¯¸ëë©",
           "ë´ì¶ë´"
         ],
-        "emotions": [
+        "other": [
           "ìë¡Â·ì¾ì",
           "ì¸íë¦¬ì´",
           "ìê¸°ì ë¬¼"
@@ -10759,17 +10759,17 @@
       "korean_name": "ì¹´ë¤ì´ì",
       "color": "ìë¡ì°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê²©ë ¤",
           "ì°ì ",
           "ê¸°ì¨"
         ],
-        "moods": [
+        "secondary": [
           "ë´ì¶ë´",
           "ë¹ë¹ë",
           "ë¬ë¸ë¦¬"
         ],
-        "emotions": [
+        "other": [
           "ììÂ·ê²©ë ¤",
           "ìê¸°ì ë¬¼",
           "ìì¼"
@@ -10823,17 +10823,17 @@
       "korean_name": "ì¹´ë¤ì´ì",
       "color": "í¼í",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê·¸ë¦¬ì",
           "ì íí¨",
           "ìë¡"
         ],
-        "moods": [
+        "secondary": [
           "ìí¬",
           "í´ëì",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ìê¸°ì ë¬¼",
           "ìë¡Â·ì¾ì",
           "ì¸íë¦¬ì´"
@@ -10887,17 +10887,17 @@
       "korean_name": "ì¹´ë¼",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "íì¨",
           "ì¡´ì",
           "ìë¡"
         ],
-        "moods": [
+        "secondary": [
           "ë¯¸ëë©",
           "ì°ìí¨",
           "ëª¨ë"
         ],
-        "emotions": [
+        "other": [
           "ì¸íë¦¬ì´",
           "ìë¡Â·ì¾ì",
           "ìê¸°ì ë¬¼"
@@ -10950,17 +10950,17 @@
       "korean_name": "ìºíëë¼",
       "color": "í¼í",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê·¸ë¦¬ì",
           "ì íí¨",
           "ìë¡"
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "ìí¬",
           "í´ëì"
         ],
-        "emotions": [
+        "other": [
           "ìë¡Â·ì¾ì",
           "ìê¸°ì ë¬¼",
           "ì¸íë¦¬ì´"
@@ -11013,17 +11013,17 @@
       "korean_name": "ìºíëë¼",
       "color": "ë¸ë£¨",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "í¬ë§",
           "ê²©ë ¤",
           "íì¨"
         ],
-        "moods": [
+        "secondary": [
           "ëª¨ë",
           "ë¯¸ëë©",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ììÂ·ê²©ë ¤",
           "ìê¸°ì ë¬¼",
           "ì¸íë¦¬ì´"
@@ -11076,17 +11076,17 @@
       "korean_name": "ìºíëë¼",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê°ì¬",
           "íì¨",
           "ì§ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ë´ì¶ë´",
           "ì°ìí¨",
           "ë¯¸ëë©"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ì¸íë¦¬ì´",
           "ìë¡Â·ì¾ì"
@@ -11139,17 +11139,17 @@
       "korean_name": "ìºíëë¼",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ê°ì¬",
           "ê¸°ì¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¬ë¸ë¦¬",
           "ë¡ë§¨í±",
           "íì¤í"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ê³ ë°±",
           "ìì¼"
@@ -11202,17 +11202,17 @@
       "korean_name": "ì½ìë",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì§ì¬",
           "íì¨",
           "ê°ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ë¯¸ëë©",
           "ë´ì¶ë´",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ì¸íë¦¬ì´",
           "ê°ì¬ì ë¬",
           "ìë¡Â·ì¾ì"
@@ -11266,17 +11266,17 @@
       "korean_name": "í´ë ë§í°ì¤",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "íì¨",
           "ì§ì¬",
           "ê°ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "ë¯¸ëë©",
           "ë´ì¶ë´"
         ],
-        "emotions": [
+        "other": [
           "ì¸íë¦¬ì´",
           "ê°ì¬ì ë¬",
           "ìë¡Â·ì¾ì"
@@ -11329,17 +11329,17 @@
       "korean_name": "í´ë ë§í°ì¤",
       "color": "í¼í",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê·¸ë¦¬ì",
           "ì íí¨",
           "ì±ìí¨"
         ],
-        "moods": [
+        "secondary": [
           "ìí¬",
           "í´ëì",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ìê¸°ì ë¬¼",
           "ì¸íë¦¬ì´",
           "ìë¡Â·ì¾ì"
@@ -11392,17 +11392,17 @@
       "korean_name": "í´ë ë§í°ì¤",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ê¸°ì¨",
           "ê°ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ë¬ë¸ë¦¬",
           "ë¡ë§¨í±",
           "íì¤í"
         ],
-        "emotions": [
+        "other": [
           "ìì¼",
           "ê³ ë°±",
           "ê°ì¬ì ë¬"
@@ -11455,17 +11455,17 @@
       "korean_name": "íë¦¬ì§ì",
       "color": "ìë¡ì°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê¸°ì¨",
           "ê°ì¬",
           "í¬ë§"
         ],
-        "moods": [
+        "secondary": [
           "ë¬ë¸ë¦¬",
           "ë¹ë¹ë",
           "ë´ì¶ë´"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ìì¼",
           "ììÂ·ê²©ë ¤"
@@ -11519,17 +11519,17 @@
       "korean_name": "íë¦¬ì§ì",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì§ì¬",
           "íì¨",
           "ê°ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ë¯¸ëë©",
           "ë´ì¶ë´",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ì¸íë¦¬ì´",
           "ìë¡Â·ì¾ì"
@@ -11583,17 +11583,17 @@
       "korean_name": "íë¦¬ì§ì",
       "color": "í¼í",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê·¸ë¦¬ì",
           "ì íí¨",
           "ìë¡"
         ],
-        "moods": [
+        "secondary": [
           "ìí¬",
           "í´ëì",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ìê¸°ì ë¬¼",
           "ìë¡Â·ì¾ì",
           "ì¸íë¦¬ì´"
@@ -11647,17 +11647,17 @@
       "korean_name": "íë¦¬ì§ì",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ê°ì¬",
           "ê¸°ì¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¬ë¸ë¦¬",
           "íì¤í",
           "ë¡ë§¨í±"
         ],
-        "emotions": [
+        "other": [
           "ìì¼",
           "ê³ ë°±",
           "ê°ì¬ì ë¬"
@@ -11711,17 +11711,17 @@
       "korean_name": "í´ë°ë¼ê¸°",
       "color": "ìë¡ì°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "í¬ë§",
           "ê²©ë ¤",
           "ìë¶ì¬"
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ë´ì¶ë´",
           "ë¬ë¸ë¦¬"
         ],
-        "emotions": [
+        "other": [
           "ììÂ·ê²©ë ¤",
           "ìì¼",
           "ì¹ì§Â·í©ê²©"
@@ -11774,17 +11774,17 @@
       "korean_name": "í´ë°ë¼ê¸°",
       "color": "ì¤ë ì§",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê¸°ì¨",
           "ì¶í",
           "ì¤ë "
         ],
-        "moods": [
+        "secondary": [
           "ë¹ë¹ë",
           "ëª¨ë",
           "ë¬ë¸ë¦¬"
         ],
-        "emotions": [
+        "other": [
           "ì¶í",
           "ê¸°ëì¼",
           "ìê¸°ì ë¬¼"
@@ -11837,17 +11837,17 @@
       "korean_name": "í¸ì ë",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì§ì¬",
           "ì¡´ì",
           "íì¨"
         ],
-        "moods": [
+        "secondary": [
           "ì°ìí¨",
           "ë¯¸ëë©",
           "ëª¨ë"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ì¸íë¦¬ì´",
           "ìë¡Â·ì¾ì"
@@ -11901,17 +11901,17 @@
       "korean_name": "ì ì¹¼ë¦½í¬ì¤",
       "color": "ê·¸ë¦°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "íì¨",
           "ìê¸°ì±ì°°",
           "ìë¡"
         ],
-        "moods": [
+        "secondary": [
           "ë¯¸ëë©",
           "ë´ì¶ë´",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ì¸íë¦¬ì´",
           "ìê¸°ì ë¬¼",
           "ìë¡Â·ì¾ì"
@@ -11965,17 +11965,17 @@
       "korean_name": "ê³¼ê½",
       "color": "í¼í",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê·¸ë¦¬ì",
           "ìë¡",
           "í¬ë§"
         ],
-        "moods": [
+        "secondary": [
           "ë´ì¶ë´",
           "í´ëì",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ìë¡Â·ì¾ì",
           "ìê¸°ì ë¬¼",
           "ì¸íë¦¬ì´"
@@ -12029,17 +12029,17 @@
       "korean_name": "ê³¼ê½",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ê°ì¬",
           "ì íí¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¬ë¸ë¦¬",
           "ë´ì¶ë´",
           "í´ëì"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ìì¼",
           "ê³ ë°±"
@@ -12092,17 +12092,17 @@
       "korean_name": "ê³¼ê½",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "íì¨",
           "ìê¸°ì±ì°°",
           "ìê²°"
         ],
-        "moods": [
+        "secondary": [
           "ë¯¸ëë©",
           "ë´ì¶ë´",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ìê¸°ì ë¬¼",
           "ì¸íë¦¬ì´",
           "ìë¡Â·ì¾ì"
@@ -12156,17 +12156,17 @@
       "korean_name": "í¼í°êµ­í",
       "color": "íì´í¸",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "íì¨",
           "ê°ì¬",
           "ìë¡"
         ],
-        "moods": [
+        "secondary": [
           "ë¯¸ëë©",
           "ì°ìí¨",
           "ë´ì¶ë´"
         ],
-        "emotions": [
+        "other": [
           "ê°ì¬ì ë¬",
           "ìë¡Â·ì¾ì",
           "ì¸íë¦¬ì´"
@@ -12219,17 +12219,17 @@
       "korean_name": "í¼í°êµ­í",
       "color": "ìë¡ì°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê¸°ì¨",
           "ì¶í",
           "í¬ë§"
         ],
-        "moods": [
+        "secondary": [
           "ë¬ë¸ë¦¬",
           "ë¹ë¹ë",
           "ë´ì¶ë´"
         ],
-        "emotions": [
+        "other": [
           "ìì¼",
           "ì¹ì§Â·í©ê²©",
           "ììÂ·ê²©ë ¤"
@@ -12282,17 +12282,17 @@
       "korean_name": "í¼í°êµ­í",
       "color": "íí¬",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì¤ë ",
           "ê°ì¬",
           "ì íí¨"
         ],
-        "moods": [
+        "secondary": [
           "ë¬ë¸ë¦¬",
           "ì°ìí¨",
           "í´ëì"
         ],
-        "emotions": [
+        "other": [
           "ê³ ë°±",
           "ìì¼",
           "ê°ì¬ì ë¬"
@@ -12345,17 +12345,17 @@
       "korean_name": "í¼í°êµ­í",
       "color": "ê·¸ë¦°",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ì±ìí¨",
           "ìê¸°ì±ì°°",
           "ìë¡"
         ],
-        "moods": [
+        "secondary": [
           "ë´ì¶ë´",
           "ìí¬",
           "ëª¨ë"
         ],
-        "emotions": [
+        "other": [
           "ìê¸°ì ë¬¼",
           "ìë¡Â·ì¾ì",
           "ì¸íë¦¬ì´"
@@ -12408,17 +12408,17 @@
       "korean_name": "í¼í°êµ­í",
       "color": "í¼í",
       "flower_meanings": {
-        "meanings": [
+        "primary": [
           "ê·¸ë¦¬ì",
           "ìë¶ì¬",
           "ì íí¨"
         ],
-        "moods": [
+        "secondary": [
           "í´ëì",
           "ìí¬",
           "ì°ìí¨"
         ],
-        "emotions": [
+        "other": [
           "ìê¸°ì ë¬¼",
           "ê¸°ëì¼",
           "ê°ì¬ì ë¬"

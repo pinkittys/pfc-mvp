@@ -86,7 +86,7 @@ class FlowerDatabaseSync:
                     base_color, moods, emotions, contexts, flower_language_short
                 )
                 
-                # 꽃 데이터 구성
+                # 꽃 데이터 구성 (명확한 이름으로 매핑)
                 flower_data = {
                     "korean_name": name_ko,
                     "scientific_name": scientific_name,
@@ -96,7 +96,13 @@ class FlowerDatabaseSync:
                     "emotions": self._parse_list(emotions),
                     "moods": self._parse_list(moods),
                     "available_colors": available_colors,
-                    "color_meanings": color_meanings
+                    "color_meanings": color_meanings,
+                    "flower_meanings": {
+                        "meanings": self._parse_list(flower_language_short),  # primary → meanings (꽃말)
+                        "moods": self._parse_list(moods),                     # secondary → moods (무드)
+                        "emotions": self._parse_list(emotions),               # other → emotions (감정)
+                        "phrases": []                                         # 문장형 꽃말 (미사용)
+                    }
                 }
                 
                 flower_database[flower_name] = flower_data

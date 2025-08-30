@@ -39,7 +39,6 @@ class RecommendationItem(BaseModel):
 class EmotionAnalysis(BaseModel):
     emotion: str
     percentage: float
-    description: str
 
 class RecommendResponse(BaseModel):
     recommendations: List[RecommendationItem]

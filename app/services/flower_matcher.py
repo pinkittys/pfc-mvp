@@ -37,19 +37,47 @@ class FlowerMatcher:
         print(f"🖼️ Base64 이미지: {len(self.base64_images)}개 폴더")
     
     def _load_flower_database(self) -> Dict[str, Dict]:
-        """꽃 데이터베이스 로드 (flower_dictionary.json에서)"""
+        """꽃 데이터베이스 로드 (Google Spreadsheet 동기화 우선)"""
         try:
+            # 1. Google Spreadsheet 동기화 시도
+            synced_data = self._load_from_google_spreadsheet()
+            if synced_data:
+                print(f"✅ Google Spreadsheet에서 {len(synced_data)}개 꽃 데이터 로드")
+                return synced_data
+            
+            # 2. 로컬 JSON 파일 시도
             with open("data/flower_dictionary.json", 'r', encoding='utf-8') as f:
                 data = json.load(f)
-                # flowers 키가 있는 경우 해당 데이터 사용
                 if "flowers" in data:
+                    print(f"✅ 로컬 JSON에서 {len(data['flowers'])}개 꽃 데이터 로드")
                     return data["flowers"]
-                # 직접 꽃 데이터인 경우
                 return data
+                
         except Exception as e:
             print(f"❌ 꽃 데이터베이스 로드 실패: {e}")
             # 폴백: 하드코딩된 데이터 사용
             return self._create_flower_database_fallback()
+    
+    def _load_from_google_spreadsheet(self) -> Optional[Dict[str, Dict]]:
+        """Google Spreadsheet에서 꽃 데이터 로드"""
+        try:
+            # Google Drive API 동기화 실행
+            from scripts.google_drive_api_sync import GoogleDriveAPISync
+            syncer = GoogleDriveAPISync()
+            success = syncer.sync()
+            
+            if success:
+                # 동기화된 데이터 로드
+                with open("data/flower_dictionary.json", 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    if "flowers" in data:
+                        return data["flowers"]
+            
+            return None
+            
+        except Exception as e:
+            print(f"❌ Google Spreadsheet 동기화 실패: {e}")
+            return None
     
     def _create_flower_database_fallback(self) -> Dict[str, Dict]:
         """하드코딩된 꽃 데이터베이스 (폴백용)"""
@@ -940,20 +968,25 @@ class FlowerMatcher:
             
             for mood in mood_keywords:
                 if mood not in excluded_texts and any(mood in flower_mood for flower_mood in all_moods):
-                    score += 30.0
-                    print(f"🎭 무드 매칭: {flower_data['korean_name']} - {mood}")
+                    score += 1.0  # 무드 매칭 점수 대폭 감소 (5.0 → 1.0, 애매하므로)
+                    # 성능 최적화: print문 제거
             
             # 감정/키워드 매칭 (낮은 가중치) - 제외되지 않은 감정만
             emotion_names = [e.emotion for e in emotions]
             flower_meanings = flower_data.get('flower_meanings', {})
-            all_meanings = []
-            all_meanings.extend(flower_meanings.get('primary', []))
-            all_meanings.extend(flower_meanings.get('secondary', []))
             
+            # 꽃말 매칭 (가장 높은 점수)
+            meanings = flower_meanings.get('meanings', flower_meanings.get('primary', []))
             for emotion in emotion_names:
-                if emotion not in excluded_texts and any(emotion in meaning for meaning in all_meanings):
-                    score += 10.0
-                    print(f"💭 감정 매칭: {flower_data['korean_name']} - {emotion}")
+                if emotion not in excluded_texts and any(emotion in meaning for meaning in meanings):
+                    score += 20.0  # 꽃말 매칭 최고 점수
+                    # 성능 최적화: print문 제거
+            
+            # 무드 매칭 (보조 점수)
+            moods = flower_meanings.get('moods', flower_meanings.get('secondary', []))
+            for emotion in emotion_names:
+                if emotion not in excluded_texts and any(emotion in mood for mood in moods):
+                    score += 5.0  # 무드 매칭 중간 점수
             
             flower_scores[flower_id] = score
         
@@ -976,7 +1009,7 @@ class FlowerMatcher:
             korean_name=best_flower['korean_name'],
             scientific_name=best_flower['scientific_name'],
             image_url=image_url,
-            keywords=best_flower.get('flower_meanings', {}).get('primary', [])[:2],
+            keywords=best_flower.get('flower_meanings', {}).get('meanings', best_flower.get('flower_meanings', {}).get('primary', []))[:2],
             hashtags=hashtags,
             color_keywords=color_keywords
         )
@@ -1008,7 +1041,7 @@ class FlowerMatcher:
                 korean_name=best_flower['korean_name'],
                 scientific_name=best_flower['scientific_name'],
                 image_url=image_url,
-                keywords=best_flower.get('flower_meanings', {}).get('primary', [])[:2],
+                keywords=best_flower.get('flower_meanings', {}).get('meanings', best_flower.get('flower_meanings', {}).get('primary', []))[:2],
                 hashtags=hashtags,
                 color_keywords=color_keywords
             )
@@ -1035,7 +1068,7 @@ class FlowerMatcher:
             korean_name=best_flower['korean_name'],
             scientific_name=best_flower['scientific_name'],
             image_url=image_url,
-            keywords=best_flower.get('flower_meanings', {}).get('primary', [])[:2],
+            keywords=best_flower.get('flower_meanings', {}).get('meanings', best_flower.get('flower_meanings', {}).get('primary', []))[:2],
             hashtags=hashtags,
             color_keywords=color_keywords
         )
@@ -1084,36 +1117,49 @@ class FlowerMatcher:
             
             # 1. 꽃말 매칭 점수 (최우선) - 제외된 키워드 제외
             flower_meanings = flower_dict.get('flower_meanings', {})
-            all_meanings = []
-            all_meanings.extend(flower_meanings.get('primary', []))
-            all_meanings.extend(flower_meanings.get('secondary', []))
-            all_meanings.extend(flower_meanings.get('other', []))
             
-            story_lower = story.lower()
-            for meaning in all_meanings:
-                # 제외된 키워드가 꽃말에 포함되어 있으면 점수 감점
+            # 1. 꽃말 매칭 (가장 높은 점수)
+            meanings = flower_meanings.get('meanings', flower_meanings.get('primary', []))  # primary → meanings
+            for meaning in meanings:
                 if any(excluded in meaning for excluded in excluded_texts):
-                    score -= 3.0  # 제외된 키워드로 인한 큰 감점
-                    print(f"❌ 제외된 키워드 꽃말: {flower_dict['korean_name']} - {meaning} (-3.0)")
+                    score -= 5.0  # 제외된 키워드로 인한 큰 감점
+                    print(f"❌ 제외된 꽃말: {flower_dict['korean_name']} - {meaning} (-5.0)")
                 elif meaning.lower() in story_lower:
-                    score += 2.0  # 꽃말 매칭은 높은 점수
-                    print(f"💐 꽃말 매칭: {flower_dict['korean_name']} - {meaning} (+2.0)")
+                    score += 20.0  # 꽃말 매칭은 최고 점수
+                    print(f"💐 꽃말 매칭: {flower_dict['korean_name']} - {meaning} (+20.0)")
             
-            # 2. 감정 매칭 점수 - 제외된 감정 제외
-            flower_moods = flower_dict.get('moods', {})
-            all_moods = []
-            for mood_list in flower_moods.values():
-                if isinstance(mood_list, list):
-                    all_moods.extend(mood_list)
+            # 2. 무드 매칭 (보조 점수)
+            moods = flower_meanings.get('moods', flower_meanings.get('secondary', []))  # secondary → moods
+            for mood in moods:
+                if mood.lower() in story_lower:
+                    score += 3.0  # 무드 매칭은 중간 점수
+                    print(f"🎭 무드 매칭: {flower_dict['korean_name']} - {mood} (+3.0)")
             
+            # 3. 감정 매칭 (감정 분석과 연동)
+            emotions_list = flower_meanings.get('emotions', flower_meanings.get('other', []))  # other → emotions
             for emotion in emotions:
-                # 제외된 감정이면 매칭하지 않음
                 if emotion.emotion in excluded_texts:
                     print(f"🚫 제외된 감정 매칭 건너뜀: {flower_dict['korean_name']} - {emotion.emotion}")
                     continue
-                elif emotion.emotion in all_moods:
-                    score += emotion.percentage * 0.02  # 감정 매칭 점수 증가
-                    print(f"💭 감정 매칭: {flower_dict['korean_name']} - {emotion.emotion} (+{emotion.percentage * 0.02:.2f})")
+                elif emotion.emotion in emotions_list:
+                    score += emotion.percentage * 0.8  # 감정 퍼센티지 기반 높은 점수
+                    print(f"💭 감정 매칭: {flower_dict['korean_name']} - {emotion.emotion} (+{emotion.percentage * 0.8:.2f})")
+            
+            # 4. 기존 moods 필드와의 중복 제거 (이미 위에서 처리됨)
+            # flower_moods = flower_dict.get('moods', {})
+            # all_moods = []
+            # for mood_list in flower_moods.values():
+            #     if isinstance(mood_list, list):
+            #         all_moods.extend(mood_list)
+            
+            # for emotion in emotions:
+            #     # 제외된 감정이면 매칭하지 않음
+            #     if emotion.emotion in excluded_texts:
+            #         print(f"🚫 제외된 감정 매칭 건너뜀: {flower_dict['korean_name']} - {emotion.emotion}")
+            #         continue
+            #     elif emotion.emotion in all_moods:
+            #         score += emotion.percentage * 0.02  # 감정 매칭 점수 증가
+            #         print(f"💭 감정 매칭: {flower_dict['korean_name']} - {emotion.emotion} (+{emotion.percentage * 0.02:.2f})")
             
             # 3. 사용 맥락 점수
             usage_contexts = flower_dict.get('usage_contexts', [])
@@ -1621,7 +1667,7 @@ class FlowerMatcher:
             korean_name=flower_data["korean_name"],
             scientific_name=flower_data["scientific_name"],
             image_url=image_url,
-            keywords=flower_data["flower_meanings"]["primary"],
+                            keywords=flower_data["flower_meanings"].get("meanings", flower_data["flower_meanings"]["primary"]),
             hashtags=hashtags,
             color_keywords=color_keywords
         )
@@ -2146,20 +2192,31 @@ class FlowerMatcher:
             for emotion in emotions:
                 if emotion.emotion in all_moods:
                     score += emotion.percentage * 0.01
-                    print(f"💭 감정 매칭: {flower['korean_name']} - {emotion.emotion} (+{emotion.percentage * 0.01:.2f})")
+                    # 성능 최적화: print문 제거
+                
+                # 꽃말과 감정 매칭 (더 중요)
+                flower_meanings = flower.get('flower_meanings', {})
+                all_meanings = []
+                all_meanings.extend(flower_meanings.get('primary', []))
+                all_meanings.extend(flower_meanings.get('secondary', []))
+                
+                if emotion.emotion in all_meanings:
+                    score += emotion.percentage * 0.5  # 꽃말 매칭은 높은 점수
+                    # 성능 최적화: print문 제거
             
             # 2. 색상 매칭 점수 (우선순위 높임)
             flower_colors = flower.get('color', [])
             if isinstance(flower_colors, str):
                 flower_colors = [flower_colors]
             
+            # 색상 매칭 (최우선순위)
             for color in color_keywords:
                 if color in flower_colors:
-                    score += 3.0  # 색상 매칭 점수를 1.0에서 3.0으로 더욱 높임
-                    print(f"🎨 색상 매칭: {flower['korean_name']} - {color} (+3.0)")
+                    score += 50.0  # 색상 매칭은 매우 높은 점수
+                    # 성능 최적화: print문 제거
                 else:
-                    score -= 1.0  # 색상 불일치 시 페널티
-                    print(f"❌ 색상 불일치: {flower['korean_name']} - 요청: {color}, 실제: {flower_colors} (-1.0)")
+                    score -= 10.0  # 색상 불일치 시 강한 페널티
+                    # 성능 최적화: print문 제거
             
             # 3. 관계 적합성 점수
             relationship_suitability = flower.get('relationship_suitability', {})
@@ -2225,13 +2282,13 @@ class FlowerMatcher:
                 if color_similarity > 0.3:
                     print(f"🎨 색상 유사도 매칭: {flower_data['korean_name']} - {color_keywords[0]} (유사도: {color_similarity:.2f}, +{color_similarity * 0.3:.2f})")
             
-            # 색상 우선순위 조정 (요청된 색상과 정확히 일치하는 경우 높은 점수)
+            # 색상 우선순위 조정 (요청된 색상과 정확히 일치하는 경우 최우선순위)
             if color_keywords and flower_data.get('color', '') in color_keywords:
-                score *= 2.0  # 색상 일치 시 점수 2배
-                print(f"🎯 색상 정확 매칭: {flower_data['korean_name']} - {flower_data.get('color', '')} (점수: {score:.2f})")
+                score *= 5.0  # 색상 일치 시 점수 5배 (최우선순위)
+                print(f"🎯 색상 정확 매칭 (최우선순위): {flower_data['korean_name']} - {flower_data.get('color', '')} (점수: {score:.2f})")
             elif color_keywords and flower_data.get('color', '') not in color_keywords:
-                score *= 0.3  # 색상 불일치 시 점수 대폭 감소
-                print(f"❌ 색상 불일치: {flower_data['korean_name']} - 요청: {color_keywords[0]}, 실제: {flower_data.get('color', '')} (점수: {score:.2f})")
+                score *= 0.1  # 색상 불일치 시 점수 대폭 감소 (거의 제외)
+                print(f"❌ 색상 불일치 (강한 페널티): {flower_data['korean_name']} - 요청: {color_keywords[0]}, 실제: {flower_data.get('color', '')} (점수: {score:.2f})")
             
             scores[flower_id] = score
         

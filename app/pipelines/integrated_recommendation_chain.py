@@ -12,6 +12,7 @@ from app.services.image_matcher import ImageMatcher
 from app.services.recommendation_logger import RecommendationLogger
 from app.services.story_manager import StoryManager
 from app.models.schemas import RecommendRequest, RecommendResponse, RecommendationItem
+from app.api.v1.endpoints.recommend import _generate_flower_card_message
 import json
 
 class IntegratedRecommendationChain:
@@ -43,9 +44,9 @@ class IntegratedRecommendationChain:
         print(f"     컬러: {extracted_context.colors}")
         print(f"     신뢰도: {extracted_context.confidence:.2f}")
         
-        # 2단계: 감정 분석 (기존 시스템과 호환)
+        # 2단계: 감정 분석 (원래 EmotionAnalyzer 서비스 사용)
         print(f"🎯 2단계: 감정 분석")
-        emotion_analysis = self._convert_context_to_emotion_analysis(extracted_context)
+        emotion_analysis = self.emotion_analyzer.analyze(request.story)
         
         # 첫 번째 감정의 emotion 속성 사용
         primary_emotion = emotion_analysis[0].emotion if emotion_analysis else "따뜻함"
@@ -82,8 +83,10 @@ class IntegratedRecommendationChain:
         print(f"   생성된 스토리 ID: {story_id}")
         
         # 단일 추천 아이템 생성
+        recommendation_id = f"R{story_id.split('-')[-1]}"  # 스토리 ID의 마지막 부분 사용
+        
         item = RecommendationItem(
-            id="R001",
+            id=recommendation_id,
             template_id=matched_flower.flower_name,
             name="추천 꽃다발",
             main_flowers=[matched_flower.flower_name],
@@ -96,7 +99,7 @@ class IntegratedRecommendationChain:
             extracted_keywords=extracted_context.emotions + extracted_context.situations + extracted_context.moods + extracted_context.colors,
             flower_keywords=matched_flower.keywords,
             season_info=self._get_season_info(matched_flower.flower_name),
-            english_message=self._generate_english_message(matched_flower, request.story),
+            english_message=self._generate_flower_card_message(matched_flower, emotion_analysis, request.story),
             recommendation_reason=recommendation_reason["professional_reason"]
         )
         
@@ -133,59 +136,7 @@ class IntegratedRecommendationChain:
             story_id=story_id  # 스토리 ID 포함
         )
     
-    def _convert_context_to_emotion_analysis(self, context: ExtractedContext):
-        """추출된 맥락을 감정 분석 형식으로 변환"""
-        from app.services.emotion_analyzer import EmotionAnalysis
-        
-        # 감정 점수 계산
-        emotion_scores = {}
-        total_score = 0
-        
-        # 감정 카테고리별 점수 할당
-        for emotion in context.emotions:
-            emotion_scores[emotion] = 1.0
-            total_score += 1.0
-        
-        # 무드를 감정으로 매핑
-        mood_to_emotion = {
-            "차분한": "평화",
-            "진지한": "진실",
-            "은은한": "따뜻함",
-            "따뜻한": "따뜻함",
-            "로맨틱한": "사랑",
-            "경쾌한": "기쁨"
-        }
-        
-        for mood in context.moods:
-            emotion = mood_to_emotion.get(mood, mood)
-            if emotion in emotion_scores:
-                emotion_scores[emotion] += 0.5
-            else:
-                emotion_scores[emotion] = 0.5
-            total_score += 0.5
-        
-        # 비율로 변환
-        if total_score > 0:
-            for emotion in emotion_scores:
-                emotion_scores[emotion] = emotion_scores[emotion] / total_score
-        
-        # 상위 감정 선택
-        sorted_emotions = sorted(emotion_scores.items(), key=lambda x: x[1], reverse=True)
-        
-        primary = sorted_emotions[0][0] if sorted_emotions else "기쁨"
-        secondary = sorted_emotions[1][0] if len(sorted_emotions) > 1 else "사랑"
-        tertiary = sorted_emotions[2][0] if len(sorted_emotions) > 2 else "감사"
-        
-        # EmotionAnalysis는 List[EmotionAnalysis] 형태로 반환해야 함
-        emotions = []
-        for emotion, score in sorted_emotions[:3]:  # 상위 3개 감정만
-            emotions.append(EmotionAnalysis(
-                emotion=emotion,
-                percentage=score * 100,  # 비율을 퍼센트로 변환
-                description=f"{emotion} 감정이 {score * 100:.1f}%로 나타남"
-            ))
-        
-        return emotions
+
     
     def run_with_details(self, request: RecommendRequest) -> Dict[str, Any]:
         """상세 정보와 함께 추천 체인 실행 (디버깅용)"""
@@ -196,7 +147,7 @@ class IntegratedRecommendationChain:
         extracted_context = self.context_extractor.extract_context_realtime(request.story)
         
         # 2. 감정 분석
-        emotion_analysis = self._convert_context_to_emotion_analysis(extracted_context)
+        emotion_analysis = self.emotion_analyzer.analyze(request.story)
         
         # 3. 꽃 매칭
         matched_flower = self.flower_matcher.match(emotion_analysis, request.story, "meaning_based")
@@ -292,22 +243,4 @@ class IntegratedRecommendationChain:
             print(f"❌ 시즌 정보 조회 실패: {e}")
             return "All Season 01-12"
     
-    def _generate_english_message(self, matched_flower, story: str) -> str:
-        """영어 메시지 생성"""
-        try:
-            flower_name = matched_flower.flower_name
-            korean_name = matched_flower.korean_name
-            
-            # 간단한 영어 메시지 생성
-            if "생일" in story:
-                return f"Happy Birthday! I chose {flower_name} ({korean_name}) for you. This flower represents love and friendship."
-            elif "감사" in story or "고맙" in story:
-                return f"Thank you! I chose {flower_name} ({korean_name}) for you. This flower represents gratitude and appreciation."
-            elif "사랑" in story or "연인" in story:
-                return f"I love you! I chose {flower_name} ({korean_name}) for you. This flower represents love and romance."
-            else:
-                return f"I chose {flower_name} ({korean_name}) for you. This flower represents love and friendship."
-                
-        except Exception as e:
-            print(f"❌ 영어 메시지 생성 실패: {e}")
-            return f"I chose {matched_flower.flower_name} for you. This flower represents love and friendship."
+

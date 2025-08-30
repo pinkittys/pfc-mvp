@@ -1586,7 +1586,7 @@
                                 <h4>🌸 꽃말</h4>
                                 <div class="edit-field">
                                     <label>주요 꽃말:</label>
-                                    <input type="text" id="primary-${flower.id}" value="${flower.flower_meanings.primary.join(', ')}" placeholder="쉼표로 구분">
+                                    <input type="text" id="primary-${flower.id}" value="${flower.flower_meanings.meanings ? flower.flower_meanings.meanings.join(', ') : flower.flower_meanings.primary.join(', ')}" placeholder="쉼표로 구분">
                                 </div>
                                 <div class="edit-field">
                                     <label>보조 꽃말:</label>
@@ -1766,7 +1766,7 @@
                     body: JSON.stringify({
                         flower_id: flowerId,
                         update_fields: {
-                            "flower_meanings.primary": primaryMeanings,
+                            "flower_meanings.meanings": primaryMeanings,
                             "flower_meanings.secondary": secondaryMeanings,
                             "flower_meanings.phrases": phrases,
                             "moods.primary": moodPrimary,
