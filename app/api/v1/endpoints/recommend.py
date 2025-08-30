@@ -13,7 +13,7 @@ from app.models.schemas import (
     FlowerComposition,
     StoryCreateRequest
 )
-from app.pipelines.integrated_recommendation_chain import IntegratedRecommendationChain
+# from app.pipelines.integrated_recommendation_chain import IntegratedRecommendationChain
 from app.services.emotion_analyzer import EmotionAnalyzer
 from app.services.flower_matcher import FlowerMatcher
 from app.services.enhanced_flower_matcher import EnhancedFlowerMatcher
@@ -27,10 +27,11 @@ from app.utils.request_deduplication import request_deduplicator
 router = APIRouter()
 
 def get_chain():
+    from app.pipelines.integrated_recommendation_chain import IntegratedRecommendationChain
     return IntegratedRecommendationChain()
 
 @router.post("/recommendations", response_model=RecommendResponse)
-def recommendations(req: RecommendRequest, chain: IntegratedRecommendationChain = Depends(get_chain)):
+def recommendations(req: RecommendRequest, chain = Depends(get_chain)):
     """통합 추천 엔드포인트 (중복 요청 방지 포함)"""
     try:
         # 요청 ID 생성

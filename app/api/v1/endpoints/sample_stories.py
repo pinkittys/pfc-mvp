@@ -135,8 +135,7 @@ async def recommend_from_sample_story(story_id: str):
             "emotions": [
                 {
                     "emotion": emotion.emotion,
-                    "percentage": emotion.percentage,
-                    "description": emotion.description
+                    "percentage": emotion.percentage
                 } for emotion in emotions
             ],
             
