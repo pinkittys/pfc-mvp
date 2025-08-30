@@ -29,13 +29,15 @@ class RecommendationItem(BaseModel):
     reason: str
     image_url: str
 
-class RecommendResponse(BaseModel):
-    recommendations: List[RecommendationItem]
-
 class EmotionAnalysis(BaseModel):
     emotion: str
     percentage: float
     description: str
+
+class RecommendResponse(BaseModel):
+    recommendations: List[RecommendationItem]
+    emotions: Optional[List[EmotionAnalysis]] = None  # 감정 분석 결과 추가
+    story_id: Optional[str] = None  # 스토리 ID 추가
 
 class FlowerMatch(BaseModel):
     flower_name: str

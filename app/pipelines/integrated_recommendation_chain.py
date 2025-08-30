@@ -5,20 +5,24 @@ import time
 from typing import List, Dict, Any
 from app.services.realtime_context_extractor import RealtimeContextExtractor, ExtractedContext
 from app.services.emotion_analyzer import EmotionAnalyzer
-from app.services.flower_blend_recommender import FlowerBlendRecommender
+from app.services.flower_matcher import FlowerMatcher
+from app.services.composition_recommender import CompositionRecommender
 from app.services.recommendation_reason_generator import RecommendationReasonGenerator
 from app.services.image_matcher import ImageMatcher
 from app.services.recommendation_logger import RecommendationLogger
+from app.services.story_manager import StoryManager
 from app.models.schemas import RecommendRequest, RecommendResponse, RecommendationItem
 
 class IntegratedRecommendationChain:
     def __init__(self):
         self.context_extractor = RealtimeContextExtractor()
         self.emotion_analyzer = EmotionAnalyzer()
-        self.blend_recommender = FlowerBlendRecommender()
+        self.flower_matcher = FlowerMatcher()
+        self.composition_recommender = CompositionRecommender()
         self.reason_generator = RecommendationReasonGenerator()
         self.image_matcher = ImageMatcher()
         self.logger = RecommendationLogger()
+        self.story_manager = StoryManager()
     
     def run(self, request: RecommendRequest) -> RecommendResponse:
         """통합 추천 체인 실행"""
@@ -42,69 +46,65 @@ class IntegratedRecommendationChain:
         print(f"🎯 2단계: 감정 분석")
         emotion_analysis = self._convert_context_to_emotion_analysis(extracted_context)
         
-        print(f"   주요 감정: {emotion_analysis.primary_emotion}")
-        print(f"   감정 비율: {emotion_analysis.emotion_scores}")
+        # 첫 번째 감정의 emotion 속성 사용
+        primary_emotion = emotion_analysis[0].emotion if emotion_analysis else "따뜻함"
+        print(f"   주요 감정: {primary_emotion}")
+        print(f"   감정 비율: {[f'{e.emotion}({e.percentage}%)' for e in emotion_analysis]}")
         
         # 3단계: 꽃 매칭
         print(f"🌺 3단계: 꽃 매칭")
-        flower_matches = self.emotion_analyzer.match_flowers_to_emotion(emotion_analysis)
+        matched_flower = self.flower_matcher.match(emotion_analysis, request.story, "meaning_based")
         
-        print(f"   매칭된 꽃 {len(flower_matches)}개")
-        for i, match in enumerate(flower_matches[:3], 1):
-            print(f"     {i}. {match.flower_name} (점수: {match.match_score:.2f})")
+        print(f"   매칭된 꽃: {matched_flower.flower_name}")
         
         # 4단계: 꽃 구성 추천
         print(f"🌿 4단계: 꽃 구성 추천")
-        blend_recommendations = self.blend_recommender.create_flower_blend(
-            flower_matches, 
-            extracted_context.colors  # 추출된 컬러 선호도 사용
-        )
+        composition = self.composition_recommender.recommend(matched_flower, emotion_analysis)
         
-        print(f"   구성 추천 {len(blend_recommendations)}개 생성")
+        print(f"   구성: {composition.composition_name}")
         
-        # 5단계: 이미지 매칭 및 추천 이유 생성 (최고 점수 구성만 선택)
-        print(f"🖼️  5단계: 이미지 매칭 및 추천 이유 생성")
-        
-        # 최고 점수의 구성만 선택
-        best_blend = max(blend_recommendations, key=lambda x: x.total_score)
-        
-        # 이미지 매칭
-        img = self.image_matcher.match(best_blend.blend)
+        # 5단계: 추천 이유 생성
+        print(f"💭 5단계: 추천 이유 생성")
         
         # 추천 이유 생성
-        recommendation_reason = self.reason_generator.generate_recommendation_reason(
+        recommendation_reason = self.reason_generator.generate_reason(
             emotion_analysis,
-            flower_matches,
-            best_blend,
+            [matched_flower],  # 단일 꽃을 리스트로 변환
+            composition,  # CompositionRecommender 결과 사용
             request.story,
             extracted_context.colors
         )
         
+        # 6단계: 스토리 ID 생성
+        print(f"📝 6단계: 스토리 ID 생성")
+        story_id = self.story_manager._generate_story_id(matched_flower.flower_name)
+        print(f"   생성된 스토리 ID: {story_id}")
+        
         # 단일 추천 아이템 생성
         item = RecommendationItem(
             id="R001",
-            template_id=best_blend.blend.main_flowers[0] if best_blend.blend.main_flowers else None,
+            template_id=matched_flower.flower_name,
             name="추천 꽃다발",
-            main_flowers=best_blend.blend.main_flowers,
-            sub_flowers=best_blend.blend.sub_flowers,
+            main_flowers=[matched_flower.flower_name],
+            sub_flowers=composition.sub_flowers,
             color_theme=extracted_context.colors,
             reason=recommendation_reason["professional_reason"],
-            image_url=img.url
+            image_url=matched_flower.image_url
         )
         
-        print(f"     📸 최고 점수 구성: {best_blend.blend.main_flowers[0] if best_blend.blend.main_flowers else 'Unknown'} → {img.url}")
+        print(f"     📸 최종 추천: {matched_flower.flower_name} → {matched_flower.image_url}")
         
         # 로깅
         processing_time_ms = int((time.time() - start_time) * 1000)
         tags = extracted_context.emotions + extracted_context.situations + extracted_context.moods + extracted_context.colors
         
         final_recommendation = {
-            "main_flower": best_blend.blend.main_flowers[0] if best_blend.blend.main_flowers else "Unknown",
-            "image_url": img.url,
+            "main_flower": matched_flower.flower_name,
+            "image_url": matched_flower.image_url,
             "reason": recommendation_reason["professional_reason"],
-            "confidence": img.confidence,
-            "style_description": best_blend.blend.style_description,
-            "color_theme": best_blend.blend.color_theme
+            "confidence": 0.8,
+            "style_description": composition.composition_name,
+            "color_theme": extracted_context.colors
         }
         
         self.logger.log_recommendation_process(
@@ -112,14 +112,18 @@ class IntegratedRecommendationChain:
             budget=None,  # MVP에서는 예산 제외
             extracted_context=extracted_context,
             emotion_analysis=emotion_analysis,
-            flower_matches=flower_matches,
-            blend_recommendations=blend_recommendations,
+            flower_matches=[matched_flower],
+            blend_recommendations=[composition],
             final_recommendation=final_recommendation,
             processing_time_ms=processing_time_ms,
             tags=tags
         )
         
-        return RecommendResponse(recommendations=[item])
+        return RecommendResponse(
+            recommendations=[item],
+            emotions=emotion_analysis,  # 감정 분석 결과 포함
+            story_id=story_id  # 스토리 ID 포함
+        )
     
     def _convert_context_to_emotion_analysis(self, context: ExtractedContext):
         """추출된 맥락을 감정 분석 형식으로 변환"""
@@ -187,55 +191,45 @@ class IntegratedRecommendationChain:
         emotion_analysis = self._convert_context_to_emotion_analysis(extracted_context)
         
         # 3. 꽃 매칭
-        flower_matches = self.emotion_analyzer.match_flowers_to_emotion(emotion_analysis)
+        matched_flower = self.flower_matcher.match(emotion_analysis, request.story, "meaning_based")
         
         # 4. 꽃 구성
-        blend_recommendations = self.blend_recommender.create_flower_blend(
-            flower_matches, 
-            extracted_context.colors
-        )
+        composition = self.composition_recommender.recommend(matched_flower, emotion_analysis)
         
         # 5. 이미지 매칭 및 이유 생성
         detailed_items = []
-        for blend_rec in blend_recommendations:
-            img = self.image_matcher.match(blend_rec.blend)
-            recommendation_reason = self.reason_generator.generate_recommendation_reason(
-                emotion_analysis,
-                flower_matches,
-                blend_rec,
-                request.story,
-                extracted_context.colors
-            )
-            
-            detailed_items.append({
-                "blend": blend_rec.blend,
-                "image": {
-                    "url": img.url,
-                    "confidence": img.confidence,
-                    "image_id": img.image_id
-                },
-                "reason": recommendation_reason
-            })
-        
-        # 최고 점수 구성 선택
-        best_blend = max(blend_recommendations, key=lambda x: x.total_score) if blend_recommendations else None
-        best_img = self.image_matcher.match(best_blend.blend) if best_blend else None
-        best_reason = self.reason_generator.generate_recommendation_reason(
+        img = self.image_matcher.match(matched_flower)
+        recommendation_reason = self.reason_generator.generate_reason(
             emotion_analysis,
-            flower_matches,
-            best_blend,
+            [matched_flower],
+            composition,
             request.story,
             extracted_context.colors
-        ) if best_blend else None
+        )
+        
+        detailed_items.append({
+            "composition": composition,
+            "image": {
+                "url": img.url,
+                "confidence": img.confidence,
+                "image_id": img.image_id
+            },
+            "reason": recommendation_reason
+        })
+        
+        # 최고 점수 구성 선택
+        best_composition = composition
+        best_img = img
+        best_reason = recommendation_reason
         
         # 최종 추천 정보
         final_recommendation = {
-            "main_flower": best_blend.blend.main_flowers[0] if best_blend.blend.main_flowers else "Unknown",
+            "main_flower": matched_flower.flower_name,
             "image_url": img.url,
-            "reason": best_reason["professional_reason"] if best_reason else "Unknown",
+            "reason": recommendation_reason["professional_reason"],
             "confidence": img.confidence,
-            "style_description": best_blend.blend.style_description,
-            "color_theme": best_blend.blend.color_theme
+            "style_description": composition.composition_name,
+            "color_theme": extracted_context.colors
         }
         
         processing_time_ms = int((time.time() - start_time) * 1000)
@@ -244,8 +238,8 @@ class IntegratedRecommendationChain:
         return {
             "extracted_context": extracted_context,
             "emotion_analysis": emotion_analysis,
-            "flower_matches": flower_matches,
-            "blend_recommendations": blend_recommendations,
+            "flower_matches": [matched_flower],
+            "blend_recommendations": [composition],
             "detailed_items": detailed_items,
             "final_recommendation": final_recommendation,
             "processing_time_ms": processing_time_ms,

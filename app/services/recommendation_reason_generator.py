@@ -10,9 +10,9 @@ class RecommendationReasonGenerator:
     def __init__(self):
         self.openai_client = openai.OpenAI()
     
-    def generate_recommendation_reason(self, emotion_analysis: EmotionAnalysis, 
-                                     flower_matches: List[FlowerMatch], 
-                                     blend_recommendation: BlendRecommendation,
+    def generate_reason(self, emotion_analysis: List[EmotionAnalysis], 
+                                     flower_matches: List, 
+                                     blend_recommendation,
                                      customer_story: str,
                                      color_preference: List[str] = None) -> Dict[str, str]:
         """추천 이유 생성"""
@@ -39,10 +39,21 @@ class RecommendationReasonGenerator:
             
             professional_reason = response.choices[0].message.content.strip()
             
+            # 첫 번째 감정의 emotion 속성 사용
+            primary_emotion = emotion_analysis[0].emotion if emotion_analysis else "따뜻함"
+            
+            # blend_recommendation이 CompositionRecommender 결과인지 확인
+            if hasattr(blend_recommendation, 'composition_name'):
+                style_description = blend_recommendation.composition_name
+            elif hasattr(blend_recommendation, 'blend') and hasattr(blend_recommendation.blend, 'style_description'):
+                style_description = blend_recommendation.blend.style_description
+            else:
+                style_description = "Beautiful Arrangement"
+            
             return {
                 "professional_reason": professional_reason,
-                "emotion_summary": f"{emotion_analysis.primary_emotion}을 중심으로 한 구성",
-                "style_description": blend_recommendation.blend.style_description
+                "emotion_summary": f"{primary_emotion}을 중심으로 한 구성",
+                "style_description": style_description
             }
             
         except Exception as e:
@@ -50,14 +61,22 @@ class RecommendationReasonGenerator:
             # 기본 추천 이유 생성
             return self._generate_fallback_reason(emotion_analysis, blend_recommendation)
     
-    def _create_reason_prompt(self, emotion_analysis: EmotionAnalysis, 
-                            flower_matches: List[FlowerMatch], 
-                            blend_recommendation: BlendRecommendation,
+    def _create_reason_prompt(self, emotion_analysis: List[EmotionAnalysis], 
+                            flower_matches: List, 
+                            blend_recommendation,
                             customer_story: str,
                             color_preference: List[str] = None) -> str:
         """추천 이유 생성 프롬프트"""
         
-        main_flower = blend_recommendation.blend.main_flowers[0] if blend_recommendation.blend.main_flowers else "꽃"
+        # flower_matches에서 첫 번째 꽃 정보 추출
+        if flower_matches and len(flower_matches) > 0:
+            main_flower = flower_matches[0].flower_name if hasattr(flower_matches[0], 'flower_name') else "꽃"
+        else:
+            main_flower = "꽃"
+        
+        # 첫 번째 감정의 emotion 속성 사용
+        primary_emotion = emotion_analysis[0].emotion if emotion_analysis else "따뜻함"
+        secondary_emotion = emotion_analysis[1].emotion if len(emotion_analysis) > 1 else "감사"
         
         prompt = f"""
 고객님의 사연과 감정을 바탕으로 꽃 추천 이유를 작성해주세요.
@@ -65,8 +84,8 @@ class RecommendationReasonGenerator:
 고객 스토리: {customer_story}
 
 분석된 감정:
-- 주요 감정: {emotion_analysis.primary_emotion}
-- 보조 감정: {emotion_analysis.secondary_emotion}
+- 주요 감정: {primary_emotion}
+- 보조 감정: {secondary_emotion}
 
 추천된 꽃: {main_flower}
 
@@ -86,11 +105,18 @@ class RecommendationReasonGenerator:
 """
         return prompt
     
-    def _generate_fallback_reason(self, emotion_analysis: EmotionAnalysis, 
-                                blend_recommendation: BlendRecommendation) -> Dict[str, str]:
+    def _generate_fallback_reason(self, emotion_analysis: List[EmotionAnalysis], 
+                                blend_recommendation) -> Dict[str, str]:
         """기본 추천 이유 생성 (LLM 실패 시)"""
         
-        main_flower = blend_recommendation.blend.main_flowers[0] if blend_recommendation.blend.main_flowers else "꽃"
+        # flower_matches에서 첫 번째 꽃 정보 추출
+        if hasattr(blend_recommendation, 'main_flower'):
+            main_flower = blend_recommendation.main_flower
+        else:
+            main_flower = "꽃"
+        
+        # 첫 번째 감정의 emotion 속성 사용
+        primary_emotion = emotion_analysis[0].emotion if emotion_analysis else "따뜻함"
         
         emotion_map = {
             "사랑": "사랑의 마음을 담아",
@@ -101,12 +127,20 @@ class RecommendationReasonGenerator:
             "슬픔": "따뜻한 마음을 담아"
         }
         
-        emotion_phrase = emotion_map.get(emotion_analysis.primary_emotion, "진심 어린 마음을 담아")
+        emotion_phrase = emotion_map.get(primary_emotion, "진심 어린 마음을 담아")
         
         reason = f"{emotion_phrase} {main_flower}입니다."
         
+        # blend_recommendation이 CompositionRecommender 결과인지 확인
+        if hasattr(blend_recommendation, 'composition_name'):
+            style_description = blend_recommendation.composition_name
+        elif hasattr(blend_recommendation, 'blend') and hasattr(blend_recommendation.blend, 'style_description'):
+            style_description = blend_recommendation.blend.style_description
+        else:
+            style_description = "Beautiful Arrangement"
+        
         return {
             "professional_reason": reason,
-            "emotion_summary": f"{emotion_analysis.primary_emotion}을 중심으로 한 구성",
-            "style_description": blend_recommendation.blend.style_description
+            "emotion_summary": f"{primary_emotion}을 중심으로 한 구성",
+            "style_description": style_description
         }

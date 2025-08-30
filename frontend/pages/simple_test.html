@@ -955,7 +955,7 @@
     </div>
 
     <script>
-        const API_BASE = 'https://api.plainflowerclub.com/api/v1';
+        const API_BASE = 'http://localhost:8000/api/v1';
         
         // DOM 요소들
         const storyInput = document.getElementById('storyInput');
@@ -1454,7 +1454,8 @@
                         // 파스텔톤 제거 (색상이 아닌 톤이므로)
         // '파스텔톤': ['화이트', '핑크', '그린', '블루'],
                 '하늘색': ['블루', '화이트', '퍼플'],
-                '연보라': ['퍼플', '핑크', '블루'],
+                '라일락': ['화이트', '연핑크', '연노랑'],
+                '연보라': ['화이트', '연핑크', '연노랑'],
                 '연핑크': ['핑크', '화이트', '퍼플'],
                 '연노랑': ['옐로우', '화이트', '오렌지'],
                 '연주황': ['오렌지', '옐로우', '레드'],
@@ -1650,10 +1651,20 @@
                 console.log('📤 스토리 제출 시작:', story);
                 console.log('🚫 선택 해제된 키워드들:', deselectedKeywords);
                 
+                // 현재 키워드 수집
+                const currentKeywords = collectCurrentKeywords();
+                const updatedContext = {
+                    emotions: currentKeywords.filter(k => k.type === 'emotion').map(k => k.text),
+                    situations: currentKeywords.filter(k => k.type === 'situation').map(k => k.text),
+                    moods: currentKeywords.filter(k => k.type === 'mood').map(k => k.text),
+                    colors: currentKeywords.filter(k => k.type === 'color').map(k => k.text)
+                };
+                
                 // 선택 해제된 키워드들을 제외 조건으로 포함
                 const requestBody = {
                     story: story,
-                    excluded_keywords: deselectedKeywords
+                    excluded_keywords: deselectedKeywords,
+                    updated_context: updatedContext
                 };
                 
                 const response = await fetch(`${API_BASE}/emotion-analysis`, {
@@ -1684,6 +1695,22 @@
         }
         
 
+        
+        // 현재 키워드 수집 함수
+        function collectCurrentKeywords() {
+            const currentKeywords = [];
+            const keywordElements = document.querySelectorAll('.keyword-tag');
+            
+            keywordElements.forEach((element) => {
+                const type = element.getAttribute('data-type');
+                const text = element.getAttribute('data-text');
+                if (type && text) {
+                    currentKeywords.push({ type, text });
+                }
+            });
+            
+            return currentKeywords;
+        }
         
         // 감정 분석 결과 표시
         function showEmotionAnalysis(data) {
@@ -1901,7 +1928,7 @@
                 console.log('  - 요청 컬러:', updatedContext.colors);
                 console.log('  - preferred_colors:', requestBody.preferred_colors);
                 
-                const response = await fetch(`${API_BASE}/emotion-analysis`, {
+                const response = await fetch(`${API_BASE}/recommend`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1916,27 +1943,31 @@
                     console.log('📥 API 응답 데이터:', newData);
                 console.log('🕐 API 응답 시점:', new Date().toISOString());
                 console.log('🔍 API 응답 컬러 확인:');
-                if (newData.recommendations && newData.recommendations[0]) {
-                    console.log('  - 추천된 꽃 이름:', newData.recommendations[0].flower_name);
-                    console.log('  - 추천된 꽃 색상:', newData.recommendations[0].color_theme);
+                if (newData.flower_name) {
+                    console.log('  - 추천된 꽃 이름:', newData.flower_name);
                     console.log('  - 요청했던 컬러:', requestBody.preferred_colors);
-                    console.log('  - 전체 추천 데이터:', newData.recommendations[0]);
+                    console.log('  - 전체 추천 데이터:', newData);
                 }
                     console.log('🌸 추천된 꽃 정보:');
-                    if (newData.recommendations && newData.recommendations.length > 0) {
-                        console.log('  - 꽃 이름:', newData.recommendations[0].flower_name);
-                        console.log('  - 한국어 이름:', newData.recommendations[0].korean_name);
-                        console.log('  - 이미지 URL:', newData.recommendations[0].image_url);
-                        console.log('  - 색상 테마:', newData.recommendations[0].color_theme);
+                    if (newData.flower_name) {
+                        console.log('  - 꽃 이름:', newData.flower_name);
+                        console.log('  - 한국어 이름:', newData.korean_name);
+                        console.log('  - 이미지 URL:', newData.image_url);
+                        console.log('  - 해시태그:', newData.hashtags);
                     }
                     
-                    // recommendations API 응답 형식에 맞게 변환
+                    // 새로운 통합 API 응답 형식에 맞게 변환
                     const convertedData = {
                         emotions: newData.emotions || [],
-                        matched_flower: newData.recommendations?.[0] || newData.matched_flower,
+                        matched_flower: {
+                            flower_name: newData.flower_name,
+                            korean_name: newData.korean_name,
+                            scientific_name: newData.scientific_name,
+                            image_url: newData.image_url
+                        },
                         composition: newData.composition || '',
-                        recommendation_reason: newData.recommendation_reason || '',
-                        flower_card_message: newData.flower_card_message || ''
+                        recommendation_reason: newData.comment || '',
+                        flower_card_message: newData.english_description || ''
                     };
                     
                     console.log('🔄 변환된 데이터:', convertedData);

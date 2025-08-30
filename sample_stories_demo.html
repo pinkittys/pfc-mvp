@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌸 사연 샘플 꽃 추천 데모</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .story-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-color: #667eea;
+        }
+
+        .story-card.selected {
+            border-color: #667eea;
+            background: #e8f2ff;
+        }
+
+        .story-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .story-text {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .story-category {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .keywords {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .keyword-tag {
+            background: #e9ecef;
+            color: #495057;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        .recommendation-section {
+            display: none;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .recommendation-section.show {
+            display: block;
+        }
+
+        .flower-result {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .flower-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 15px;
+            object-fit: cover;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .flower-info {
+            flex: 1;
+        }
+
+        .flower-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .flower-scientific {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .flower-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .flower-keyword {
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        .flower-hashtags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .hashtag {
+            background: #e9ecef;
+            color: #495057;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+        }
+
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .back-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌸 사연 샘플 꽃 추천</h1>
+            <p>마음에 드는 사연을 선택하면 바로 꽃을 추천해드려요</p>
+        </div>
+
+        <div class="content">
+            <div id="stories-container">
+                <div class="loading">사연들을 불러오는 중...</div>
+            </div>
+
+            <div id="recommendation-container" class="recommendation-section">
+                <button class="back-button" onclick="showStories()">← 다른 사연 보기</button>
+                <div id="recommendation-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000/api/v1';
+        let stories = [];
+
+        // 페이지 로드 시 사연 목록 가져오기
+        window.onload = async function() {
+            await loadStories();
+        };
+
+        // 사연 목록 로드
+        async function loadStories() {
+            try {
+                const response = await fetch(`${API_BASE}/sample-stories`);
+                const data = await response.json();
+                stories = data.stories;
+                displayStories();
+            } catch (error) {
+                console.error('사연 로드 실패:', error);
+                document.getElementById('stories-container').innerHTML = 
+                    '<div class="error-message">사연을 불러오는데 실패했습니다. 잠시 후 다시 시도해주세요.</div>';
+            }
+        }
+
+        // 사연 목록 표시
+        function displayStories() {
+            const container = document.getElementById('stories-container');
+            
+            const storiesHTML = stories.map(story => `
+                <div class="story-card" onclick="selectStory('${story.id}')">
+                    <div class="story-title">${story.title}</div>
+                    <div class="story-text">${story.story}</div>
+                    <div class="story-category">${story.category}</div>
+                    <div class="keywords">
+                        ${story.predefined_keywords.emotions.map(e => `<span class="keyword-tag">${e}</span>`).join('')}
+                        ${story.predefined_keywords.colors.map(c => `<span class="keyword-tag">${c}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            container.innerHTML = `
+                <div class="stories-grid">
+                    ${storiesHTML}
+                </div>
+            `;
+        }
+
+        // 사연 선택 시 추천 요청
+        async function selectStory(storyId) {
+            // 선택된 카드 하이라이트
+            document.querySelectorAll('.story-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            event.target.closest('.story-card').classList.add('selected');
+
+            // 로딩 표시
+            document.getElementById('stories-container').style.display = 'none';
+            document.getElementById('recommendation-container').classList.add('show');
+            document.getElementById('recommendation-content').innerHTML = '<div class="loading">꽃을 추천하는 중...</div>';
+
+            try {
+                const response = await fetch(`${API_BASE}/sample-stories/${storyId}/recommend`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                displayRecommendation(data);
+
+            } catch (error) {
+                console.error('추천 요청 실패:', error);
+                document.getElementById('recommendation-content').innerHTML = 
+                    '<div class="error-message">꽃 추천에 실패했습니다. 잠시 후 다시 시도해주세요.</div>';
+            }
+        }
+
+        // 추천 결과 표시
+        function displayRecommendation(data) {
+            const content = `
+                <div class="flower-result">
+                    <img src="${data.flower_image_url}" alt="${data.flower_name}" class="flower-image" 
+                         onerror="this.src='/images/default/flower.webp'">
+                    <div class="flower-info">
+                        <div class="flower-name">${data.flower_name}</div>
+                        <div class="flower-scientific">${data.scientific_name}</div>
+                        <div class="flower-keywords">
+                            ${data.keywords.map(k => `<span class="flower-keyword">${k}</span>`).join('')}
+                        </div>
+                        <div class="flower-hashtags">
+                            ${data.hashtags.map(h => `<span class="hashtag">${h}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: white; padding: 20px; border-radius: 10px; margin-top: 20px;">
+                    <h3 style="margin-bottom: 15px; color: #333;">감정 분석</h3>
+                    <div style="margin-bottom: 15px;">
+                        ${data.emotions.map(emotion => 
+                            `<span style="background: #667eea; color: white; padding: 5px 12px; border-radius: 15px; margin-right: 10px; font-size: 0.9rem;">
+                                ${emotion.emotion} ${emotion.percentage}%
+                            </span>`
+                        ).join('')}
+                    </div>
+                    
+                    <h3 style="margin-bottom: 15px; color: #333;">꽃 조합</h3>
+                    <div style="margin-bottom: 15px;">
+                        <p><strong>메인 꽃:</strong> ${data.flower_blend.main_flower}</p>
+                        <p><strong>서브 꽃:</strong> ${data.flower_blend.sub_flowers.join(', ')}</p>
+                        <p><strong>조합명:</strong> ${data.flower_blend.composition_name}</p>
+                    </div>
+                    
+                    <h3 style="margin-bottom: 15px; color: #333;">추천 이유</h3>
+                    <p style="color: #666; line-height: 1.6; margin-bottom: 15px;">${data.recommendation_reason}</p>
+                    
+                    <h3 style="margin-bottom: 15px; color: #333;">꽃 카드 메시지</h3>
+                    <p style="color: #333; font-style: italic; margin-bottom: 15px;">${data.flower_card_message}</p>
+                    
+                    <h3 style="margin-bottom: 15px; color: #333;">선택한 사연</h3>
+                    <p style="color: #666; line-height: 1.6;">${data.original_story}</p>
+                    <div style="margin-top: 15px;">
+                        <strong>계절:</strong> ${data.season_info}<br>
+                        <strong>선호 색상:</strong> ${data.color_keywords.join(', ')}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('recommendation-content').innerHTML = content;
+        }
+
+        // 사연 목록으로 돌아가기
+        function showStories() {
+            document.getElementById('stories-container').style.display = 'block';
+            document.getElementById('recommendation-container').classList.remove('show');
+            document.querySelectorAll('.story-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>샘플 사연 테스트 - Floiy-Reco</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .category-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            background: #f0f0f0;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .category-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .category-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .story-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 20px;
+            background: white;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+
+        .story-card.selected {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .story-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .story-text {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .story-category {
+            display: inline-block;
+            padding: 5px 12px;
+            background: #e3f2fd;
+            color: #1976d2;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .keywords {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .keyword-tag {
+            display: inline-block;
+            padding: 4px 8px;
+            margin: 2px;
+            background: #f5f5f5;
+            color: #666;
+            border-radius: 10px;
+            font-size: 0.8rem;
+        }
+
+        .keyword-tag.emotion {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .keyword-tag.situation {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .keyword-tag.mood {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .keyword-tag.color {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .recommend-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .recommend-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .recommend-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9ff;
+            border-radius: 15px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .result-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .flower-card {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .flower-image {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .flower-info {
+            flex: 1;
+        }
+
+        .flower-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .flower-scientific {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .flower-reason {
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .flower-hashtags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .hashtag {
+            padding: 4px 8px;
+            background: #667eea;
+            color: white;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .error {
+            text-align: center;
+            padding: 20px;
+            color: #d32f2f;
+            background: #ffebee;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .stories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .flower-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .flower-image {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌸 샘플 사연 테스트</h1>
+            <p>30개의 미리 설정된 사연으로 꽃 추천을 테스트해보세요</p>
+        </div>
+
+        <div class="content">
+            <div class="categories" id="categories">
+                <!-- 카테고리 버튼들이 여기에 동적으로 추가됩니다 -->
+            </div>
+
+            <div class="stories-grid" id="storiesGrid">
+                <!-- 사연 카드들이 여기에 동적으로 추가됩니다 -->
+            </div>
+
+            <button class="recommend-btn" id="recommendBtn" disabled>
+                선택된 사연으로 꽃 추천받기
+            </button>
+
+            <div class="result-section" id="resultSection" style="display: none;">
+                <div class="result-title">🌺 추천 결과</div>
+                <div id="resultContent">
+                    <!-- 추천 결과가 여기에 표시됩니다 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000/api/v1';
+        let selectedStoryId = null;
+        let allStories = [];
+
+        // 페이지 로드 시 초기화
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadCategories();
+            await loadStories();
+        });
+
+        // 카테고리 로드
+        async function loadCategories() {
+            try {
+                const response = await fetch(`${API_BASE}/sample-stories/categories`);
+                const data = await response.json();
+                
+                const categoriesDiv = document.getElementById('categories');
+                categoriesDiv.innerHTML = `
+                    <button class="category-btn active" onclick="filterByCategory('all')">
+                        전체 (${Object.values(data.categories).flat().length})
+                    </button>
+                `;
+
+                Object.entries(data.categories).forEach(([category, stories]) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'category-btn';
+                    btn.textContent = `${category} (${stories.length})`;
+                    btn.onclick = () => filterByCategory(category);
+                    categoriesDiv.appendChild(btn);
+                });
+            } catch (error) {
+                console.error('카테고리 로드 실패:', error);
+            }
+        }
+
+        // 사연 로드
+        async function loadStories() {
+            try {
+                const response = await fetch(`${API_BASE}/sample-stories`);
+                const data = await response.json();
+                allStories = data.stories;
+                displayStories(allStories);
+            } catch (error) {
+                console.error('사연 로드 실패:', error);
+            }
+        }
+
+        // 사연 표시
+        function displayStories(stories) {
+            const grid = document.getElementById('storiesGrid');
+            grid.innerHTML = '';
+
+            stories.forEach(story => {
+                const card = document.createElement('div');
+                card.className = 'story-card';
+                card.onclick = () => selectStory(story.id);
+
+                const keywords = story.predefined_keywords;
+                const keywordTags = [];
+
+                if (keywords.emotions) {
+                    keywords.emotions.forEach(emotion => {
+                        keywordTags.push(`<span class="keyword-tag emotion">감정: ${emotion}</span>`);
+                    });
+                }
+                if (keywords.situations) {
+                    keywords.situations.forEach(situation => {
+                        keywordTags.push(`<span class="keyword-tag situation">상황: ${situation}</span>`);
+                    });
+                }
+                if (keywords.moods) {
+                    keywords.moods.forEach(mood => {
+                        keywordTags.push(`<span class="keyword-tag mood">무드: ${mood}</span>`);
+                    });
+                }
+                if (keywords.colors) {
+                    keywords.colors.forEach(color => {
+                        keywordTags.push(`<span class="keyword-tag color">색상: ${color}</span>`);
+                    });
+                }
+
+                card.innerHTML = `
+                    <div class="story-title">${story.title}</div>
+                    <div class="story-text">${story.story}</div>
+                    <div class="story-category">${story.category}</div>
+                    <div class="keywords">
+                        ${keywordTags.join('')}
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        // 사연 선택
+        function selectStory(storyId) {
+            // 이전 선택 해제
+            document.querySelectorAll('.story-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+
+            // 새 선택 표시
+            const selectedCard = document.querySelector(`[onclick="selectStory('${storyId}')"]`);
+            if (selectedCard) {
+                selectedCard.classList.add('selected');
+            }
+
+            selectedStoryId = storyId;
+            document.getElementById('recommendBtn').disabled = false;
+        }
+
+        // 카테고리 필터링
+        function filterByCategory(category) {
+            // 카테고리 버튼 활성화 상태 변경
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            if (category === 'all') {
+                displayStories(allStories);
+            } else {
+                const filteredStories = allStories.filter(story => story.category === category);
+                displayStories(filteredStories);
+            }
+
+            // 선택 해제
+            selectedStoryId = null;
+            document.getElementById('recommendBtn').disabled = true;
+            document.getElementById('resultSection').style.display = 'none';
+        }
+
+        // 추천 요청
+        document.getElementById('recommendBtn').addEventListener('click', async () => {
+            if (!selectedStoryId) return;
+
+            const btn = document.getElementById('recommendBtn');
+            const resultSection = document.getElementById('resultSection');
+            const resultContent = document.getElementById('resultContent');
+
+            btn.disabled = true;
+            btn.textContent = '추천 중...';
+            resultSection.style.display = 'none';
+
+            try {
+                const response = await fetch(`${API_BASE}/sample-stories/${selectedStoryId}/recommend`, {
+                    method: 'POST'
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                displayRecommendation(data);
+
+            } catch (error) {
+                console.error('추천 요청 실패:', error);
+                resultContent.innerHTML = `
+                    <div class="error">
+                        추천 처리 중 오류가 발생했습니다: ${error.message}
+                    </div>
+                `;
+                resultSection.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '선택된 사연으로 꽃 추천받기';
+            }
+        });
+
+        // 추천 결과 표시
+        function displayRecommendation(data) {
+            const resultSection = document.getElementById('resultSection');
+            const resultContent = document.getElementById('resultContent');
+            const recommendation = data.recommendation;
+
+            resultContent.innerHTML = `
+                <div class="flower-card">
+                    <img src="${recommendation.image_url}" alt="${recommendation.korean_name}" class="flower-image" onerror="this.src='https://via.placeholder.com/150x150?text=이미지+없음'">
+                    <div class="flower-info">
+                        <div class="flower-name">${recommendation.korean_name}</div>
+                        <div class="flower-scientific">${recommendation.scientific_name}</div>
+                        <div class="flower-reason">${recommendation.recommendation_reason}</div>
+                        <div class="flower-hashtags">
+                            ${recommendation.hashtags.map(tag => `<span class="hashtag">#${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            resultSection.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
+

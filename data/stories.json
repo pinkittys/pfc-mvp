@@ -485,5 +485,2429 @@
       "파스텔톤"
     ],
     "excluded_keywords": []
+  },
+  "S250826-ANT-00001": {
+    "story_id": "S250826-ANT-00001",
+    "original_story": "오늘 우울해 전환이 필요해",
+    "created_at": "2025-08-26 03:01:14.444498",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "기분 처짐",
+        "percentage": 50.0,
+        "description": ""
+      },
+      {
+        "emotion": "침침함",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "활기 부족",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Anthurium Andraeanum",
+    "flower_name_en": "안스리움",
+    "scientific_name": "Anthurium Andraeanum",
+    "flower_card_message": "\"Life is like a box of chocolates.\"\\n- Forrest Gump -",
+    "flower_blend": {
+      "main_flower": "Anthurium Andraeanum",
+      "sub_flowers": [
+        "라벤더",
+        "실버리프"
+      ],
+      "composition_name": "Shine Your Light"
+    },
+    "season_info": "봄, 여름, 가을, 겨울",
+    "recommendation_reason": "오늘 우울한 기분 전환이 필요하시군요, 그래서 그린 안스리움이 애정과 희망의 메시지를 담아드려요. 기분 처짐과 침침함을 이 꽃의 특별한 매력으로 표현하면, 다시 활기를 찾는 데 큰 도움이 될 수 있을 거예요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/anthurium-andraeanum-gr.webp",
+    "keywords": [
+      "기분 처짐",
+      "침침함",
+      "기분전환",
+      "편안한",
+      "그린"
+    ],
+    "hashtags": [
+      "#안스리움",
+      "#기분 처짐",
+      "#침침함",
+      "#활기 부족"
+    ],
+    "color_keywords": [
+      "그린"
+    ],
+    "excluded_keywords": []
+  },
+  "S250826-ANT-00002": {
+    "story_id": "S250826-ANT-00002",
+    "original_story": "오늘은ㅂ ㅣ가오네 아 자야하는데 빨리 릴렉스할래",
+    "created_at": "2025-08-26 03:06:43.472707",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "따뜻함",
+        "percentage": 33.4,
+        "description": ""
+      },
+      {
+        "emotion": "기쁨",
+        "percentage": 33.3,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 33.3,
+        "description": ""
+      }
+    ],
+    "flower_name": "Anthurium Andraeanum",
+    "flower_name_en": "안스리움",
+    "scientific_name": "Anthurium Andraeanum",
+    "flower_card_message": "\"Just keep swimming, just keep swimming.\"\\n- Finding Nemo -",
+    "flower_blend": {
+      "main_flower": "Anthurium Andraeanum",
+      "sub_flowers": [
+        "라벤더",
+        "실버리프"
+      ],
+      "composition_name": "Shine Your Light"
+    },
+    "season_info": "봄, 여름, 가을, 겨울",
+    "recommendation_reason": "\"오늘은 비가 오네, 집에서 릴렉스하고 싶은 당신에게 그린 안스리움이 따뜻한 애정과 편안함을 전해줄 거예요. 기쁨과 축하가 가득한 이 순간을 '꽃의 여왕'처럼 특별하게 만들어 줄 수 있답니다.\"",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/anthurium-gr.webp",
+    "keywords": [
+      "따뜻함",
+      "기쁨",
+      "휴식공간",
+      "편안한",
+      "그린"
+    ],
+    "hashtags": [
+      "#안스리움",
+      "#따뜻함",
+      "#기쁨",
+      "#축하"
+    ],
+    "color_keywords": [
+      "그린"
+    ],
+    "excluded_keywords": []
+  },
+  "S250826-RAN-00001": {
+    "story_id": "S250826-RAN-00001",
+    "original_story": "남편이 보고 싶어. 나를 위해 애써준 그에게 마음을 표현할래",
+    "created_at": "2025-08-26 03:07:31.043519",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "사랑/로맨스",
+        "percentage": 60.0,
+        "description": ""
+      },
+      {
+        "emotion": "감사/존경",
+        "percentage": 20.0,
+        "description": ""
+      },
+      {
+        "emotion": "그리움/추억",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Ranunculus",
+    "flower_name_en": "라넌큘러스",
+    "scientific_name": "Ranunculus",
+    "flower_card_message": "\"You have bewitched me, body and soul.\"\\n- Pride and Prejudice -",
+    "flower_blend": {
+      "main_flower": "Ranunculus",
+      "sub_flowers": [
+        "라벤더",
+        "실버리프"
+      ],
+      "composition_name": "Shine Your Light"
+    },
+    "season_info": "봄",
+    "recommendation_reason": "남편이 그리워지는 마음에 핑크 라넌큘러스가 사랑과 동경의 감정을 담아줘요. 그의 노고에 대한 감사와 존경을 매력적인 꽃의 아름다움으로 표현하면, 더욱 특별한 감동을 전할 수 있을 거예요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/ranunculus-asiaticus-pk.webp",
+    "keywords": [
+      "사랑/로맨스",
+      "감사/존경",
+      "그리움/추억",
+      "기분전환",
+      "따뜻한",
+      "핑크"
+    ],
+    "hashtags": [
+      "#라넌큘러스",
+      "#사랑/로맨스",
+      "#감사/존경",
+      "#그리움/추억"
+    ],
+    "color_keywords": [
+      "핑크"
+    ],
+    "excluded_keywords": []
+  },
+  "S250827-SWP-00001": {
+    "story_id": "S250827-SWP-00001",
+    "original_story": "오늘 오랜 회사 친구들과 회식을 하며 미래 얘기를 했어 고맙고 따뜻했어 이사람들이 늘 내곁에 이었으면 ㅈ호겠어.",
+    "created_at": "2025-08-27 00:20:54.170824",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "그리움",
+        "percentage": 40.0,
+        "description": ""
+      },
+      {
+        "emotion": "추억",
+        "percentage": 35.0,
+        "description": ""
+      },
+      {
+        "emotion": "응원",
+        "percentage": 25.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Lathyrus Odoratus",
+    "flower_name_en": "스위트피",
+    "scientific_name": "Lathyrus Odoratus",
+    "flower_card_message": "\"Good friends are like stars; you don't always see them, but you know they're always there.\"\\n- Unknown -",
+    "flower_blend": {
+      "main_flower": "Lathyrus Odoratus",
+      "sub_flowers": [
+        "라벤더",
+        "실버리프"
+      ],
+      "composition_name": "Shine Your Light"
+    },
+    "season_info": "봄, 여름",
+    "recommendation_reason": "오랜 친구들과의 따뜻한 회식에서 느낀 그리움과 행복한 추억을 핑크색 스위트피가 담아줘요. 이 꽃의 달콤한 사랑 같은 특성은 그들과의 소중한 순간을 더욱 특별하게 기억하게 해줄 거예요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/lathyrus-odoratus-pk.webp",
+    "keywords": [
+      "그리움",
+      "추억",
+      "응원",
+      "기분전환",
+      "따뜻한",
+      "핑크"
+    ],
+    "hashtags": [
+      "#스위트피",
+      "#그리움",
+      "#추억",
+      "#응원"
+    ],
+    "color_keywords": [
+      "핑크"
+    ],
+    "excluded_keywords": []
+  },
+  "S250827-ALS-00001": {
+    "story_id": "S250827-ALS-00001",
+    "original_story": "친구가 반려견을 잃었어. 너무 슬퍼하는데 위로를 하고 싶어.",
+    "created_at": "2025-08-27 00:21:56.195242",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "위로",
+        "percentage": 45.0,
+        "description": ""
+      },
+      {
+        "emotion": "따뜻함",
+        "percentage": 35.0,
+        "description": ""
+      },
+      {
+        "emotion": "응원",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Alstroemeria spp.",
+    "flower_name_en": "알스트로메리아",
+    "scientific_name": "Alstroemeria spp.",
+    "flower_card_message": "\"Until one has loved an animal, a part of one's soul remains unawakened.\"\\n- Anatole France -",
+    "flower_blend": {
+      "main_flower": "Alstroemeria spp.",
+      "sub_flowers": [
+        "화이트 베이비 브레스",
+        "크림 로즈"
+      ],
+      "composition_name": "Gentle Comfort"
+    },
+    "season_info": "봄, 여름, 가을, 겨울",
+    "recommendation_reason": "친구의 반려견을 잃은 슬픔을 위로하기 위해 화이트 알스트로메리아가 우정과 행복한 재회의 의미를 담아줘요. 이 꽃은 친구에게 따뜻한 응원과 위로를 전해줄 수 있어, 그 슬픔 속에서도 당신의 마음이 함께하고 있다는 것을 느끼게 할 수 있어요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/alstroemeria-wh.webp",
+    "keywords": [
+      "위로",
+      "따뜻함",
+      "응원",
+      "위로",
+      "부드러운",
+      "화이트"
+    ],
+    "hashtags": [
+      "#알스트로메리아",
+      "#위로",
+      "#따뜻함",
+      "#응원"
+    ],
+    "color_keywords": [
+      "화이트"
+    ],
+    "excluded_keywords": []
+  },
+  "S250827-GEN-00001": {
+    "story_id": "S250827-GEN-00001",
+    "original_story": "친구가 반려견을 잃었어. 너무 슬퍼하는 친구에게 위로가 되는 꽃을 전하고 싶어",
+    "created_at": "2025-08-27 00:37:20.180085",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "위로",
+        "percentage": 45.0,
+        "description": ""
+      },
+      {
+        "emotion": "따뜻함",
+        "percentage": 35.0,
+        "description": ""
+      },
+      {
+        "emotion": "응원",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Gentiana Andrewsii",
+    "flower_name_en": "젠티아나",
+    "scientific_name": "Gentiana Andrewsii",
+    "flower_card_message": "\"Grief is the price we pay for love.\"\\n- The Queen -",
+    "flower_blend": {
+      "main_flower": "Gentiana Andrewsii",
+      "sub_flowers": [
+        "화이트 베이비 브레스",
+        "크림 로즈"
+      ],
+      "composition_name": "Gentle Comfort"
+    },
+    "season_info": "가을",
+    "recommendation_reason": "친구의 반려견을 잃은 슬픔에 위로가 필요한 상황에 블루 젠티아나가 인내와 충성을 담아줘요. 친구에게 이 꽃은 그리움과 사랑을 잊지 않도록 응원해주며, 따뜻한 마음을 전해줄 수 있는 특별한 존재가 될 거예요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/gentiana-andrewsii-bl.webp",
+    "keywords": [
+      "위로",
+      "위로",
+      "따뜻한",
+      "블루"
+    ],
+    "hashtags": [
+      "#젠티아나",
+      "#위로",
+      "#따뜻함",
+      "#응원"
+    ],
+    "color_keywords": [
+      "블루"
+    ],
+    "excluded_keywords": []
+  },
+  "S250827-ANT-00001": {
+    "story_id": "S250827-ANT-00001",
+    "original_story": "다시 널 볼 수 없을 것 같아 너무 두려워. 불안하지만 사랑을 전하고 싶어",
+    "created_at": "2025-08-27 00:38:58.968503",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "사랑/로맨스",
+        "percentage": 50.0,
+        "description": ""
+      },
+      {
+        "emotion": "열정",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "기쁨",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Anthurium Andraeanum",
+    "flower_name_en": "안스리움",
+    "scientific_name": "Anthurium Andraeanum",
+    "flower_card_message": "\"Love is the only thing that matters.\"\\n- The Fault in Our Stars -",
+    "flower_blend": {
+      "main_flower": "Anthurium Andraeanum",
+      "sub_flowers": [
+        "라벤더",
+        "실버리프"
+      ],
+      "composition_name": "Shine Your Light"
+    },
+    "season_info": "봄, 여름, 가을, 겨울",
+    "recommendation_reason": "\"다시 널 볼 수 없을 것 같아 두려워하는 마음에 레드 안스리움이 열정과 사랑을 담아줘요. 당신의 사랑을 전하고 싶은 그 마음은 이 꽃을 통해 더욱 강렬하게 표현될 수 있어요.\"",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/anthurium-rd.webp",
+    "keywords": [
+      "사랑",
+      "연인",
+      "로맨틱한",
+      "레드"
+    ],
+    "hashtags": [
+      "#안스리움",
+      "#사랑/로맨스",
+      "#열정",
+      "#기쁨"
+    ],
+    "color_keywords": [
+      "레드"
+    ],
+    "excluded_keywords": []
+  },
+  "S250827-SWP-00002": {
+    "story_id": "S250827-SWP-00002",
+    "original_story": "밤에 울다 부은 눈으로 너를 생각해 또 그렇게 살아가. 내 마음을 다 찢겨져 버렸지만 너는 잘 살아가길 바래. 이별의 아픔을 달래줄 꽃이 필요해.",
+    "created_at": "2025-08-27 00:47:42.009154",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "그리움/추억",
+        "percentage": 50.0,
+        "description": ""
+      },
+      {
+        "emotion": "사랑/로맨스",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "위로/따뜻함",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Lathyrus Odoratus",
+    "flower_name_en": "스위트피",
+    "scientific_name": "Lathyrus Odoratus",
+    "flower_card_message": "\"Goodbye is only for those who love with their eyes.\"\\n- The Alchemist -",
+    "flower_blend": {
+      "main_flower": "Lathyrus Odoratus",
+      "sub_flowers": [
+        "라벤더",
+        "실버리프"
+      ],
+      "composition_name": "Shine Your Light"
+    },
+    "season_info": "봄, 여름",
+    "recommendation_reason": "이별의 아픔을 달래고 싶어하는 마음에 핑크 스위트피가 당신의 그리움과 사랑을 담아줄 거예요. '행복한 추억'과 '달콤한 사랑'의 의미로, 아픈 마음을 위로하고 따뜻한 감정을 되살려줄 수 있을 거예요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/lathyrus-odoratus-pk.webp",
+    "keywords": [
+      "위로",
+      "위로",
+      "우아한",
+      "핑크"
+    ],
+    "hashtags": [
+      "#스위트피",
+      "#그리움/추억",
+      "#사랑/로맨스",
+      "#위로/따뜻함"
+    ],
+    "color_keywords": [
+      "핑크"
+    ],
+    "excluded_keywords": []
+  },
+  "S250827-ALS-00002": {
+    "story_id": "S250827-ALS-00002",
+    "original_story": "끝내 해 내고만 나자신, 정말 대견해. 오늘로 내 세상은 더 커졌어. 설레고 기뻐.오늘 나를 위해 꽃을 선물하고 싶어. 그동안 수고했어.",
+    "created_at": "2025-08-27 00:53:16.266884",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "기쁨",
+        "percentage": 50.0,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "응원/격려",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Alstroemeria spp.",
+    "flower_name_en": "알스트로메리아",
+    "scientific_name": "Alstroemeria spp.",
+    "flower_card_message": "\"You have brains in your head, you have feet in your shoes.\"\\n- Oh, The Places You'll Go! -",
+    "flower_blend": {
+      "main_flower": "Alstroemeria spp.",
+      "sub_flowers": [
+        "스톡",
+        "베이비 브레스"
+      ],
+      "composition_name": "Celebration"
+    },
+    "season_info": "봄, 여름, 가을, 겨울",
+    "recommendation_reason": "오늘 자신을 위해 꽃을 선물하고 싶은 기쁜 마음에, 화이트 알스트로메리아가 우정과 행복한 재회의 의미를 담아줘요. 그동안 수고한 자신을 응원하고 격려하는 이 꽃이, 새로운 시작을 축하하며 더욱 큰 세상으로 나아가는 힘이 되어줄 거예요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/alstroemeria-wh.webp",
+    "keywords": [
+      "기쁨",
+      "일상",
+      "따뜻한",
+      "화이트"
+    ],
+    "hashtags": [
+      "#알스트로메리아",
+      "#기쁨",
+      "#축하",
+      "#응원/격려"
+    ],
+    "color_keywords": [
+      "화이트"
+    ],
+    "excluded_keywords": []
+  },
+  "S250827-TAG-00001": {
+    "story_id": "S250827-TAG-00001",
+    "original_story": "새로운 직장에 취업했는데 스트레스가 많아. 사무실에 활력을 주는 꽃을 찾고 있어.",
+    "created_at": "2025-08-27 00:56:58.571626",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "위로",
+        "percentage": 45.0,
+        "description": ""
+      },
+      {
+        "emotion": "따뜻함",
+        "percentage": 35.0,
+        "description": ""
+      },
+      {
+        "emotion": "응원",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Tagetes Erecta",
+    "flower_name_en": "태게테스",
+    "scientific_name": "Tagetes Erecta",
+    "flower_card_message": "\"You are stronger than you know.\"  \n- The Princess Diaries -",
+    "flower_blend": {
+      "main_flower": "Tagetes Erecta",
+      "sub_flowers": [
+        "화이트 베이비 브레스",
+        "크림 로즈"
+      ],
+      "composition_name": "Gentle Comfort"
+    },
+    "season_info": "여름, 가을",
+    "recommendation_reason": "새로운 직장에 취업하셨지만 스트레스로 힘든 요즘, 옐로우 태게테스가 사랑의 행복을 담아 당신의 사무실에 활력을 불어넣어 줄 거예요. 따뜻한 색감과 재치 있는 특성이 위로와 응원의 메시지를 전해, 매일의 업무를 더 밝고 즐겁게 만들어 줄 수 있을 거랍니다.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/freesia-yl.webp",
+    "keywords": [
+      "희망",
+      "성공",
+      "밝은",
+      "옐로우"
+    ],
+    "hashtags": [
+      "#태게테스",
+      "#위로",
+      "#따뜻함",
+      "#응원"
+    ],
+    "color_keywords": [
+      "옐로우"
+    ],
+    "excluded_keywords": []
+  },
+  "S250827-TAG-00002": {
+    "story_id": "S250827-TAG-00002",
+    "original_story": "새로운 직장에 취업했는데 스트레스가 많아. 사무실에 활력을 주는 꽃을 찾고 있어.",
+    "created_at": "2025-08-27 01:13:28.124038",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "위로",
+        "percentage": 45.0,
+        "description": ""
+      },
+      {
+        "emotion": "따뜻함",
+        "percentage": 35.0,
+        "description": ""
+      },
+      {
+        "emotion": "응원",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Tagetes Erecta",
+    "flower_name_en": "태게테스",
+    "scientific_name": "Tagetes Erecta",
+    "flower_card_message": "\"You are stronger than you know.\"  \n- The Princess Diaries -",
+    "flower_blend": {
+      "main_flower": "Tagetes Erecta",
+      "sub_flowers": [
+        "화이트 베이비 브레스",
+        "크림 로즈"
+      ],
+      "composition_name": "Gentle Comfort"
+    },
+    "season_info": "여름, 가을",
+    "recommendation_reason": "새로운 직장에 취업하셨지만 스트레스로 힘든 요즘, 옐로우 태게테스가 당신의 사무실에 사랑의 행복을 담아줄 거예요. 위로와 따뜻함을 주는 이 꽃의 재치있는 특성은, 당신의 마음을 밝고 유쾌하게 변화시켜주며 활력을 불어넣어줄 거예요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/tagetes-erecta-yl.webp",
+    "keywords": [
+      "희망",
+      "성공",
+      "밝은",
+      "옐로우"
+    ],
+    "hashtags": [
+      "#태게테스",
+      "#위로",
+      "#따뜻함",
+      "#응원"
+    ],
+    "color_keywords": [
+      "옐로우"
+    ],
+    "excluded_keywords": []
+  },
+  "S250827-IBE-00001": {
+    "story_id": "S250827-IBE-00001",
+    "original_story": "오늘 뭔가 우울해 애들도 보고 싶고. 나를 위로할 만한 꽃 살래.",
+    "created_at": "2025-08-27 01:14:06.349049",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "위로",
+        "percentage": 45.0,
+        "description": ""
+      },
+      {
+        "emotion": "따뜻함",
+        "percentage": 35.0,
+        "description": ""
+      },
+      {
+        "emotion": "응원",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Iberis Sempervirens",
+    "flower_name_en": "이베리스",
+    "scientific_name": "Iberis Sempervirens",
+    "flower_card_message": "\"Some days you just have to create your own sunshine.\"  \n- The Secret Garden -",
+    "flower_blend": {
+      "main_flower": "Iberis Sempervirens",
+      "sub_flowers": [
+        "화이트 베이비 브레스",
+        "크림 로즈"
+      ],
+      "composition_name": "Gentle Comfort"
+    },
+    "season_info": "봄",
+    "recommendation_reason": "오늘 우울한 기분을 달래고 싶다면, 화이트 이베리스가 좋을 것 같아요. 이 꽃은 천진난만함과 순수함을 담고 있어, 애들을 그리워하는 마음과 위로의 메시지를 전해줄 수 있어요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/iberis-wh.webp",
+    "keywords": [
+      "위로",
+      "위로",
+      "따뜻한",
+      "화이트"
+    ],
+    "hashtags": [
+      "#이베리스",
+      "#위로",
+      "#따뜻함",
+      "#응원"
+    ],
+    "color_keywords": [
+      "화이트"
+    ],
+    "excluded_keywords": []
+  },
+  "S250827-ANT-00002": {
+    "story_id": "S250827-ANT-00002",
+    "original_story": "고등학교 담임 선생님 환갑을 맞으셨어요. 교실 가득 퍼질 따뜻한 향기와 함께 드리고 싶어요.",
+    "created_at": "2025-08-27 01:15:08.198917",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "축하",
+        "percentage": 40.0,
+        "description": ""
+      },
+      {
+        "emotion": "감사/존경",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "따뜻함",
+        "percentage": 30.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Anthurium Andraeanum",
+    "flower_name_en": "안스리움",
+    "scientific_name": "Anthurium Andraeanum",
+    "flower_card_message": "\"To teach is to touch a life forever.\"\\n- Author Unknown -",
+    "flower_blend": {
+      "main_flower": "Anthurium Andraeanum",
+      "sub_flowers": [
+        "오렌지 거베라",
+        "핑크 데이지"
+      ],
+      "composition_name": "Colorful Celebration"
+    },
+    "season_info": "봄, 여름, 가을, 겨울",
+    "recommendation_reason": "\"고등학교 담임 선생님의 환갑을 맞아 그린 안스리움이 애정과 존경의 마음을 담아줘요. 따뜻한 향기와 함께 선생님께 감사의 마음을 전하면, 교실이 더욱 밝고 따뜻한 분위기로 가득 찰 거예요.\"",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/anthurium-gr.webp",
+    "keywords": [
+      "기쁨",
+      "일상",
+      "따뜻한",
+      "그린"
+    ],
+    "hashtags": [
+      "#안스리움",
+      "#축하",
+      "#감사/존경",
+      "#따뜻함"
+    ],
+    "color_keywords": [
+      "그린"
+    ],
+    "excluded_keywords": []
+  },
+  "S250827-ANT-00003": {
+    "story_id": "S250827-ANT-00003",
+    "original_story": "아내가 요즘 회사 일로 지쳐 보여요. 고맙고 사랑한다는 메시지를 전할 꽃이 필요해요.",
+    "created_at": "2025-08-27 01:15:37.597439",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "사랑/로맨스",
+        "percentage": 50.0,
+        "description": ""
+      },
+      {
+        "emotion": "열정",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "기쁨",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Anthurium Andraeanum",
+    "flower_name_en": "안스리움",
+    "scientific_name": "Anthurium Andraeanum",
+    "flower_card_message": "\"You are my heart, my love, my everything.\"\\n- The Notebook -",
+    "flower_blend": {
+      "main_flower": "Anthurium Andraeanum",
+      "sub_flowers": [
+        "라벤더",
+        "실버리프"
+      ],
+      "composition_name": "Shine Your Light"
+    },
+    "season_info": "봄, 여름, 가을, 겨울",
+    "recommendation_reason": "아내가 회사 일로 지쳐있는 지금, 레드 안스리움이 그녀에게 사랑과 열정을 담아주는 꽃이에요. 당신의 깊은 사랑과 고마움을 이 아름다운 꽃으로 표현하면, 그녀의 마음이 따뜻해지고 힘을 얻을 수 있을 거예요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/anthurium-rd.webp",
+    "keywords": [
+      "사랑",
+      "연인",
+      "로맨틱한",
+      "레드"
+    ],
+    "hashtags": [
+      "#안스리움",
+      "#사랑/로맨스",
+      "#열정",
+      "#기쁨"
+    ],
+    "color_keywords": [
+      "레드"
+    ],
+    "excluded_keywords": []
+  },
+  "S250827-GEN-00002": {
+    "story_id": "S250827-GEN-00002",
+    "original_story": "여자친구가 좋아하는 하늘색을 담아 고백하고 싶어요. 설레고 순수한 느낌이면 좋겠어요. 하늘색이라고.",
+    "created_at": "2025-08-27 01:19:22.074179",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "사랑/로맨스",
+        "percentage": 60.0,
+        "description": ""
+      },
+      {
+        "emotion": "기쁨",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 10.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Gentiana Andrewsii",
+    "flower_name_en": "젠티아나",
+    "scientific_name": "Gentiana Andrewsii",
+    "flower_card_message": "\"To me, you are perfect.\"\\n- Love Actually -",
+    "flower_blend": {
+      "main_flower": "Gentiana Andrewsii",
+      "sub_flowers": [
+        "라벤더",
+        "실버리프"
+      ],
+      "composition_name": "Shine Your Light"
+    },
+    "season_info": "가을",
+    "recommendation_reason": "여자친구에게 하늘색의 젠티아나를 전하는 것은 그동안 쌓아온 사랑의 마음을 순수하게 표현할 수 있어요. 이 꽃의 인내와 충성을 담아, 설레는 고백의 순간을 더욱 특별하게 만들어 줄 거예요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/gentiana-andrewsii-bl.webp",
+    "keywords": [
+      "사랑",
+      "연인",
+      "로맨틱한",
+      "블루"
+    ],
+    "hashtags": [
+      "#젠티아나",
+      "#사랑/로맨스",
+      "#기쁨",
+      "#축하"
+    ],
+    "color_keywords": [
+      "블루"
+    ],
+    "excluded_keywords": []
+  },
+  "S250827-GEN-00003": {
+    "story_id": "S250827-GEN-00003",
+    "original_story": "시험에 떨어진 친구를 위로하고 싶어.",
+    "created_at": "2025-08-27 01:23:01.497238",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "위로",
+        "percentage": 45.0,
+        "description": ""
+      },
+      {
+        "emotion": "따뜻함",
+        "percentage": 35.0,
+        "description": ""
+      },
+      {
+        "emotion": "응원",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Gentiana Andrewsii",
+    "flower_name_en": "젠티아나",
+    "scientific_name": "Gentiana Andrewsii",
+    "flower_card_message": "\"You are stronger than you know.\"  \n- The Princess Diaries -",
+    "flower_blend": {
+      "main_flower": "Gentiana Andrewsii",
+      "sub_flowers": [
+        "화이트 베이비 브레스",
+        "크림 로즈"
+      ],
+      "composition_name": "Gentle Comfort"
+    },
+    "season_info": "가을",
+    "recommendation_reason": "시험에 떨어진 친구를 위로하고 싶을 때, 블루 젠티아나가 인내와 충성의 의미를 담아줘요. 친구에게 따뜻한 응원과 함께 \"나는 너를 믿고 항상 곁에 있을게\"라는 메시지를 전할 수 있어요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/gentiana-andrewsii-bl.webp",
+    "keywords": [
+      "위로",
+      "위로",
+      "따뜻한",
+      "블루"
+    ],
+    "hashtags": [
+      "#젠티아나",
+      "#위로",
+      "#따뜻함",
+      "#응원"
+    ],
+    "color_keywords": [
+      "블루"
+    ],
+    "excluded_keywords": []
+  },
+  "S250827-IRI-00001": {
+    "story_id": "S250827-IRI-00001",
+    "original_story": "친구 생일인데 꽃 추천 받고 싶어. 걔는 연보라색을 좋아하고, 엄청 밝은 애야. 딱 어울리는 꽃 추천해줘!",
+    "created_at": "2025-08-27 01:56:53.845102",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "기쁨",
+        "percentage": 50.0,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "희망",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Iris Sanguinea",
+    "flower_name_en": "아이리스",
+    "scientific_name": "Iris Sanguinea",
+    "flower_card_message": "\"You are my sunshine, my only sunshine.\"  \n- You Are My Sunshine -",
+    "flower_blend": {
+      "main_flower": "Iris Sanguinea",
+      "sub_flowers": [
+        "스톡",
+        "베이비 브레스"
+      ],
+      "composition_name": "Celebration"
+    },
+    "season_info": "봄",
+    "recommendation_reason": "친구 생일에 연보라색 아이리스 꽃이 그 밝은 성격을 잘 담아줄 거예요. 기쁨과 축하의 마음을 열정적으로 표현해주어, 친구에게 특별한 사랑과 희망을 전할 수 있을 거예요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/iris-pu.webp",
+    "keywords": [
+      "기쁨",
+      "생일",
+      "밝은",
+      "퍼플"
+    ],
+    "hashtags": [
+      "#아이리스",
+      "#기쁨",
+      "#축하",
+      "#희망"
+    ],
+    "color_keywords": [
+      "퍼플"
+    ],
+    "excluded_keywords": []
+  },
+  "S250827-ALS-00003": {
+    "story_id": "S250827-ALS-00003",
+    "original_story": "친구 생일인데 꽃 추천 받고 싶어. 걔는 연보라색을 좋아하고, 엄청 밝은 애야.",
+    "created_at": "2025-08-27 02:50:18.531719",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "기쁨",
+        "percentage": 50.0,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "희망",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Alstroemeria spp.",
+    "flower_name_en": "알스트로메리아",
+    "scientific_name": "Alstroemeria spp.",
+    "flower_card_message": "\"You are my sunshine on a rainy day.\"\\n- You Are My Sunshine -",
+    "flower_blend": {
+      "main_flower": "Alstroemeria spp.",
+      "sub_flowers": [
+        "스톡",
+        "베이비 브레스"
+      ],
+      "composition_name": "Celebration"
+    },
+    "season_info": "봄, 여름, 가을, 겨울",
+    "recommendation_reason": "친구의 생일을 축하하기 위해 핑크색 알스트로메리아를 선택하면, '우정'과 '행운'의 의미가 담겨 있어요. 밝은 친구에게 이 꽃은 당신의 따뜻한 마음과 함께 새로운 한 해의 행복을 기원하는 진심을 잘 전달해 줄 거예요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/alstroemeria-pk.webp",
+    "keywords": [
+      "기쁨",
+      "생일",
+      "밝은",
+      "핑크"
+    ],
+    "hashtags": [
+      "#알스트로메리아",
+      "#기쁨",
+      "#축하",
+      "#희망"
+    ],
+    "color_keywords": [
+      "핑크"
+    ],
+    "excluded_keywords": []
+  },
+  "S250827-IRI-00002": {
+    "story_id": "S250827-IRI-00002",
+    "original_story": "친구 생일인데 꽃 추천 받고 싶어. 걔는 연보라색을 좋아하고, 엄청 밝은 애야. 딱 어울리는 꽃 추천해줘!",
+    "created_at": "2025-08-27 03:00:25.679475",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "기쁨",
+        "percentage": 50.0,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "희망",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Iris Sanguinea",
+    "flower_name_en": "아이리스",
+    "scientific_name": "Iris Sanguinea",
+    "flower_card_message": "\"You are my sunshine, my only sunshine.\"\\n- You Are My Sunshine -",
+    "flower_blend": {
+      "main_flower": "Iris Sanguinea",
+      "sub_flowers": [
+        "스톡",
+        "베이비 브레스"
+      ],
+      "composition_name": "Celebration"
+    },
+    "season_info": "봄",
+    "recommendation_reason": "친구의 생일을 축하하기 위해 연보라색을 좋아하는 친구에게 아이리스 Sanguinea가 딱 어울려요. 이 꽃은 열정과 강렬한 사랑을 상징해, 친구의 밝고 희망적인 성격을 더욱 빛내줄 거예요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/iris-pu.webp",
+    "keywords": [
+      "기쁨",
+      "생일",
+      "밝은",
+      "퍼플"
+    ],
+    "hashtags": [
+      "#아이리스",
+      "#기쁨",
+      "#축하",
+      "#희망"
+    ],
+    "color_keywords": [
+      "퍼플"
+    ],
+    "excluded_keywords": []
+  },
+  "S250828-SWP-00001": {
+    "story_id": "S250828-SWP-00001",
+    "original_story": "사랑하는 아내가 회사 일로 힘들어 해요. 아내에게 힘을 주는 꽃을 선물하고 싶어요",
+    "created_at": "2025-08-28 00:25:45.831648",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "위로",
+        "percentage": 45.0,
+        "description": ""
+      },
+      {
+        "emotion": "따뜻함",
+        "percentage": 35.0,
+        "description": ""
+      },
+      {
+        "emotion": "응원",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Lathyrus Odoratus",
+    "flower_name_en": "스위트피",
+    "scientific_name": "Lathyrus Odoratus",
+    "flower_card_message": "\"You are stronger than you know.\"\\n- The Princess Diaries -",
+    "flower_blend": {
+      "main_flower": "Lathyrus Odoratus",
+      "sub_flowers": [
+        "화이트 베이비 브레스",
+        "크림 로즈"
+      ],
+      "composition_name": "Gentle Comfort"
+    },
+    "season_info": "봄, 여름",
+    "recommendation_reason": "사랑하는 아내의 힘든 회사 일로 마음이 아프시군요. 핑크 스위트피가 '행복한 추억'과 '달콤한 사랑'을 담아 아내에게 따뜻한 위로와 응원을 전해줄 거예요. 아내의 마음이 조금이나마 편안해지길 바라며, 이 꽃으로 그분의 하루가 밝아지길 응원해요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/lathyrus-odoratus-pk.webp",
+    "keywords": [
+      "사랑",
+      "연인",
+      "로맨틱한",
+      "핑크"
+    ],
+    "hashtags": [
+      "#스위트피",
+      "#위로",
+      "#따뜻함",
+      "#응원"
+    ],
+    "color_keywords": [
+      "핑크"
+    ],
+    "excluded_keywords": []
+  },
+  "S250828-IRI-00001": {
+    "story_id": "S250828-IRI-00001",
+    "original_story": "연보라색 꽃 추천해줘.",
+    "created_at": "2025-08-28 01:10:23.211430",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "따뜻함",
+        "percentage": 33.4,
+        "description": ""
+      },
+      {
+        "emotion": "기쁨",
+        "percentage": 33.3,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 33.3,
+        "description": ""
+      }
+    ],
+    "flower_name": "Iris Sanguinea",
+    "flower_name_en": "아이리스",
+    "scientific_name": "Iris Sanguinea",
+    "flower_card_message": "\"You are my sunshine when skies are gray.\"\\n- You Are My Sunshine -",
+    "flower_blend": {
+      "main_flower": "Iris Sanguinea",
+      "sub_flowers": [
+        "라벤더",
+        "실버리프"
+      ],
+      "composition_name": "Shine Your Light"
+    },
+    "season_info": "봄",
+    "recommendation_reason": "\"소중한 사람의 생일을 축하하는 마음에 퍼플 아이리스가 열정과 강렬한 사랑을 담아줄 거예요. 따뜻함과 기쁨을 함께 전하며, 이 특별한 날을 더욱 빛나게 만들어줄 꽃입니다.\"",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/iris-pu.webp",
+    "keywords": [
+      "기쁨",
+      "일상",
+      "따뜻한",
+      "퍼플"
+    ],
+    "hashtags": [
+      "#아이리스",
+      "#따뜻함",
+      "#기쁨",
+      "#축하"
+    ],
+    "color_keywords": [
+      "퍼플"
+    ],
+    "excluded_keywords": []
+  },
+  "S250828-TAG-00001": {
+    "story_id": "S250828-TAG-00001",
+    "original_story": "새로운 시작을 하게된 회사 동생에게 응원과 격려의 의미로 꽃을 주고 싶어",
+    "created_at": "2025-08-28 01:28:17.591109",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "위로",
+        "percentage": 45.0,
+        "description": ""
+      },
+      {
+        "emotion": "따뜻함",
+        "percentage": 35.0,
+        "description": ""
+      },
+      {
+        "emotion": "응원",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Tagetes Erecta",
+    "flower_name_en": "태게테스",
+    "scientific_name": "Tagetes Erecta",
+    "flower_card_message": "\"Do not go where the path may lead,\\n- Ralph Waldo Emerson -\"",
+    "flower_blend": {
+      "main_flower": "Tagetes Erecta",
+      "sub_flowers": [
+        "화이트 베이비 브레스",
+        "크림 로즈"
+      ],
+      "composition_name": "Gentle Comfort"
+    },
+    "season_info": "여름, 가을",
+    "recommendation_reason": "\"새로운 시작을 하는 회사 동생에게 옐로우 태게테스가 사랑의 행복과 재치 있는 사람을 담아줘요. 위로와 따뜻함의 메시지를 전하며 응원하는 마음을 더욱 깊이 있게 표현할 수 있을 거예요.\"",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/tagetes-erecta-yl.webp",
+    "keywords": [
+      "희망",
+      "새로운시작",
+      "따뜻한",
+      "옐로우"
+    ],
+    "hashtags": [
+      "#태게테스",
+      "#위로",
+      "#따뜻함",
+      "#응원"
+    ],
+    "color_keywords": [
+      "옐로우"
+    ],
+    "excluded_keywords": []
+  },
+  "S250828-TAG-00002": {
+    "story_id": "S250828-TAG-00002",
+    "original_story": "새로운 시작을 하게된 회사 동생에게 응원과 격려의 의미로 꽃을 주고 싶어",
+    "created_at": "2025-08-28 01:42:01.284860",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "위로",
+        "percentage": 45.0,
+        "description": ""
+      },
+      {
+        "emotion": "따뜻함",
+        "percentage": 35.0,
+        "description": ""
+      },
+      {
+        "emotion": "응원",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Tagetes Erecta",
+    "flower_name_en": "태게테스",
+    "scientific_name": "Tagetes Erecta",
+    "flower_card_message": "\"Every new beginning comes from some other beginning's end.\"  \n- Semisonic -",
+    "flower_blend": {
+      "main_flower": "Tagetes Erecta",
+      "sub_flowers": [
+        "화이트 베이비 브레스",
+        "크림 로즈"
+      ],
+      "composition_name": "Gentle Comfort"
+    },
+    "season_info": "여름, 가을",
+    "recommendation_reason": "새로운 시작을 하게 된 회사 동생에게 옐로우 태게테스가 사랑의 행복과 재치있는 사람의 의미를 담아줘요. 위로의 마음을 태게테스의 따뜻한 색상으로 표현하면 동생에게 큰 응원과 격려가 될 수 있을 거예요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/tagetes-erecta-yl.webp",
+    "keywords": [
+      "희망",
+      "새로운시작",
+      "따뜻한",
+      "옐로우"
+    ],
+    "hashtags": [
+      "#태게테스",
+      "#위로",
+      "#따뜻함",
+      "#응원"
+    ],
+    "color_keywords": [
+      "옐로우"
+    ],
+    "excluded_keywords": []
+  },
+  "S250828-TAG-00003": {
+    "story_id": "S250828-TAG-00003",
+    "original_story": "새로운 시작을 하게된 회사 동생에게 응원과 격려의 의미로 꽃을 주고 싶어",
+    "created_at": "2025-08-28 01:51:38.087171",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "위로",
+        "percentage": 45.0,
+        "description": ""
+      },
+      {
+        "emotion": "따뜻함",
+        "percentage": 35.0,
+        "description": ""
+      },
+      {
+        "emotion": "응원",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Tagetes Erecta",
+    "flower_name_en": "태게테스",
+    "scientific_name": "Tagetes Erecta",
+    "flower_card_message": "\"Believe you can and you're halfway there.\"\\n- Theodore Roosevelt -",
+    "flower_blend": {
+      "main_flower": "Tagetes Erecta",
+      "sub_flowers": [
+        "화이트 베이비 브레스",
+        "크림 로즈"
+      ],
+      "composition_name": "Gentle Comfort"
+    },
+    "season_info": "여름, 가을",
+    "recommendation_reason": "\"새로운 시작을 맞이한 회사 동생에게 응원과 격려의 의미로 옐로우 태게테스가 사랑의 행복과 재치있는 사람의 기운을 담아줄 거예요. 따뜻한 색상과 긍정적인 속성이 동생에게 위로와 힘을 전해주어, 새로운 도전을 더욱 즐겁게 받아들이는 데 도움을 줄 수 있답니다.\"",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/tagetes-erecta-yl.webp",
+    "keywords": [
+      "희망",
+      "새로운시작",
+      "따뜻한",
+      "옐로우"
+    ],
+    "hashtags": [
+      "#태게테스",
+      "#위로",
+      "#따뜻함",
+      "#응원"
+    ],
+    "color_keywords": [
+      "옐로우"
+    ],
+    "excluded_keywords": []
+  },
+  "S250828-TAG-00004": {
+    "story_id": "S250828-TAG-00004",
+    "original_story": "새로운 시작을 하게된 회사 동생에게 응원과 격려의 의미로 꽃을 주고 싶어",
+    "created_at": "2025-08-28 01:53:35.307588",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "위로",
+        "percentage": 45.0,
+        "description": ""
+      },
+      {
+        "emotion": "따뜻함",
+        "percentage": 35.0,
+        "description": ""
+      },
+      {
+        "emotion": "응원",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Tagetes Erecta",
+    "flower_name_en": "태게테스",
+    "scientific_name": "Tagetes Erecta",
+    "flower_card_message": "\"Every day may not be good, but there's something good in every day.\"  \n- Art of Happiness -",
+    "flower_blend": {
+      "main_flower": "Tagetes Erecta",
+      "sub_flowers": [
+        "화이트 베이비 브레스",
+        "크림 로즈"
+      ],
+      "composition_name": "Gentle Comfort"
+    },
+    "season_info": "여름, 가을",
+    "recommendation_reason": "새로운 시작을 하는 동생에게 옐로우 태게테스가 사랑의 행복과 재치있는 사람이라는 의미를 담아줘요. 위로와 따뜻함을 전하며, 동생이 힘차게 나아갈 수 있도록 응원하는 데 큰 도움이 될 거예요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/tagetes-erecta-yl.webp",
+    "keywords": [
+      "희망",
+      "새로운시작",
+      "따뜻한",
+      "옐로우"
+    ],
+    "hashtags": [
+      "#태게테스",
+      "#위로",
+      "#따뜻함",
+      "#응원"
+    ],
+    "color_keywords": [
+      "옐로우"
+    ],
+    "excluded_keywords": []
+  },
+  "S250828-SWP-00002": {
+    "story_id": "S250828-SWP-00002",
+    "original_story": "진짜 나 잘하고 있는 걸까? 너무 기회비용이 큰가? 이거 정말 잘 아무 생각없이 해나가면 되겠지?",
+    "created_at": "2025-08-28 01:56:30.706345",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "고민",
+        "percentage": 50.0,
+        "description": ""
+      },
+      {
+        "emotion": "불안",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "의문",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Lathyrus Odoratus",
+    "flower_name_en": "스위트피",
+    "scientific_name": "Lathyrus Odoratus",
+    "flower_card_message": "\"Do I dare disturb the universe?\"  \n- The Love Song of J. Alfred Prufrock -",
+    "flower_blend": {
+      "main_flower": "Lathyrus Odoratus",
+      "sub_flowers": [
+        "라벤더",
+        "실버리프"
+      ],
+      "composition_name": "Shine Your Light"
+    },
+    "season_info": "봄, 여름",
+    "recommendation_reason": "\"지금 진로에 대한 고민과 불안함 속에서 핑크 스위트피가 당신에게 ‘행복한 추억’과 ‘달콤한 사랑’을 담아줘요. 이 꽃의 따뜻한 색깔은 당신의 마음속 의문을 부드럽게 감싸주어, 당신이 선택한 길이 결국에는 행복한 결과로 이어질 것임을 상기시켜줄 거예요.\"",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/lathyrus-odoratus-pk.webp",
+    "keywords": [
+      "사랑",
+      "자기위로",
+      "차분한",
+      "핑크"
+    ],
+    "hashtags": [
+      "#스위트피",
+      "#고민",
+      "#불안",
+      "#의문"
+    ],
+    "color_keywords": [
+      "핑크"
+    ],
+    "excluded_keywords": []
+  },
+  "S250828-GEN-00001": {
+    "story_id": "S250828-GEN-00001",
+    "original_story": "아들에게 보낼 생일 꽃이 필요해. 블루를 좋아해.",
+    "created_at": "2025-08-28 23:03:57.124379",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "기쁨",
+        "percentage": 50.0,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "희망",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Gentiana Andrewsii",
+    "flower_name_en": "젠티아나",
+    "scientific_name": "Gentiana Andrewsii",
+    "flower_card_message": "\"May your dreams take flight and soar high.\"\\n- The Secret Life of Walter Mitty -",
+    "flower_blend": {
+      "main_flower": "Gentiana Andrewsii",
+      "sub_flowers": [
+        "스톡",
+        "베이비 브레스"
+      ],
+      "composition_name": "Celebration"
+    },
+    "season_info": "가을",
+    "recommendation_reason": "아드님 생일을 축하하는 특별한 순간에 블루 색상의 젠티아나가 인내와 충성의 의미를 담아줄 거예요. 기쁨과 희망의 감정을 젠티아나의 아름다움으로 표현하면, 아드님에게 따뜻한 사랑과 응원의 메시지를 전할 수 있어요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/gentian-bl.webp",
+    "keywords": [
+      "사랑",
+      "생일",
+      "따뜻한",
+      "블루"
+    ],
+    "hashtags": [
+      "#젠티아나",
+      "#기쁨",
+      "#축하",
+      "#희망"
+    ],
+    "color_keywords": [
+      "블루"
+    ],
+    "excluded_keywords": []
+  },
+  "S250829-CYM-00001": {
+    "story_id": "S250829-CYM-00001",
+    "original_story": "하늘색 심비디움이 좋아요",
+    "created_at": "2025-08-29 00:03:11.404499",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "기쁨",
+        "percentage": 40.0,
+        "description": ""
+      },
+      {
+        "emotion": "사랑/로맨스",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 30.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Cymbidium Spp",
+    "flower_name_en": "심비디움",
+    "scientific_name": "Cymbidium Spp",
+    "flower_card_message": "\"You are my sunshine, my only sunshine.\"\\n- You Are My Sunshine -",
+    "flower_blend": {
+      "main_flower": "Cymbidium Spp",
+      "sub_flowers": [
+        "스톡",
+        "베이비 브레스"
+      ],
+      "composition_name": "Celebration"
+    },
+    "season_info": "겨울, 봄",
+    "recommendation_reason": "하늘색 심비디움이 기쁜 날을 축하해줄 완벽한 선택이에요. 사랑과 아름다움이 가득한 이 꽃은 당신의 기쁨과 로맨스를 더욱 빛내줄 거예요.",
+    "flower_image_url": "/images/default/심비디움.webp",
+    "keywords": [
+      "기쁨",
+      "사랑/로맨스",
+      "블루"
+    ],
+    "hashtags": [
+      "#심비디움",
+      "#기쁨",
+      "#사랑/로맨스",
+      "#축하"
+    ],
+    "color_keywords": [
+      "블루"
+    ],
+    "excluded_keywords": []
+  },
+  "S250829-CYM-00002": {
+    "story_id": "S250829-CYM-00002",
+    "original_story": "하늘색 심비디움이 좋아요",
+    "created_at": "2025-08-29 00:03:30.985305",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "따뜻함",
+        "percentage": 33.4,
+        "description": ""
+      },
+      {
+        "emotion": "기쁨",
+        "percentage": 33.3,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 33.3,
+        "description": ""
+      }
+    ],
+    "flower_name": "Cymbidium Spp",
+    "flower_name_en": "심비디움",
+    "scientific_name": "Cymbidium Spp",
+    "flower_card_message": "\"You are my sunshine on a cloudy day.\"  \n- You Are My Sunshine -",
+    "flower_blend": {
+      "main_flower": "Cymbidium Spp",
+      "sub_flowers": [
+        "라벤더",
+        "실버리프"
+      ],
+      "composition_name": "Shine Your Light"
+    },
+    "season_info": "겨울, 봄",
+    "recommendation_reason": "하늘색 심비디움은 따뜻한 축하의 순간에 아름다움과 사랑을 담아줘요. 이 꽃을 통해 기쁨과 따뜻함을 느끼며, 특별한 날을 더욱 빛나게 해줄 수 있어요.",
+    "flower_image_url": "/images/default/심비디움.webp",
+    "keywords": [
+      "따뜻함",
+      "기쁨",
+      "블루"
+    ],
+    "hashtags": [
+      "#심비디움",
+      "#따뜻함",
+      "#기쁨",
+      "#축하"
+    ],
+    "color_keywords": [
+      "블루"
+    ],
+    "excluded_keywords": []
+  },
+  "S250829-CYM-00003": {
+    "story_id": "S250829-CYM-00003",
+    "original_story": "하늘색 심비디움이 좋아요",
+    "created_at": "2025-08-29 00:06:26.259326",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "기쁨",
+        "percentage": 50.0,
+        "description": ""
+      },
+      {
+        "emotion": "사랑/로맨스",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Cymbidium Spp",
+    "flower_name_en": "심비디움",
+    "scientific_name": "Cymbidium Spp",
+    "flower_card_message": "\"You are my sunshine, my only sunshine.\"\\n- You Are My Sunshine -",
+    "flower_blend": {
+      "main_flower": "Cymbidium Spp",
+      "sub_flowers": [
+        "스톡",
+        "베이비 브레스"
+      ],
+      "composition_name": "Celebration"
+    },
+    "season_info": "겨울, 봄",
+    "recommendation_reason": "하늘색 심비디움이 기쁜 마음을 담아주어요. 사랑과 아름다움의 상징인 이 꽃은 소중한 날, 특별한 기쁨을 더욱 빛나게 해줄 거예요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/cymbidium-spp-bl.webp",
+    "keywords": [
+      "기쁨",
+      "사랑/로맨스",
+      "블루"
+    ],
+    "hashtags": [
+      "#심비디움",
+      "#기쁨",
+      "#사랑/로맨스",
+      "#축하"
+    ],
+    "color_keywords": [
+      "블루"
+    ],
+    "excluded_keywords": []
+  },
+  "S250829-CYM-00004": {
+    "story_id": "S250829-CYM-00004",
+    "original_story": "하늘색 심비디움이 좋아요",
+    "created_at": "2025-08-29 00:06:48.811651",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "따뜻함",
+        "percentage": 33.4,
+        "description": ""
+      },
+      {
+        "emotion": "기쁨",
+        "percentage": 33.3,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 33.3,
+        "description": ""
+      }
+    ],
+    "flower_name": "Cymbidium Spp",
+    "flower_name_en": "심비디움",
+    "scientific_name": "Cymbidium Spp",
+    "flower_card_message": "\"Love is all you need.\"\\n- The Beatles -",
+    "flower_blend": {
+      "main_flower": "Cymbidium Spp",
+      "sub_flowers": [
+        "라벤더",
+        "실버리프"
+      ],
+      "composition_name": "Shine Your Light"
+    },
+    "season_info": "겨울, 봄",
+    "recommendation_reason": "하늘색 심비디움은 따뜻한 기쁨과 축하의 순간에 완벽하게 어울려요. 이 꽃은 사랑과 아름다움을 담고 있어, 당신의 소중한 감정을 더욱 특별하게 표현해줄 수 있어요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/cymbidium-spp-bl.webp",
+    "keywords": [
+      "따뜻함",
+      "기쁨",
+      "블루"
+    ],
+    "hashtags": [
+      "#심비디움",
+      "#따뜻함",
+      "#기쁨",
+      "#축하"
+    ],
+    "color_keywords": [
+      "블루"
+    ],
+    "excluded_keywords": []
+  },
+  "S250829-CYM-00005": {
+    "story_id": "S250829-CYM-00005",
+    "original_story": "하늘색 심비디움이 좋아요",
+    "created_at": "2025-08-29 00:07:21.495034",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "따뜻함",
+        "percentage": 33.4,
+        "description": ""
+      },
+      {
+        "emotion": "기쁨",
+        "percentage": 33.3,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 33.3,
+        "description": ""
+      }
+    ],
+    "flower_name": "Cymbidium Spp",
+    "flower_name_en": "심비디움",
+    "scientific_name": "Cymbidium Spp",
+    "flower_card_message": "\"You are my sunshine, my only sunshine.\"  \n- You Are My Sunshine -",
+    "flower_blend": {
+      "main_flower": "Cymbidium Spp",
+      "sub_flowers": [
+        "라벤더",
+        "실버리프"
+      ],
+      "composition_name": "Shine Your Light"
+    },
+    "season_info": "겨울, 봄",
+    "recommendation_reason": "하늘색 심비디움이 생일 축하의 기쁨과 따뜻함을 고스란히 담아줄 거예요. 사랑과 아름다움을 상징하는 이 꽃은 당신의 소중한 순간을 더욱 특별하게 만들어줄 거예요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/cymbidium-spp-bl.webp",
+    "keywords": [
+      "따뜻함",
+      "기쁨",
+      "블루"
+    ],
+    "hashtags": [
+      "#심비디움",
+      "#따뜻함",
+      "#기쁨",
+      "#축하"
+    ],
+    "color_keywords": [
+      "블루"
+    ],
+    "excluded_keywords": []
+  },
+  "S250829-GEN-00001": {
+    "story_id": "S250829-GEN-00001",
+    "original_story": "하늘색 꽃이 좋아요",
+    "created_at": "2025-08-29 00:09:04.286479",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "기쁨",
+        "percentage": 40.0,
+        "description": ""
+      },
+      {
+        "emotion": "사랑/로맨스",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 30.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Gentiana Andrewsii",
+    "flower_name_en": "젠티아나",
+    "scientific_name": "Gentiana Andrewsii",
+    "flower_card_message": "\"Here’s looking at you, kid.\"\\n- Casablanca -",
+    "flower_blend": {
+      "main_flower": "Gentiana Andrewsii",
+      "sub_flowers": [
+        "스톡",
+        "베이비 브레스"
+      ],
+      "composition_name": "Celebration"
+    },
+    "season_info": "가을",
+    "recommendation_reason": "하늘색 꽃을 좋아하시는 고객님께는 Gentiana Andrewsii(젠티아나)가 정말 잘 어울려요. 사랑과 기쁨의 순간을 축하하는 데 이 꽃의 인내와 충성이 담긴 의미가 고객님의 마음을 더욱 깊이 표현해줄 수 있을 거예요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/gentiana-andrewsii-bl.webp",
+    "keywords": [
+      "기쁨",
+      "사랑/로맨스",
+      "블루"
+    ],
+    "hashtags": [
+      "#젠티아나",
+      "#기쁨",
+      "#사랑/로맨스",
+      "#축하"
+    ],
+    "color_keywords": [
+      "블루"
+    ],
+    "excluded_keywords": []
+  },
+  "S250829-GEN-00002": {
+    "story_id": "S250829-GEN-00002",
+    "original_story": "하늘색 꽃이 좋아요",
+    "created_at": "2025-08-29 00:09:18.112206",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "기쁨",
+        "percentage": 40.0,
+        "description": ""
+      },
+      {
+        "emotion": "사랑/로맨스",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 30.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Gentiana Andrewsii",
+    "flower_name_en": "젠티아나",
+    "scientific_name": "Gentiana Andrewsii",
+    "flower_card_message": "\"You're my end and my beginning.\"\\n- The Notebook -",
+    "flower_blend": {
+      "main_flower": "Gentiana Andrewsii",
+      "sub_flowers": [
+        "스톡",
+        "베이비 브레스"
+      ],
+      "composition_name": "Celebration"
+    },
+    "season_info": "가을",
+    "recommendation_reason": "하늘색 꽃을 좋아하시는 고객님께 젠티아나가 특별한 의미를 담아 전해줘요. 이 꽃은 인내와 충성을 상징하여 기쁨과 사랑이 넘치는 특별한 순간을 더욱 빛내줄 수 있으니, 소중한 사람과의 행복한 기억을 만들어가길 바래요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/gentiana-andrewsii-bl.webp",
+    "keywords": [
+      "기쁨",
+      "사랑/로맨스",
+      "블루"
+    ],
+    "hashtags": [
+      "#젠티아나",
+      "#기쁨",
+      "#사랑/로맨스",
+      "#축하"
+    ],
+    "color_keywords": [
+      "블루"
+    ],
+    "excluded_keywords": []
+  },
+  "S250829-RAN-00001": {
+    "story_id": "S250829-RAN-00001",
+    "original_story": "핑크 꽃이 좋아요",
+    "created_at": "2025-08-29 00:09:33.811057",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "사랑/로맨스",
+        "percentage": 40.0,
+        "description": ""
+      },
+      {
+        "emotion": "기쁨",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "감사/존경",
+        "percentage": 30.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Ranunculus",
+    "flower_name_en": "라넌큘러스",
+    "scientific_name": "Ranunculus",
+    "flower_card_message": "\"You are my heart's desire, my sweetest bloom.\"\\n- Unknown -",
+    "flower_blend": {
+      "main_flower": "Ranunculus",
+      "sub_flowers": [
+        "라벤더",
+        "실버리프"
+      ],
+      "composition_name": "Shine Your Light"
+    },
+    "season_info": "봄",
+    "recommendation_reason": "특별한 날을 맞이하여 핑크 라넌큘러스가 사랑과 기쁨의 감정을 담아줄 수 있어요. 이 꽃은 매력적인 동경의 의미를 지니고 있어, 소중한 분께 감사와 존경의 마음을 전하는 데 완벽한 선택이 될 거예요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/ranunculus-pk.webp",
+    "keywords": [
+      "사랑/로맨스",
+      "기쁨",
+      "핑크"
+    ],
+    "hashtags": [
+      "#라넌큘러스",
+      "#사랑/로맨스",
+      "#기쁨",
+      "#감사/존경"
+    ],
+    "color_keywords": [
+      "핑크"
+    ],
+    "excluded_keywords": []
+  },
+  "S250829-ZIN-00001": {
+    "story_id": "S250829-ZIN-00001",
+    "original_story": "레드 꽃이 좋아요",
+    "created_at": "2025-08-29 00:09:46.306182",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "사랑/로맨스",
+        "percentage": 50.0,
+        "description": ""
+      },
+      {
+        "emotion": "기쁨",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Zinnia Elegans",
+    "flower_name_en": "백일홍",
+    "scientific_name": "Zinnia Elegans",
+    "flower_card_message": "\"Love is composed of a single soul inhabiting two bodies.\"\\n- Aristotle -",
+    "flower_blend": {
+      "main_flower": "Zinnia Elegans",
+      "sub_flowers": [
+        "라벤더",
+        "실버리프"
+      ],
+      "composition_name": "Shine Your Light"
+    },
+    "season_info": "여름, 가을",
+    "recommendation_reason": "사랑하는 사람에게 특별한 날을 축하하는 마음으로 레드 백일홍이 존경과 충성을 담아줘요. 당신의 기쁨과 로맨스가 이 아름다운 꽃의 활기찬 색상과 함께 더욱 깊어질 수 있을 거예요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/zinnia-elegans-rd.webp",
+    "keywords": [
+      "사랑/로맨스",
+      "기쁨",
+      "레드"
+    ],
+    "hashtags": [
+      "#백일홍",
+      "#사랑/로맨스",
+      "#기쁨",
+      "#축하"
+    ],
+    "color_keywords": [
+      "레드"
+    ],
+    "excluded_keywords": []
+  },
+  "S250829-GEN-00003": {
+    "story_id": "S250829-GEN-00003",
+    "original_story": "하늘색 꽃이 좋아요",
+    "created_at": "2025-08-29 00:10:02.722331",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "기쁨",
+        "percentage": 40.0,
+        "description": ""
+      },
+      {
+        "emotion": "사랑/로맨스",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "위로/따뜻함",
+        "percentage": 30.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Gentiana Andrewsii",
+    "flower_name_en": "젠티아나",
+    "scientific_name": "Gentiana Andrewsii",
+    "flower_card_message": "\"You are the light of my life, my love.\"\\n- The Fault in Our Stars -",
+    "flower_blend": {
+      "main_flower": "Gentiana Andrewsii",
+      "sub_flowers": [
+        "스톡",
+        "베이비 브레스"
+      ],
+      "composition_name": "Celebration"
+    },
+    "season_info": "가을",
+    "recommendation_reason": "하늘색 꽃을 찾고 계신 당신께 젠티아나를 추천해드려요. 이 꽃은 인내와 충성을 상징하며, 당신의 기쁨과 사랑을 더 깊이 표현해줄 수 있어요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/gentiana-andrewsii-bl.webp",
+    "keywords": [
+      "기쁨",
+      "사랑/로맨스",
+      "블루"
+    ],
+    "hashtags": [
+      "#젠티아나",
+      "#기쁨",
+      "#사랑/로맨스",
+      "#위로/따뜻함"
+    ],
+    "color_keywords": [
+      "블루"
+    ],
+    "excluded_keywords": []
+  },
+  "S250829-ZIN-00002": {
+    "story_id": "S250829-ZIN-00002",
+    "original_story": "레드 백일홍이 좋아요",
+    "created_at": "2025-08-29 00:12:04.556907",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "따뜻함",
+        "percentage": 33.4,
+        "description": ""
+      },
+      {
+        "emotion": "기쁨",
+        "percentage": 33.3,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 33.3,
+        "description": ""
+      }
+    ],
+    "flower_name": "Zinnia Elegans",
+    "flower_name_en": "백일홍",
+    "scientific_name": "Zinnia Elegans",
+    "flower_card_message": "\"Love is friendship set on fire.\"\\n- Jeremy Taylor -",
+    "flower_blend": {
+      "main_flower": "Zinnia Elegans",
+      "sub_flowers": [
+        "라벤더",
+        "실버리프"
+      ],
+      "composition_name": "Shine Your Light"
+    },
+    "season_info": "여름, 가을",
+    "recommendation_reason": "레드 백일홍이 따뜻한 기쁨과 축하의 순간을 잘 담아줘요. 이 꽃은 정직한 사랑과 지속적인 관계의 상징으로, 당신의 따뜻한 마음과 기쁜 소식을 더욱 특별하게 만들어줄 수 있어요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/zinnia-elegans-rd.webp",
+    "keywords": [
+      "따뜻함",
+      "기쁨",
+      "레드"
+    ],
+    "hashtags": [
+      "#백일홍",
+      "#따뜻함",
+      "#기쁨",
+      "#축하"
+    ],
+    "color_keywords": [
+      "레드"
+    ],
+    "excluded_keywords": []
+  },
+  "S250829-ZIN-00003": {
+    "story_id": "S250829-ZIN-00003",
+    "original_story": "레드 백일홍이 좋아요",
+    "created_at": "2025-08-29 00:12:28.330540",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "따뜻함",
+        "percentage": 33.4,
+        "description": ""
+      },
+      {
+        "emotion": "기쁨",
+        "percentage": 33.3,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 33.3,
+        "description": ""
+      }
+    ],
+    "flower_name": "Zinnia Elegans",
+    "flower_name_en": "백일홍",
+    "scientific_name": "Zinnia Elegans",
+    "flower_card_message": "\"Keep your face always toward the sunshine.\"\\n- Walt Whitman -",
+    "flower_blend": {
+      "main_flower": "Zinnia Elegans",
+      "sub_flowers": [
+        "라벤더",
+        "실버리프"
+      ],
+      "composition_name": "Shine Your Light"
+    },
+    "season_info": "여름, 가을",
+    "recommendation_reason": "친구의 생일을 맞이하여 레드 백일홍이 따뜻한 축하의 마음을 담아줘요. 기쁨과 사랑, 그리고 정직한 마음이 느껴지는 이 꽃은 친구와의 끈끈한 인연을 더욱 특별하게 만들어줄 거예요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/zinnia-elegans-rd.webp",
+    "keywords": [
+      "따뜻함",
+      "기쁨",
+      "레드"
+    ],
+    "hashtags": [
+      "#백일홍",
+      "#따뜻함",
+      "#기쁨",
+      "#축하"
+    ],
+    "color_keywords": [
+      "레드"
+    ],
+    "excluded_keywords": []
+  },
+  "S250829-ZIN-00004": {
+    "story_id": "S250829-ZIN-00004",
+    "original_story": "레드 꽃을 원해요",
+    "created_at": "2025-08-29 00:56:45.130692",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "사랑/로맨스",
+        "percentage": 50.0,
+        "description": ""
+      },
+      {
+        "emotion": "기쁨",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Zinnia Elegans",
+    "flower_name_en": "백일홍",
+    "scientific_name": "Zinnia Elegans",
+    "flower_card_message": "\"Love is composed of a single soul inhabiting two bodies.\"\\n- Aristotle -",
+    "flower_blend": {
+      "main_flower": "Zinnia Elegans",
+      "sub_flowers": [
+        "라벤더",
+        "실버리프"
+      ],
+      "composition_name": "Shine Your Light"
+    },
+    "season_info": "여름, 가을",
+    "recommendation_reason": "사랑하는 사람의 특별한 날을 축하하기 위해 레드 백일홍을 선택해보세요. 이 꽃이 가진 '존경'과 '충성'의 의미는 당신의 깊은 감정을 아름답게 표현해 줄 거예요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/zinnia-rd.webp",
+    "keywords": [
+      "사랑/로맨스",
+      "기쁨",
+      "레드"
+    ],
+    "hashtags": [
+      "#백일홍",
+      "#사랑/로맨스",
+      "#기쁨",
+      "#축하"
+    ],
+    "color_keywords": [
+      "레드"
+    ],
+    "excluded_keywords": []
+  },
+  "S250829-ZIN-00005": {
+    "story_id": "S250829-ZIN-00005",
+    "original_story": "레드 꽃을 원해요",
+    "created_at": "2025-08-29 01:02:05.061511",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "따뜻함",
+        "percentage": 33.4,
+        "description": ""
+      },
+      {
+        "emotion": "기쁨",
+        "percentage": 33.3,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 33.3,
+        "description": ""
+      }
+    ],
+    "flower_name": "Zinnia Elegans",
+    "flower_name_en": "백일홍",
+    "scientific_name": "Zinnia Elegans",
+    "flower_card_message": "\"Love is friendship set on fire.\"\\n- Jeremy Taylor -",
+    "flower_blend": {
+      "main_flower": "Zinnia Elegans",
+      "sub_flowers": [
+        "라벤더",
+        "실버리프"
+      ],
+      "composition_name": "Shine Your Light"
+    },
+    "season_info": "여름, 가을",
+    "recommendation_reason": "생일 축하를 위해 레드 백일홍을 선택했어요. 이 꽃은 존경과 충성을 담고 있어, 소중한 사람에게 따뜻한 마음과 기쁨을 전하는 데 정말 잘 어울려요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/zinnia-rd.webp",
+    "keywords": [
+      "따뜻함",
+      "기쁨",
+      "레드"
+    ],
+    "hashtags": [
+      "#백일홍",
+      "#따뜻함",
+      "#기쁨",
+      "#축하"
+    ],
+    "color_keywords": [
+      "레드"
+    ],
+    "excluded_keywords": []
+  },
+  "S250829-SWP-00001": {
+    "story_id": "S250829-SWP-00001",
+    "original_story": "핑크 꽃을 원해요",
+    "created_at": "2025-08-29 01:02:19.255972",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "사랑/로맨스",
+        "percentage": 40.0,
+        "description": ""
+      },
+      {
+        "emotion": "기쁨",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 30.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Lathyrus Odoratus",
+    "flower_name_en": "스위트피",
+    "scientific_name": "Lathyrus Odoratus",
+    "flower_card_message": "\"Love is all you need.\"\\n- The Beatles -",
+    "flower_blend": {
+      "main_flower": "Lathyrus Odoratus",
+      "sub_flowers": [
+        "라벤더",
+        "실버리프"
+      ],
+      "composition_name": "Shine Your Light"
+    },
+    "season_info": "봄, 여름",
+    "recommendation_reason": "사랑과 기쁨이 가득한 순간을 축하하는 데, 핑크 스위트피가 특별한 의미를 담아줄 거예요. 이 꽃의 '행복한 추억'과 '달콤한 사랑'은 당신의 소중한 사람과의 사랑을 더욱 깊게 느끼게 해줄 수 있답니다.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/lathyrus-odoratus-pk.webp",
+    "keywords": [
+      "사랑/로맨스",
+      "기쁨",
+      "핑크"
+    ],
+    "hashtags": [
+      "#스위트피",
+      "#사랑/로맨스",
+      "#기쁨",
+      "#축하"
+    ],
+    "color_keywords": [
+      "핑크"
+    ],
+    "excluded_keywords": []
+  },
+  "S250829-ALS-00001": {
+    "story_id": "S250829-ALS-00001",
+    "original_story": "화이트 꽃을 원해요",
+    "created_at": "2025-08-29 01:02:32.555465",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "사랑/로맨스",
+        "percentage": 40.0,
+        "description": ""
+      },
+      {
+        "emotion": "기쁨",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "축하",
+        "percentage": 30.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Alstroemeria spp.",
+    "flower_name_en": "알스트로메리아",
+    "scientific_name": "Alstroemeria spp.",
+    "flower_card_message": "\"You have bewitched me, body and soul.\"\\n- Pride and Prejudice -",
+    "flower_blend": {
+      "main_flower": "Alstroemeria spp.",
+      "sub_flowers": [
+        "라벤더",
+        "실버리프"
+      ],
+      "composition_name": "Shine Your Light"
+    },
+    "season_info": "봄, 여름, 가을, 겨울",
+    "recommendation_reason": "사랑하는 분에게 전달할 화이트 알스트로메리아가 우정과 행복한 재회의 의미를 담아줄 거예요. 이 꽃은 기쁨과 축하의 순간을 더욱 특별하게 만들어주어, 따뜻한 마음을 전할 수 있는 완벽한 선택이에요.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/alstroemeria-wh.webp",
+    "keywords": [
+      "사랑/로맨스",
+      "기쁨",
+      "화이트"
+    ],
+    "hashtags": [
+      "#알스트로메리아",
+      "#사랑/로맨스",
+      "#기쁨",
+      "#축하"
+    ],
+    "color_keywords": [
+      "화이트"
+    ],
+    "excluded_keywords": []
+  },
+  "S250829-SWP-00002": {
+    "story_id": "S250829-SWP-00002",
+    "original_story": "가끔 눈물이 나도 돌아갈 수 있는 너가 있어서 너무 다행이야. 그 사람에게 전할 꽃을 추천해줘.",
+    "created_at": "2025-08-29 02:07:56.394937",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "사랑/로맨스",
+        "percentage": 50.0,
+        "description": ""
+      },
+      {
+        "emotion": "그리움/추억",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "위로/따뜻함",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Lathyrus Odoratus",
+    "flower_name_en": "스위트피",
+    "scientific_name": "Lathyrus Odoratus",
+    "flower_card_message": "\"You're my person, now and always.\"\\n- Grey's Anatomy -",
+    "flower_blend": {
+      "main_flower": "Lathyrus Odoratus",
+      "sub_flowers": [
+        "라벤더",
+        "실버리프"
+      ],
+      "composition_name": "Shine Your Light"
+    },
+    "season_info": "봄, 여름",
+    "recommendation_reason": "\"가끔 눈물이 나도 돌아갈 수 있는 너에게 전할 꽃으로 핑크 스위트피가 정말 잘 어울려요. 이 꽃은 '행복한 추억'과 '달콤한 사랑'을 상징해, 그리움과 따뜻함이 담긴 마음을 더욱 깊이 있게 전해줄 수 있을 거예요.\"",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/lathyrus-odoratus-pk.webp",
+    "keywords": [
+      "사랑",
+      "감사",
+      "위로",
+      "핑크"
+    ],
+    "hashtags": [
+      "#스위트피",
+      "#사랑/로맨스",
+      "#그리움/추억",
+      "#위로/따뜻함"
+    ],
+    "color_keywords": [
+      "핑크"
+    ],
+    "excluded_keywords": []
+  },
+  "S250830-ZIN-00001": {
+    "story_id": "S250830-ZIN-00001",
+    "original_story": "친구의 생일을 축하하고 싶어요. 밝고 활기찬 분위기로 선물하고 싶습니다.",
+    "created_at": "2025-08-30 02:53:54.362309",
+    "updated_at": null,
+    "emotions": [
+      {
+        "emotion": "축하",
+        "percentage": 50.0,
+        "description": ""
+      },
+      {
+        "emotion": "기쁨",
+        "percentage": 30.0,
+        "description": ""
+      },
+      {
+        "emotion": "희망",
+        "percentage": 20.0,
+        "description": ""
+      }
+    ],
+    "flower_name": "Zinnia Elegans",
+    "flower_name_en": "백일홍",
+    "scientific_name": "Zinnia Elegans",
+    "flower_card_message": "\"Count your rainbows, not your thunderstorms.\"\\n- The Wizard of Oz -",
+    "flower_blend": {
+      "main_flower": "Zinnia Elegans",
+      "sub_flowers": [
+        "오렌지 거베라",
+        "핑크 데이지"
+      ],
+      "composition_name": "Colorful Celebration"
+    },
+    "season_info": "여름, 가을",
+    "recommendation_reason": "친구의 생일을 축하하고 싶다면, 레드와 핑크의 백일홍이 어울려요. 이 꽃은 존경과 충성을 담고 있어, 친구에 대한 깊은 사랑과 함께 기쁨을 전해줄 수 있습니다.",
+    "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/zinnia-elegans-rd.webp",
+    "keywords": [
+      "축하",
+      "기쁨",
+      "희망",
+      "레드",
+      "핑크"
+    ],
+    "hashtags": [
+      "#백일홍",
+      "#축하",
+      "#기쁨",
+      "#희망"
+    ],
+    "color_keywords": [
+      "레드",
+      "핑크"
+    ],
+    "excluded_keywords": []
   }
 }

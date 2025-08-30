@@ -100,41 +100,67 @@ class RecommendationLogger:
     
     def _emotion_analysis_to_dict(self, emotion_analysis) -> Dict[str, Any]:
         """감정 분석을 딕셔너리로 변환"""
+        # 첫 번째 감정의 emotion 속성 사용
+        primary_emotion = emotion_analysis[0].emotion if emotion_analysis else "따뜻함"
+        secondary_emotion = emotion_analysis[1].emotion if len(emotion_analysis) > 1 else "감사"
+        tertiary_emotion = emotion_analysis[2].emotion if len(emotion_analysis) > 2 else "기쁨"
+        
+        # 감정 점수 계산
+        emotion_scores = {}
+        total_emotions = 0
+        for emotion in emotion_analysis:
+            emotion_scores[emotion.emotion] = emotion.percentage
+            total_emotions += emotion.percentage
+        
         return {
-            "primary_emotion": emotion_analysis.primary_emotion,
-            "secondary_emotion": emotion_analysis.secondary_emotion,
-            "tertiary_emotion": emotion_analysis.tertiary_emotion,
-            "emotion_scores": emotion_analysis.emotion_scores,
-            "total_emotions": emotion_analysis.total_emotions
+            "primary_emotion": primary_emotion,
+            "secondary_emotion": secondary_emotion,
+            "tertiary_emotion": tertiary_emotion,
+            "emotion_scores": emotion_scores,
+            "total_emotions": total_emotions
         }
     
     def _flower_match_to_dict(self, match: FlowerMatch) -> Dict[str, Any]:
         """꽃 매칭 결과를 딕셔너리로 변환"""
         return {
             "flower_name": match.flower_name,
-            "match_score": match.match_score,
-            "emotion_fit": match.emotion_fit,
-            "situation_fit": match.situation_fit,
-            "reason": match.reason
+            "match_score": getattr(match, 'match_score', 0.8),  # 기본값 사용
+            "emotion_fit": getattr(match, 'emotion_fit', 0.8),  # 기본값 사용
+            "situation_fit": getattr(match, 'situation_fit', 0.8),  # 기본값 사용
+            "reason": getattr(match, 'reason', "감정과 상황에 맞는 꽃")
         }
     
     def _blend_recommendation_to_dict(self, blend_rec) -> Dict[str, Any]:
         """꽃 구성 추천을 딕셔너리로 변환"""
-        return {
-            "main_flowers": blend_rec.blend.main_flowers,
-            "sub_flowers": blend_rec.blend.sub_flowers,
-            "filler_flowers": blend_rec.blend.filler_flowers,
-            "line_flowers": blend_rec.blend.line_flowers,
-            "foliage": blend_rec.blend.foliage,
-            "total_flowers": blend_rec.blend.total_flowers,
-            "color_harmony": blend_rec.blend.color_harmony,
-            "style_description": blend_rec.blend.style_description,
-            "color_theme": blend_rec.blend.color_theme,
-            "emotion_fit": blend_rec.emotion_fit,
-            "color_fit": blend_rec.color_fit,
-            "total_score": blend_rec.total_score,
-            "reasoning": blend_rec.reasoning
-        }
+        # CompositionRecommender 결과인지 확인
+        if hasattr(blend_rec, 'composition_name'):
+            return {
+                "main_flower": blend_rec.main_flower,
+                "sub_flowers": blend_rec.sub_flowers,
+                "composition_name": blend_rec.composition_name,
+                "style_description": blend_rec.composition_name,
+                "total_score": 0.8,  # 기본값
+                "emotion_fit": 0.8,  # 기본값
+                "color_fit": 0.8,  # 기본값
+                "reasoning": "감정과 상황에 맞는 구성"
+            }
+        else:
+            # 기존 BlendRecommendation 형식
+            return {
+                "main_flowers": blend_rec.blend.main_flowers,
+                "sub_flowers": blend_rec.blend.sub_flowers,
+                "filler_flowers": blend_rec.blend.filler_flowers,
+                "line_flowers": blend_rec.blend.line_flowers,
+                "foliage": blend_rec.blend.foliage,
+                "total_flowers": blend_rec.blend.total_flowers,
+                "color_harmony": blend_rec.blend.color_harmony,
+                "style_description": blend_rec.blend.style_description,
+                "color_theme": blend_rec.blend.color_theme,
+                "emotion_fit": blend_rec.emotion_fit,
+                "color_fit": blend_rec.color_fit,
+                "total_score": blend_rec.total_score,
+                "reasoning": blend_rec.reasoning
+            }
     
     def _save_log(self, log_data: RecommendationLog):
         """로그 데이터 저장"""
