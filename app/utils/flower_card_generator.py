@@ -1,11 +1,11 @@
 import openai
 import os
 from app.models.schemas import EmotionAnalysis, FlowerMatch
-from typing import List
+from typing import List, Dict
 
-def generate_flower_card_message(flower_match: FlowerMatch, emotion_analysis: List[EmotionAnalysis], story: str) -> str:
+def generate_flower_card_message(flower_match: FlowerMatch, emotion_analysis: List[EmotionAnalysis], story: str) -> Dict[str, str]:
     """
-    꽃 카드 메시지 생성 (영어 인용구 + 출처)
+    꽃 카드 메시지 생성 (인용구 + 출처 분리)
     """
     try:
         # 주요 감정 추출
@@ -54,11 +54,38 @@ def generate_flower_card_message(flower_match: FlowerMatch, emotion_analysis: Li
         
         # 기본 메시지가 없으면 fallback
         if not message or len(message) < 10:
-            return f"\"{flower_name} brings beauty and {primary_emotion} to your special day\" - (Flower Wisdom)"
+            return {
+                "quote": f"{flower_name} brings beauty and {primary_emotion} to your special day",
+                "source": "Flower Wisdom"
+            }
         
-        return message
+        # 메시지를 인용구와 출처로 분리
+        try:
+            if ' - (' in message and message.endswith(')'):
+                quote_part, source_part = message.rsplit(' - (', 1)
+                quote = quote_part.strip().strip('"')
+                source = source_part.rstrip(')').strip()
+                return {
+                    "quote": quote,
+                    "source": source
+                }
+            else:
+                # 분리할 수 없는 경우 전체를 인용구로, 기본 출처 사용
+                return {
+                    "quote": message.strip().strip('"'),
+                    "source": "Flower Wisdom"
+                }
+        except Exception as e:
+            print(f"⚠️ 메시지 파싱 실패: {e}")
+            return {
+                "quote": message.strip().strip('"'),
+                "source": "Flower Wisdom"
+            }
         
     except Exception as e:
         print(f"❌ 꽃 카드 메시지 생성 오류: {e}")
         # Fallback 메시지
-        return f"\"{flower_match.flower_name} represents beauty and grace\" - (Flower Wisdom)"
+        return {
+            "quote": f"{flower_match.flower_name} represents beauty and grace",
+            "source": "Flower Wisdom"
+        }

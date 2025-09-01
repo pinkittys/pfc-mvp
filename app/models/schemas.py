@@ -22,6 +22,11 @@ class KeywordExtractionResponse(BaseModel):
     confidence: float
     message: str = ""
 
+class FlowerCardMessage(BaseModel):
+    """꽃 카드 메시지 구조 (인용구 + 출처 분리)"""
+    quote: str      # 인용구
+    source: str     # 출처
+
 class KeywordRequest(BaseModel):
     story: str
 
@@ -88,7 +93,7 @@ class EmotionAnalysisResponse(BaseModel):
     matched_flower: FlowerMatch
     composition: FlowerComposition
     recommendation_reason: str
-    flower_card_message: Optional[str] = None
+    flower_card_message: Optional[FlowerCardMessage] = None  # 인용구 + 출처 분리
     story_id: Optional[str] = None  # 스토리 ID 추가
     
     # 새로운 키워드 구조 추가
@@ -169,7 +174,7 @@ class StoryData(BaseModel):
     flower_name: str  # 한글 이름
     flower_name_en: str  # 영문 이름
     scientific_name: str  # 학명
-    flower_card_message: str  # 인용문구 메시지
+    flower_card_message: FlowerCardMessage  # 인용구 + 출처 분리
     
     # 꽃 조합 정보
     flower_blend: FlowerComposition
@@ -196,7 +201,7 @@ class StoryCreateRequest(BaseModel):
     matched_flower: FlowerMatch
     composition: FlowerComposition
     recommendation_reason: str
-    flower_card_message: Optional[str] = None
+    flower_card_message: Optional[FlowerCardMessage] = None
     season_info: Optional[Dict[str, str]] = None
     keywords: List[str] = []
     hashtags: List[str] = []
