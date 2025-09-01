@@ -4,13 +4,18 @@ LLM 기반 감정 분석 서비스
 import os
 import json
 from typing import List
+from dotenv import load_dotenv
 from app.models.schemas import EmotionAnalysis
 
 class EmotionAnalyzer:
     def __init__(self):
+        # .env 파일 로드
+        load_dotenv()
         self.openai_api_key = os.getenv("OPENAI_API_KEY")
         if not self.openai_api_key:
             print("⚠️  OPENAI_API_KEY가 설정되지 않았습니다.")
+        else:
+            print(f"✅ OpenAI API 키 로드됨: {self.openai_api_key[:10]}...")
     
     def analyze(self, story: str) -> List[EmotionAnalysis]:
         """LLM 기반 감정 분석"""
@@ -36,10 +41,7 @@ class EmotionAnalyzer:
             result = response.choices[0].message.content
             print(f"🤖 LLM 감정 분석 응답: {result}")
             
-            # 특별한 키워드가 있으면 감정 가중치 조정 (강제 변경 대신)
-            forced_emotions = self._check_special_keywords(story)
-            if forced_emotions:
-                return forced_emotions
+            # 특별 키워드 체크 제거 - LLM에 맡김
             
             try:
                 print(f"🔍 감정 분석 파싱 시도...")
@@ -57,110 +59,7 @@ class EmotionAnalyzer:
             print(f"🔧 폴백 시스템으로 전환")
             return self._fallback_analysis(story)
     
-    def _check_special_keywords(self, story: str) -> List[EmotionAnalysis]:
-        """특별한 키워드가 있으면 감정 가중치 조정 (강제 변경 대신)"""
-        story_lower = story.lower()
-        
-        # 위로/응원 관련 사연 (가장 우선 처리)
-        if any(keyword in story_lower for keyword in ["힘든 시기", "위로", "응원", "힘들어", "어려운", "고민", "스트레스", "번아웃", "지친", "피곤한"]):
-            print(f"🔧 위로/응원 감정 가중치 조정")
-            return [
-                EmotionAnalysis(emotion="위로", percentage=45.0, description=""),
-                EmotionAnalysis(emotion="따뜻함", percentage=35.0, description=""),
-                EmotionAnalysis(emotion="응원", percentage=20.0, description="")
-            ]
-        
-        # 이직/축하 관련 사연 (최우선 처리)
-        if any(keyword in story_lower for keyword in ["이직", "퇴사", "새로운 회사", "새 직장", "새로운 시작", "축하", "성취", "합격", "승진"]):
-            print(f"🔧 이직/축하 감정 가중치 조정")
-            return [
-                EmotionAnalysis(emotion="축하", percentage=50.0, description=""),
-                EmotionAnalysis(emotion="기쁨", percentage=30.0, description=""),
-                EmotionAnalysis(emotion="희망", percentage=20.0, description="")
-            ]
-        
-        # 생일/축하 관련 사연
-        if any(keyword in story_lower for keyword in ["생일", "베프", "밝고 경쾌", "축하", "성취"]):
-            print(f"🔧 생일/축하 감정 가중치 조정")
-            return [
-                EmotionAnalysis(emotion="기쁨", percentage=50.0, description=""),
-                EmotionAnalysis(emotion="축하", percentage=30.0, description=""),
-                EmotionAnalysis(emotion="희망", percentage=20.0, description="")
-            ]
-        
-        # 이사/떠남 관련 사연
-        if any(keyword in story_lower for keyword in ["이사", "떠나", "동네를 떠남", "20년지기", "오래 살던"]):
-            print(f"🔧 이사/떠남 감정 가중치 조정")
-            return [
-                EmotionAnalysis(emotion="그리움", percentage=40.0, description=""),
-                EmotionAnalysis(emotion="추억", percentage=35.0, description=""),
-                EmotionAnalysis(emotion="응원", percentage=25.0, description="")
-            ]
-        
-        # 산후 우울증 관련 사연
-        if any(keyword in story for keyword in ["산후 우울증", "출산 후", "산모", "엄마", "아기"]):
-            print(f"🔧 산후 우울증 감정 가중치 조정")
-            return [
-                EmotionAnalysis(emotion="사랑", percentage=45.0, description=""),
-                EmotionAnalysis(emotion="따뜻함", percentage=35.0, description=""),
-                EmotionAnalysis(emotion="걱정", percentage=20.0, description="")
-            ]
-        
-        # 기념일 관련 사연
-        if any(keyword in story_lower for keyword in ["기념일", "5주년", "20주년", "결혼기념일"]):
-            print(f"🔧 기념일 감정 가중치 조정")
-            return [
-                EmotionAnalysis(emotion="감사", percentage=40.0, description=""),
-                EmotionAnalysis(emotion="따뜻함", percentage=35.0, description=""),
-                EmotionAnalysis(emotion="기쁨", percentage=25.0, description="")
-            ]
-        
-        # 작업실/인테리어 사연
-        if any(keyword in story_lower for keyword in ["작업실", "인테리어", "커피", "책", "공간", "분위기"]):
-            print(f"🔧 작업실/인테리어 감정 가중치 조정")
-            return [
-                EmotionAnalysis(emotion="평온함", percentage=40.0, description=""),
-                EmotionAnalysis(emotion="우아함", percentage=35.0, description=""),
-                EmotionAnalysis(emotion="자연스러움", percentage=25.0, description="")
-            ]
-        
-        # 우드톤/내추럴 키워드
-        if any(keyword in story_lower for keyword in ["우드톤", "내추럴", "자연"]):
-            print(f"🔧 우드톤/내추럴 감정 가중치 조정")
-            return [
-                EmotionAnalysis(emotion="따뜻함", percentage=50.0, description=""),
-                EmotionAnalysis(emotion="평온", percentage=30.0, description=""),
-                EmotionAnalysis(emotion="자연", percentage=20.0, description="")
-            ]
-        
-        # 해외 유학 완료 환영 사연
-        if any(keyword in story_lower for keyword in ["해외 유학", "유학 완료", "돌아왔어", "알록달록", "여행지"]):
-            print(f"🔧 해외 유학 완료 환영 감정 가중치 조정")
-            return [
-                EmotionAnalysis(emotion="기쁨", percentage=50.0, description=""),
-                EmotionAnalysis(emotion="축하", percentage=30.0, description=""),
-                EmotionAnalysis(emotion="환영", percentage=20.0, description="")
-            ]
-        
-        # 열정적인 사랑 관련 사연
-        if any(keyword in story_lower for keyword in ["열정적인", "열정", "강렬한", "사랑", "로맨스"]):
-            print(f"🔧 열정적인 사랑 감정 가중치 조정")
-            return [
-                EmotionAnalysis(emotion="사랑/로맨스", percentage=50.0, description=""),
-                EmotionAnalysis(emotion="열정", percentage=30.0, description=""),
-                EmotionAnalysis(emotion="기쁨", percentage=20.0, description="")
-            ]
-        
-        # 흐린 날씨/기분 처짐 관련 사연
-        if any(keyword in story_lower for keyword in ["흐린 날씨", "흐려서", "기분이 처져요", "처져", "우울", "침침한", "밝아질", "밝게", "활기", "기운"]):
-            print(f"🔧 흐린 날씨/기분 처짐 감정 가중치 조정")
-            return [
-                EmotionAnalysis(emotion="기분 처짐", percentage=50.0, description=""),
-                EmotionAnalysis(emotion="침침함", percentage=30.0, description=""),
-                EmotionAnalysis(emotion="활기 부족", percentage=20.0, description="")
-            ]
-        
-        return None
+    # 특별 키워드 체크 함수 제거 - LLM에 맡김
 
     def _create_emotion_prompt(self, story: str) -> str:
         """감정 분석 프롬프트 생성"""

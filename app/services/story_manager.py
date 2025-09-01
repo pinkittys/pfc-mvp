@@ -69,7 +69,7 @@ class StoryManager:
                 "matched_flower": json.dumps(story_data.matched_flower.dict(), ensure_ascii=False),
                 "recommendation_reason": story_data.recommendation_reason,
                 "flower_card_message": story_data.flower_card_message,
-                "season_info": story_data.season_info,
+                "season_info": json.dumps(story_data.season_info, ensure_ascii=False),
                 "keywords": json.dumps(story_data.keywords, ensure_ascii=False),
                 "hashtags": json.dumps(story_data.hashtags, ensure_ascii=False),
                 "color_keywords": json.dumps(story_data.color_keywords, ensure_ascii=False),
@@ -116,6 +116,7 @@ class StoryManager:
                     story_dict['keywords'] = json.loads(story_dict['keywords'])
                     story_dict['hashtags'] = json.loads(story_dict['hashtags'])
                     story_dict['color_keywords'] = json.loads(story_dict['color_keywords'])
+                    story_dict['season_info'] = json.loads(story_dict['season_info'])
                     
                     # datetime 변환
                     if isinstance(story_dict.get('created_at'), str):
@@ -154,10 +155,12 @@ class StoryManager:
         return f"S{today}-{flower_code}-{sequence}"
     
     def _get_flower_code(self, flower_name: str) -> str:
-        """꽃 영문명에서 3자리 코드 생성"""
-        # 꽃 영문명 매핑 테이블
+        """꽃 이름에서 3자리 코드 생성 (중복 제거된 통합 매핑)"""
+        
+        # 통합된 꽃 코드 매핑 (중복 제거)
+        # 구글 스프레드시트 name_en, scientific_name, name_ko 칼럼 기준
         flower_code_mapping = {
-            # 주요 꽃들
+            # 주요 꽃들 (name_en 기준)
             'Sweet Pea': 'SWP',
             'Rose': 'ROS',
             'Tulip': 'TUL',
@@ -176,11 +179,11 @@ class StoryManager:
             'Stock': 'STO',
             'Scabiosa': 'SCA',
             'Bouvardia': 'BOU',
-            'Marguerite': 'MAR',
+            'Marguerite Daisy': 'MAR',
             'Cockscomb': 'COC',
             'Cotton': 'COT',
-            'Drumstick': 'DRU',
-            'Gentiana': 'GEN',
+            'Drumstick Flower': 'DRU',
+            'Gentian': 'GEN',
             'Zinnia': 'ZIN',
             'Tagetes': 'TAG',
             'Veronica': 'VER',
@@ -198,57 +201,45 @@ class StoryManager:
             'Dianthus': 'DIA',
             'Garden': 'GAR',
             'Globe': 'GLO',
-            'Lathyrus Odoratus': 'SWP',  # Sweet Pea의 학명
-            'Rosa': 'ROS',  # Rose의 학명
-            'Tulipa': 'TUL',  # Tulip의 학명
+            'Sunflower': 'SUN',
+            'Calla Lily': 'CAL',
+            
+            # 학명 (scientific_name 칼럼)
+            'Lathyrus Odoratus': 'SWP',  # Sweet Pea
+            'Rosa': 'ROS',  # Rose
+            'Tulipa': 'TUL',  # Tulip
             'Gerbera Daisy': 'GER',
             'Alstroemeria spp': 'ALS',
-            'Lilium': 'LIL',  # Lily의 학명
-            'Dianthus caryophyllus': 'CAR',  # Carnation의 학명
-            'Dahlia pinnata': 'DAH',  # Dahlia의 학명
-            'Paeonia': 'PEO',  # Peony의 학명
+            'Lilium': 'LIL',  # Lily
+            'Dianthus caryophyllus': 'CAR',  # Carnation
+            'Dahlia pinnata': 'DAH',  # Dahlia
+            'Paeonia': 'PEO',  # Peony
             'Iris sanguinea': 'IRI',
             'Anemone coronaria': 'ANE',
             'Ranunculus asiaticus': 'RAN',
-            'Gladiolus': 'GLA',
             'Freesia refracta': 'FRE',
-            'Eustoma': 'LIS',  # Lisianthus의 학명
-            'Matthiola': 'STO',  # Stock의 학명
-            'Scabiosa': 'SCA',
-            'Bouvardia': 'BOU',
-            'Argyranthemum': 'MAR',  # Marguerite의 학명
-            'Celosia': 'COC',  # Cockscomb의 학명
-            'Gossypium': 'COT',  # Cotton의 학명
-            'Craspedia': 'DRU',  # Drumstick의 학명
+            'Eustoma': 'LIS',  # Lisianthus
+            'Matthiola': 'STO',  # Stock
+            'Argyranthemum frutescens': 'MAR',  # Marguerite
+            'Celosia cristata': 'COC',  # Cockscomb
+            'Gossypium': 'COT',  # Cotton
+            'Craspedia globosa': 'DRU',  # Drumstick
             'Gentiana andrewsii': 'GEN',
             'Zinnia elegans': 'ZIN',
             'Tagetes erecta': 'TAG',
             'Veronica spicata': 'VER',
-            'Hydrangea': 'HYD',
             'Astilbe japonica': 'AST',
             'Anthurium andraeanum': 'ANT',
             'Cymbidium spp': 'CYM',
-            'Gypsophila': 'BAB',  # Baby's Breath의 학명
+            'Gypsophila': 'BAB',  # Baby's Breath
             'Oxypetalum coeruleum': 'OXY',
             'Spiraea prunifolia': 'SPI',
             'Iberis sempervirens': 'IBE',
             'Ammi majus': 'AMM',
             'Zantedeschia aethiopica': 'ZAN',
-            'Dianthus': 'DIA',
-        }
-        
-        # 정확한 매칭 시도
-        if flower_name in flower_code_mapping:
-            return flower_code_mapping[flower_name]
-        
-        # 부분 매칭 시도 (영문명에 포함된 경우)
-        for key, code in flower_code_mapping.items():
-            if flower_name.lower() in key.lower() or key.lower() in flower_name.lower():
-                return code
-        
-        # 매칭되지 않은 경우 영문명에서 3자리 추출
-        # 한글명인 경우 영문명으로 변환 시도
-        korean_to_english = {
+            'Helianthus annuus': 'SUN',  # Sunflower
+            
+            # 한글명 (name_ko 칼럼)
             '스위트피': 'SWP',
             '장미': 'ROS',
             '튤립': 'TUL',
@@ -256,7 +247,7 @@ class StoryManager:
             '알스트로메리아': 'ALS',
             '백합': 'LIL',
             '카네이션': 'CAR',
-            '달리아': 'DAH',
+            '다알리아': 'DAH',
             '피오니': 'PEO',
             '아이리스': 'IRI',
             '아네모네': 'ANE',
@@ -267,11 +258,11 @@ class StoryManager:
             '스톡': 'STO',
             '스카비오사': 'SCA',
             '부바르디아': 'BOU',
-            '마거리트': 'MAR',
+            '마가렛': 'MAR',
             '맨드라미': 'COC',
             '목화': 'COT',
-            '드럼스틱': 'DRU',
-            '젠티아나': 'GEN',
+            '골든볼': 'DRU',
+            '용담': 'GEN',
             '천일홍': 'ZIN',
             '태게테스': 'TAG',
             '베로니카': 'VER',
@@ -286,12 +277,20 @@ class StoryManager:
             '아미': 'AMM',
             '잔테데스키아': 'ZAN',
             '다이안서스': 'DIA',
+            '해바라기': 'SUN',
+            '카라': 'CAL',
         }
         
-        if flower_name in korean_to_english:
-            return korean_to_english[flower_name]
+        # 1. 정확한 매칭 시도
+        if flower_name in flower_code_mapping:
+            return flower_code_mapping[flower_name]
         
-        # 마지막 fallback: 영문명에서 3자리 추출
+        # 2. 부분 매칭 시도 (영문명에 포함된 경우)
+        for key, code in flower_code_mapping.items():
+            if flower_name.lower() in key.lower() or key.lower() in flower_name.lower():
+                return code
+        
+        # 3. 최종 fallback: 영문명에서 3자리 추출
         english_name = flower_name.upper()
         # 공백과 특수문자 제거
         english_name = ''.join(c for c in english_name if c.isalpha())
@@ -322,7 +321,7 @@ class StoryManager:
             scientific_name=request.matched_flower.scientific_name,
             flower_card_message=request.flower_card_message or "",
             flower_blend=request.composition,
-            season_info=request.season_info or "",
+            season_info=request.season_info or {"season": "All Season", "months": "01-12"},
             recommendation_reason=request.recommendation_reason,
             flower_image_url=request.matched_flower.image_url,
             keywords=request.keywords,

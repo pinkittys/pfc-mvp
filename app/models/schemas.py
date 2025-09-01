@@ -52,7 +52,7 @@ class RecommendationItem(BaseModel):
     original_story: Optional[str] = None  # 원본 스토리
     extracted_keywords: Optional[List[str]] = None  # 추출된 키워드 (해시태그)
     flower_keywords: Optional[List[str]] = None  # 꽃 키워드 (꽃말)
-    season_info: Optional[str] = None  # 시즌 정보
+    season_info: Optional[Dict[str, str]] = None  # 시즌 정보 (시즌과 월 분리)
     english_message: Optional[str] = None  # 영어 메시지
     recommendation_reason: Optional[str] = None  # 상세 추천 이유
 
@@ -175,7 +175,7 @@ class StoryData(BaseModel):
     flower_blend: FlowerComposition
     
     # 계절 정보
-    season_info: str
+    season_info: Dict[str, str]
     
     # 추천 코멘트
     recommendation_reason: str
@@ -197,7 +197,7 @@ class StoryCreateRequest(BaseModel):
     composition: FlowerComposition
     recommendation_reason: str
     flower_card_message: Optional[str] = None
-    season_info: Optional[str] = None
+    season_info: Optional[Dict[str, str]] = None
     keywords: List[str] = []
     hashtags: List[str] = []
     color_keywords: List[str] = []

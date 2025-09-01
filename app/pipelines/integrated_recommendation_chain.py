@@ -206,8 +206,8 @@ class IntegratedRecommendationChain:
             "request": request
         }
 
-    def _get_season_info(self, flower_name: str) -> str:
-        """꽃의 시즌 정보 반환"""
+    def _get_season_info(self, flower_name: str) -> Dict[str, str]:
+        """꽃의 시즌 정보 반환 (시즌과 월 분리)"""
         try:
             # flower_dictionary.json에서 꽃 정보 찾기
             with open("data/flower_dictionary.json", "r", encoding="utf-8") as f:
@@ -219,28 +219,28 @@ class IntegratedRecommendationChain:
                     flower_info.get("scientific_name") == flower_name):
                     seasonality = flower_info.get("seasonality", [])
                     if len(seasonality) == 4:
-                        return "All Season 01-12"
+                        return {"season": "All Season", "months": "01-12"}
                     elif len(seasonality) == 2:
                         seasons = " ".join(seasonality)
                         if "봄" in seasons and "여름" in seasons:
-                            return "Spring/Summer 03-08"
+                            return {"season": "Spring/Summer", "months": "03-08"}
                         elif "가을" in seasons and "겨울" in seasons:
-                            return "Fall/Winter 09-02"
+                            return {"season": "Fall/Winter", "months": "09-02"}
                     elif len(seasonality) == 1:
                         season = seasonality[0]
                         if season == "봄":
-                            return "Spring 03-05"
+                            return {"season": "Spring", "months": "03-05"}
                         elif season == "여름":
-                            return "Summer 06-08"
+                            return {"season": "Summer", "months": "06-08"}
                         elif season == "가을":
-                            return "Fall 09-11"
+                            return {"season": "Fall", "months": "09-11"}
                         elif season == "겨울":
-                            return "Winter 12-02"
+                            return {"season": "Winter", "months": "12-02"}
             
-            return "All Season 01-12"  # 기본값
+            return {"season": "All Season", "months": "01-12"}  # 기본값
             
         except Exception as e:
             print(f"❌ 시즌 정보 조회 실패: {e}")
-            return "All Season 01-12"
+            return {"season": "All Season", "months": "01-12"}
     
 

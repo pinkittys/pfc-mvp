@@ -482,8 +482,8 @@ def _fallback_flower_card_message(matched_flower: FlowerMatch, emotions: List[Em
         return "You make every day beautiful.\n- The Sound of Music -"
 
 
-def _get_season_info(flower_name: str) -> str:
-    """꽃의 계절 정보 가져오기"""
+def _get_season_info(flower_name: str) -> Dict[str, str]:
+    """꽃의 계절 정보 가져오기 (시즌과 월 분리)"""
     try:
         # flower_dictionary.json에서 꽃 정보 찾기
         with open("data/flower_dictionary.json", "r", encoding="utf-8") as f:
@@ -496,16 +496,32 @@ def _get_season_info(flower_name: str) -> str:
                 flower_name.lower() in flower_info.get("korean_name", "").lower()):
                 
                 seasonality = flower_info.get("seasonality", [])
-                if seasonality:
-                    return ", ".join(seasonality)
+                if len(seasonality) == 4:
+                    return {"season": "All Season", "months": "01-12"}
+                elif len(seasonality) == 2:
+                    seasons = " ".join(seasonality)
+                    if "봄" in seasons and "여름" in seasons:
+                        return {"season": "Spring/Summer", "months": "03-08"}
+                    elif "가을" in seasons and "겨울" in seasons:
+                        return {"season": "Fall/Winter", "months": "09-02"}
+                elif len(seasonality) == 1:
+                    season = seasonality[0]
+                    if season == "봄":
+                        return {"season": "Spring", "months": "03-05"}
+                    elif season == "여름":
+                        return {"season": "Summer", "months": "06-08"}
+                    elif season == "가을":
+                        return {"season": "Fall", "months": "09-11"}
+                    elif season == "겨울":
+                        return {"season": "Winter", "months": "12-02"}
                 break
         
         # 찾지 못한 경우 기본값 반환
-        return "봄, 여름"
+        return {"season": "Spring/Summer", "months": "03-08"}
         
     except Exception as e:
         print(f"❌ 꽃 계절 정보 조회 실패: {e}")
-        return "봄, 여름"
+        return {"season": "Spring/Summer", "months": "03-08"}
 
 
 @router.post("/extract-context")

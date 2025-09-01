@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from app.models.schemas import KeywordRequest, KeywordExtractionResponse
+from app.models.schemas import KeywordRequest, KeywordExtractionResponse, KeywordWithAlternatives, KeywordDimension
 from app.services.realtime_context_extractor import RealtimeContextExtractor
 
 router = APIRouter()

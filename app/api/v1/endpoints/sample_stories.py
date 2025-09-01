@@ -122,8 +122,8 @@ async def recommend_from_sample_story(story_id: str):
         random_suffix = f"{random.randint(100000, 999999)}"
         story_id = f"S{current_date}-{flower_prefix.upper()}-{random_suffix}"
         
-        # 계절 정보 생성
-        season_info = "All Season 01-12"  # 기본값, 실제로는 꽃 데이터에서 가져와야 함
+        # 계절 정보 생성 (시즌과 월 분리)
+        season_info = {"season": "All Season", "months": "01-12"}  # 기본값, 실제로는 꽃 데이터에서 가져와야 함
         
         # 응답 생성 (실제 사용자 추천과 동일한 구조)
         response = {
