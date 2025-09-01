@@ -4,7 +4,7 @@
 import os
 import json
 from typing import Dict, List, Any, Optional
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 # .env 파일 로드
 try:
@@ -16,13 +16,19 @@ except ImportError:
 @dataclass
 class ExtractedContext:
     """추출된 맥락 정보"""
-    emotions: List[str]  # 감정
-    situations: List[str]  # 상황
-    moods: List[str]  # 무드
-    colors: List[str]  # 컬러
+    emotions: List[str]  # 감정 (메인 키워드 1개)
+    situations: List[str]  # 상황 (메인 키워드 1개)
+    moods: List[str]  # 무드 (메인 키워드 1개)
+    colors: List[str]  # 컬러 (메인 키워드 1개)
     confidence: float  # 신뢰도
     user_intent: str = "meaning_based"  # 사용자 의도 (meaning_based 또는 design_based)
     mentioned_flower: Optional[str] = None  # 언급된 꽃 이름
+    
+    # 대안 키워드 제안
+    emotions_alternatives: List[str] = field(default_factory=list)  # 감정 대안 키워드 2-3개
+    situations_alternatives: List[str] = field(default_factory=list)  # 상황 대안 키워드 2-3개
+    moods_alternatives: List[str] = field(default_factory=list)  # 무드 대안 키워드 2-3개
+    colors_alternatives: List[str] = field(default_factory=list)  # 색상 대안 키워드 2-3개
 
 class RealtimeContextExtractor:
     def __init__(self):
@@ -90,6 +96,7 @@ class RealtimeContextExtractor:
         mentioned_flower = self._detect_mentioned_flower(story)
         
         if not self.openai_api_key:
+            print("🔧 OPENAI_API_KEY가 없어서 fallback_extraction 사용")
             result = self._fallback_extraction(story, emotions, excluded_keywords)
             result.mentioned_flower = mentioned_flower
             return result
@@ -112,7 +119,7 @@ class RealtimeContextExtractor:
             )
             
             result = response.choices[0].message.content
-            parsed_result = self._parse_llm_response(result)
+            parsed_result = self._parse_llm_response(result, mentioned_flower)
             
             # 감정 분석 결과가 있으면 emotions를 감정 분석 결과로 대체
             if emotions and len(emotions) > 0:
@@ -199,7 +206,11 @@ class RealtimeContextExtractor:
             situations=[],
             moods=[],
             colors=[],
-            confidence=context.confidence
+            confidence=context.confidence,
+            emotions_alternatives=context.emotions_alternatives,
+            situations_alternatives=context.situations_alternatives,
+            moods_alternatives=context.moods_alternatives,
+            colors_alternatives=context.colors_alternatives
         )
         
         # 색상은 항상 색상 카테고리에 보존
@@ -439,16 +450,17 @@ class RealtimeContextExtractor:
 - 자연스러운: 자연스러운, 내추럴한, 깔끔한, 산뜻한, 시원한, 청량한, 상쾌한
 - 로맨틱한: 로맨틱한, 달콤한, 사랑스러운, 아름다운, 환상적인, 꿈꾸는, 몽환적인
 
-**색상 (colors) - 더 구체적으로**:
-- 따뜻한 색: 핑크, 레드, 오렌지, 옐로우, 살구색, 코랄, 로즈골드
-- 차가운 색: 블루, 화이트, 그린, 퍼플, 라일락, 네이비, 실버, 그레이
-- 중성 색: 베이지, 크림, 아이보리, 브라운, 블랙, 골드
+**색상 (colors) - 실제 DB 컬러코드만 사용**:
+- **화이트 (wh)**: "화이트", "흰색", "순수", "깨끗한"
+- **오렌지 (or)**: "오렌지", "주황", "따뜻한", "활기"
+- **레드 (rd)**: "레드", "빨강", "열정", "사랑"
+- **옐로우 (yl)**: "옐로우", "노랑", "골드", "밝은"
+- **핑크 (pk)**: "핑크", "분홍", "로즈", "로맨틱"
+- **라일락 (ll)**: "라일락", "연보라", "은은한", "부드러운"
+- **블루 (bl)**: "블루", "파랑", "시원한", "차분한"
+- **퍼플 (pu)**: "퍼플", "보라", "신비로운", "우아한"
 
-**색상 매핑 규칙 (우선순위)**:
-1. **연보라/라일락**: "연보라", "연한 보라", "은은한 보라", "부드러운 보라", "라일락" → 라일락
-2. **보라/퍼플**: "보라", "진한 보라", "신비로운 보라" → 퍼플
-3. **파랑/블루**: "파랑", "푸른", "시원한" → 블루
-4. **분홍/핑크**: "분홍", "로즈", "로맨틱" → 핑크
+**중요**: 위 8개 색상 중에서만 선택하세요. 다른 색상은 사용하지 마세요.
 
 **중요**: 명시적 색상 표현이 있으면 반드시 해당 색상을 우선 추출하세요.
 """
@@ -476,7 +488,7 @@ class RealtimeContextExtractor:
 }}
 """
     
-    def _parse_llm_response(self, response: str) -> ExtractedContext:
+    def _parse_llm_response(self, response: str, mentioned_flower: Optional[str] = None) -> ExtractedContext:
         """LLM 응답 파싱"""
         try:
             # JSON 추출 (```json ... ``` 형태일 수도 있음)
@@ -489,17 +501,63 @@ class RealtimeContextExtractor:
             
             data = json.loads(json_str)
             
-            return ExtractedContext(
-                emotions=data.get("emotions", []),
-                situations=data.get("situations", []),
-                moods=data.get("moods", []),
-                colors=data.get("colors", []),
-                confidence=data.get("confidence", 0.5)
+            # LLM에서 추출된 키워드에 대한 대안 키워드 생성
+            emotions = data.get("emotions", [])
+            situations = data.get("situations", [])
+            moods = data.get("moods", [])
+            colors = data.get("colors", [])
+            
+            # 각 디멘션에서 첫 번째 키워드만 메인 키워드로 사용
+            emotions = emotions[:1] if emotions else []
+            situations = situations[:1] if situations else []
+            moods = moods[:1] if moods else []
+            colors = colors[:1] if colors else []
+            
+            # 대안 키워드 생성
+            emotions_alternatives = []
+            situations_alternatives = []
+            moods_alternatives = []
+            colors_alternatives = []
+            
+            print(f"🎯 LLM 경로에서 대안 키워드 생성:")
+            print(f"  emotions: {emotions}")
+            print(f"  situations: {situations}")
+            print(f"  moods: {moods}")
+            print(f"  colors: {colors}")
+            
+            if emotions and len(emotions) > 0:
+                emotions_alternatives = self._generate_emotion_alternatives(emotions[0])
+                print(f"  감정 대안: {emotions_alternatives}")
+            
+            if situations and len(situations) > 0:
+                situations_alternatives = self._generate_situation_alternatives(situations[0])
+                print(f"  상황 대안: {situations_alternatives}")
+            
+            if moods and len(moods) > 0:
+                moods_alternatives = self._generate_mood_alternatives(moods[0])
+                print(f"  무드 대안: {moods_alternatives}")
+            
+            if colors and len(colors) > 0:
+                colors_alternatives = self._generate_color_alternatives(colors[0])
+                print(f"  색상 대안: {colors_alternatives}")
+            
+            result = ExtractedContext(
+                emotions=emotions,
+                situations=situations,
+                moods=moods,
+                colors=colors,
+                confidence=data.get("confidence", 0.5),
+                emotions_alternatives=emotions_alternatives,
+                situations_alternatives=situations_alternatives,
+                moods_alternatives=moods_alternatives,
+                colors_alternatives=colors_alternatives
             )
+            result.mentioned_flower = mentioned_flower
+            return result
             
         except Exception as e:
             print(f"❌ LLM 응답 파싱 실패: {e}")
-            return self._fallback_extraction("")
+            return self._fallback_extraction("", emotions, excluded_keywords)
     
     def _fallback_extraction(self, story: str, emotions: List[dict] = None, excluded_keywords: List[Dict[str, str]] = None) -> ExtractedContext:
         """기본 추출기 (LLM 실패 시)"""
@@ -761,13 +819,18 @@ class RealtimeContextExtractor:
         emotions = [e for e in emotions if e not in excluded_texts]
         print(f"🚫 제외된 키워드로 인한 감정 필터링: {excluded_texts}")
         
-        # 감정이 여전히 적으면 기본 감정 추가 (제외된 키워드 제외)
-        if len(emotions) < 2:
+        # 감정이 없으면 기본 감정 1개 추가 (제외된 키워드 제외)
+        if len(emotions) < 1:
             # 현재 감정 위주로 기본값 설정
-            default_emotions = ["사랑", "감사", "기쁨", "희망", "따뜻함"]
+            default_emotions = ["사랑", "감사", "기쁨", "희망", "따뜻함", "편안함", "설렘", "우정"]
             for emotion in default_emotions:
-                if emotion not in emotions and emotion not in excluded_texts and len(emotions) < 3:
+                if emotion not in emotions and emotion not in excluded_texts and len(emotions) < 1:
                     emotions.append(emotion)
+                    break  # 1개만 추가
+        
+        # emotions가 비어있으면 기본값 설정
+        if not emotions:
+            emotions = ["사랑"]
         
         # 상황 키워드 매칭 (가장 정확한 매칭 우선)
         situations = []
@@ -829,12 +892,12 @@ class RealtimeContextExtractor:
         has_certain_mood = any(expression in story_lower for expression in certain_mood_expressions)
         
         if has_explicit_mood and has_certain_mood:
-            # 무드가 명시되고 확실한 경우: 1개만 유지
-            moods = moods[:1]
-            print(f"🎭 확실한 무드 감지: {moods[0]} (1개만 유지)")
+            # 무드가 명시되고 확실한 경우: 2개까지 유지
+            moods = moods[:2]
+            print(f"🎭 확실한 무드 감지: {moods} (2개까지 유지)")
         elif has_explicit_mood and not has_certain_mood:
-            # 무드가 명시되었지만 모호한 경우: 3개 옵션 제안
-            if len(moods) < 3:
+            # 무드가 명시되었지만 모호한 경우: 4개 옵션 제안
+            if len(moods) < 4:
                 if "부드러운" in story_lower:
                     if "부드러운" not in moods:
                         moods.append("부드러운")
@@ -873,10 +936,10 @@ class RealtimeContextExtractor:
             print(f"🎭 모호한 무드: {moods} (3개 옵션 제안)")
         else:
             # 무드가 명시되지 않은 경우: 기본 무드 추가
-            if len(moods) < 2:
-                default_moods = ["따뜻한", "부드러운", "로맨틱한", "우아한", "자연스러운"]
+            if len(moods) < 4:
+                default_moods = ["따뜻한", "부드러운", "로맨틱한", "우아한", "자연스러운", "활기찬", "편안한", "세련된"]
                 for mood in default_moods:
-                    if mood not in moods and len(moods) < 3:
+                    if mood not in moods and len(moods) < 4:
                         moods.append(mood)
             print(f"🎭 기본 무드: {moods} (기본값 추가)")
         
@@ -886,26 +949,35 @@ class RealtimeContextExtractor:
         
         # emotions가 비어있으면 기본값 추가
         if not emotions:
-            emotions = ["기쁨"]
+            emotions = ["사랑"]
         
-        # 상황 키워드가 적으면 기본값 추가
-        if len(situations) < 2:
+        # moods가 비어있으면 기본값 추가
+        if not moods:
+            moods = ["따뜻한"]
+        
+        # colors가 비어있으면 기본값 추가
+        if not colors:
+            colors = ["화이트"]
+        
+        # 상황 키워드가 없으면 기본값 1개 추가
+        if len(situations) < 1:
             story_lower = story.lower()
             if "남편" in story_lower or "아내" in story_lower:
                 if "남편" not in situations and "아내" not in situations:
                     situations.append("남편" if "남편" in story_lower else "아내")
-                if "로맨틱" not in situations:
-                    situations.append("로맨틱")
             elif "친구" in story_lower:
                 if "친구" not in situations:
                     situations.append("친구")
-                if "우정" not in situations:
-                    situations.append("우정")
             else:
-                default_situations = ["친구", "가족", "로맨틱"]
+                default_situations = ["친구", "가족", "로맨틱", "일상", "위로", "축하"]
                 for situation in default_situations:
-                    if situation not in situations and len(situations) < 3:
+                    if situation not in situations and len(situations) < 1:
                         situations.append(situation)
+                        break  # 1개만 추가
+        
+        # situations가 비어있으면 기본값 설정
+        if not situations:
+            situations = ["일상"]
         
         # 색상 우선순위 처리 (여러 색상이 추출된 경우)
         if len(colors) > 1:
@@ -954,12 +1026,12 @@ class RealtimeContextExtractor:
         has_mood_only = any(mood in story_lower for mood in mood_color_keywords) and not has_explicit_color
         
         if has_explicit_color:
-            # 컬러톤이 명시된 경우: 1개만 유지 (고객이 원하는 색상이 명확함)
-            colors = colors[:1]
-            print(f"🎨 명시적 컬러 감지: {colors[0]} (1개만 유지)")
+            # 컬러톤이 명시된 경우: 2개까지 유지 (고객이 원하는 색상이 명확함)
+            colors = colors[:2]
+            print(f"🎨 명시적 컬러 감지: {colors} (2개까지 유지)")
         elif has_mood_only:
-            # 분위기만 지정된 경우: 3개 옵션 제안
-            if len(colors) < 3:
+            # 분위기만 지정된 경우: 4개 옵션 제안
+            if len(colors) < 4:
                 if "부드러운" in story_lower or "부드러운 꽃" in story_lower:
                     if "핑크" not in colors:
                         colors.append("핑크")
@@ -1002,80 +1074,86 @@ class RealtimeContextExtractor:
             print(f"🎭 분위기만 지정: {colors} (3개 옵션 제안)")
         else:
             # 기본 색상이 추출된 경우: 기본 색상 추가 (긴 텍스트에서만)
-            if len(colors) < 2 and len(story.strip()) > 30:
-                default_colors = ["핑크", "화이트", "레드", "블루"]
+            if len(colors) < 4 and len(story.strip()) > 30:
+                default_colors = ["핑크", "화이트", "레드", "블루", "옐로우", "퍼플", "오렌지", "그린"]
                 for color in default_colors:
-                    if color not in colors and len(colors) < 3:
+                    if color not in colors and len(colors) < 4:
                         colors.append(color)
                 print(f"🎨 기본 색상: {colors} (기본값 추가)")
             elif len(colors) == 0:
                 print(f"🎨 색상 미추출: 명시적 색상 요청이 없음")
         
-        # 최대 개수 제한 (각 카테고리별 1~3개, 전체 12개 이하로 제한)
-        emotions = emotions[:3]  # 최대 3개로 확장
-        situations = situations[:3]  # 최대 3개로 확장
-        moods = moods[:3]  # 최대 3개로 확장
-        colors = colors[:3]  # 최대 3개로 확장
+        # 메인 키워드는 각 디멘션별로 1개씩만 추출
+        emotions = emotions[:1]  # 메인 키워드 1개
+        situations = situations[:1]  # 메인 키워드 1개
+        moods = moods[:1]  # 메인 키워드 1개
+        colors = colors[:1]  # 메인 키워드 1개
         
-        # 전체 키워드 개수 확인 및 조정 (최대 12개)
+        # 메인 키워드는 이미 1개씩으로 제한됨 (전체 4개)
         total_keywords = len(emotions) + len(situations) + len(moods) + len(colors)
-        if total_keywords > 12:
-            # 우선순위: colors > moods > situations > emotions
-            if total_keywords > 12 and len(emotions) > 3:
-                emotions = emotions[:3]
-            if total_keywords > 12 and len(situations) > 3:
-                situations = situations[:3]
-            if total_keywords > 12 and len(moods) > 3:
-                moods = moods[:3]
-            if total_keywords > 12 and len(colors) > 3:
-                colors = colors[:3]
+        print(f"🔧 메인 키워드 개수: {total_keywords}개")
         
         # 점진적 키워드 추출: 텍스트 길이에 따라 키워드 수 조절
         text_length = len(story.strip())
         
-        # 텍스트가 짧으면 감정만 추출 (색상은 명시적 요청이 있을 때만)
-        if text_length <= 10:
-            emotions = emotions[:1] if emotions else []
-            situations = []  # 상황은 추출하지 않음
-            moods = []  # 무드는 추출하지 않음
-            # 색상은 명시적 색상 키워드가 있을 때만
-            explicit_colors = ["블루", "파랑", "푸른", "블루톤", "핑크", "레드", "화이트", "노랑", "옐로우", "오렌지", "퍼플", "보라", "그린", "초록"]
-            if any(color in story.lower() for color in explicit_colors):
-                colors = colors[:1] if colors else []
-            else:
-                colors = []  # 명시적 색상 요청이 없으면 색상 추출하지 않음
-            print(f"📝 짧은 텍스트 ({text_length}자): 감정만 추출, 색상은 명시적 요청시만")
-        
-        # 텍스트가 중간이면 감정+상황 추출
-        elif text_length <= 30:
-            emotions = emotions[:2] if emotions else []
-            situations = situations[:1] if situations else []
-            moods = []  # 무드는 추출하지 않음
-            # 색상은 명시적 색상 키워드가 있을 때만
-            explicit_colors = ["블루", "파랑", "푸른", "블루톤", "핑크", "레드", "화이트", "노랑", "옐로우", "오렌지", "퍼플", "보라", "그린", "초록"]
-            if any(color in story.lower() for color in explicit_colors):
-                colors = colors[:1] if colors else []
-            else:
-                colors = []  # 명시적 색상 요청이 없으면 색상 추출하지 않음
-            print(f"📝 중간 텍스트 ({text_length}자): 감정+상황 추출, 색상은 명시적 요청시만")
-        
-        # 텍스트가 길면 모든 키워드 추출
-        else:
-            emotions = emotions[:3] if emotions else []
-            situations = situations[:2] if situations else []
-            moods = moods[:2] if moods else []
-            colors = colors[:2] if colors else []
-            print(f"📝 긴 텍스트 ({text_length}자): 모든 키워드 추출")
+        # 메인 키워드는 항상 1개씩만 추출 (텍스트 길이와 무관)
+        emotions = emotions[:1] if emotions else []
+        situations = situations[:1] if situations else []
+        moods = moods[:1] if moods else []
+        colors = colors[:1] if colors else []
+        print(f"📝 메인 키워드 추출: 감정={emotions}, 상황={situations}, 무드={moods}, 색상={colors}")
         
         print(f"🔧 최종 키워드: emotions={emotions}, situations={situations}, moods={moods}, colors={colors}")
         
+        # 대안 키워드 생성
+        emotions_alternatives = []
+        situations_alternatives = []
+        moods_alternatives = []
+        colors_alternatives = []
+        
+        print(f"🔍 대안 키워드 생성 시작:")
+        print(f"  emotions: {emotions}, len: {len(emotions) if emotions else 0}")
+        print(f"  situations: {situations}, len: {len(situations) if situations else 0}")
+        print(f"  moods: {moods}, len: {len(moods) if moods else 0}")
+        print(f"  colors: {colors}, len: {len(colors) if colors else 0}")
+        
+        if emotions and len(emotions) > 0:
+            print(f"  감정 대안 생성: {emotions[0]}")
+            emotions_alternatives = self._generate_emotion_alternatives(emotions[0])
+            print(f"  감정 대안 결과: {emotions_alternatives}")
+        
+        if situations and len(situations) > 0:
+            print(f"  상황 대안 생성: {situations[0]}")
+            situations_alternatives = self._generate_situation_alternatives(situations[0])
+            print(f"  상황 대안 결과: {situations_alternatives}")
+        
+        if moods and len(moods) > 0:
+            print(f"  무드 대안 생성: {moods[0]}")
+            moods_alternatives = self._generate_mood_alternatives(moods[0])
+            print(f"  무드 대안 결과: {moods_alternatives}")
+        
+        if colors and len(colors) > 0:
+            print(f"  색상 대안 생성: {colors[0]}")
+            colors_alternatives = self._generate_color_alternatives(colors[0], context)
+            print(f"  색상 대안 결과: {colors_alternatives}")
+        
+        print(f"🎯 대안 키워드 생성:")
+        print(f"  감정: {emotions} → 대안: {emotions_alternatives}")
+        print(f"  상황: {situations} → 대안: {situations_alternatives}")
+        print(f"  무드: {moods} → 대안: {moods_alternatives}")
+        print(f"  색상: {colors} → 대안: {colors_alternatives}")
+        
         return ExtractedContext(
-            emotions=emotions[:3],  # 최대 3개로 확장
-            situations=situations[:3],  # 최대 3개로 확장
-            moods=moods[:3],  # 최대 3개로 확장
-            colors=colors[:3],  # 최대 3개로 확장
+            emotions=emotions[:1],  # 메인 키워드 1개
+            situations=situations[:1],  # 메인 키워드 1개
+            moods=moods[:1],  # 메인 키워드 1개
+            colors=colors[:1],  # 메인 키워드 1개
             confidence=0.3,  # 낮은 신뢰도
-            user_intent=user_intent  # 사용자 의도 추가
+            user_intent=user_intent,  # 사용자 의도 추가
+            emotions_alternatives=emotions_alternatives,  # 감정 대안 키워드
+            situations_alternatives=situations_alternatives,  # 상황 대안 키워드
+            moods_alternatives=moods_alternatives,  # 무드 대안 키워드
+            colors_alternatives=colors_alternatives  # 색상 대안 키워드
         )
     
     def _extract_basic_emotions(self, story: str) -> List[str]:
@@ -1176,3 +1254,197 @@ class RealtimeContextExtractor:
         # 기본값
         else:
             return ["따뜻한"]
+    
+    def _get_default_colors(self, story: str) -> List[str]:
+        """기본 색상 제공"""
+        story_lower = story.lower()
+        
+        # 위로/힐링 관련
+        if any(word in story_lower for word in ["위로", "힐링", "편안", "차분", "쉬고", "휴식"]):
+            return ["화이트"]
+        # 축하/기쁨 관련
+        elif any(word in story_lower for word in ["축하", "생일", "기쁨", "행복", "합격"]):
+            return ["옐로우"]
+        # 사랑/감사 관련
+        elif any(word in story_lower for word in ["사랑", "감사", "고맙", "은혜"]):
+            return ["핑크"]
+        # 기본값
+        else:
+            return ["화이트"]
+    
+    def _generate_emotion_alternatives(self, main_emotion: str) -> List[str]:
+        """감정 대안 키워드 생성"""
+        alternatives_map = {
+            "사랑": ["애정", "로맨틱", "따뜻함"],
+            "감사": ["고마움", "은혜", "소중함"],
+            "기쁨": ["행복", "즐거움", "설렘"],
+            "희망": ["미래", "새로운 시작", "꿈"],
+            "위로": ["안심", "편안함", "차분함"],
+            "슬픔": ["애도", "그리움", "외로움"],
+            "스트레스": ["피곤", "지침", "불안"],
+            "우울": ["침울", "답답함", "허전함"],
+            "설렘": ["두근거림", "떨림", "긴장"],
+            "감동": ["감사", "뭉클함", "따뜻함"]
+        }
+        return alternatives_map.get(main_emotion, ["애정", "따뜻함", "편안함"])
+    
+    def _generate_situation_alternatives(self, main_situation: str) -> List[str]:
+        """상황 대안 키워드 생성"""
+        alternatives_map = {
+            "위로": ["격려", "힐링", "안심"],
+            "축하": ["경사", "축하파티", "기념"],
+            "사과": ["용서", "화해", "재회"],
+            "고백": ["프로포즈", "사랑", "진심"],
+            "생일": ["기념일", "파티", "선물"],
+            "졸업": ["학위", "성취", "새로운 시작"],
+            "합격": ["성공", "축하", "자랑"],
+            "친구": ["우정", "동료", "절친"],
+            "가족": ["부모", "자식", "형제"],
+            "로맨틱": ["데이트", "연인", "사랑"],
+            "일상": ["루틴", "편안함", "소소한"],
+            "방꾸미기": ["인테리어", "홈데코", "공간"],
+            "휴식": ["쉬기", "힐링", "편안함"],
+            "기분전환": ["새로운", "활력", "환기"],
+            "스트레스해소": ["힐링", "편안함", "안정"],
+            "자기위로": ["힐링", "편안함", "안정"],
+            "힐링": ["치유", "편안함", "안정"],
+            "명상": ["집중", "차분함", "평온"],
+            "독서": ["지식", "여유", "편안함"],
+            "운동": ["활력", "건강", "에너지"],
+            "취미활동": ["즐거움", "창작", "표현"],
+            "자기계발": ["성장", "발전", "학습"],
+            "새로운시작": ["변화", "도전", "모험"],
+            "거실": ["가족", "편안함", "아늑함"],
+            "침실": ["휴식", "편안함", "안정"],
+            "사무실": ["업무", "집중", "성과"],
+            "카페": ["분위기", "아늑함", "편안함"],
+            "정원": ["자연", "신선함", "평화"],
+            "발코니": ["야외", "바람", "햇살"],
+            "베란다": ["야외", "바람", "햇살"],
+            "인테리어": ["디자인", "스타일", "분위기"],
+            "홈데코": ["장식", "소품", "포인트"],
+            "공간분위기": ["무드", "감성", "환경"],
+            "조명": ["분위기", "밝기", "환경"]
+        }
+        return alternatives_map.get(main_situation, ["일상", "편안함", "즐거움"])
+    
+    def _generate_mood_alternatives(self, main_mood: str) -> List[str]:
+        """무드 대안 키워드 생성"""
+        alternatives_map = {
+            "따뜻한": ["포근한", "편안한", "안정적인"],
+            "부드러운": ["은은한", "조용한", "차분한"],
+            "로맨틱한": ["달콤한", "사랑스러운", "아름다운"],
+            "활기찬": ["경쾌한", "밝은", "즐거운"],
+            "우아한": ["세련된", "고급스러운", "품격 있는"],
+            "자연스러운": ["내추럴한", "깔끔한", "심플한"],
+            "화려한": ["비비드한", "알록달록한", "눈부신"],
+            "심플한": ["가벼운", "간단한", "미니멀한"],
+            "가벼운": ["가볍지만", "간단한", "심플한"],
+            "감사한": ["고마워", "은혜", "도움"],
+            "사랑스러운": ["애정", "정", "마음"],
+            "편안한": ["편하게", "쉬고", "휴식"],
+            "평온한": ["차분", "조용한", "고요한"],
+            "기분전환": ["새로운", "활력", "환기"],
+            "밝은": ["밝게", "활기찬", "경쾌한"],
+            "기쁜": ["행복한", "즐거운", "신나는"],
+            "위로받고 싶은": ["안심", "편안함", "차분함"],
+            
+            # 색상 관련 무드 추가
+            "시원한": ["시원한", "차분한", "상쾌한"],
+            "신비로운": ["신비로운", "우아한", "고급스러운"],
+            "순수한": ["순수한", "깨끗한", "정갈한"],
+            "열정적인": ["열정적인", "강렬한", "뜨거운"],
+            "은은한": ["은은한", "부드러운", "조용한"]
+        }
+        return alternatives_map.get(main_mood, ["따뜻한", "편안한", "자연스러운"])
+    
+    def _generate_color_alternatives(self, main_color: str, context: ExtractedContext = None) -> List[str]:
+        """색상 대안 키워드 생성 - 컨텍스트 기반 색상 팔레트 추천"""
+        
+        # 컨텍스트가 없으면 기본 대안 반환
+        if not context:
+            basic_alternatives = {
+                "화이트": ["핑크", "라일락"],     # wh
+                "오렌지": ["옐로우", "레드"],     # or  
+                "레드": ["핑크", "오렌지"],       # rd
+                "옐로우": ["오렌지", "핑크"],     # yl
+                "핑크": ["라일락", "화이트"],    # pk
+                "라일락": ["핑크", "퍼플"],      # ll
+                "블루": ["퍼플", "화이트"],      # bl
+                "퍼플": ["라일락", "블루"]       # pu
+            }
+            return basic_alternatives.get(main_color, ["화이트", "핑크", "블루"])
+        
+        # 컨텍스트 기반 색상 팔레트 추천
+        emotion = context.emotions[0] if context.emotions else ""
+        mood = context.moods[0] if context.moods else ""
+        
+        # 감정 + 무드 조합에 따른 색상 팔레트
+        if emotion == "위로" or "위로" in mood or "따뜻한" in mood:
+            # 위로/따뜻함 → 부드럽고 편안한 색상
+            warm_palette = {
+                "핑크": ["라일락", "화이트"],
+                "라일락": ["핑크", "퍼플"],
+                "화이트": ["핑크", "라일락"],
+                "퍼플": ["라일락", "핑크"],
+                "블루": ["라일락", "화이트"],
+                "레드": ["핑크", "라일락"],
+                "오렌지": ["핑크", "옐로우"],
+                "옐로우": ["핑크", "오렌지"]
+            }
+            return warm_palette.get(main_color, ["핑크", "라일락"])
+            
+        elif emotion == "기쁨" or "활기찬" in mood or "밝은" in mood:
+            # 기쁨/활기찬 → 밝고 경쾌한 색상
+            bright_palette = {
+                "옐로우": ["오렌지", "핑크"],
+                "오렌지": ["옐로우", "레드"],
+                "핑크": ["옐로우", "라일락"],
+                "레드": ["오렌지", "핑크"],
+                "라일락": ["핑크", "퍼플"],
+                "퍼플": ["라일락", "핑크"],
+                "블루": ["라일락", "퍼플"],
+                "화이트": ["핑크", "옐로우"]
+            }
+            return bright_palette.get(main_color, ["옐로우", "핑크"])
+            
+        elif emotion == "사랑" or "로맨틱" in mood:
+            # 사랑/로맨틱 → 로맨틱한 색상
+            romantic_palette = {
+                "핑크": ["라일락", "레드"],
+                "레드": ["핑크", "라일락"],
+                "라일락": ["핑크", "퍼플"],
+                "퍼플": ["라일락", "핑크"],
+                "화이트": ["핑크", "라일락"],
+                "블루": ["라일락", "퍼플"],
+                "오렌지": ["핑크", "레드"],
+                "옐로우": ["핑크", "오렌지"]
+            }
+            return romantic_palette.get(main_color, ["핑크", "라일락"])
+            
+        elif emotion == "우울" or "차분한" in mood or "시원한" in mood:
+            # 우울/차분함 → 차분하고 시원한 색상
+            cool_palette = {
+                "블루": ["퍼플", "라일락"],
+                "퍼플": ["블루", "라일락"],
+                "라일락": ["블루", "퍼플"],
+                "화이트": ["블루", "라일락"],
+                "핑크": ["라일락", "퍼플"],
+                "레드": ["퍼플", "블루"],
+                "오렌지": ["라일락", "블루"],
+                "옐로우": ["라일락", "블루"]
+            }
+            return cool_palette.get(main_color, ["블루", "라일락"])
+        
+        # 기본 팔레트 (위 조건에 해당하지 않는 경우)
+        default_palette = {
+            "핑크": ["라일락", "화이트"],
+            "블루": ["퍼플", "라일락"],
+            "화이트": ["핑크", "라일락"],
+            "레드": ["핑크", "오렌지"],
+            "옐로우": ["오렌지", "핑크"],
+            "오렌지": ["옐로우", "레드"],
+            "라일락": ["핑크", "퍼플"],
+            "퍼플": ["라일락", "블루"]
+        }
+        return default_palette.get(main_color, ["화이트", "핑크", "블루"])

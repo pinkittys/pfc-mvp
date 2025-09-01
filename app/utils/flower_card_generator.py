@@ -38,8 +38,9 @@ def generate_flower_card_message(flower_match: FlowerMatch, emotion_analysis: Li
         "Happiness held is the seed; happiness shared is the flower" - (John Harrigan)
         """
         
-        # OpenAI API 호출
-        response = openai.ChatCompletion.create(
+        # OpenAI API 호출 (새로운 버전)
+        client = openai.OpenAI()
+        response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": "You are a poetic flower card message writer who creates beautiful, meaningful quotes for flower gifts."},

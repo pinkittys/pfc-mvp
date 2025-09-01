@@ -2,6 +2,26 @@ from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Any
 from datetime import datetime
 
+# 새로운 키워드 구조 스키마 추가
+class KeywordWithAlternatives(BaseModel):
+    """메인 키워드와 대안 키워드를 포함하는 구조"""
+    main: str  # 메인 키워드
+    alternatives: List[str]  # 대안 키워드 2-3개
+
+class KeywordDimension(BaseModel):
+    """각 디멘션별 키워드 구조"""
+    emotions: List[KeywordWithAlternatives] = []      # 감정 디멘션
+    situations: List[KeywordWithAlternatives] = []    # 상황 디멘션
+    moods: List[KeywordWithAlternatives] = []         # 무드 디멘션
+    colors: List[KeywordWithAlternatives] = []        # 색상 디멘션
+
+class KeywordExtractionResponse(BaseModel):
+    """키워드 추출 응답"""
+    success: bool
+    keywords: KeywordDimension
+    confidence: float
+    message: str = ""
+
 class KeywordRequest(BaseModel):
     story: str
 
@@ -44,6 +64,10 @@ class RecommendResponse(BaseModel):
     recommendations: List[RecommendationItem]
     emotions: Optional[List[EmotionAnalysis]] = None  # 감정 분석 결과 추가
     story_id: Optional[str] = None  # 스토리 ID 추가
+    
+    # 새로운 키워드 구조 추가
+    extracted_keywords: Optional[KeywordDimension] = None  # 추출된 키워드 (메인 + 대안)
+    final_keywords: Optional[Dict[str, List[str]]] = None  # 최종 선택된 키워드
 
 class FlowerMatch(BaseModel):
     flower_name: str
@@ -66,6 +90,10 @@ class EmotionAnalysisResponse(BaseModel):
     recommendation_reason: str
     flower_card_message: Optional[str] = None
     story_id: Optional[str] = None  # 스토리 ID 추가
+    
+    # 새로운 키워드 구조 추가
+    extracted_keywords: Optional[KeywordDimension] = None  # 추출된 키워드 (메인 + 대안)
+    final_keywords: Optional[str] = None  # 최종 선택된 키워드
 
 class FlowerInfo(BaseModel):
     """꽃 정보 모델"""
