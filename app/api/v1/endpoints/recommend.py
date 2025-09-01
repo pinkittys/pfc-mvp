@@ -196,6 +196,10 @@ def emotion_analysis(req: RecommendRequest):
         season_info = _get_season_info(matched_flower.flower_name)
         
         # 9. 스토리 데이터베이스에 저장
+        # Story ID 생성
+        story_id = None
+        story_data = None
+        
         try:
             story_request = StoryCreateRequest(
                 story=req.story,
@@ -212,11 +216,18 @@ def emotion_analysis(req: RecommendRequest):
             )
             
             story_data = story_manager.create_story(story_request)
-            print(f"✅ 스토리 저장 완료: {story_data.story_id}")
+            story_id = story_data.story_id
+            print(f"✅ 스토리 저장 완료: {story_id}")
             
         except Exception as e:
             print(f"⚠️ 스토리 저장 실패: {e}")
-            # 스토리 저장 실패해도 추천 결과는 반환
+            # Fallback: 꽃 이름으로 story_id 생성
+            try:
+                story_id = story_manager._generate_story_id(matched_flower.flower_name)
+                print(f"✅ Fallback story_id 생성: {story_id}")
+            except Exception as e:
+                print(f"⚠️ Fallback story_id 생성 실패: {e}")
+                story_id = f"FALLBACK-{int(time.time())}"
         
         # 결과 생성
         result = EmotionAnalysisResponse(
@@ -225,7 +236,7 @@ def emotion_analysis(req: RecommendRequest):
             composition=composition,
             recommendation_reason=reason,
             flower_card_message=flower_card_message,
-            story_id=story_data.story_id if 'story_data' in locals() else None
+            story_id=story_id
         )
         
         # 결과 캐시에 저장 (updated_context가 있으면 우선순위 높게)

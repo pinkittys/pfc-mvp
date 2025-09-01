@@ -34,9 +34,22 @@ app.include_router(api_v1_router, prefix="/api/v1")
 async def root():
     return {"message": "Floiy-Reco API is running!"}
 
+@app.get("/ping")
+async def ping():
+    """간단한 헬스체크 엔드포인트 (빠른 응답)"""
+    return {"status": "ok", "timestamp": datetime.now().isoformat()}
+
 @app.get("/health")
 async def health_check():
-    """헬스체크 엔드포인트"""
+    """빠른 헬스체크 엔드포인트 (Pod 시작용)"""
+    return {
+        "status": "healthy",
+        "timestamp": datetime.now().isoformat()
+    }
+
+@app.get("/health/detailed")
+async def detailed_health_check():
+    """상세 헬스체크 엔드포인트 (모니터링용)"""
     return {
         "status": "healthy",
         "timestamp": datetime.now().isoformat(),

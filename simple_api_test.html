@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>핵심 API 테스트 - Floiy Reco</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .input-section {
+            margin-bottom: 30px;
+        }
+
+        .story-input {
+            width: 100%;
+            padding: 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 15px;
+            font-size: 16px;
+            resize: vertical;
+            min-height: 120px;
+            transition: border-color 0.3s ease;
+        }
+
+        .story-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .test-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .test-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .test-btn.success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .test-btn.error {
+            background: linear-gradient(135deg, #dc3545 0%, #e74c3c 100%);
+        }
+
+        .result-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+            border: 2px solid #e9ecef;
+        }
+
+        .result-header {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #495057;
+        }
+
+        .result-content {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #dee2e6;
+        }
+
+        .loading {
+            color: #667eea;
+            font-style: italic;
+        }
+
+        .success {
+            color: #28a745;
+        }
+
+        .error {
+            color: #dc3545;
+        }
+
+        .api-info {
+            background: #e3f2fd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .api-info h3 {
+            color: #1976d2;
+            margin-bottom: 15px;
+        }
+
+        .api-endpoint {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌸 Floiy Reco</h1>
+            <p>핵심 API 테스트 - 간단하고 명확하게</p>
+        </div>
+
+        <div class="main-content">
+            <div class="api-info">
+                <h3>🎯 핵심 API 엔드포인트</h3>
+                <div class="api-endpoint">POST /api/v1/extract_keywords - 키워드 추출</div>
+                <div class="api-endpoint">POST /api/v1/recommend - 꽃 추천</div>
+                <div class="api-endpoint">GET /health - 서버 상태 확인</div>
+            </div>
+
+            <div class="input-section">
+                <h3>📝 이야기 입력</h3>
+                <textarea 
+                    id="storyInput" 
+                    class="story-input" 
+                    placeholder="꽃을 추천받고 싶은 이야기를 입력해주세요...&#10;&#10;예시:&#10;친구 생일을 축하하고 싶어요.&#10;그녀는 핑크색을 좋아하고 로맨틱한 분위기를 선호해요."
+                ></textarea>
+                
+                <div class="button-group">
+                    <button class="test-btn" onclick="testHealth()">🏥 서버 상태</button>
+                    <button class="test-btn" onclick="testExtractKeywords()">🔍 키워드 추출</button>
+                    <button class="test-btn" onclick="testRecommend()">🌸 꽃 추천</button>
+                    <button class="test-btn" onclick="testFullFlow()">🚀 전체 흐름</button>
+                </div>
+            </div>
+
+            <div class="result-section">
+                <div class="result-header">📊 테스트 결과</div>
+                <div id="resultContent" class="result-content">
+                    테스트를 시작하려면 위의 버튼을 클릭하세요.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://api.plainflowerclub.com/api/v1';
+        
+        function showResult(content, type = 'info') {
+            const resultDiv = document.getElementById('resultContent');
+            resultDiv.textContent = content;
+            resultDiv.className = `result-content ${type}`;
+        }
+
+        function updateButton(button, success) {
+            button.className = `test-btn ${success ? 'success' : 'error'}`;
+            setTimeout(() => {
+                button.className = 'test-btn';
+            }, 2000);
+        }
+
+        async function testHealth() {
+            const button = event.target;
+            showResult('🏥 서버 상태 확인 중...', 'loading');
+            
+            try {
+                const response = await fetch('https://api.plainflowerclub.com/health');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult(`✅ 서버 상태 정상!\n\n${JSON.stringify(data, null, 2)}`, 'success');
+                    updateButton(button, true);
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                showResult(`❌ 서버 상태 확인 실패!\n\n${error.message}`, 'error');
+                updateButton(button, false);
+            }
+        }
+
+        async function testExtractKeywords() {
+            const button = event.target;
+            const story = document.getElementById('storyInput').value.trim();
+            
+            if (!story) {
+                showResult('❌ 이야기를 먼저 입력해주세요!', 'error');
+                return;
+            }
+            
+            showResult('🔍 키워드 추출 중...', 'loading');
+            
+            try {
+                const response = await fetch(`${API_BASE}/extract_keywords`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ story })
+                });
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult(`✅ 키워드 추출 성공!\n\n${JSON.stringify(data, null, 2)}`, 'success');
+                    updateButton(button, true);
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${data.detail || '알 수 없는 오류'}`);
+                }
+            } catch (error) {
+                showResult(`❌ 키워드 추출 실패!\n\n${error.message}`, 'error');
+                updateButton(button, false);
+            }
+        }
+
+        async function testRecommend() {
+            const button = event.target;
+            const story = document.getElementById('storyInput').value.trim();
+            
+            if (!story) {
+                showResult('❌ 이야기를 먼저 입력해주세요!', 'error');
+                return;
+            }
+            
+            showResult('🌸 꽃 추천 중...', 'loading');
+            
+            try {
+                const response = await fetch(`${API_BASE}/recommend`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ story })
+                });
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult(`✅ 꽃 추천 성공!\n\n${JSON.stringify(data, null, 2)}`, 'success');
+                    updateButton(button, true);
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${data.detail || '알 수 없는 오류'}`);
+                }
+            } catch (error) {
+                showResult(`❌ 꽃 추천 실패!\n\n${error.message}`, 'error');
+                updateButton(button, false);
+            }
+        }
+
+        async function testFullFlow() {
+            const button = event.target;
+            const story = document.getElementById('storyInput').value.trim();
+            
+            if (!story) {
+                showResult('❌ 이야기를 먼저 입력해주세요!', 'error');
+                return;
+            }
+            
+            showResult('🚀 전체 흐름 테스트 시작...\n\n1️⃣ 키워드 추출 중...', 'loading');
+            
+            try {
+                // 1. 키워드 추출
+                const keywordsResponse = await fetch(`${API_BASE}/extract_keywords`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ story })
+                });
+                
+                if (!keywordsResponse.ok) {
+                    throw new Error(`키워드 추출 실패: HTTP ${keywordsResponse.status}`);
+                }
+                
+                const keywordsData = await keywordsResponse.json();
+                showResult('🚀 전체 흐름 테스트 시작...\n\n1️⃣ 키워드 추출 ✅\n2️⃣ 꽃 추천 중...', 'loading');
+                
+                // 2. 꽃 추천
+                const recommendResponse = await fetch(`${API_BASE}/recommend`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ story })
+                });
+                
+                if (!recommendResponse.ok) {
+                    throw new Error(`꽃 추천 실패: HTTP ${recommendResponse.status}`);
+                }
+                
+                const recommendData = await recommendResponse.json();
+                
+                showResult(`🚀 전체 흐름 테스트 완료!\n\n1️⃣ 키워드 추출 ✅\n2️⃣ 꽃 추천 ✅\n\n📊 키워드 추출 결과:\n${JSON.stringify(keywordsData, null, 2)}\n\n🌸 꽃 추천 결과:\n${JSON.stringify(recommendData, null, 2)}`, 'success');
+                updateButton(button, true);
+                
+            } catch (error) {
+                showResult(`❌ 전체 흐름 테스트 실패!\n\n${error.message}`, 'error');
+                updateButton(button, false);
+            }
+        }
+
+        // 페이지 로드 시 서버 상태 자동 확인
+        window.addEventListener('load', () => {
+            testHealth();
+        });
+    </script>
+</body>
+</html>
