@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.api.v1.endpoints import recommend, keywords, admin, fast_context, stories, unified, sample_stories
+from app.api.v1.endpoints import recommend, admin, stories, unified, sample_stories, realtime_context
 
 api_v1_router = APIRouter()
 
@@ -27,16 +27,10 @@ except Exception as e:
 
 # 2. 기타 API들
 try:
-    api_v1_router.include_router(keywords.router, tags=["keywords"])
-    print("✅ Keywords 라우터 등록 완료")
+    api_v1_router.include_router(realtime_context.router, tags=["realtime-context"])
+    print("✅ Realtime Context 라우터 등록 완료")
 except Exception as e:
-    print(f"❌ Keywords 라우터 등록 실패: {e}")
-
-try:
-    api_v1_router.include_router(fast_context.router, tags=["fast-context"])
-    print("✅ Fast Context 라우터 등록 완료")
-except Exception as e:
-    print(f"❌ Fast Context 라우터 등록 실패: {e}")
+    print(f"❌ Realtime Context 라우터 등록 실패: {e}")
 
 try:
     api_v1_router.include_router(stories.router, prefix="/stories", tags=["stories"])

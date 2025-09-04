@@ -7,6 +7,7 @@ from app.models.schemas import FlowerMatch, EmotionAnalysis, FlowerComposition
 from app.services.flower_matcher import FlowerMatcher
 from app.services.composition_recommender import CompositionRecommender
 from app.api.v1.endpoints.recommend import _generate_unified_recommendation_reason, _generate_flower_card_message
+import random
 
 router = APIRouter()
 
@@ -21,13 +22,41 @@ def load_sample_stories():
         print(f"❌ 샘플 사연 데이터 로드 실패: {e}")
         return []
 
+def _ensure_two_sub_flowers(sub_flowers: List[str]) -> List[str]:
+    """서브 플라워를 항상 2개로 확장 (중복 방지)"""
+    if not sub_flowers:
+        return ["화이트 베이비 브레스", "그린 유칼립투스"]
+    
+    if len(sub_flowers) == 1:
+        # 1개만 있는 경우 다른 소재 추가
+        existing_flower = sub_flowers[0]
+        if "베이비 브레스" in existing_flower:
+            return sub_flowers + ["그린 유칼립투스"]
+        else:
+            return sub_flowers + ["화이트 베이비 브레스"]
+    
+    # 2개 이상인 경우 앞의 2개만 사용
+    return sub_flowers[:2]
+
 @router.get("/sample-stories")
 async def get_sample_stories():
     """샘플 사연 목록을 반환합니다."""
     stories = load_sample_stories()
+    
+    # ID 형식을 S01, S02 형식으로 변경
+    formatted_stories = []
+    for i, story in enumerate(stories, 1):
+        formatted_story = {
+            "id": f"S{i:02d}",  # S01, S02, S03 형식
+            "title": story.get("title", ""),
+            "category": story.get("category", "기타"),
+            "predefined_keywords": story.get("predefined_keywords", {})
+        }
+        formatted_stories.append(formatted_story)
+    
     return {
-        "stories": stories,
-        "total_count": len(stories)
+        "stories": formatted_stories,
+        "total_count": len(formatted_stories)
     }
 
 @router.get("/sample-stories/{story_id}")
@@ -55,22 +84,39 @@ async def recommend_from_sample_story(story_id: str):
         # 미리 설정된 키워드 추출
         predefined_keywords = story["predefined_keywords"]
         
-        # EmotionAnalysis 객체 생성
+        # EmotionAnalysis 객체 생성 (3개로 확장)
         emotions = []
         if predefined_keywords.get("emotions"):
-            for emotion in predefined_keywords["emotions"]:
+            emotion_list = predefined_keywords["emotions"]
+            # 최대 3개까지 처리
+            for i, emotion in enumerate(emotion_list[:3]):
+                if i == 0:
+                    percentage = 40.0  # 첫 번째 감정
+                elif i == 1:
+                    percentage = 35.0  # 두 번째 감정
+                else:
+                    percentage = 25.0  # 세 번째 감정
+                
                 emotions.append(EmotionAnalysis(
                     emotion=emotion,
-                    percentage=50.0,  # 기본값
+                    percentage=percentage,
                     description=f"{emotion}한 마음"
                 ))
+            
+            # 감정이 2개만 있는 경우 3번째 감정 추가
+            if len(emotions) == 2:
+                emotions.append(EmotionAnalysis(
+                    emotion="차분함",
+                    percentage=25.0,
+                    description="차분한 마음"
+                ))
         else:
-            # 기본 감정 설정
-            emotions.append(EmotionAnalysis(
-                emotion="기쁨",
-                percentage=50.0,
-                description="기쁜 마음"
-            ))
+            # 기본 감정 설정 (3개)
+            emotions = [
+                EmotionAnalysis(emotion="기쁨", percentage=40.0, description="기쁜 마음"),
+                EmotionAnalysis(emotion="감사", percentage=35.0, description="감사한 마음"),
+                EmotionAnalysis(emotion="희망", percentage=25.0, description="희망찬 마음")
+            ]
         
         # 꽃 매칭 서비스 초기화
         flower_matcher = FlowerMatcher()
@@ -115,28 +161,51 @@ async def recommend_from_sample_story(story_id: str):
             story=story["story"]
         )
         
-        # 스토리 ID 생성 (S{YYYYMMDD}{꽃이름앞3글자}{6자리순번})
-        current_date = datetime.now().strftime("%y%m%d")
-        flower_prefix = matched_flower.korean_name[:3] if len(matched_flower.korean_name) >= 3 else matched_flower.korean_name
-        import random
-        random_suffix = f"{random.randint(100000, 999999)}"
-        story_id = f"S{current_date}-{flower_prefix.upper()}-{random_suffix}"
+        # 이미지 URL에서 spp 제거
+        image_url = matched_flower.image_url
+        if image_url and "-spp-" in image_url:
+            image_url = image_url.replace("-spp-", "-")
+        
+        # 스토리 ID 생성 (S{순번}만 사용)
+        story_number = story_id.replace("story_", "").replace("S", "")
+        formatted_story_id = f"S{story_number}"  # T01 제거
         
         # 계절 정보 생성 (시즌과 월 분리)
         season_info = {"season": "All Season", "months": "01-12"}  # 기본값, 실제로는 꽃 데이터에서 가져와야 함
         
-        # 응답 생성 (실제 사용자 추천과 동일한 구조)
+        # 해시태그 생성 (감정 2개, 무드 1개)
+        hashtags = []
+        
+        # 감정 2개 추가
+        if predefined_keywords.get("emotions"):
+            emotions_list = predefined_keywords["emotions"]
+            for i, emotion in enumerate(emotions_list[:2]):  # 최대 2개
+                hashtags.append(f"#{emotion}")
+        
+        # 무드 1개 추가
+        if predefined_keywords.get("moods"):
+            moods_list = predefined_keywords["moods"]
+            if moods_list:
+                hashtags.append(f"#{moods_list[0]}")
+        
+        # 3개가 안 되면 기본값 추가
+        while len(hashtags) < 3:
+            hashtags.append("#특별한")
+        
+        # 응답 생성 (수정된 구조)
         response = {
-            "story_id": story_id,
+            "story_id": formatted_story_id,
             "original_story": story["story"],
-            "created_at": datetime.now().isoformat(),
             
-            # 감정 분석 결과
+            # 해시태그 (감정과 무드 중심 3개)
+            "hashtags": hashtags[:3],
+            
+            # 감정 분석 결과 (3개로 확장, 100을 3개로 분리)
             "emotions": [
                 {
                     "emotion": emotion.emotion,
                     "percentage": emotion.percentage
-                } for emotion in emotions
+                } for emotion in emotions[:3]  # 최대 3개
             ],
             
             # 꽃 정보
@@ -144,34 +213,20 @@ async def recommend_from_sample_story(story_id: str):
             "flower_name_en": matched_flower.flower_name,
             "scientific_name": matched_flower.scientific_name,
             "flower_card_message": flower_card_message,
-            "flower_image_url": matched_flower.image_url,
+            "flower_image_url": image_url,  # spp 제거된 URL 사용
             
-            # 꽃 조합 정보
+            # 꽃 조합 정보 (메인꽃 한글로 통일, 서브 플라워 2개로 확장)
             "flower_blend": {
-                "main_flower": composition.main_flower,
-                "sub_flowers": composition.sub_flowers,
+                "main_flower": matched_flower.korean_name,  # 한글로 통일
+                "sub_flowers": _ensure_two_sub_flowers(composition.sub_flowers),  # 2개로 확장
                 "composition_name": composition.composition_name
             },
             
             # 계절 정보
             "season_info": season_info,
             
-            # 추천 코멘트
-            "recommendation_reason": recommendation_reason,
-            
-            # 추가 메타데이터
-            "keywords": matched_flower.keywords,
-            "hashtags": matched_flower.hashtags,
-            "color_keywords": matched_flower.color_keywords,
-            "excluded_keywords": [],
-            
-            # 샘플 사연 정보
-            "sample_story": {
-                "id": story["id"],
-                "title": story["title"],
-                "category": story["category"],
-                "predefined_keywords": predefined_keywords
-            }
+            # 추천 코멘트 (필드명 변경)
+            "comment": recommendation_reason
         }
         
         return response

@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
+from fastapi import WebSocket
 import os
 from datetime import datetime
 
@@ -29,6 +30,12 @@ app.mount("/frontend", StaticFiles(directory="frontend"), name="frontend")
 
 # API 라우터 등록
 app.include_router(api_v1_router, prefix="/api/v1")
+
+# WebSocket 테스트 엔드포인트 (직접 추가)
+@app.websocket("/ws/test")
+async def websocket_test(websocket: WebSocket):
+    await websocket.accept()
+    await websocket.send_text("WebSocket 연결 테스트 성공!")
 
 @app.get("/")
 async def root():
@@ -71,7 +78,7 @@ async def admin_panel_html():
 
 @app.get("/simple_test.html")
 async def simple_test():
-    return FileResponse("simple_test.html")
+    return FileResponse("simple_api_test.html")
 
 @app.get("/sample_stories_demo.html")
 async def sample_stories_demo():
@@ -82,3 +89,13 @@ async def sample_stories_demo():
 async def demo():
     """사연 샘플 데모 페이지 (단축 URL)"""
     return FileResponse("sample_stories_demo.html")
+
+@app.get("/realtime_keyword_test.html")
+async def realtime_keyword_test():
+    """실시간 키워드 추출 테스트 페이지"""
+    return FileResponse("frontend/pages/realtime_keyword_test.html")
+
+@app.get("/keyword_test")
+async def keyword_test():
+    """실시간 키워드 추출 테스트 페이지 (단축 URL)"""
+    return FileResponse("frontend/pages/realtime_keyword_test.html")

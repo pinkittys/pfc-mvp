@@ -1,0 +1,8 @@
+fastapi==0.111.0
+uvicorn==0.30.0
+python-multipart==0.0.20
+openai==1.99.9
+supabase==2.18.1
+requests==2.32.4
+python-dotenv==1.0.1
+websockets==15.0.1

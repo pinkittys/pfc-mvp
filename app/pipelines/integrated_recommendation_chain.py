@@ -11,8 +11,8 @@ from app.services.recommendation_reason_generator import RecommendationReasonGen
 from app.services.image_matcher import ImageMatcher
 from app.services.recommendation_logger import RecommendationLogger
 from app.services.story_manager import StoryManager
-from app.models.schemas import RecommendRequest, RecommendResponse, RecommendationItem
 from app.utils.flower_card_generator import generate_flower_card_message
+from app.models.schemas import RecommendRequest, RecommendResponse, RecommendationItem, FlowerCardMessage
 import json
 
 class IntegratedRecommendationChain:
@@ -99,7 +99,7 @@ class IntegratedRecommendationChain:
             extracted_keywords=extracted_context.emotions + extracted_context.situations + extracted_context.moods + extracted_context.colors,
             flower_keywords=matched_flower.keywords,
             season_info=self._get_season_info(matched_flower.flower_name),
-            english_message=generate_flower_card_message(matched_flower, emotion_analysis, request.story),
+            english_message=f"{generate_flower_card_message(matched_flower, emotion_analysis, request.story)['quote']}\n{generate_flower_card_message(matched_flower, emotion_analysis, request.story)['source']}",
             recommendation_reason=recommendation_reason["professional_reason"]
         )
         

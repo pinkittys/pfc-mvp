@@ -9,6 +9,7 @@ from app.services.emotion_analyzer import EmotionAnalyzer
 from app.services.realtime_context_extractor import RealtimeContextExtractor
 from app.services.flower_matcher import FlowerMatcher
 from app.services.composition_recommender import CompositionRecommender
+from app.services.smart_websocket_extractor import SmartWebSocketExtractor
 from app.utils.request_deduplication import request_deduplicator
 
 router = APIRouter()
@@ -55,83 +56,149 @@ class UnifiedRecommendResponse(BaseModel):
     # 식별자
     story_id: Optional[str] = None  # 스토리 ID (추천 ID와 동일)
 
-@router.post("/sample-stories")
-async def get_sample_stories():
-    """샘플 사연 시연 엔드포인트"""
-    try:
-        # 샘플 사연 데이터 로드
-        sample_stories = [
-            {
-                "id": "sample_1",
-                "title": "첫 손자 태어남",
-                "story": "첫 손자가 태어난 날이에요. 병실 분위기가 환해지는 꽃바구니를 준비하고 싶어요.",
-                "emotions": ["기쁨", "감사"],
-                "situations": ["축하"],
-                "colors": ["핑크", "화이트"]
-            },
-            {
-                "id": "sample_2", 
-                "title": "친구 이직",
-                "story": "오랫동안 함께 일한 친구가 이직하게 되었어요. 새로운 시작을 응원하는 마음을 담아 꽃을 선물하고 싶어요.",
-                "emotions": ["응원", "감사"],
-                "situations": ["이직"],
-                "colors": ["옐로우", "화이트"]
-            },
-            {
-                "id": "sample_3",
-                "title": "어머니 생신",
-                "story": "어머니 생신이에요. 평소 고생하시는 어머니께 감사한 마음을 담아 꽃을 드리고 싶어요.",
-                "emotions": ["감사", "사랑"],
-                "situations": ["생일"],
-                "colors": ["핑크", "레드"]
-            }
-        ]
-        
-        return {
-            "success": True,
-            "stories": sample_stories
-        }
-        
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"샘플 사연 로드 실패: {str(e)}")
+
 
 @router.post("/extract-keywords")
-async def extract_keywords(req: UnifiedRecommendRequest):
-    """실시간 키워드 추출 엔드포인트"""
+async def extract_keywords(
+    req: UnifiedRecommendRequest,
+    mode: str = "realtime"  # "realtime" | "final"
+):
+    """통합 키워드 추출 엔드포인트 - mode에 따라 실시간/최종 구분"""
     try:
-        # 감정 분석
-        emotion_analyzer = EmotionAnalyzer()
-        emotions = emotion_analyzer.analyze(req.story)
-        
-        # 컨텍스트 추출
-        context_extractor = RealtimeContextExtractor()
-        excluded_keywords = req.excluded_flowers if req.excluded_flowers else []
-        context = context_extractor.extract_context_realtime(req.story, emotions, excluded_keywords)
-        
-        # 업데이트된 컨텍스트가 있으면 적용
-        if req.updated_context:
-            if req.updated_context.get('emotions'):
-                context.emotions = req.updated_context['emotions']
-            if req.updated_context.get('situations'):
-                context.situations = req.updated_context['situations']
-            if req.updated_context.get('moods'):
-                context.moods = req.updated_context['moods']
-            if req.updated_context.get('colors'):
-                context.colors = req.updated_context['colors']
-        
-        return {
-            "success": True,
-            "keywords": {
-                "emotions": context.emotions,
-                "situations": context.situations,
-                "moods": context.moods,
-                "colors": context.colors
-            },
-            "confidence": context.confidence
-        }
+        if mode == "realtime":
+            # 실시간 추출 (빠른 응답)
+            return await extract_realtime(req)
+        else:
+            # 최종 맥락 파악 (정확한 분석)
+            return await extract_final(req)
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"키워드 추출 실패: {str(e)}")
+
+async def extract_realtime(req: UnifiedRecommendRequest):
+    """실시간 키워드 추출 (빠른 응답) - 점진적 표시 지원"""
+    smart_extractor = SmartWebSocketExtractor()
+    smart_context = await smart_extractor.extract_with_confidence(req.story)
+    
+    # 업데이트된 컨텍스트가 있으면 적용
+    if req.updated_context:
+        if req.updated_context.get('emotions'):
+            smart_context.emotions = req.updated_context['emotions']
+        if req.updated_context.get('situations'):
+            smart_context.situations = req.updated_context['situations']
+        if req.updated_context.get('moods'):
+            smart_context.moods = req.updated_context['moods']
+        if req.updated_context.get('colors'):
+            smart_context.colors = req.updated_context['colors']
+    
+    # 점진적 표시를 위한 단계 정보 추가
+    story_lower = req.story.lower()
+    extraction_stage = _determine_extraction_stage(story_lower)
+    
+    return {
+        "success": True,
+        "mode": "realtime",
+        "extraction_stage": extraction_stage,
+        "keywords": {
+            "emotions": smart_context.emotions,
+            "situations": smart_context.situations,
+            "moods": smart_context.moods,
+            "colors": smart_context.colors
+        },
+        "confidence": smart_context.confidence,
+        "extraction_method": smart_context.extraction_method,
+        "alternatives": {
+            "emotions": smart_context.emotions_alternatives,
+            "situations": smart_context.situations_alternatives,
+            "moods": smart_context.moods_alternatives,
+            "colors": smart_context.colors_alternatives
+        }
+    }
+
+def _determine_extraction_stage(story: str) -> dict:
+    """텍스트 내용에 따른 추출 단계 결정"""
+    stage = {
+        "has_subject": False,      # 주체/대상 언급
+        "has_situation": False,    # 상황 언급
+        "has_mood": False,         # 무드 맥락
+        "has_complete_context": False,  # 완전한 맥락
+        "stage_number": 0          # 1-4단계
+    }
+    
+    # 1단계: 주체/대상 언급
+    subjects = ['친구', '어머니', '아버지', '나', '저', '우리', '가족', '연인', '동료']
+    if any(subject in story for subject in subjects):
+        stage["has_subject"] = True
+        stage["stage_number"] = 1
+    
+    # 2단계: 상황 언급
+    situations = ['번아웃', '힘들', '스트레스', '생일', '이직', '합격', '결혼', '졸업', '기념일']
+    if any(situation in story for situation in situations):
+        stage["has_situation"] = True
+        stage["stage_number"] = 2
+    
+    # 3단계: 무드 맥락
+    moods = ['위로', '힐링', '조용', '따뜻', '부드럽', '차분', '로맨틱', '활기']
+    if any(mood in story for mood in moods):
+        stage["has_mood"] = True
+        stage["stage_number"] = 3
+    
+    # 4단계: 완전한 맥락
+    if len(story) > 30 and stage["has_subject"] and stage["has_situation"] and stage["has_mood"]:
+        stage["has_complete_context"] = True
+        stage["stage_number"] = 4
+    
+    return stage
+
+async def extract_final(req: UnifiedRecommendRequest):
+    """최종 맥락 파악 + 사용자 수정 지원 (정확한 분석)"""
+    smart_extractor = SmartWebSocketExtractor()
+    smart_context = await smart_extractor.extract_with_confidence(req.story)
+    
+    # 업데이트된 컨텍스트가 있으면 적용
+    if req.updated_context:
+        if req.updated_context.get('emotions'):
+            smart_context.emotions = req.updated_context['emotions']
+        if req.updated_context.get('situations'):
+            smart_context.situations = req.updated_context['situations']
+        if req.updated_context.get('moods'):
+            smart_context.moods = req.updated_context['moods']
+        if req.updated_context.get('colors'):
+            smart_context.colors = req.updated_context['colors']
+    
+    # 최종 모드: 메인 키워드 + 대안 키워드 구조 (4개 디멘션 모두 필수)
+    return {
+        "success": True,
+        "mode": "final",
+        "confidence": smart_context.confidence,
+        "message": "키워드 추출 완료",
+        "keywords": {
+            "emotions": [
+                {
+                    "main": smart_context.emotions[0] if smart_context.emotions else "따뜻함",
+                    "alternatives": smart_context.emotions_alternatives[:3] if smart_context.emotions_alternatives else []
+                }
+            ],
+            "situations": [
+                {
+                    "main": smart_context.situations[0] if smart_context.situations else "일반",
+                    "alternatives": smart_context.situations_alternatives[:3] if smart_context.situations_alternatives else []
+                }
+            ],
+            "moods": [
+                {
+                    "main": smart_context.moods[0] if smart_context.moods else "따뜻한",
+                    "alternatives": smart_context.moods_alternatives[:3] if smart_context.moods_alternatives else []
+                }
+            ],
+            "colors": [
+                {
+                    "main": smart_context.colors[0] if smart_context.colors else "핑크",
+                    "alternatives": smart_context.colors_alternatives[:3] if smart_context.colors_alternatives else []
+                }
+            ]
+        }
+    }
 
 @router.post("/recommend")
 async def unified_recommend(req: UnifiedRecommendRequest):

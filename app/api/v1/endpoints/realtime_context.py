@@ -1,6 +1,6 @@
 """
 실시간 컨텍스트 추출을 위한 WebSocket 엔드포인트
-최적화된 실시간 키워드 추출
+스마트 키워드 추출기와 연동하여 실시간 키워드 추출 처리
 """
 
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException
@@ -34,7 +34,8 @@ async def websocket_context_extraction(websocket: WebSocket):
             "situations": {"main": "상황", "alternatives": ["대안1", "대안2", "대안3"]},
             "moods": {"main": "무드", "alternatives": ["대안1", "대안2", "대안3"]},
             "colors": {"main": "색상", "alternatives": ["대안1", "대안2", "대안3"]},
-            "confidence": 0.9
+            "confidence": 0.9,
+            "extraction_method": "rule_based|lightweight_llm|full_llm"
         },
         "timestamp": 1234567890.123
     }
@@ -76,7 +77,8 @@ async def get_websocket_status():
     """WebSocket 연결 상태 확인"""
     return {
         "active_connections": handler.get_connection_count(),
-        "status": "running"
+        "status": "running",
+        "extractor_type": "SmartWebSocketExtractor"
     }
 
 @router.post("/cleanup")

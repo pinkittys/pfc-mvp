@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실시간 키워드 추출 테스트</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .input-section {
+            margin-bottom: 30px;
+        }
+        
+        .story-input {
+            width: 100%;
+            min-height: 120px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+        
+        .story-input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .input-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .mode-selector {
+            margin-bottom: 20px;
+        }
+        
+        .mode-btn {
+            padding: 10px 20px;
+            margin-right: 10px;
+            border: 2px solid #3498db;
+            background: white;
+            color: #3498db;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .mode-btn.active {
+            background: #3498db;
+            color: white;
+        }
+        
+        .mode-btn:hover {
+            background: #2980b9;
+            color: white;
+        }
+        
+        .results-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .result-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .result-card h3 {
+            margin-top: 0;
+            color: #2c3e50;
+            font-size: 1.3em;
+        }
+        
+        .keyword-item {
+            background: white;
+            padding: 15px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .keyword-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .keyword-main {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+        
+        .keyword-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .keyword-dropdown {
+            padding: 6px 12px;
+            border: 2px solid #3498db;
+            border-radius: 4px;
+            background: white;
+            color: #3498db;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .keyword-dropdown:hover {
+            background: #3498db;
+            color: white;
+        }
+        
+        .keyword-dropdown:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.3);
+        }
+        
+        .keyword-alternatives {
+            color: #666;
+            font-size: 0.9em;
+            padding: 8px 0;
+            border-top: 1px solid #f0f0f0;
+        }
+        
+        .alternative-tag {
+            display: inline-block;
+            background: #f8f9fa;
+            color: #495057;
+            padding: 4px 8px;
+            margin: 2px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            border: 1px solid #dee2e6;
+        }
+        
+        .selected-keyword {
+            background: #e8f4fd;
+            border-color: #3498db;
+            color: #2980b9;
+        }
+        
+
+        
+
+        
+        .confidence-bar {
+            background: #ecf0f1;
+            height: 8px;
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #e74c3c, #f39c12, #27ae60);
+            transition: width 0.3s;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border: 1px dashed #dee2e6;
+        }
+        
+        .loading.analyzing {
+            background: #e8f4fd;
+            border-color: #3498db;
+            color: #2980b9;
+            font-weight: bold;
+        }
+        
+        .loading.waiting {
+            background: #fff3cd;
+            border-color: #ffc107;
+            color: #856404;
+        }
+        
+        .error {
+            color: #e74c3c;
+            background: #fdf2f2;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #fecaca;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        
+        .extraction-method {
+            background: #e8f4fd;
+            color: #2980b9;
+            padding: 10px 15px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌸 실시간 키워드 추출 테스트</h1>
+        
+        <div class="mode-selector">
+            <button class="mode-btn active" onclick="setMode('realtime')">실시간 추출</button>
+            <button class="mode-btn" onclick="setMode('final')">최종 맥락 파악</button>
+        </div>
+        
+        <div class="input-section">
+            <textarea 
+                class="story-input" 
+                id="storyInput" 
+                placeholder="여기에 사연을 입력해보세요...&#10;예: 친구가 번아웃으로 힘들어해요. 걱정되는데 조용한 응원의 마음을 전하고 싶어요."
+                oninput="handleInput()"
+            ></textarea>
+            <div class="input-info">
+                <span id="charCount">0자</span>
+                <span id="extractionMethod">입력 대기 중...</span>
+            </span>
+        </div>
+        
+        <div class="results-section">
+            <div class="result-card">
+                <h3>🎭 감정 (Emotions)</h3>
+                <div id="emotionsResult">
+                    <div class="loading">입력을 시작해보세요...</div>
+                </div>
+            </div>
+            
+            <div class="result-card">
+                <h3>📅 상황 (Situations)</h3>
+                <div id="situationsResult">
+                    <div class="loading">입력을 시작해보세요...</div>
+                </div>
+            </div>
+            
+            <div class="result-card">
+                <h3>✨ 무드 (Moods)</h3>
+                <div id="moodsResult">
+                    <div class="loading">입력을 시작해보세요...</div>
+                </div>
+            </div>
+            
+            <div class="result-card">
+                <h3>🎨 색상 (Colors)</h3>
+                <div id="colorsResult">
+                    <div class="loading">입력을 시작해보세요...</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-value" id="confidenceValue">-</div>
+                <div class="stat-label">신뢰도</div>
+                <div class="confidence-bar">
+                    <div class="confidence-fill" id="confidenceFill" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <div class="stat-item">
+                <div class="stat-value" id="responseTime">-</div>
+                <div class="stat-label">응답 시간</div>
+            </div>
+            
+            <div class="stat-item">
+                <div class="stat-value" id="apiCalls">0</div>
+                <div class="stat-label">API 호출</div>
+            </div>
+        </div>
+        
+        <div id="extractionMethodDisplay" class="extraction-method" style="display: none;">
+            추출 방법: <span id="methodText">-</span>
+        </div>
+    </div>
+
+    <script>
+        let currentMode = 'realtime';
+        let debounceTimer;
+        let apiCallCount = 0;
+        
+        function setMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // 모드 변경 시 즉시 재분석
+            const story = document.getElementById('storyInput').value;
+            if (story.trim().length > 0) {
+                handleInput();
+            }
+        }
+        
+        function handleInput() {
+            const story = document.getElementById('storyInput').value;
+            const charCount = story.length;
+            
+            document.getElementById('charCount').textContent = `${charCount}자`;
+            
+            // 3자 미만이면 결과 초기화
+            if (charCount < 3) {
+                resetResults();
+                return;
+            }
+            
+            // 입력 중에는 기존 키워드 유지 (점진적 표시 제거)
+            // 디바운싱 (1초 후 API 호출)
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                extractKeywords(story);
+            }, 1000);
+        }
+        
+        function showProgressiveKeywords(story) {
+            const storyLower = story.toLowerCase();
+            
+            // 1단계: 주체/대상 언급 → 감정만 표시
+            if (hasSubjectOrTarget(storyLower)) {
+                showEmotionsOnly();
+                return;
+            }
+            
+            // 2단계: 상황 언급 → 감정 + 상황 표시
+            if (hasSituation(storyLower)) {
+                showEmotionsAndSituations();
+                return;
+            }
+            
+            // 3단계: 맥락 완성 → 감정 + 상황 + 무드 표시
+            if (hasMoodContext(storyLower)) {
+                showEmotionsSituationsMoods();
+                return;
+            }
+            
+            // 4단계: 완전한 맥락 → 모든 디멘션 표시
+            if (hasCompleteContext(storyLower)) {
+                showAllDimensions();
+                return;
+            }
+        }
+        
+        function hasSubjectOrTarget(story) {
+            const subjects = ['친구', '어머니', '아버지', '나', '저', '우리', '가족', '연인', '동료'];
+            return subjects.some(subject => story.includes(subject));
+        }
+        
+        function hasSituation(story) {
+            const situations = ['번아웃', '힘들', '스트레스', '생일', '이직', '합격', '결혼', '졸업', '기념일'];
+            return situations.some(situation => story.includes(situation));
+        }
+        
+        function hasMoodContext(story) {
+            const moods = ['위로', '힐링', '조용', '따뜻', '부드럽', '차분', '로맨틱', '활기'];
+            return moods.some(mood => story.includes(mood));
+        }
+        
+        function hasCompleteContext(story) {
+            return story.length > 30 && (hasSubjectOrTarget(story) && hasSituation(story) && hasMoodContext(story));
+        }
+        
+
+        
+
+        
+
+        
+
+        
+        function showProgressiveLoading(story) {
+            const storyLower = story.toLowerCase();
+            
+            // 1단계: 주체/대상 언급 → 감정만 표시
+            if (hasSubjectOrTarget(storyLower)) {
+                document.getElementById('emotionsResult').innerHTML = '<div class="loading analyzing">감정 분석 중...</div>';
+                document.getElementById('situationsResult').innerHTML = '<div class="loading waiting">입력을 계속하세요...</div>';
+                document.getElementById('moodsResult').innerHTML = '<div class="loading waiting">입력을 계속하세요...</div>';
+                document.getElementById('colorsResult').innerHTML = '<div class="loading waiting">입력을 계속하세요...</div>';
+                return;
+            }
+            
+            // 2단계: 상황 언급 → 감정 + 상황 표시
+            if (hasSituation(storyLower)) {
+                document.getElementById('emotionsResult').innerHTML = '<div class="loading analyzing">감정 분석 중...</div>';
+                document.getElementById('situationsResult').innerHTML = '<div class="loading analyzing">상황 분석 중...</div>';
+                document.getElementById('moodsResult').innerHTML = '<div class="loading waiting">입력을 계속하세요...</div>';
+                document.getElementById('colorsResult').innerHTML = '<div class="loading waiting">입력을 계속하세요...</div>';
+                return;
+            }
+            
+            // 3단계: 맥락 완성 → 감정 + 상황 + 무드 표시
+            if (hasMoodContext(storyLower)) {
+                document.getElementById('emotionsResult').innerHTML = '<div class="loading analyzing">감정 분석 중...</div>';
+                document.getElementById('situationsResult').innerHTML = '<div class="loading analyzing">상황 분석 중...</div>';
+                document.getElementById('moodsResult').innerHTML = '<div class="loading analyzing">무드 분석 중...</div>';
+                document.getElementById('colorsResult').innerHTML = '<div class="loading waiting">입력을 계속하세요...</div>';
+                return;
+            }
+            
+            // 4단계: 완전한 맥락 → 모든 디멘션 표시
+            if (hasCompleteContext(storyLower)) {
+                document.getElementById('emotionsResult').innerHTML = '<div class="loading analyzing">감정 분석 중...</div>';
+                document.getElementById('situationsResult').innerHTML = '<div class="loading analyzing">상황 분석 중...</div>';
+                document.getElementById('moodsResult').innerHTML = '<div class="loading analyzing">무드 분석 중...</div>';
+                document.getElementById('colorsResult').innerHTML = '<div class="loading analyzing">색상 분석 중...</div>';
+                return;
+            }
+            
+            // 기본 상태
+            showLoading();
+        }
+        
+        async function extractKeywords(story) {
+            const startTime = Date.now();
+            apiCallCount++;
+            document.getElementById('apiCalls').textContent = apiCallCount;
+            
+            try {
+                // 로딩 상태 표시 (실시간 모드에서만 점진적 표시)
+                if (currentMode === 'realtime') {
+                    showProgressiveLoading(story);
+                } else {
+                    showLoading();
+                }
+                
+                const response = await fetch(`/api/v1/extract-keywords?mode=${currentMode}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        story: story,
+                        preferred_colors: [],
+                        excluded_flowers: [],
+                        updated_context: window.updatedContext || null
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // 현재 키워드 저장 (업데이트용)
+                    if (data.keywords) {
+                        window.currentKeywords = data.keywords;
+                    }
+                    
+                    displayResults(data);
+                    
+                    // 응답 시간 계산
+                    const responseTime = Date.now() - startTime;
+                    document.getElementById('responseTime').textContent = `${responseTime}ms`;
+                    
+                    // 추출 방법 표시
+                    if (data.extraction_method) {
+                        document.getElementById('extractionMethodDisplay').style.display = 'block';
+                        document.getElementById('methodText').textContent = getMethodText(data.extraction_method);
+                        document.getElementById('extractionMethod').textContent = getMethodText(data.extraction_method);
+                    }
+                } else {
+                    showError('키워드 추출에 실패했습니다.');
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                showError('API 호출 중 오류가 발생했습니다.');
+            }
+        }
+        
+        function displayResults(data) {
+            if (currentMode === 'realtime') {
+                displayRealtimeResults(data);
+            } else {
+                displayFinalResults(data);
+            }
+            
+            // 신뢰도 표시
+            if (data.confidence) {
+                const confidencePercent = Math.round(data.confidence * 100);
+                document.getElementById('confidenceValue').textContent = `${confidencePercent}%`;
+                document.getElementById('confidenceFill').style.width = `${confidencePercent}%`;
+            }
+        }
+        
+        function displayRealtimeResults(data) {
+            // 실시간 모드: 단순 배열 형태
+            displayKeywordSection('emotionsResult', data.keywords.emotions, data.alternatives.emotions);
+            displayKeywordSection('situationsResult', data.keywords.situations, data.alternatives.situations);
+            displayKeywordSection('moodsResult', data.keywords.moods, data.alternatives.moods);
+            displayKeywordSection('colorsResult', data.keywords.colors, data.alternatives.colors);
+        }
+        
+        function displayFinalResults(data) {
+            // 최종 모드: 메인 + 대안 구조 (4개 디멘션 모두 필수)
+            if (data.keywords.emotions && data.keywords.emotions.length > 0) {
+                displayKeywordSectionFinal('emotionsResult', data.keywords.emotions);
+            } else {
+                document.getElementById('emotionsResult').innerHTML = '<div class="error">감정 키워드가 필요합니다</div>';
+            }
+            
+            if (data.keywords.situations && data.keywords.situations.length > 0) {
+                displayKeywordSectionFinal('situationsResult', data.keywords.situations);
+            } else {
+                document.getElementById('situationsResult').innerHTML = '<div class="error">상황 키워드가 필요합니다</div>';
+            }
+            
+            if (data.keywords.moods && data.keywords.moods.length > 0) {
+                displayKeywordSectionFinal('moodsResult', data.keywords.moods);
+            } else {
+                document.getElementById('moodsResult').innerHTML = '<div class="error">무드 키워드가 필요합니다</div>';
+            }
+            
+            if (data.keywords.colors && data.keywords.colors.length > 0) {
+                displayKeywordSectionFinal('colorsResult', data.keywords.colors);
+            } else {
+                document.getElementById('colorsResult').innerHTML = '<div class="error">색상 키워드가 필요합니다</div>';
+            }
+        }
+        
+        function displayKeywordSection(elementId, keywords, alternatives) {
+            const element = document.getElementById(elementId);
+            if (!keywords || keywords.length === 0) {
+                element.innerHTML = '<div class="loading">키워드를 찾을 수 없습니다</div>';
+                return;
+            }
+            
+            let html = '';
+            keywords.forEach((keyword, index) => {
+                const dimension = elementId.replace('Result', ''); // emotions, situations, moods, colors
+                const alternativesList = alternatives || [];
+                const allOptions = [keyword, ...alternativesList];
+                
+                html += `
+                    <div class="keyword-item">
+                        <div class="keyword-header">
+                            <span class="keyword-main">${keyword}</span>
+                            <div class="keyword-selector">
+                                <select class="keyword-dropdown" onchange="updateKeyword('${dimension}', ${index}, this.value)">
+                                    ${allOptions.map(option => 
+                                        `<option value="${option}" ${option === keyword ? 'selected' : ''}>${option}</option>`
+                                    ).join('')}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="keyword-alternatives">
+                            <strong>대안:</strong> 
+                            ${alternativesList.map(alt => 
+                                `<span class="alternative-tag">${alt}</span>`
+                            ).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            element.innerHTML = html;
+        }
+        
+        function displayKeywordSectionFinal(elementId, keywordData) {
+            const element = document.getElementById(elementId);
+            if (!keywordData || keywordData.length === 0) {
+                element.innerHTML = '<div class="loading">키워드를 찾을 수 없습니다</div>';
+                return;
+            }
+            
+            let html = '';
+            keywordData.forEach(item => {
+                html += `
+                    <div class="keyword-item">
+                        <span class="keyword-main">${item.main}</span>
+                        <span class="keyword-alternatives">${item.alternatives ? item.alternatives.join(', ') : ''}</span>
+                    </div>
+                `;
+            });
+            
+            element.innerHTML = html;
+        }
+        
+        function showLoading() {
+            const sections = ['emotionsResult', 'situationsResult', 'moodsResult', 'colorsResult'];
+            sections.forEach(sectionId => {
+                document.getElementById(sectionId).innerHTML = '<div class="loading">분석 중...</div>';
+            });
+        }
+        
+        function resetResults() {
+            const sections = ['emotionsResult', 'situationsResult', 'moodsResult', 'colorsResult'];
+            sections.forEach(sectionId => {
+                document.getElementById(sectionId).innerHTML = '<div class="loading">입력을 시작해보세요...</div>';
+            });
+            
+            document.getElementById('confidenceValue').textContent = '-';
+            document.getElementById('confidenceFill').style.width = '0%';
+            document.getElementById('responseTime').textContent = '-';
+            document.getElementById('extractionMethodDisplay').style.display = 'none';
+            document.getElementById('extractionMethod').textContent = '입력 대기 중...';
+        }
+        
+        function showError(message) {
+            const sections = ['emotionsResult', 'situationsResult', 'moodsResult', 'colorsResult'];
+            sections.forEach(sectionId => {
+                document.getElementById(sectionId).innerHTML = `<div class="error">${message}</div>`;
+            });
+        }
+        
+        function getMethodText(method) {
+            const methodMap = {
+                'rule_based': '규칙 기반 (빠름)',
+                'lightweight_llm': '간단한 LLM (중간)',
+                'full_llm': '전체 LLM (정확)'
+            };
+            return methodMap[method] || method;
+        }
+        
+        // 키워드 업데이트 함수
+        function updateKeyword(dimension, index, newValue) {
+            console.log(`키워드 업데이트: ${dimension}[${index}] = ${newValue}`);
+            
+            // updated_context에 변경사항 저장
+            if (!window.updatedContext) {
+                window.updatedContext = {};
+            }
+            
+            if (!window.updatedContext[dimension]) {
+                window.updatedContext[dimension] = [];
+            }
+            
+            // 기존 키워드 배열 복사
+            const currentKeywords = [...(window.currentKeywords?.[dimension] || [])];
+            currentKeywords[index] = newValue;
+            window.updatedContext[dimension] = currentKeywords;
+            
+            // UI에 선택된 키워드 강조 표시
+            highlightSelectedKeyword(dimension, index, newValue);
+            
+            // 변경사항이 있으면 최종 추천 버튼 활성화
+            updateFinalRecommendButton();
+        }
+        
+        function highlightSelectedKeyword(dimension, index, newValue) {
+            const element = document.getElementById(dimension + 'Result');
+            const keywordItems = element.querySelectorAll('.keyword-item');
+            if (keywordItems[index]) {
+                const mainKeyword = keywordItems[index].querySelector('.keyword-main');
+                mainKeyword.textContent = newValue;
+                mainKeyword.className = 'keyword-main selected-keyword';
+            }
+        }
+        
+        function updateFinalRecommendButton() {
+            const hasChanges = window.updatedContext && Object.keys(window.updatedContext).length > 0;
+            const finalButton = document.querySelector('.mode-btn[onclick*="final"]');
+            if (finalButton) {
+                finalButton.style.background = hasChanges ? '#27ae60' : '#3498db';
+                finalButton.style.color = 'white';
+            }
+        }
+        
+        // 페이지 로드 시 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            resetResults();
+            window.updatedContext = {};
+            window.currentKeywords = {};
+        });
+    </script>
+</body>
+</html>

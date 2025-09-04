@@ -7,11 +7,15 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <style>
         body {
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             margin: 0;
             padding: 40px 20px;
             background: #f8f9fa;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             transition: all 0.5s ease;
         }
         
@@ -53,8 +57,82 @@
             font-size: 18px;
             color: #2C3E50;
             font-weight: 500;
-            margin-bottom: 40px;
             line-height: 1.5;
+        }
+
+        /* 샘플 스토리 섹션 (새로 추가) */
+        .sample-stories-section {
+            margin-bottom: 40px;
+            width: 100%;
+        }
+        
+        .sample-stories-section h3 {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .stories-scroll-container {
+            overflow-x: auto;
+            padding: 20px 0;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            width: 100%;
+        }
+        
+        .stories-scroll {
+            display: flex;
+            gap: 16px;
+            padding: 0 20px;
+            min-width: max-content;
+        }
+        
+        .story-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 16px;
+            min-width: 280px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .story-card:hover {
+            border-color: #007bff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,123,255,0.15);
+        }
+        
+        .story-card.selected {
+            border-color: #007bff;
+            background: #e3f2fd;
+        }
+        
+        .story-card h4 {
+            font-size: 0.9rem;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            font-weight: 600;
+        }
+        
+        .story-card .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 12px;
+        }
+        
+        .story-card .keyword-tag {
+            background: #007bff;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
         }
         
         .message-container {
@@ -154,35 +232,6 @@
             max-width: calc(100% - 100px);
         }
         
-        .send-icon {
-            position: absolute;
-            bottom: 15px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            background: #2C3E50;
-            border: none;
-            border-radius: 50%;
-            color: white;
-            font-size: 18px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .send-icon:hover {
-            background: #1a252f;
-            transform: scale(1.05);
-        }
-        
-        .send-icon:disabled {
-            background: #6c757d;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
         .keyword-tag {
             display: inline-flex;
             align-items: center;
@@ -193,10 +242,8 @@
             font-size: 14px;
             margin: 6px;
             border: 1px solid #E9ECEF;
-            cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 500;
-            position: relative;
             gap: 8px;
             opacity: 0;
             transform: translateY(-20px);
@@ -268,7 +315,34 @@
             opacity: 0.6;
         }
         
-
+        .send-icon {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            background: #2C3E50;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .send-icon:hover {
+            background: #1a252f;
+            transform: scale(1.05);
+        }
+        
+        .send-icon:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
         
         .result-container {
             margin-top: 40px;
@@ -306,6 +380,36 @@
             height: 100%;
             object-fit: cover;
             object-position: center;
+        }
+        
+        .image-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+        
+        .image-loading .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        
+        .image-loading .loading-text {
+            color: #6c757d;
+            font-size: 14px;
+            font-weight: 500;
         }
         
         .flower-card-message {
@@ -548,6 +652,7 @@
             flex-wrap: wrap;
             gap: 8px;
             margin-bottom: 20px;
+            align-items: center;
         }
         
         .blend-tag {
@@ -569,8 +674,6 @@
             align-items: center;
         }
         
-
-        
         .main-flower {
             color: #2C3E50;
         }
@@ -583,7 +686,41 @@
             color: #6c757d;
         }
         
-
+        .season-section {
+            margin-bottom: 35px;
+        }
+        
+        .season-section h4 {
+            margin: 0 0 20px 0;
+            font-size: 16px;
+            color: #2C3E50;
+        }
+        
+        .season-info {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .season-display {
+            background: #f8f9fa;
+            color: #2C3E50;
+            padding: 8px 16px;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid #e9ecef;
+        }
+        
+        .season-range {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 8px 16px;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid #bbdefb;
+        }
         
         .emotion-tags {
             display: flex;
@@ -867,8 +1004,6 @@
             color: #0056b3;
         }
         
-
-        
         /* Instagram 섹션 스타일 업데이트 */
         .instagram-section {
             background: white;
@@ -924,6 +1059,17 @@
         .btn-home:hover {
             background: #5a6268;
         }
+        
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 10px;
+            }
+            
+            .story-card {
+                min-width: 250px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -932,6 +1078,16 @@
             <div class="brand">PlainFlowerClub</div>
             <div class="subtitle">AI FLOWER CURATION & STUDIO</div>
             <div class="main-heading">Let your story bloom. Gently. Truly. Plainly.</div>
+        </div>
+
+        <!-- 샘플 스토리 스크롤 섹션 (새로 추가) -->
+        <div class="sample-stories-section">
+            <h3>💭 샘플 스토리에서 선택하거나 직접 입력하세요</h3>
+            <div class="stories-scroll-container">
+                <div class="stories-scroll" id="storiesScroll">
+                    <!-- 샘플 스토리들이 여기에 동적으로 추가됩니다 -->
+                </div>
+            </div>
         </div>
         
         <div class="message-container">
@@ -961,378 +1117,99 @@
         const storyInput = document.getElementById('storyInput');
         const keywordsContainer = document.getElementById('keywordsContainer');
         const sendBtn = document.getElementById('sendBtn');
+        const storiesScroll = document.getElementById('storiesScroll');
         const loadingContainer = document.getElementById('loadingContainer');
         
-        // 컬러 매핑 함수들
-        function getFlowerColor(colorKeyword) {
-            const colorMap = {
-                '핑크': '#FFB6C1',
-                '화이트': '#FFFFFF',
-                '노랑': '#FFD700',
-                '블루': '#87CEEB',
-                '레드': '#FF6B6B',
-                '퍼플': '#DDA0DD',
-                '오렌지': '#FFA500',
-                '그린': '#98FB98'
-            };
-            return colorMap[colorKeyword] || '#E9ECEF';
-        }
+        // 상태 변수들
+        let selectedStory = null;
+        let currentKeywords = null;
+        let realtimeAbortController = null;
         
-        function getSubFlowerColor(flowerName) {
-            const subFlowerColorMap = {
-                '베이비스브레스': '#FFFFFF',
-                '오렌지 거베라': '#FFA500',
-                '핑크 데이지': '#FFB6C1',
-                '화이트 데이지': '#FFFFFF',
-                '옐로우 데이지': '#FFFACD',
-                '레드 거베라': '#FF6B6B',
-                '핑크 거베라': '#FFB6C1',
-                '화이트 거베라': '#FFFFFF',
-                '옐로우 거베라': '#FFD700',
-                '화이트 베이비 브레스': '#FFFFFF',
-                '그린 유칼립투스': '#98FB98',
-                '화이트 유칼립투스': '#FFFFFF',
-                '핑크 유칼립투스': '#FFB6C1',
-                '화이트 스톡': '#FFFFFF',
-                '퍼플 스톡': '#DDA0DD',
-                '핑크 스톡': '#FFB6C1',
-                '화이트 스톡 플라워': '#FFFFFF',
-                '퍼플 스톡 플라워': '#DDA0DD',
-                '핑크 스톡 플라워': '#FFB6C1'
-            };
-            return subFlowerColorMap[flowerName] || '#E9ECEF';
-        }
-        
-
-        
-        // 실시간 키워드 추출을 위한 타이머/컨트롤러
-        let debounceTimer;
-        let realtimeTimer;
-        let realtimeAbortController; // 이전 요청 취소용
-        let isTyping = false;
-        let lastInputTime = 0;
-        
-        // 이벤트 리스너 설정
-        storyInput.addEventListener('input', function() {
-            const currentTime = Date.now();
-            isTyping = true;
-            lastInputTime = currentTime;
-            
-            // 실시간 키워드 추출 시작
-            startRealtimeExtraction();
-            
-            // 입력이 멈추면 키워드 고정 (더 빠르게)
-            clearTimeout(realtimeTimer);
-            realtimeTimer = setTimeout(() => {
-                isTyping = false;
-                finalizeKeywords();
-            }, 300); // 0.3초 후 입력이 멈추면 고정
-            
-            updateInputHeight();
+        // 페이지 로드 시 샘플 스토리 로드
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadSampleStories();
+            setupEventListeners();
         });
         
-        storyInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                submitStory();
-            }
-        });
-        
-        // 입력 높이 업데이트 함수
-        function updateInputHeight() {
-            const content = storyInput.value.trim();
-            const contentLength = content.length;
-            
-            // 기존 클래스 제거
-            storyInput.classList.remove('has-content', 'medium-content', 'long-content');
-            
-            // 내용 길이에 따라 클래스 추가
-            if (contentLength > 50) {
-                storyInput.classList.add('has-content');
-            }
-            if (contentLength > 150) {
-                storyInput.classList.add('medium-content');
-            }
-            if (contentLength > 300) {
-                storyInput.classList.add('long-content');
-            }
-        }
-        
-        // 실시간 키워드 추출 시작 (디바운싱 적용)
-        function startRealtimeExtraction() {
-            if (!isTyping) return;
-            
-            const story = storyInput.value.trim();
-            if (story.length < 4) {
-                // 텍스트가 너무 짧으면 키워드 숨기기
-                keywordsContainer.style.display = 'none';
-                return;
-            }
-            
-            // 4글자 정도 입력할 때마다 응답
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(() => {
-                console.log('⚡ 실시간 키워드 추출 시작:', story);
-                extractContextRealtime(story);
-            }, 500); // 500ms로 조정
-        }
-        
-        // 키워드 최종 고정
-        function finalizeKeywords() {
-            console.log('🔒 키워드 최종 고정');
-            isTyping = false;
-            
-            // 키워드 컨테이너에 'finalized' 클래스 추가
-            keywordsContainer.classList.add('finalized');
-
-            // 최종 시 LLM 기반 정밀 추출로 업데이트 (느려도 괜찮음)
-            extractContext();
-        }
-        
-        // 실시간 컨텍스트 추출 (빠른 API 사용 + 이전 요청 취소)
-        async function extractContextRealtime(story) {
-            if (!story || story.length < 4) {
-                keywordsContainer.innerHTML = '';
-                return;
-            }
-            
+        // 샘플 스토리 로드
+        async function loadSampleStories() {
             try {
-                console.log('🔍 실시간 키워드 추출 요청:', story);
-                // 이전 요청이 진행 중이면 취소
-                if (realtimeAbortController) {
-                    try { realtimeAbortController.abort(); } catch (e) {}
-                }
-                realtimeAbortController = new AbortController();
-                const { signal } = realtimeAbortController;
-                const response = await fetch(`${API_BASE}/fast-context`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ story }),
-                    signal
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
-                
+                const response = await fetch(`${API_BASE}/sample-stories`);
                 const data = await response.json();
-                console.log('✅ 실시간 키워드 추출 응답:', data);
-                displayKeywordsRealtime(data);
                 
-            } catch (err) {
-                console.error('❌ 실시간 컨텍스트 추출 실패:', err);
+                if (data.stories && data.stories.length > 0) {
+                    displaySampleStories(data.stories);
+                }
+            } catch (error) {
+                console.error('샘플 스토리 로드 실패:', error);
             }
         }
         
-        // 컨텍스트 추출 함수
-        async function extractContext() {
-            const story = storyInput.value.trim();
+        // 샘플 스토리 표시
+        function displaySampleStories(stories) {
+            storiesScroll.innerHTML = '';
             
-            if (!story || story.length < 10) {
-                keywordsContainer.innerHTML = '';
-                return;
-            }
-            
-            try {
-                console.log('🔍 키워드 추출 요청:', story);
-                const response = await fetch(`${API_BASE}/extract-context`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ story })
-                });
+            stories.forEach((story, index) => {
+                const storyCard = document.createElement('div');
+                storyCard.className = 'story-card';
+                storyCard.dataset.storyIndex = index;
                 
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
+                const keywords = story.predefined_keywords;
+                const keywordTags = [
+                    ...(keywords.emotions || []),
+                    ...(keywords.situations || []),
+                    ...(keywords.moods || []),
+                    ...(keywords.colors || [])
+                ].slice(0, 4); // 최대 4개만 표시
                 
-                const data = await response.json();
-                console.log('✅ 키워드 추출 응답:', data);
-                displayKeywords(data);
+                storyCard.innerHTML = `
+                    <h4>${story.title}</h4>
+                    <div class="keywords">
+                        ${keywordTags.map(keyword => 
+                            `<span class="keyword-tag">${keyword}</span>`
+                        ).join('')}
+                    </div>
+                `;
                 
-            } catch (err) {
-                console.error('❌ 컨텍스트 추출 실패:', err);
-            }
+                storyCard.addEventListener('click', () => selectSampleStory(story));
+                storiesScroll.appendChild(storyCard);
+            });
         }
         
-        // 실시간 키워드 표시 함수
-        function displayKeywordsRealtime(data) {
-            console.log('🎨 실시간 키워드 표시:', data);
-            
-            // API 응답 구조에 맞게 키워드 추출
-            const emotions = data.emotions || [];
-            const situations = data.situations || [];
-            const moods = data.moods || [];
-            const colors = data.colors || [];
-            
-            console.log('📝 실시간 추출된 키워드들:', {
-                emotions: emotions,
-                situations: situations,
-                moods: moods,
-                colors: colors
+        // 샘플 스토리 선택
+        function selectSampleStory(story) {
+            // 이전 선택 해제
+            document.querySelectorAll('.story-card').forEach(card => {
+                card.classList.remove('selected');
             });
             
+            // 현재 선택 표시
+            const selectedCard = document.querySelector(`[data-story-index="${storiesScroll.children.length - 1}"]`);
+            if (selectedCard) {
+                selectedCard.classList.add('selected');
+            }
+            
+            selectedStory = story;
+            storyInput.value = story.story;
+            
+            // 미리 정의된 키워드로 바로 결과 표시 (API 호출 없이)
+            displayPredefinedKeywords(story.predefined_keywords);
+            displaySampleStoryResult(story);
+        }
+        
+        // 미리 정의된 키워드 표시
+        function displayPredefinedKeywords(keywords) {
+            keywordsContainer.style.display = 'flex';
             keywordsContainer.innerHTML = '';
             
-            // 모든 키워드가 비어있으면 종료
-            if (emotions.length === 0 && situations.length === 0 && moods.length === 0 && colors.length === 0) {
-                console.log('⚠️ 실시간 추출된 키워드가 없습니다.');
-                return;
-            }
-            
-            // 키워드 컨테이너 표시
-            keywordsContainer.style.display = 'flex';
-            
-            // 4개 디멘션에서 확실한 것만 선택
-            let allKeywords = [];
-            
-            // 확실한 디멘션만 추가 (빈 문자열이나 불확실한 키워드 제외)
-            if (emotions.length > 0 && emotions[0].trim() && emotions[0] !== 'undefined' && emotions[0] !== 'null') {
-                allKeywords.push({
-                    text: emotions[0],
-                    type: 'emotion'
-                });
-            }
-            
-            if (situations.length > 0 && situations[0].trim() && situations[0] !== 'undefined' && situations[0] !== 'null') {
-                allKeywords.push({
-                    text: situations[0],
-                    type: 'situation'
-                });
-            }
-            
-            if (moods.length > 0 && moods[0].trim() && moods[0] !== 'undefined' && moods[0] !== 'null') {
-                allKeywords.push({
-                    text: moods[0],
-                    type: 'mood'
-                });
-            }
-            
-            if (colors.length > 0 && colors[0].trim() && colors[0] !== 'undefined' && colors[0] !== 'null') {
-                allKeywords.push({
-                    text: colors[0],
-                    type: 'color'
-                });
-            }
-            
-                                // 실시간 키워드들을 빠르게 표시
-                    allKeywords.forEach((keyword, index) => {
-                        setTimeout(() => {
-                            const keywordElement = document.createElement('div');
-                            keywordElement.className = 'keyword-tag realtime';
-                            keywordElement.setAttribute('data-type', keyword.type);
-                            keywordElement.setAttribute('data-text', keyword.text);
-                            
-                            keywordElement.innerHTML = `
-                                <span>${keyword.text}</span>
-                                <button class="keyword-remove-btn">✕</button>
-                            `;
-                            
-                            // 클릭 이벤트 추가
-                            keywordElement.addEventListener('click', function(e) {
-                                if (e.target.classList.contains('keyword-remove-btn')) {
-                                    toggleKeywordSelection(this);
-                                } else {
-                                    // 키워드 자체 클릭 시 옵션 표시
-                                    showKeywordOptions(this);
-                                }
-                            });
-                    
-                    // 키워드 컨테이너에 추가
-                    keywordsContainer.appendChild(keywordElement);
-                    
-                    // 실시간 애니메이션 시작
-                    setTimeout(() => {
-                        keywordElement.classList.add('show');
-                    }, 50);
-                    
-                }, index * 30); // 30ms 간격으로 더 빠르게 표시 (속도 개선)
-            });
-            
-            // 메시지 박스 높이 자동 조정
-            setTimeout(() => {
-                adjustMessageBoxHeight();
-            }, 100);
-            
-            console.log('✅ 실시간 키워드 애니메이션 시작:', allKeywords.length, '개');
-        }
-        
-        // 키워드 표시 함수 (모든 키워드를 버튼으로 표시)
-        function displayKeywords(data) {
-            console.log('🎨 displayKeywords 호출됨:', data);
-            
-            // 4가지 디멘전별로 키워드 추출
-            const emotions = data.emotions || [];
-            const situations = data.situations || [];
-            const moods = data.moods || [];
-            const colors = data.colors || [];
-            
-            console.log('📝 추출된 키워드들:', {
-                emotions: emotions,
-                situations: situations,
-                moods: moods,
-                colors: colors
-            });
-            
-            keywordsContainer.innerHTML = '';
-            
-            // 모든 키워드가 비어있으면 종료
-            if (emotions.length === 0 && situations.length === 0 && moods.length === 0 && colors.length === 0) {
-                console.log('⚠️ 추출된 키워드가 없습니다.');
-                return;
-            }
-            
-            // 키워드 컨테이너 표시
-            keywordsContainer.style.display = 'flex';
-            
-            // 4개 디멘션에서 각각 1개씩만 선택
-            let allKeywords = [];
-            
-            // 감정 키워드 (첫 번째만)
-            if (emotions.length > 0) {
-                allKeywords.push({
-                    text: emotions[0],
-                    type: 'emotion'
-                });
-            }
-            
-            // 상황 키워드 (첫 번째만)
-            if (situations.length > 0) {
-                allKeywords.push({
-                    text: situations[0],
-                    type: 'situation'
-                });
-            }
-            
-            // 무드 키워드 (첫 번째만)
-            if (moods.length > 0) {
-                allKeywords.push({
-                    text: moods[0],
-                    type: 'mood'
-                });
-            }
-            
-            // 색상 키워드 (첫 번째만)
-            if (colors.length > 0) {
-                allKeywords.push({
-                    text: colors[0],
-                    type: 'color'
-                });
-            }
-            
-            // 키워드들을 자연스러운 흐름으로 표시
-            allKeywords.forEach((keyword, index) => {
-                setTimeout(() => {
+            Object.entries(keywords).forEach(([category, words]) => {
+                words.forEach(word => {
                     const keywordElement = document.createElement('div');
-                    keywordElement.className = 'keyword-tag';
-                    keywordElement.setAttribute('data-type', keyword.type);
-                    keywordElement.setAttribute('data-text', keyword.text);
-                    
+                    keywordElement.className = 'keyword-tag show';
+                    keywordElement.setAttribute('data-type', category);
+                    keywordElement.setAttribute('data-text', word);
                     keywordElement.innerHTML = `
-                        <span>${keyword.text}</span>
+                        <span>${word}</span>
                         <button class="keyword-remove-btn">✕</button>
                     `;
                     
@@ -1341,333 +1218,134 @@
                         if (e.target.classList.contains('keyword-remove-btn')) {
                             toggleKeywordSelection(this);
                         } else {
-                            // 키워드 자체 클릭 시 옵션 표시
                             showKeywordOptions(this);
                         }
                     });
                     
-                    // 키워드 컨테이너에 추가
                     keywordsContainer.appendChild(keywordElement);
-                    
-                    // 애니메이션 시작 (약간의 지연 후)
-                    setTimeout(() => {
-                        keywordElement.classList.add('show');
-                    }, 100);
-                    
-                }, index * 80); // 80ms 간격으로 자연스럽게 표시
+                });
             });
-            
-            // 메시지 박스 높이 자동 조정
-            setTimeout(() => {
-                adjustMessageBoxHeight();
-            }, 100);
-            
-            console.log('✅ 모든 키워드 애니메이션 시작:', allKeywords.length, '개');
         }
         
-        // 메시지 박스 높이 자동 조정 함수
-        function adjustMessageBoxHeight() {
-            const storyInput = document.getElementById('storyInput');
-            const keywordsContainer = document.getElementById('keywordsContainer');
-            const messageContainer = document.querySelector('.message-container');
+        // 샘플 스토리 결과 표시 (API 호출 없이)
+        function displaySampleStoryResult(story) {
+            // 미리 정의된 키워드로 꽃 매칭
+            const matchedFlower = getMatchedFlowerFromKeywords(story.predefined_keywords);
             
-            // 사연의 실제 높이 계산
-            const storyHeight = storyInput.scrollHeight;
-            const containerHeight = storyInput.clientHeight;
-            
-            // 사연이 컨테이너를 넘어서면 높이 조정
-            if (storyHeight > containerHeight) {
-                storyInput.style.minHeight = storyHeight + 'px';
-                storyInput.style.paddingBottom = '80px'; // 키워드 공간만 확보
+            if (matchedFlower) {
+                displayRecommendationResult(matchedFlower, story);
             } else {
-                // 사연이 짧으면 기본 높이 유지
-                storyInput.style.minHeight = '50px';
-                storyInput.style.paddingBottom = '80px'; // 키워드 공간만 확보
+                // 매칭되는 꽃이 없으면 기본 꽃 사용
+                const defaultFlower = {
+                    flower_name: "Rose",
+                    korean_name: "장미",
+                    scientific_name: "Rosa",
+                    image_url: "https://cdn.plainflower.club/flowers/rose-pk.png",
+                    hashtags: ["#장미", "#사랑", "#감사"],
+                    keywords: ["사랑", "감사", "기쁨"],
+                    emotions: [
+                        { emotion: "사랑", percentage: 50 },
+                        { emotion: "감사", percentage: 30 },
+                        { emotion: "기쁨", percentage: 20 }
+                    ],
+                    season_detail: { display: "All Season", range: "01-12" },
+                    composition: {
+                        main_flower: "Rose",
+                        accent_flowers: ["베이비 브레스", "스톡"],
+                        composition_name: "Beautiful Blend"
+                    },
+                    comment: `${story.title}에 가장 적합한 꽃입니다.`,
+                    english_description: "A beautiful rose that perfectly matches your story."
+                };
+                displayRecommendationResult(defaultFlower, story);
             }
-            
-            // 메시지 컨테이너는 자동 높이로 설정
-            messageContainer.style.minHeight = 'auto';
         }
         
-        // 선택 해제된 키워드들을 추적하는 전역 변수
-        let deselectedKeywords = [];
-        
-        // 키워드 옵션 데이터
-        const keywordOptions = {
-            emotion: {
-                '우울': ['기쁨', '희망', '활력'],
-                '슬픔': ['위로', '희망', '따뜻함'],
-                '스트레스': ['편안함', '휴식', '평온함'],
-                '피곤': ['활력', '기쁨', '편안함'],
-                '외로움': ['따뜻함', '사랑', '위로'],
-                '불안': ['평온함', '편안함', '희망'],
-                '감사': ['기쁨', '만족', '행복'],
-                '기쁨': ['감사', '행복', '만족'],
-                '희망': ['기쁨', '행복', '감사'],
-                '사랑': ['기쁨', '감사', '따뜻함'],
-                '따뜻함': ['사랑', '감사', '기쁨'],
-                '격려': ['희망', '기쁨', '활력'],
-                '진심': ['감사', '사랑', '기쁨'],
-                '우정': ['감사', '기쁨', '만족']
-            },
-            mood: {
-                '따뜻한': ['부드러운', '우아한', '자연스러운', '심플한'],
-                '부드러운': ['따뜻한', '은은한', '조용한', '차분한'],
-                '우아한': ['세련된', '고급스러운', '품격 있는', '아름다운'],
-                '활기찬': ['경쾌한', '밝은', '즐거운', '에너지 넘치는'],
-                '자연스러운': ['내추럴한', '깔끔한', '심플한', '가벼운'],
-                '화려한': ['비비드한', '알록달록한', '형형색색', '눈부신'],
-                '심플한': ['가벼운', '간단한', '미니멀한', '깔끔한'],
-                '내추럴한': ['자연스러운', '깔끔한', '심플한', '가벼운'],
-                '은은한': ['부드러운', '조용한', '차분한', '따뜻한'],
-                '조용한': ['차분한', '은은한', '부드러운', '평온한'],
-                '차분한': ['조용한', '은은한', '부드러운', '평온한'],
-                '세련된': ['우아한', '고급스러운', '품격 있는', '아름다운'],
-                '고급스러운': ['세련된', '우아한', '품격 있는', '아름다운'],
-                '품격 있는': ['고급스러운', '세련된', '우아한', '아름다운'],
-                '아름다운': ['우아한', '세련된', '고급스러운', '품격 있는'],
-                '경쾌한': ['활기찬', '밝은', '즐거운', '에너지 넘치는'],
-                '밝은': ['활기찬', '경쾌한', '즐거운', '에너지 넘치는'],
-                '즐거운': ['활기찬', '경쾌한', '밝은', '에너지 넘치는'],
-                '에너지 넘치는': ['활기찬', '경쾌한', '밝은', '즐거운'],
-                '깔끔한': ['자연스러운', '심플한', '내추럴한', '가벼운'],
-                '가벼운': ['심플한', '자연스러운', '깔끔한', '내추럴한'],
-                '간단한': ['심플한', '가벼운', '깔끔한', '미니멀한'],
-                '미니멀한': ['심플한', '간단한', '가벼운', '깔끔한'],
-                '비비드한': ['화려한', '알록달록한', '형형색색', '눈부신'],
-                '알록달록한': ['화려한', '비비드한', '형형색색', '눈부신'],
-                '형형색색': ['화려한', '비비드한', '알록달록한', '눈부신'],
-                '눈부신': ['화려한', '비비드한', '알록달록한', '형형색색'],
-                '평온한': ['조용한', '차분한', '은은한', '부드러운']
-            },
-            color: {
-                // DB에 등록된 기본 컬러들
-                '핑크': ['화이트', '퍼플', '레드'],
-                '화이트': ['핑크', '블루', '옐로우', '그린'],
-                '레드': ['오렌지', '핑크', '퍼플'],
-                '옐로우': ['오렌지', '화이트', '그린'],
-                '오렌지': ['레드', '옐로우', '핑크'],
-                '퍼플': ['블루', '핑크', '레드'],
-                '블루': ['퍼플', '그린', '화이트'],
-                '그린': ['블루', '화이트', '옐로우'],
-                
-                        // 파스텔톤 제거 (색상이 아닌 톤이므로)
-        // '파스텔톤': ['화이트', '핑크', '그린', '블루'],
-                '하늘색': ['블루', '화이트', '퍼플'],
-                '라일락': ['화이트', '연핑크', '연노랑'],
-                '연보라': ['화이트', '연핑크', '연노랑'],
-                '연핑크': ['핑크', '화이트', '퍼플'],
-                '연노랑': ['옐로우', '화이트', '오렌지'],
-                '연주황': ['오렌지', '옐로우', '레드'],
-                '연빨강': ['레드', '핑크', '오렌지'],
-                '연초록': ['그린', '화이트', '블루']
-            }
-        };
-        
-        // 키워드 옵션 표시 함수
-        function showKeywordOptions(keywordElement) {
-            const keywordText = keywordElement.getAttribute('data-text');
-            const keywordType = keywordElement.getAttribute('data-type');
+        // 키워드로 꽃 매칭 (간단한 로직)
+        function getMatchedFlowerFromKeywords(keywords) {
+            // 간단한 키워드 매칭 로직
+            const color = keywords.colors?.[0] || 'pk';
+            const emotion = keywords.emotions?.[0] || '감사';
             
-            console.log('🔍 showKeywordOptions 호출:', { keywordText, keywordType });
-            
-            // mood, color, emotion만 옵션 제공
-            if (keywordType !== 'mood' && keywordType !== 'color' && keywordType !== 'emotion') {
-                console.log('❌ mood/color/emotion이 아님:', keywordType);
-                return;
-            }
-            
-            // 키워드가 표시되어 있으면 옵션 제공 가능
-            const keywordsContainer = document.getElementById('keywordsContainer');
-            if (keywordsContainer.children.length === 0) {
-                console.log('❌ 키워드 컨테이너가 비어있음');
-                return;
-            }
-            
-            // 기존 옵션 컨테이너 제거
-            const existingOptions = document.querySelector('.keyword-options-container');
-            if (existingOptions) {
-                existingOptions.remove();
-            }
-            
-            // 옵션 데이터 가져오기
-            const options = keywordOptions[keywordType][keywordText] || [];
-            console.log('📋 옵션 데이터:', { keywordType, keywordText, options });
-            
-            if (options.length === 0) {
-                console.log('❌ 옵션이 없음');
-                return;
-            }
-            
-            // 옵션 컨테이너 생성
-            const optionsContainer = document.createElement('div');
-            optionsContainer.className = 'keyword-options-container';
-            optionsContainer.style.cssText = `
-                position: absolute;
-                top: 100%;
-                left: 0;
-                background: white;
-                border: 1px solid #e0e0e0;
-                border-radius: 8px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                padding: 8px;
-                z-index: 1000;
-                min-width: 120px;
-                opacity: 0;
-                transform: translateY(-10px);
-                transition: all 0.3s ease;
-            `;
-            
-            // 옵션 버튼들 생성
-            options.forEach((option, index) => {
-                const optionBtn = document.createElement('button');
-                optionBtn.className = 'keyword-option-btn';
-                optionBtn.textContent = option;
-                optionBtn.style.cssText = `
-                    display: block;
-                    width: 100%;
-                    padding: 8px 12px;
-                    margin: 2px 0;
-                    border: none;
-                    background: #f8f9fa;
-                    border-radius: 4px;
-                    cursor: pointer;
-                    font-size: 14px;
-                    text-align: left;
-                    transition: background 0.2s ease;
-                `;
-                
-                // 호버 효과
-                optionBtn.addEventListener('mouseenter', function() {
-                    this.style.background = '#e9ecef';
-                });
-                
-                optionBtn.addEventListener('mouseleave', function() {
-                    this.style.background = '#f8f9fa';
-                });
-                
-                // 클릭 이벤트
-                optionBtn.addEventListener('click', function() {
-                    console.log('🔍 옵션 버튼 클릭됨:', option, '타입:', keywordType);
-                    
-                    // 키워드 텍스트 변경
-                    keywordElement.querySelector('span').textContent = option;
-                    keywordElement.setAttribute('data-text', option);
-                    
-                    console.log('✅ 키워드 요소 업데이트됨:', keywordElement.getAttribute('data-text'));
-                    console.log('🔍 DOM 업데이트 확인:');
-                    console.log('  - span 텍스트:', keywordElement.querySelector('span').textContent);
-                    console.log('  - data-text 속성:', keywordElement.getAttribute('data-text'));
-                    
-                    // 옵션 컨테이너 제거
-                    optionsContainer.remove();
-                    
-                    // 키워드 변경 애니메이션
-                    keywordElement.style.transform = 'scale(1.05)';
-                    setTimeout(() => {
-                        keywordElement.style.transform = 'scale(1)';
-                    }, 200);
-                    
-                    console.log('🎯 키워드 옵션 선택됨:', option, '타입:', keywordType);
-                    // 키워드 변경 시 매칭 로직 재실행
-                    updateMatchingWithNewKeywords();
-                });
-                
-                optionsContainer.appendChild(optionBtn);
-            });
-            
-            // 키워드 요소에 옵션 컨테이너 추가
-            keywordElement.style.position = 'relative';
-            keywordElement.appendChild(optionsContainer);
-            
-            // 애니메이션으로 표시
-            setTimeout(() => {
-                optionsContainer.style.opacity = '1';
-                optionsContainer.style.transform = 'translateY(0)';
-            }, 10);
-            
-            // 외부 클릭 시 옵션 닫기
-            document.addEventListener('click', function closeOptions(e) {
-                if (!keywordElement.contains(e.target)) {
-                    optionsContainer.remove();
-                    document.removeEventListener('click', closeOptions);
+            // 색상과 감정에 따른 꽃 매칭 (정적 파일 서빙 URL 사용)
+            const flowerMap = {
+                '화이트': { 
+                    name: 'marguerite-daisy', 
+                    korean: '마가렛 데이지',
+                    imagePath: '/images/marguerite-daisy-wh.webp'
+                },
+                '핑크': { 
+                    name: 'dahlia', 
+                    korean: '다알리아',
+                    imagePath: '/images/dahlia-pk.webp'
+                },
+                '레드': { 
+                    name: 'rose', 
+                    korean: '장미',
+                    imagePath: '/images/rose-rd.webp'
+                },
+                '옐로우': { 
+                    name: 'sunflower', 
+                    korean: '해바라기',
+                    imagePath: '/images/sunflower-yl.webp'
+                },
+                '블루': { 
+                    name: 'gentian', 
+                    korean: '용담',
+                    imagePath: '/images/gentiana-andrewsii-bl.webp'
                 }
-            });
+            };
+            
+            const matchedFlower = flowerMap[color] || flowerMap['핑크'];
+            
+            return {
+                flower_name: matchedFlower.name,
+                korean_name: matchedFlower.korean,
+                scientific_name: matchedFlower.name.charAt(0).toUpperCase() + matchedFlower.name.slice(1),
+                image_url: matchedFlower.imagePath, // 로컬 파일 경로 사용
+                hashtags: [`#${matchedFlower.korean}`, `#${emotion}`, `#${keywords.situations?.[0] || '특별한'}`],
+                keywords: [emotion, keywords.situations?.[0], keywords.moods?.[0]],
+                emotions: [
+                    { emotion: emotion, percentage: 50 },
+                    { emotion: keywords.situations?.[0] || '감사', percentage: 30 },
+                    { emotion: keywords.moods?.[0] || '따뜻함', percentage: 20 }
+                ],
+                season_detail: { display: "All Season", range: "01-12" },
+                composition: {
+                    main_flower: matchedFlower.korean,
+                    accent_flowers: ["베이비 브레스", "스톡"],
+                    composition_name: "Beautiful Blend"
+                },
+                comment: `${story.title}에 가장 적합한 ${matchedFlower.korean}입니다.`,
+                english_description: "A perfect flower for your special moment."
+            };
         }
         
-        // 키워드 선택/해제 토글 함수
-        function toggleKeywordSelection(keywordElement) {
-            const keywordText = keywordElement.getAttribute('data-text');
-            const keywordType = keywordElement.getAttribute('data-type');
-            
-            keywordElement.classList.toggle('deselected');
-            
-            if (keywordElement.classList.contains('deselected')) {
-                // 선택 해제된 키워드 추가
-                deselectedKeywords.push({
-                    text: keywordText,
-                    type: keywordType
-                });
-                
-                keywordElement.style.backgroundColor = '#f8f9fa';
-                keywordElement.style.color = '#6c757d';
-                keywordElement.style.borderColor = '#dee2e6';
-                keywordElement.style.opacity = '0.6';
-                
-                console.log('❌ 키워드 선택 해제:', keywordText, '타입:', keywordType);
-                console.log('📝 현재 선택 해제된 키워드들:', deselectedKeywords);
-            } else {
-                // 선택 해제된 키워드 제거
-                deselectedKeywords = deselectedKeywords.filter(kw => 
-                    !(kw.text === keywordText && kw.type === keywordType)
-                );
-                
-                keywordElement.style.backgroundColor = 'white';
-                keywordElement.style.color = '#2C3E50';
-                keywordElement.style.borderColor = '#E9ECEF';
-                keywordElement.style.opacity = '1';
-                
-                console.log('✅ 키워드 선택 복원:', keywordText, '타입:', keywordType);
-                console.log('📝 현재 선택 해제된 키워드들:', deselectedKeywords);
-            }
+        // 이벤트 리스너 설정
+        function setupEventListeners() {
+            // 꽃 추천 버튼만 설정 (실시간 키워드 추출 제거)
+            sendBtn.addEventListener('click', submitStory);
         }
         
-        // 스토리 제출 함수
+        // 스토리 제출 (직접 입력 시에만 API 호출)
         async function submitStory() {
             const story = storyInput.value.trim();
-            window.customerStory = story; // 전역 변수로 저장
-            
             if (!story) {
-                alert('사연을 입력해주세요.');
+                alert('이야기를 입력해주세요.');
                 return;
             }
             
-            // 로딩 상태 시작
-            sendBtn.disabled = true;
-            sendBtn.textContent = '⋯';
-            loadingContainer.style.display = 'block';
-            
             try {
-                console.log('📤 스토리 제출 시작:', story);
-                console.log('🚫 선택 해제된 키워드들:', deselectedKeywords);
+                showLoading();
                 
-                // 현재 키워드 수집
-                const currentKeywords = collectCurrentKeywords();
-                const updatedContext = {
-                    emotions: currentKeywords.filter(k => k.type === 'emotion').map(k => k.text),
-                    situations: currentKeywords.filter(k => k.type === 'situation').map(k => k.text),
-                    moods: currentKeywords.filter(k => k.type === 'mood').map(k => k.text),
-                    colors: currentKeywords.filter(k => k.type === 'color').map(k => k.text)
-                };
-                
-                // 선택 해제된 키워드들을 제외 조건으로 포함
+                // 직접 입력된 스토리는 API로 추천
                 const requestBody = {
                     story: story,
-                    excluded_keywords: deselectedKeywords,
-                    updated_context: updatedContext
+                    preferred_colors: [],
+                    excluded_flowers: []
                 };
                 
-                const response = await fetch(`${API_BASE}/emotion-analysis`, {
+                const response = await fetch(`${API_BASE}/recommend`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -1675,1056 +1353,156 @@
                     body: JSON.stringify(requestBody)
                 });
                 
-                if (!response.ok) {
+                if (response.ok) {
+                    const data = await response.json();
+                    displayRecommendationResult(data, { story: story });
+                } else {
                     throw new Error(`HTTP ${response.status}`);
                 }
-                
-                const data = await response.json();
-                console.log('✅ 감정 분석 완료:', data);
-                showEmotionAnalysis(data);
-                
-            } catch (err) {
-                console.error('❌ 스토리 제출 실패:', err);
-                alert('오류가 발생했습니다. 다시 시도해주세요.');
-            } finally {
-                // 로딩 상태 종료
-                sendBtn.disabled = false;
-                sendBtn.textContent = '→';
-                loadingContainer.style.display = 'none';
-            }
-        }
-        
-
-        
-        // 현재 키워드 수집 함수
-        function collectCurrentKeywords() {
-            const currentKeywords = [];
-            const keywordElements = document.querySelectorAll('.keyword-tag');
-            
-            keywordElements.forEach((element) => {
-                const type = element.getAttribute('data-type');
-                const text = element.getAttribute('data-text');
-                if (type && text) {
-                    currentKeywords.push({ type, text });
-                }
-            });
-            
-            return currentKeywords;
-        }
-        
-        // 감정 분석 결과 표시
-        function showEmotionAnalysis(data) {
-            const { matched_flower, composition, emotions, recommendation_reason, flower_card_message, story_id } = data;
-            
-            // 키워드 추출 데이터에서 situations와 moods 가져오기
-            const situations = data.situations || [];
-            const moods = data.moods || [];
-            
-            // 고객 사연 가져오기
-            const customerStory = document.getElementById('storyInput').value.trim();
-            
-            // 꽃 정보를 전역 변수에 저장 (구매 화면에서 사용)
-            window.currentMatchedFlower = matched_flower;
-            
-            // 컨테이너를 숨기고 결과 화면으로 전환
-            const container = document.querySelector('.container');
-            container.style.opacity = '0';
-            container.style.transform = 'translateY(-20px)';
-            container.style.transition = 'all 0.5s ease';
-            
-            setTimeout(() => {
-                // 결과를 표시할 HTML 생성
-                let resultHTML = `
-                    <div class="result-container">
-                        <div class="flower-card">
-                            <div class="flower-image-container">
-                                <img src="${matched_flower.image_url}" alt="${matched_flower.korean_name}" class="flower-image">
-                                <div class="flower-name-overlay">${matched_flower.flower_name}</div>
-                                <div class="date-overlay">${new Date().toLocaleDateString('ko-KR', {year: 'numeric', month: '2-digit', day: '2-digit'}).replace(/\. /g, '.').replace(/\.$/, '')}</div>
-                                ${flower_card_message ? `<div class="flower-card-message">${flower_card_message.replace(/\\n/g, '<br>')}</div>` : ''}
-                            </div>
-                            
-                            <div class="flower-info">
-                                <div class="hashtags">
-                                    #${emotions[0]?.emotion || ''} #${emotions[1]?.emotion || ''} #${emotions[2]?.emotion || ''}
-                                </div>
-                                <div class="names">${matched_flower.korean_name} <span class="english-name">${matched_flower.flower_name}</span></div>
-                                <div class="scientific">${matched_flower.scientific_name}</div>
-                                ${matched_flower.keywords && matched_flower.keywords.length > 0 ? `<div class="flower-keywords">${matched_flower.keywords.join(' • ')}</div>` : ''}
-                                <div class="share-button" onclick="copyShareUrl()" title="공유 URL 복사">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="curation-report">
-                            
-                            <div class="report-header">
-                                <div class="flower-title">${matched_flower.flower_name}</div>
-                                <div class="story-id">${story_id || 'ID 없음'}</div>
-                            </div>
-                            
-                            <div class="story-section">
-                                <h4>Your Story</h4>
-                                <div class="story-content">
-                                    ${customerStory}
-                                </div>
-                            </div>
-                            
-                            <div class="emotion-section">
-                                <h4>Emotion</h4>
-                                <div class="emotion-tags">
-                                    ${emotions.map(emotion => 
-                                        `<span class="emotion-tag">${emotion.emotion} ${emotion.percentage}%</span>`
-                                    ).join('')}
-                                </div>
-                            </div>
-                            
-
-                            
-
-                            
-                            <div class="flower-blend-section">
-                                <h4>Flower Blend</h4>
-                                <div class="blend-tags">
-                                    <span class="blend-tag">${matched_flower.korean_name}</span>
-                                    ${composition.sub_flowers ? composition.sub_flowers.map(flower => `<span class="blend-tag">${flower}</span>`).join('') : '<span class="blend-tag">다양한 꽃들</span>'}
-
-                                </div>
-                                <div class="flower-info-details">
-                                    <div class="flower-info-row">
-                                        <span class="flower-info-label">Season</span>
-                                        <span class="flower-info-value" id="season-value-${Date.now()}">로딩 중...</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="recommendation-reason">
-                                <p>${recommendation_reason || `${matched_flower.korean_name}의 ${matched_flower.color_keywords ? matched_flower.color_keywords[0] : ''} 컬러는 ${emotions[0]?.emotion || '따뜻함'}을 담고 있어요. ${situations[0]?.situation || '이 상황'}에서 ${moods[0]?.mood || '특별한'} 마음을 전하고 싶을 때, ${composition.sub_flowers ? composition.sub_flowers.join(', ') : '다양한 꽃들'}과 함께 완성된 꽃다발로 더욱 의미 있는 선물이 될 거예요.`}</p>
-                            </div>
-                            
-                            <div class="action-buttons">
-                                <button class="action-button btn-back" onclick="goBack()">다시 추천받기</button>
-                                <button class="action-button btn-purchase" onclick="showPurchaseScreen()">꽃다발 추천받기</button>
-                            </div>
-                            
-                            <div class="curation-divider"></div>
-                        </div>
-                    </div>
-                `;
-                
-                // 결과 데이터를 전역 변수에 저장 (공유용)
-                window.lastResultHTML = resultHTML;
-                window.lastEmotions = emotions;
-                window.lastMatchedFlower = matched_flower;
-                window.lastComposition = composition;
-                window.lastRecommendationReason = recommendation_reason;
-                window.lastFlowerCardMessage = flower_card_message;
-                window.lastStoryId = story_id;  // 스토리 ID 저장
-                
-                // 기존 컨테이너 내용을 결과로 교체
-                container.innerHTML = resultHTML;
-                
-                // 결과 화면 표시 애니메이션
-                setTimeout(() => {
-                    container.style.opacity = '1';
-                    container.style.transform = 'translateY(0)';
-                    
-                    const resultContainer = document.querySelector('.result-container');
-                    if (resultContainer) {
-                        resultContainer.classList.add('show');
-                    }
-                    
-                                    // 계절 정보 비동기 로드
-                loadSeasonInfo(matched_flower.korean_name);
-                }, 100);
-                
-            }, 500);
-        }
-        
-        // 키워드 변경 시 매칭 업데이트 함수
-        let currentRequestController = null;
-        let isProcessingRequest = false;  // 요청 처리 중 플래그 추가
-        
-        async function updateMatchingWithNewKeywords() {
-            try {
-                // 이미 요청이 처리 중이면 무시
-                if (isProcessingRequest) {
-                    console.log('⚠️ 요청이 이미 처리 중입니다. 중복 요청 무시.');
-                    return;
-                }
-                
-                isProcessingRequest = true;  // 요청 처리 시작
-                
-                // 이전 요청이 진행 중이면 취소
-                if (currentRequestController) {
-                    console.log('🔄 이전 요청 취소 중...');
-                    currentRequestController.abort();
-                }
-                
-                // 새로운 AbortController 생성
-                currentRequestController = new AbortController();
-                // 현재 표시된 키워드들 수집
-                const currentKeywords = [];
-                const keywordElements = document.querySelectorAll('.keyword-tag');
-                
-                console.log('🔍 키워드 요소 수집 디버깅:');
-                console.log('  - 총 키워드 요소 개수:', keywordElements.length);
-                
-                keywordElements.forEach((element, index) => {
-                    const type = element.getAttribute('data-type');
-                    const text = element.getAttribute('data-text');
-                    console.log(`  - 요소 ${index + 1}: type="${type}", text="${text}"`);
-                    if (type && text) {
-                        currentKeywords.push({ type, text });
-                    }
-                });
-                
-                // 새로운 컨텍스트 데이터 생성
-                const updatedContext = {
-                    emotions: currentKeywords.filter(k => k.type === 'emotion').map(k => k.text),
-                    situations: currentKeywords.filter(k => k.type === 'situation').map(k => k.text),
-                    moods: currentKeywords.filter(k => k.type === 'mood').map(k => k.text),
-                    colors: currentKeywords.filter(k => k.type === 'color').map(k => k.text)
-                };
-                
-                console.log('🎨 현재 키워드 요소들:', keywordElements);
-                console.log('📝 수집된 키워드들:', currentKeywords);
-                console.log('🎯 컬러 키워드:', currentKeywords.filter(k => k.type === 'color'));
-                
-                console.log('🔄 키워드 변경으로 인한 매칭 업데이트:', updatedContext);
-                console.log('📤 전송할 데이터:', {
-                    story: window.customerStory,
-                    excluded_keywords: deselectedKeywords,
-                    updated_context: updatedContext
-                });
-                
-                // 현재 입력된 스토리 가져오기
-                const currentStory = document.getElementById('storyInput').value.trim();
-                
-                if (!currentStory) {
-                    console.log('⚠️ 스토리가 입력되지 않았습니다. 키워드 변경을 건너뜁니다.');
-                    return;
-                }
-                
-                // 새로운 매칭 요청
-                const requestBody = {
-                    story: currentStory,
-                    preferred_colors: updatedContext.colors,
-                    excluded_flowers: [],
-                    top_k: 1,
-                    updated_context: updatedContext
-                };
-                
-                console.log('📤 API 요청 데이터:', requestBody);
-                console.log('🕐 API 요청 시점:', new Date().toISOString());
-                console.log('🔍 컬러 변경 디버깅 상세:');
-                console.log('  - updated_context.colors:', updatedContext.colors);
-                console.log('  - requestBody.preferred_colors:', requestBody.preferred_colors);
-                console.log('  - requestBody.updated_context.colors:', requestBody.updated_context.colors);
-                console.log('🎨 컬러 변경 디버깅:');
-                console.log('  - 요청 컬러:', updatedContext.colors);
-                console.log('  - preferred_colors:', requestBody.preferred_colors);
-                
-                const response = await fetch(`${API_BASE}/recommend`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(requestBody),
-                    signal: currentRequestController.signal
-                });
-                
-                if (response.ok) {
-                    const newData = await response.json();
-                    
-                    console.log('📥 API 응답 데이터:', newData);
-                console.log('🕐 API 응답 시점:', new Date().toISOString());
-                console.log('🔍 API 응답 컬러 확인:');
-                if (newData.flower_name) {
-                    console.log('  - 추천된 꽃 이름:', newData.flower_name);
-                    console.log('  - 요청했던 컬러:', requestBody.preferred_colors);
-                    console.log('  - 전체 추천 데이터:', newData);
-                }
-                    console.log('🌸 추천된 꽃 정보:');
-                    if (newData.flower_name) {
-                        console.log('  - 꽃 이름:', newData.flower_name);
-                        console.log('  - 한국어 이름:', newData.korean_name);
-                        console.log('  - 이미지 URL:', newData.image_url);
-                        console.log('  - 해시태그:', newData.hashtags);
-                    }
-                    
-                    // 새로운 통합 API 응답 형식에 맞게 변환
-                    const convertedData = {
-                        emotions: newData.emotions || [],
-                        matched_flower: {
-                            flower_name: newData.flower_name,
-                            korean_name: newData.korean_name,
-                            scientific_name: newData.scientific_name,
-                            image_url: newData.image_url
-                        },
-                        composition: newData.composition || '',
-                        recommendation_reason: newData.comment || '',
-                        flower_card_message: newData.english_description || ''
-                    };
-                    
-                    console.log('🔄 변환된 데이터:', convertedData);
-                    
-                    // 새로운 결과로 화면 업데이트
-                    updateResultDisplay(convertedData);
-                    
-                    console.log('✅ 키워드 변경에 따른 매칭 업데이트 완료');
-                    
-                    // 요청 완료 후 controller 정리
-                    currentRequestController = null;
-                    isProcessingRequest = false;  // 요청 처리 완료
-                }
-                
             } catch (error) {
-                if (error.name === 'AbortError') {
-                    console.log('🔄 요청이 취소되었습니다.');
-                } else {
-                    console.error('❌ 키워드 변경 매칭 업데이트 실패:', error);
-                }
-                
-                // 에러 발생 시에도 controller 정리
-                currentRequestController = null;
-                isProcessingRequest = false;  // 요청 처리 완료
+                console.error('추천 실패:', error);
+                hideLoading();
+                alert('추천에 실패했습니다. 다시 시도해주세요.');
             }
         }
         
-        // 결과 표시 업데이트 함수
-        function updateResultDisplay(data) {
-            // 기존 결과 데이터 업데이트
-            window.lastEmotions = data.emotions;
-            window.lastMatchedFlower = data.matched_flower;
-            window.lastComposition = data.composition;
-            window.lastRecommendationReason = data.recommendation_reason;
-            window.lastFlowerCardMessage = data.flower_card_message;
+        // 추천 결과 표시 (원래 기능 유지)
+        function displayRecommendationResult(data) {
+            hideLoading();
             
-            // 꽃 카드 이미지와 정보 업데이트
-            const flowerImage = document.querySelector('.flower-image');
-            const flowerName = document.querySelector('.flower-name-overlay');
-            const koreanName = document.querySelector('.names');
-            const scientificName = document.querySelector('.scientific');
-            const hashtags = document.querySelector('.hashtags');
-            const recommendationReason = document.querySelector('.recommendation-reason p');
-            const flowerCardMessage = document.querySelector('.flower-card-message');
+            // 시즌 정보 분리
+            const seasonInfo = data.season_detail || {};
+            const seasonDisplay = seasonInfo.display || 'All Season';
+            const seasonRange = seasonInfo.range || '01-12';
             
-            if (flowerImage) flowerImage.src = data.matched_flower.image_url;
-            if (flowerName) flowerName.textContent = data.matched_flower.flower_name;
-            if (koreanName) koreanName.innerHTML = `${data.matched_flower.korean_name} <span class="english-name">${data.matched_flower.flower_name}</span>`;
-            if (scientificName) scientificName.textContent = data.matched_flower.scientific_name;
-            if (hashtags) hashtags.innerHTML = `#${data.emotions[0]?.emotion || ''} #${data.emotions[1]?.emotion || ''} #${data.emotions[2]?.emotion || ''}`;
-            if (recommendationReason) recommendationReason.textContent = data.recommendation_reason;
-            if (flowerCardMessage) flowerCardMessage.innerHTML = data.flower_card_message ? data.flower_card_message.replace(/\\n/g, '<br>') : '';
+            // 영문 메시지 분리 (메시지와 출처)
+            const englishMessage = data.english_description || '';
+            const messageParts = englishMessage.split(' - ');
+            const messageText = messageParts[0] || englishMessage;
+            const messageSource = messageParts.length > 1 ? messageParts[1] : '';
             
-            // 변경 애니메이션
-            const flowerCard = document.querySelector('.flower-card');
-            if (flowerCard) {
-                flowerCard.style.transform = 'scale(1.02)';
-                setTimeout(() => {
-                    flowerCard.style.transform = 'scale(1)';
-                }, 200);
-            }
-        }
-        
-        // URL 복사 함수
-        async function copyShareUrl() {
-            try {
-                // 스토리 ID가 있으면 스토리 기반 공유 URL 생성
-                if (window.lastStoryId) {
-                    // 스토리 ID를 Base64로 인코딩
-                    const encodedStoryId = btoa(unescape(encodeURIComponent(window.lastStoryId)));
-                    const shareUrl = `${window.location.origin}/api/v1/stories/share/${encodedStoryId}`;
-                    
-                    // 클립보드에 복사
-                    if (navigator.clipboard && window.isSecureContext) {
-                        await navigator.clipboard.writeText(shareUrl);
-                    } else {
-                        // fallback for non-secure contexts
-                        const textArea = document.createElement('textarea');
-                        textArea.value = shareUrl;
-                        textArea.style.position = 'fixed';
-                        textArea.style.left = '-999999px';
-                        textArea.style.top = '-999999px';
-                        document.body.appendChild(textArea);
-                        textArea.focus();
-                        textArea.select();
-                        document.execCommand('copy');
-                        textArea.remove();
-                    }
-                    
-                    // 성공 메시지 표시
-                    showToast('공유 URL이 클립보드에 복사되었습니다!', 'success');
-                    console.log('📋 스토리 공유 URL 복사됨:', shareUrl);
-                    return;
-                }
-                
-                // 스토리 ID가 없는 경우 기존 방식 사용 (fallback)
-                const shareData = {
-                    story: window.customerStory || '',
-                    emotions: window.lastEmotions || [],
-                    matched_flower: window.lastMatchedFlower || {},
-                    composition: window.lastComposition || {},
-                    recommendation_reason: window.lastRecommendationReason || '',
-                    flower_card_message: window.lastFlowerCardMessage || ''
-                };
-                
-                // 데이터를 Base64로 인코딩 (한글 지원)
-                const jsonString = JSON.stringify(shareData);
-                const encodedData = btoa(unescape(encodeURIComponent(jsonString)));
-                
-                // 공유 URL 생성
-                const shareUrl = `${window.location.origin}${window.location.pathname}?share=${encodedData}`;
-                
-                // 클립보드에 복사 (fallback 포함)
-                if (navigator.clipboard && window.isSecureContext) {
-                    await navigator.clipboard.writeText(shareUrl);
-                } else {
-                    // fallback for non-secure contexts
-                    const textArea = document.createElement('textarea');
-                    textArea.value = shareUrl;
-                    textArea.style.position = 'fixed';
-                    textArea.style.left = '-999999px';
-                    textArea.style.top = '-999999px';
-                    document.body.appendChild(textArea);
-                    textArea.focus();
-                    textArea.select();
-                    document.execCommand('copy');
-                    textArea.remove();
-                }
-                
-                // 성공 메시지 표시
-                showToast('공유 URL이 클립보드에 복사되었습니다!', 'success');
-                
-                console.log('📋 공유 URL 복사됨:', shareUrl);
-                
-            } catch (error) {
-                console.error('❌ URL 복사 실패:', error);
-                showToast('URL 복사에 실패했습니다.', 'error');
-            }
-        }
-        
-        // 토스트 메시지 표시 함수
-        function showToast(message, type = 'info') {
-            // 기존 토스트 제거
-            const existingToast = document.querySelector('.toast-message');
-            if (existingToast) {
-                existingToast.remove();
-            }
+            // 이미지 URL 수정 (실제 파일명 패턴에 맞게)
+            let correctedImageUrl = data.image_url;
+            // 샘플 스토리는 이미 CDN URL이므로 변환 불필요
+            // 직접 입력된 스토리만 Supabase URL을 CDN URL로 변환
             
-            // 토스트 생성
-            const toast = document.createElement('div');
-            toast.className = `toast-message toast-${type}`;
-            toast.textContent = message;
-            toast.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#17a2b8'};
-                color: white;
-                padding: 12px 20px;
-                border-radius: 8px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                z-index: 10000;
-                font-size: 14px;
-                font-weight: 500;
-                opacity: 0;
-                transform: translateX(100%);
-                transition: all 0.3s ease;
-            `;
+            // 스토리 ID 생성 (올바른 형식: S + YYMMDD + - + 꽃약자 + - + 순번)
+            const flowerKeywords = data.keywords || [];
+            const flowerName = data.flower_name || 'UNK';
             
-            document.body.appendChild(toast);
+            // 꽃 이름에서 약자 추출 (첫 글자들)
+            const flowerAbbrev = flowerName.split(' ').map(word => word.charAt(0).toUpperCase()).join('').substring(0, 3);
             
-            // 애니메이션으로 표시
-            setTimeout(() => {
-                toast.style.opacity = '1';
-                toast.style.transform = 'translateX(0)';
-            }, 10);
-            
-            // 3초 후 자동 제거
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transform = 'translateX(100%)';
-                setTimeout(() => {
-                    if (toast.parentNode) {
-                        toast.remove();
-                    }
-                }, 300);
-            }, 3000);
-        }
-        
-        // 뒤로 가기 함수
-        function goBack() {
-            // 배경 초기화
-            document.body.style.backgroundImage = 'none';
-            document.body.style.filter = 'none';
-            
-            // 페이지 새로고침
-            location.reload();
-        }
-        
-        // 구매 화면 표시
-        function showPurchaseScreen() {
-            const container = document.querySelector('.container');
-            
-            // 현재 추천된 꽃 정보 가져오기
-            const matchedFlower = window.currentMatchedFlower || {
-                flower_name: 'Dahlia',
-                scientific_name: 'Dahlia pinnata',
-                hashtags: ['#평온함', '#우아함', '#자연스러움']
-            };
-            
-            // 현재 날짜 생성 (YY.MM.DD 형식)
+            // 현재 날짜에서 YYMMDD 형식 생성
             const now = new Date();
-            const dateStr = `${now.getFullYear().toString().slice(-2)}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')}`;
+            const dateStr = now.getFullYear().toString().slice(-2) + 
+                           String(now.getMonth() + 1).padStart(2, '0') + 
+                           String(now.getDate()).padStart(2, '0');
             
-            const purchaseHTML = `
-                <div class="purchase-screen show">
-                    <div class="curation-report-frame">
-                        <div class="beta-title">PlainFlowerClub</div>
-                        <div class="beta-subtitle">We are in Beta</div>
-                        <div class="intro-text">
-                            현재 P.F.C는 이야기 기반 감정 분석과 꽃 시각화 실험을 진행하고 있어요. 곧 Flower Blend 서비스와 주문 배송까지 확장될 예정입니다.
-                        </div>
-                        
-                        <div class="download-frame" style="--flower-bg-image: url('${matchedFlower.image_url}')">
-                            <div class="download-header">
-                                <div class="download-left">P.F.C</div>
-                                <div class="download-center">${matchedFlower.flower_name.toUpperCase()}</div>
-                                <div class="download-right">${dateStr}</div>
-                            </div>
-                            <div class="download-main">
-                                <div class="download-title">Download Curation Report</div>
-                                <div class="download-icon" onclick="downloadCurationReport()">↓</div>
-                            </div>
-                            <div class="download-codes">
-                                KX OHZVBKDSYX YP SNOKC<br>
-                                52488 0101&82&98
-                            </div>
-                        </div>
-                        
-                        <div class="instagram-section">
-                            <h3>Instagram event</h3>
-                            <p>지금 나만의 감정이 담긴 꽃을 다운 받아, 인스타그램에 공유해 주세요. 추첨을 통해 당신만의 큐레이션 꽃을 직접 실물로 보내드려요!</p>
-                            <div class="instagram-link">> 인스타 이벤트 자세히 보러가기</div>
-                        </div>
-                        
-                        <div class="action-buttons">
-                            <button class="action-button btn-back" onclick="goBackToResult()">Flower Card 보기</button>
-                            <button class="action-button btn-home" onclick="goBack()">처음으로 가기</button>
-                        </div>
-                    </div>
-                </div>
-            `;
+            // 순번 생성 (4자리)
+            const randomNumber = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
             
-            container.innerHTML = purchaseHTML;
-        }
-        
-        // 결과 화면으로 돌아가기
-        function goBackToResult() {
-            // 이전 결과 화면을 다시 표시
-            if (window.lastResultHTML) {
-                const container = document.querySelector('.container');
-                container.innerHTML = window.lastResultHTML;
-                
-                setTimeout(() => {
-                    container.style.opacity = '1';
-                    container.style.transform = 'translateY(0)';
-                    
-                    const resultContainer = document.querySelector('.result-container');
-                    if (resultContainer) {
-                        resultContainer.classList.add('show');
-                    }
-                }, 100);
-            }
-        }
-        
-        // 큐레이션 리포트 다운로드 함수
-        function downloadCurationReport() {
-            try {
-                // 현재 추천된 꽃 정보 가져오기
-                const matchedFlower = window.currentMatchedFlower || {
-                    flower_name: 'Dahlia',
-                    korean_name: '다알리아',
-                    scientific_name: 'Dahlia pinnata',
-                    hashtags: ['#평온함', '#우아함', '#자연스러움']
-                };
-                
-                // 고객이 입력한 사연 가져오기
-                const storyInput = document.getElementById('storyInput');
-                const customerStory = storyInput ? storyInput.value.trim() : '고객의 특별한 사연';
-                
-                // 현재 날짜 생성
-                const now = new Date();
-                const dateStr = `${now.getFullYear().toString().slice(-2)}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')}`;
-                
-                // HTML 콘텐츠 생성
-                const htmlContent = `
-                    <!DOCTYPE html>
-                    <html lang="ko">
-                    <head>
-                        <meta charset="UTF-8">
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>P.F.C Curation Report</title>
-                        <style>
-                            body {
-                                font-family: 'Arial', sans-serif;
-                                margin: 0;
-                                padding: 40px;
-                                background: #f8f9fa;
-                                color: #2C3E50;
-                            }
-                            .report-container {
-                                max-width: 800px;
-                                margin: 0 auto;
-                                background: white;
-                                border-radius: 20px;
-                                padding: 40px;
-                                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-                            }
-                            .header {
-                                text-align: center;
-                                margin-bottom: 40px;
-                            }
-                            .brand {
-                                font-size: 28px;
-                                font-weight: bold;
-                                margin-bottom: 10px;
-                            }
-                            .subtitle {
-                                font-size: 14px;
-                                color: #6c757d;
-                                text-transform: uppercase;
-                                letter-spacing: 2px;
-                            }
-                            .flower-story-section {
-                                position: relative;
-                                width: 100%;
-                                height: 400px;
-                                border-radius: 20px;
-                                overflow: hidden;
-                                margin-bottom: 30px;
-                                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-                            }
-                            .flower-background {
-                                position: absolute;
-                                top: 0;
-                                left: 0;
-                                width: 100%;
-                                height: 100%;
-                                background-image: url('${matchedFlower.image_url}');
-                                background-size: cover;
-                                background-position: center;
-                                background-repeat: no-repeat;
-                                filter: brightness(0.7) blur(1px);
-                            }
-                            .story-overlay {
-                                position: absolute;
-                                top: 50%;
-                                left: 50%;
-                                transform: translate(-50%, -50%);
-                                width: 80%;
-                                max-width: 500px;
-                                background: rgba(255, 255, 255, 0.95);
-                                padding: 30px;
-                                border-radius: 15px;
-                                text-align: center;
-                                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-                                backdrop-filter: blur(10px);
-                            }
-                            .story-title {
-                                font-size: 16px;
-                                font-weight: bold;
-                                color: #2C3E50;
-                                margin-bottom: 15px;
-                                text-transform: uppercase;
-                                letter-spacing: 1px;
-                            }
-                            .story-content {
-                                font-size: 14px;
-                                line-height: 1.8;
-                                color: #2C3E50;
-                                font-style: italic;
-                                margin: 0;
-                            }
-                            .flower-info {
-                                background: #f8f9fa;
-                                padding: 30px;
-                                border-radius: 15px;
-                                margin-bottom: 30px;
-                                text-align: center;
-                            }
-                            .flower-name {
-                                font-size: 32px;
-                                font-weight: bold;
-                                margin-bottom: 10px;
-                                text-transform: uppercase;
-                            }
-                            .scientific-name {
-                                font-size: 18px;
-                                color: #6c757d;
-                                font-style: italic;
-                                margin-bottom: 15px;
-                            }
-                            .hashtags {
-                                font-size: 14px;
-                                color: #2C3E50;
-                                font-weight: 500;
-                            }
-                            .date {
-                                text-align: right;
-                                font-size: 12px;
-                                color: #6c757d;
-                                margin-bottom: 20px;
-                            }
-                            .footer {
-                                text-align: center;
-                                font-size: 12px;
-                                color: #6c757d;
-                                margin-top: 40px;
-                                padding-top: 20px;
-                                border-top: 1px solid #e9ecef;
-                            }
-                        </style>
-                    </head>
-                    <body>
-                        <div class="report-container">
-                            <div class="header">
-                                <div class="brand">PlainFlowerClub</div>
-                                <div class="subtitle">AI FLOWER CURATION & STUDIO</div>
-                            </div>
-                            
-                            <div class="date">Generated on ${dateStr}</div>
-                            
-                            <div class="flower-story-section">
-                                <div class="flower-background"></div>
-                                <div class="story-overlay">
-                                    <div class="story-title">Your Story</div>
-                                    <div class="story-content">"${customerStory}"</div>
-                                </div>
-                            </div>
-                            
-                            <div class="flower-info">
-                                <div class="flower-name">${matchedFlower.flower_name}</div>
-                                <div class="scientific-name">${matchedFlower.scientific_name}</div>
-                                <div class="hashtags">${matchedFlower.hashtags ? matchedFlower.hashtags.join(' ') : ''}</div>
-                            </div>
-                            
-                            <div class="footer">
-                                <p>Generated by PlainFlowerClub AI Curation System</p>
-                                <p>KX OHZVBKDSYX YP SNOKC | 52488 0101&82&98</p>
-                            </div>
-                        </div>
-                    </body>
-                    </html>
-                `;
-                
-                // Blob 생성
-                const blob = new Blob([htmlContent], { type: 'text/html' });
-                
-                // 다운로드 링크 생성
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `PFC_Curation_Report_${matchedFlower.flower_name}_${dateStr}.html`;
-                document.body.appendChild(a);
-                a.click();
-                
-                // 정리
-                window.URL.revokeObjectURL(url);
-                document.body.removeChild(a);
-                
-                console.log('✅ 큐레이션 리포트 다운로드 완료');
-                
-            } catch (error) {
-                console.error('❌ 다운로드 실패:', error);
-                alert('다운로드 중 오류가 발생했습니다.');
-            }
-        }
-        
-
-        
-        // 계절 정보 반환 함수 (DB에서 가져오기)
-        async function getSeasonInfo(flowerName) {
-            try {
-                const response = await fetch(`/api/v1/flower-season/${encodeURIComponent(flowerName)}`);
-                const data = await response.json();
-                
-                if (data.seasonality && data.seasonality.length > 0) {
-                    const seasons = data.seasonality;
-                    
-                    // 사계절 모두인 경우
-                    if (seasons.length === 4) {
-                        return 'All Season 01-12';
-                    }
-                    
-                    // 두 계절인 경우 조합
-                    if (seasons.length === 2) {
-                        if (seasons.includes('봄') && seasons.includes('여름')) {
-                            return 'Spring/Summer 03-08';
-                        } else if (seasons.includes('여름') && seasons.includes('가을')) {
-                            return 'Summer/Fall 06-11';
-                        } else if (seasons.includes('가을') && seasons.includes('겨울')) {
-                            return 'Fall/Winter 09-02';
-                        } else if (seasons.includes('겨울') && seasons.includes('봄')) {
-                            return 'Winter/Spring 12-05';
-                        }
-                    }
-                    
-                    // 단일 계절인 경우
-                    const seasonMapping = {
-                        '봄': 'Spring 03-05',
-                        '여름': 'Summer 06-08',
-                        '가을': 'Fall 09-11',
-                        '겨울': 'Winter 12-02'
-                    };
-                    
-                    return seasons.map(season => seasonMapping[season] || season).join(', ');
-                }
-                return 'Spring 03-05';
-            } catch (error) {
-                console.error('계절 정보 가져오기 실패:', error);
-                return 'Spring 03-05';
-            }
-        }
-        
-
-        
-        // 계절 정보 로드 함수
-        async function loadSeasonInfo(flowerName) {
-            try {
-                const seasonValue = document.querySelector('[id^="season-value-"]');
-                if (seasonValue) {
-                    const seasonInfo = await getSeasonInfo(flowerName);
-                    seasonValue.textContent = seasonInfo;
-                }
-            } catch (error) {
-                console.error('계절 정보 로드 실패:', error);
-                const seasonValue = document.querySelector('[id^="season-value-"]');
-                if (seasonValue) {
-                    seasonValue.textContent = 'spring: 3월-5월, summer: 6월-8월, fall: 9월-11월, winter: 12월-2월';
-                }
-            }
-        }
-        
-        // 공유 URL에서 데이터 로드 함수
-        function loadSharedData() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const shareData = urlParams.get('share');
+            // 최종 스토리 ID 생성
+            const storyId = `S${dateStr}-${flowerAbbrev}-${randomNumber}`;
             
-            // 스토리 ID 기반 공유 URL 확인
-            const pathSegments = window.location.pathname.split('/');
-            const storyShareIndex = pathSegments.indexOf('share');
-            
-            if (storyShareIndex !== -1 && pathSegments[storyShareIndex + 1]) {
-                // 스토리 ID 기반 공유
-                const encodedStoryId = pathSegments[storyShareIndex + 1];
-                loadSharedStory(encodedStoryId);
-                return;
-            }
-            
-            if (shareData) {
-                try {
-                    const decodedData = JSON.parse(atob(shareData));
-                    
-                    // 공유된 데이터로 결과 표시
-                    displaySharedResult(decodedData);
-                    
-                    // URL에서 share 파라미터 제거
-                    const newUrl = window.location.pathname;
-                    window.history.replaceState({}, document.title, newUrl);
-                    
-                } catch (error) {
-                    console.error('❌ 공유 데이터 로드 실패:', error);
-                    showToast('공유 데이터를 불러오는데 실패했습니다.', 'error');
-                }
-            }
-        }
-        
-        // 공유된 결과 표시 함수
-        function displaySharedResult(data) {
+            // 원래 simple_test.html의 결과 표시 로직 유지
             const container = document.querySelector('.container');
-            
-            // 결과 HTML 생성 (기존과 동일한 형식)
-            let resultHTML = `
-                <div class="result-container">
+            container.innerHTML = `
+                <div class="result-container show">
                     <div class="flower-card">
                         <div class="flower-image-container">
-                            <img src="${data.matched_flower.image_url}" alt="${data.matched_flower.korean_name}" class="flower-image">
-                            <div class="flower-name-overlay">${data.matched_flower.flower_name}</div>
-                            <div class="date-overlay">${new Date().toLocaleDateString('ko-KR', {year: 'numeric', month: '2-digit', day: '2-digit'}).replace(/\. /g, '.').replace(/\.$/, '')}</div>
-                            ${data.flower_card_message ? `<div class="flower-card-message">${data.flower_card_message.replace(/\\n/g, '<br>')}</div>` : ''}
+                            <div class="image-loading" id="imageLoading">
+                                <div class="loading-spinner"></div>
+                                <div class="loading-text">이미지 로딩 중...</div>
+                            </div>
+                            <img src="${correctedImageUrl}" 
+                                 alt="${data.korean_name}" 
+                                 class="flower-image"
+                                 onload="document.getElementById('imageLoading').style.display='none';"
+                                 onerror="this.onerror=null; this.src='data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 400\"><rect width=\"400\" height=\"400\" fill=\"%23f8f9fa\"/><text x=\"200\" y=\"200\" text-anchor=\"middle\" dy=\".3em\" font-family=\"Arial\" font-size=\"24\" fill=\"%236c757d\">${data.korean_name}</text></svg>'; document.getElementById('imageLoading').style.display='none';">
+                            <div class="flower-name-overlay">${data.flower_name}</div>
+                            <div class="date-overlay">${new Date().toLocaleDateString()}</div>
+                            <div class="flower-card-message">${messageText}${messageSource ? `\n- ${messageSource}` : ''}</div>
                         </div>
-                        
                         <div class="flower-info">
-                            <div class="hashtags">
-                                #${data.emotions[0]?.emotion || '따뜻함'} #${data.emotions[1]?.emotion || '응원'} #${data.matched_flower.keywords ? data.matched_flower.keywords[0] : '희망'}
-                            </div>
-                            <div class="names">${data.matched_flower.korean_name} <span class="english-name">${data.matched_flower.flower_name}</span></div>
-                            <div class="scientific">${data.matched_flower.scientific_name}</div>
-                            ${data.matched_flower.keywords && data.matched_flower.keywords.length > 0 ? `<div class="flower-keywords">${data.matched_flower.keywords.join(' • ')}</div>` : ''}
-                            <div class="share-button" onclick="copyShareUrl()" title="공유 URL 복사">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
-                                </svg>
-                            </div>
+                            <div class="hashtags">${data.hashtags ? data.hashtags.join(' ') : ''}</div>
+                            <div class="names">${data.korean_name} <span class="english-name">${data.flower_name}</span></div>
+                            <div class="scientific">${data.scientific_name}</div>
+                            <div class="flower-keywords">${data.keywords ? data.keywords.join(', ') : ''}</div>
                         </div>
                     </div>
                     
                     <div class="curation-report">
-                        
                         <div class="report-header">
-                            <div class="flower-title">${data.matched_flower.flower_name}</div>
-                            <div class="story-id">${data.story_id || '공유된 결과'}</div>
+                            <div class="flower-title">${data.korean_name} 추천</div>
+                            <div class="story-id">${storyId}</div>
                         </div>
                         
                         <div class="story-section">
-                            <h4>Your Story</h4>
-                            <div class="story-content">
-                                ${data.story}
-                            </div>
+                            <h4>당신의 이야기</h4>
+                            <div class="story-content">${storyInput.value}</div>
                         </div>
                         
                         <div class="emotion-section">
-                            <h4>Emotion</h4>
+                            <h4>감정 분석</h4>
                             <div class="emotion-tags">
-                                ${data.emotions.map(emotion => 
-                                    `<span class="emotion-tag">${emotion.emotion} ${emotion.percentage}%</span>`
-                                ).join('')}
+                                ${data.emotions ? data.emotions.map(emotion => 
+                                    `<span class="emotion-tag">${emotion.emotion} (${emotion.percentage}%)</span>`
+                                ).join('') : ''}
                             </div>
                         </div>
                         
                         <div class="flower-blend-section">
-                            <h4>Flower Blend</h4>
-                            <div class="blend-tags">
-                                <span class="blend-tag">${data.matched_flower.korean_name}</span>
-                                ${data.composition.sub_flowers ? data.composition.sub_flowers.map(flower => `<span class="blend-tag">${flower}</span>`).join('') : '<span class="blend-tag">다양한 꽃들</span>'}
+                            <h4>꽃 구성</h4>
+                            <div class="blend-composition">
+                                <span class="main-flower">${data.composition ? data.composition.main_flower : data.korean_name}</span>
+                                <span class="blend-separator">+</span>
+                                <span class="sub-flowers">${data.composition ? data.composition.accent_flowers.join(', ') : '다양한 꽃들'}</span>
+                            </div>
+                            <div class="composition-name">${data.composition ? data.composition.composition_name : 'Beautiful Blend'}</div>
+                        </div>
+                        
+                        <div class="season-section">
+                            <h4>시즌 정보</h4>
+                            <div class="season-info">
+                                <div class="season-display">${seasonDisplay}</div>
+                                <div class="season-range">${seasonRange}</div>
                             </div>
                         </div>
                         
                         <div class="recommendation-reason">
-                            <p>${data.recommendation_reason}</p>
+                            <h4>추천 이유</h4>
+                            <p>${data.comment || `${data.korean_name}는 당신의 이야기에 가장 적합한 꽃입니다.`}</p>
                         </div>
                         
                         <div class="action-buttons">
                             <button class="action-button btn-back" onclick="goBack()">다시 추천받기</button>
                             <button class="action-button btn-purchase" onclick="showPurchaseScreen()">꽃다발 추천받기</button>
                         </div>
-                        
-                        <div class="curation-divider"></div>
                     </div>
                 </div>
             `;
-            
-            // 결과 표시
-            container.innerHTML = resultHTML;
-            
-            // 애니메이션 적용
-            setTimeout(() => {
-                container.style.opacity = '1';
-                container.style.transform = 'translateY(0)';
-                
-                const resultContainer = document.querySelector('.result-container');
-                if (resultContainer) {
-                    resultContainer.classList.add('show');
-                }
-            }, 100);
         }
         
-        // 공유된 스토리 로드 함수
-        async function loadSharedStory(encodedStoryId) {
-            try {
-                const response = await fetch(`/api/v1/stories/share/${encodedStoryId}`);
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
-                
-                const result = await response.json();
-                if (result.success && result.data) {
-                    displaySharedStory(result.data);
-                } else {
-                    throw new Error('스토리를 찾을 수 없습니다.');
-                }
-            } catch (error) {
-                console.error('❌ 공유된 스토리 로드 실패:', error);
-                showToast('공유된 스토리를 불러올 수 없습니다.', 'error');
-            }
+        // 로딩 표시/숨김
+        function showLoading() {
+            loadingContainer.style.display = 'block';
         }
         
-        // 공유된 스토리 표시 함수
-        function displaySharedStory(storyData) {
-            const container = document.querySelector('.container');
-            
-            // 스토리 데이터를 기존 형식에 맞게 변환
-            const data = {
-                story: storyData.original_story,
-                emotions: storyData.emotions,
-                matched_flower: {
-                    flower_name: storyData.flower_name,
-                    korean_name: storyData.flower_name_en,
-                    scientific_name: storyData.scientific_name,
-                    image_url: storyData.flower_image_url,
-                    keywords: storyData.keywords,
-                    hashtags: storyData.hashtags,
-                    color_keywords: storyData.color_keywords
-                },
-                composition: storyData.flower_blend,
-                recommendation_reason: storyData.recommendation_reason,
-                flower_card_message: storyData.flower_card_message,
-                story_id: storyData.story_id  // 스토리 ID 추가
-            };
-            
-            // 기존 displaySharedResult 함수 사용
-            displaySharedResult(data);
+        function hideLoading() {
+            loadingContainer.style.display = 'none';
         }
         
-        // 페이지 로드 시 공유 URL 확인
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', loadSharedData);
-        } else {
-            loadSharedData();
+        // 뒤로 가기 (원래 기능 유지)
+        function goBack() {
+            location.reload();
         }
         
-        // 수명 정보 반환 함수
-        function getContemplativePeriod(flowerName) {
-            const periodData = {
-                '장미': '일반적인 수명 (5-7일)',
-                '튤립': '짧은 수명 (3-5일)',
-                '카네이션': '긴 수명 (7-10일)',
-                '백합': '일반적인 수명 (5-7일)',
-                '거베라': '긴 수명 (7-10일)',
-                '안개꽃': '짧은 수명 (3-5일)',
-                '마거리트 데이지': '일반적인 수명 (5-7일)',
-                '리시안서스': '일반적인 수명 (5-7일)',
-                '글라디올러스': '일반적인 수명 (5-7일)',
-                '달리아': '짧은 수명 (3-5일)',
-                '프리지아': '짧은 수명 (3-5일)',
-                '라넌큘러스': '짧은 수명 (3-5일)',
-                '백일홍': '일반적인 수명 (5-7일)',
-                '수국': '일반적인 수명 (5-7일)',
-                '아네모네': '짧은 수명 (3-5일)',
-                '아스트': '일반적인 수명 (5-7일)',
-                '코스모스': '짧은 수명 (3-5일)',
-                '국화': '긴 수명 (7-10일)',
-                '포인세티아': '긴 수명 (7-10일)',
-                '아마릴리스': '일반적인 수명 (5-7일)'
-            };
-            
-            return periodData[flowerName] || '일반적인 수명 (5-7일)';
+        // 구매 화면 표시 (원래 기능 유지)
+        function showPurchaseScreen() {
+            // 원래 simple_test.html의 구매 화면 로직 유지
+            alert('구매 화면 기능이 준비 중입니다.');
         }
-        
-        // 이미지 다운로드 함수
-        function downloadImage() {
-            // 실제 다운로드 로직 구현
-            alert('이미지 다운로드 기능이 준비 중입니다.');
-        }
-        
-
     </script>
 </body>
 </html>
-

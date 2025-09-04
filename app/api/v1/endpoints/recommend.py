@@ -11,7 +11,8 @@ from app.models.schemas import (
     EmotionAnalysis,
     FlowerMatch,
     FlowerComposition,
-    StoryCreateRequest
+    StoryCreateRequest,
+    FlowerCardMessage
 )
 # from app.pipelines.integrated_recommendation_chain import IntegratedRecommendationChain
 from app.services.emotion_analyzer import EmotionAnalyzer
@@ -386,7 +387,7 @@ def _fallback_recommendation_reason(matched_flower: FlowerMatch, composition: Fl
         return f"{flower_color} {flower_name}의 아름다움이 마음을 담아 전해줘요."
 
 
-def _generate_flower_card_message(matched_flower: FlowerMatch, emotions: List[EmotionAnalysis], story: str) -> str:
+def _generate_flower_card_message(matched_flower: FlowerMatch, emotions: List[EmotionAnalysis], story: str) -> FlowerCardMessage:
     """꽃카드 메시지 생성 (영어 시적 문구)"""
     if not os.getenv("OPENAI_API_KEY"):
         return _fallback_flower_card_message(matched_flower, emotions, story)
@@ -441,14 +442,21 @@ Choose a quote that DIRECTLY matches the customer's specific situation and emoti
             max_tokens=50
         )
         
-        return response.choices[0].message.content.strip()
+        message_content = response.choices[0].message.content.strip()
+        
+        # 메시지 내용에서 라인 1과 라인 2를 분리
+        lines = message_content.split('\n')
+        quote = lines[0] if len(lines) > 0 else ""
+        source = lines[1] if len(lines) > 1 else ""
+        
+        return FlowerCardMessage(quote=quote, source=source)
         
     except Exception as e:
         print(f"❌ 꽃카드 메시지 생성 실패: {e}")
         return _fallback_flower_card_message(matched_flower, emotions, story)
 
 
-def _fallback_flower_card_message(matched_flower: FlowerMatch, emotions: List[EmotionAnalysis], story: str) -> str:
+def _fallback_flower_card_message(matched_flower: FlowerMatch, emotions: List[EmotionAnalysis], story: str) -> FlowerCardMessage:
     """폴백 꽃카드 메시지 (인용문구 형식)"""
     flower_name = matched_flower.flower_name.lower()
     
@@ -458,39 +466,39 @@ def _fallback_flower_card_message(matched_flower: FlowerMatch, emotions: List[Em
     # 아내/남편 관련 (결혼/로맨스)
     if any(word in story_lower for word in ["아내", "남편", "와이프", "부인", "남편님"]):
         if any(word in story_lower for word in ["고맙", "감사", "사랑"]):
-            return "I love you more than words.\n- The Notebook -"
+            return FlowerCardMessage(quote="I love you more than words.", source="- The Notebook -")
         elif any(word in story_lower for word in ["지쳐", "피곤", "힘들"]):
-            return "I'll be there for you.\n- Friends -"
+            return FlowerCardMessage(quote="I'll be there for you.", source="- Friends -")
         else:
-            return "You make me want to be a better man.\n- As Good As It Gets -"
+            return FlowerCardMessage(quote="You make me want to be a better man.", source="- As Good As It Gets -")
     
     # 감사/사랑 관련
     elif any(word in story_lower for word in ["고맙", "감사", "사랑"]):
-        return "Thank you for being you.\n- Friends -"
+        return FlowerCardMessage(quote="Thank you for being you.", source="- Friends -")
     
     # 지침/위로 관련
     elif any(word in story_lower for word in ["지쳐", "피곤", "힘들", "스트레스"]):
-        return "You are stronger than you know.\n- The Princess Diaries -"
+        return FlowerCardMessage(quote="You are stronger than you know.", source="- The Princess Diaries -")
     
     # 응원/격려 관련
     elif any(word in story_lower for word in ["응원", "격려", "힘내"]):
-        return "I believe in you always.\n- The Little Engine That Could -"
+        return FlowerCardMessage(quote="I believe in you always.", source="- The Little Engine That Could -")
     
     # 기쁨/행복 관련
     elif any(word in story_lower for word in ["기쁨", "행복", "즐거"]):
-        return "You are my sunshine.\n- You Are My Sunshine -"
+        return FlowerCardMessage(quote="You are my sunshine.", source="- You Are My Sunshine -")
     
     # 감정 분석 결과 기반
     elif any("사랑" in e.emotion for e in emotions):
-        return "I love you more than words.\n- The Notebook -"
+        return FlowerCardMessage(quote="I love you more than words.", source="- The Notebook -")
     elif any("감사" in e.emotion for e in emotions):
-        return "Thank you for being you.\n- Friends -"
+        return FlowerCardMessage(quote="Thank you for being you.", source="- Friends -")
     elif any("위로" in e.emotion for e in emotions):
-        return "You are stronger than you know.\n- The Princess Diaries -"
+        return FlowerCardMessage(quote="You are stronger than you know.", source="- The Princess Diaries -")
     elif any("응원" in e.emotion for e in emotions):
-        return "I believe in you always.\n- The Little Engine That Could -"
+        return FlowerCardMessage(quote="I believe in you always.", source="- The Little Engine That Could -")
     else:
-        return "You make every day beautiful.\n- The Sound of Music -"
+        return FlowerCardMessage(quote="You make every day beautiful.", source="- The Sound of Music -")
 
 
 def _get_season_info(flower_name: str) -> Dict[str, str]:

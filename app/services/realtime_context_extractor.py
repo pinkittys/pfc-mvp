@@ -29,6 +29,22 @@ class ExtractedContext:
     situations_alternatives: List[str] = field(default_factory=list)  # 상황 대안 키워드 2-3개
     moods_alternatives: List[str] = field(default_factory=list)  # 무드 대안 키워드 2-3개
     colors_alternatives: List[str] = field(default_factory=list)  # 색상 대안 키워드 2-3개
+    
+    def dict(self) -> Dict[str, Any]:
+        """딕셔너리로 변환"""
+        return {
+            "emotions": self.emotions,
+            "situations": self.situations,
+            "moods": self.moods,
+            "colors": self.colors,
+            "confidence": self.confidence,
+            "user_intent": self.user_intent,
+            "mentioned_flower": self.mentioned_flower,
+            "emotions_alternatives": self.emotions_alternatives,
+            "situations_alternatives": self.situations_alternatives,
+            "moods_alternatives": self.moods_alternatives,
+            "colors_alternatives": self.colors_alternatives
+        }
 
 class RealtimeContextExtractor:
     def __init__(self):
