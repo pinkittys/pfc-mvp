@@ -99,3 +99,7 @@ async def realtime_keyword_test():
 async def keyword_test():
     """실시간 키워드 추출 테스트 페이지 (단축 URL)"""
     return FileResponse("frontend/pages/realtime_keyword_test.html")
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)

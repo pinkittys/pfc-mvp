@@ -7,7 +7,7 @@ import random
 from typing import List, Dict, Optional
 from app.models.schemas import EmotionAnalysis, FlowerMatch
 from app.services.realtime_context_extractor import RealtimeContextExtractor
-# from app.services.comfort_flower_matcher import ComfortFlowerMatcher  # 파일이 삭제됨
+from app.services.comfort_flower_matcher import ComfortFlowerMatcher
 
 class FlowerMatcher:
     def __init__(self):
@@ -16,7 +16,7 @@ class FlowerMatcher:
         self.context_extractor = RealtimeContextExtractor()
         
         # 위로/슬픔 상황 특화 매칭기
-        # self.comfort_matcher = ComfortFlowerMatcher()  # 파일이 삭제됨
+        self.comfort_matcher = ComfortFlowerMatcher()
         
         # LLM 클라이언트 초기화
         try:

@@ -1409,8 +1409,8 @@
             const container = document.querySelector('.container');
             container.innerHTML = `
                 <div class="result-container show">
-                    <div class="flower-card">
-                        <div class="flower-image-container">
+                        <div class="flower-card">
+                            <div class="flower-image-container">
                             <div class="image-loading" id="imageLoading">
                                 <div class="loading-spinner"></div>
                                 <div class="loading-text">이미지 로딩 중...</div>
@@ -1424,64 +1424,64 @@
                             <div class="date-overlay">${new Date().toLocaleDateString()}</div>
                             <div class="flower-card-message">${messageText}${messageSource ? `\n- ${messageSource}` : ''}</div>
                         </div>
-                        <div class="flower-info">
+                            <div class="flower-info">
                             <div class="hashtags">${data.hashtags ? data.hashtags.join(' ') : ''}</div>
                             <div class="names">${data.korean_name} <span class="english-name">${data.flower_name}</span></div>
                             <div class="scientific">${data.scientific_name}</div>
                             <div class="flower-keywords">${data.keywords ? data.keywords.join(', ') : ''}</div>
-                        </div>
-                    </div>
-                    
-                    <div class="curation-report">
-                        <div class="report-header">
-                            <div class="flower-title">${data.korean_name} 추천</div>
-                            <div class="story-id">${storyId}</div>
-                        </div>
-                        
-                        <div class="story-section">
-                            <h4>당신의 이야기</h4>
-                            <div class="story-content">${storyInput.value}</div>
-                        </div>
-                        
-                        <div class="emotion-section">
-                            <h4>감정 분석</h4>
-                            <div class="emotion-tags">
-                                ${data.emotions ? data.emotions.map(emotion => 
-                                    `<span class="emotion-tag">${emotion.emotion} (${emotion.percentage}%)</span>`
-                                ).join('') : ''}
                             </div>
                         </div>
                         
-                        <div class="flower-blend-section">
+                        <div class="curation-report">
+                            <div class="report-header">
+                            <div class="flower-title">${data.korean_name} 추천</div>
+                            <div class="story-id">${storyId}</div>
+                            </div>
+                            
+                            <div class="story-section">
+                            <h4>당신의 이야기</h4>
+                            <div class="story-content">${storyInput.value}</div>
+                            </div>
+                            
+                            <div class="emotion-section">
+                            <h4>감정 분석</h4>
+                                <div class="emotion-tags">
+                                ${data.emotions ? data.emotions.map(emotion => 
+                                    `<span class="emotion-tag">${emotion.emotion} (${emotion.percentage}%)</span>`
+                                ).join('') : ''}
+                                </div>
+                            </div>
+                            
+                            <div class="flower-blend-section">
                             <h4>꽃 구성</h4>
                             <div class="blend-composition">
                                 <span class="main-flower">${data.composition ? data.composition.main_flower : data.korean_name}</span>
                                 <span class="blend-separator">+</span>
                                 <span class="sub-flowers">${data.composition ? data.composition.accent_flowers.join(', ') : '다양한 꽃들'}</span>
-                            </div>
+                                </div>
                             <div class="composition-name">${data.composition ? data.composition.composition_name : 'Beautiful Blend'}</div>
-                        </div>
+                                    </div>
                         
                         <div class="season-section">
                             <h4>시즌 정보</h4>
                             <div class="season-info">
                                 <div class="season-display">${seasonDisplay}</div>
                                 <div class="season-range">${seasonRange}</div>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="recommendation-reason">
+                            
+                            <div class="recommendation-reason">
                             <h4>추천 이유</h4>
                             <p>${data.comment || `${data.korean_name}는 당신의 이야기에 가장 적합한 꽃입니다.`}</p>
-                        </div>
-                        
-                        <div class="action-buttons">
-                            <button class="action-button btn-back" onclick="goBack()">다시 추천받기</button>
-                            <button class="action-button btn-purchase" onclick="showPurchaseScreen()">꽃다발 추천받기</button>
+                            </div>
+                            
+                            <div class="action-buttons">
+                                <button class="action-button btn-back" onclick="goBack()">다시 추천받기</button>
+                                <button class="action-button btn-purchase" onclick="showPurchaseScreen()">꽃다발 추천받기</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `;
+                `;
         }
         
         // 로딩 표시/숨김

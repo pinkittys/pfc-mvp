@@ -100,6 +100,83 @@
             font-size: 1.3em;
         }
         
+        /* 키워드 드롭다운 스타일 */
+        .keyword-section {
+            margin-top: 15px;
+        }
+        
+        .keyword-dropdown {
+            position: relative;
+            margin-bottom: 15px;
+        }
+        
+        .keyword-dropdown select {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            font-size: 16px;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        
+        .keyword-dropdown select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .dropdown-arrow {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            pointer-events: none;
+        }
+        
+        /* 대안 키워드 태그 스타일 */
+        .alternatives-section {
+            margin-top: 10px;
+        }
+        
+        .alternatives-label {
+            font-size: 14px;
+            color: #666;
+            margin-right: 10px;
+        }
+        
+        .alternatives-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .alternative-tag {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #ecf0f1;
+            color: #2c3e50;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid #bdc3c7;
+        }
+        
+        .alternative-tag:hover {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+            transform: translateY(-1px);
+        }
+        
+        .alternative-tag:active {
+            transform: translateY(0);
+        }
+        
         .keyword-item {
             background: white;
             padding: 15px;
@@ -250,6 +327,171 @@
             margin-top: 5px;
         }
         
+        /* 추천 결과 영역 스타일 */
+        .recommendation-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            display: none;
+        }
+        
+        .recommendation-section.show {
+            display: block;
+        }
+        
+        .recommend-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px 0;
+            transition: background 0.3s;
+        }
+        
+        .recommend-btn:hover {
+            background: #c0392b;
+        }
+        
+        .recommend-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+        
+        .flower-result {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .flower-image {
+            text-align: center;
+        }
+        
+        .flower-image img {
+            max-width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .flower-details {
+            padding: 20px;
+        }
+        
+        .flower-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .story-id {
+            background: #f8f9fa;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin: 10px 0;
+            text-align: center;
+            border: 1px solid #dee2e6;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        
+        .your-story {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            border-left: 4px solid #2196f3;
+            line-height: 1.5;
+        }
+        
+        .flower-composition {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        
+        .emotion-bar {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+        }
+        
+        .emotion-label {
+            width: 80px;
+            font-size: 0.9em;
+        }
+        
+        .emotion-progress {
+            flex: 1;
+            height: 20px;
+            background: #ecf0f1;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0 10px;
+        }
+        
+        .emotion-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #9b59b6);
+            transition: width 0.3s;
+        }
+        
+        .emotion-percentage {
+            width: 40px;
+            text-align: right;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        
+        .season-info {
+            background: #e8f5e8;
+            padding: 10px;
+            border-radius: 6px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .english-message {
+            background: #f0f8ff;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-style: italic;
+            text-align: center;
+        }
+        
+        .comment {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .hashtags {
+            margin: 15px 0;
+        }
+        
+        .hashtag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin: 2px;
+        }
+        
         .extraction-method {
             background: #e8f4fd;
             color: #2980b9;
@@ -330,6 +572,19 @@
             <div class="stat-item">
                 <div class="stat-value" id="apiCalls">0</div>
                 <div class="stat-label">API 호출</div>
+            </div>
+        </div>
+        
+        <!-- 추천받기 버튼 -->
+        <button class="recommend-btn" id="recommendBtn" onclick="getRecommendation()" disabled>
+            🌸 꽃 추천받기
+        </button>
+        
+        <!-- 추천 결과 영역 -->
+        <div class="recommendation-section" id="recommendationSection">
+            <h3>🌸 추천 결과</h3>
+            <div class="flower-result" id="flowerResult">
+                <!-- 추천 결과가 여기에 표시됩니다 -->
             </div>
         </div>
         
@@ -495,21 +750,32 @@
                     },
                     body: JSON.stringify({
                         story: story,
-                        preferred_colors: [],
-                        excluded_flowers: [],
                         updated_context: window.updatedContext || null
                     })
                 });
                 
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
                 const data = await response.json();
+                console.log('Response data:', data);
+                console.log('Alternatives from API:', data.alternatives);
                 
                 if (data.success) {
                     // 현재 키워드 저장 (업데이트용)
                     if (data.keywords) {
                         window.currentKeywords = data.keywords;
+                        console.log('키워드 저장됨:', window.currentKeywords);
                     }
                     
                     displayResults(data);
+                    
+                    // 추천받기 버튼 상태 업데이트
+                    updateFinalRecommendButton();
                     
                     // 응답 시간 계산
                     const responseTime = Date.now() - startTime;
@@ -527,7 +793,8 @@
                 
             } catch (error) {
                 console.error('Error:', error);
-                showError('API 호출 중 오류가 발생했습니다.');
+                console.error('Error details:', error.message);
+                showError(`API 호출 중 오류가 발생했습니다: ${error.message}`);
             }
         }
         
@@ -547,11 +814,19 @@
         }
         
         function displayRealtimeResults(data) {
-            // 실시간 모드: 단순 배열 형태
-            displayKeywordSection('emotionsResult', data.keywords.emotions, data.alternatives.emotions);
-            displayKeywordSection('situationsResult', data.keywords.situations, data.alternatives.situations);
-            displayKeywordSection('moodsResult', data.keywords.moods, data.alternatives.moods);
-            displayKeywordSection('colorsResult', data.keywords.colors, data.alternatives.colors);
+            // 실시간 모드: 새로운 배열 형태
+            console.log('displayRealtimeResults called with:', data);
+            
+            // keywords 배열에서 각 타입별로 찾기
+            const emotions = data.keywords.find(k => k.type === 'emotions');
+            const situations = data.keywords.find(k => k.type === 'situations');
+            const moods = data.keywords.find(k => k.type === 'moods');
+            const colors = data.keywords.find(k => k.type === 'colors');
+            
+            displayKeywordSectionNew('emotionsResult', emotions);
+            displayKeywordSectionNew('situationsResult', situations);
+            displayKeywordSectionNew('moodsResult', moods);
+            displayKeywordSectionNew('colorsResult', colors);
         }
         
         function displayFinalResults(data) {
@@ -581,6 +856,78 @@
             }
         }
         
+        function displayKeywordSectionNew(elementId, keywordData) {
+            const element = document.getElementById(elementId);
+            if (!keywordData) {
+                element.innerHTML = '<div class="loading">키워드를 찾을 수 없습니다</div>';
+                return;
+            }
+            
+            const mainKeyword = keywordData.main;
+            const alternatives = keywordData.alternatives || [];
+            const allOptions = [mainKeyword, ...alternatives];
+            const type = keywordData.type;
+            
+            // 드롭다운 HTML 생성
+            let optionsHtml = '';
+            allOptions.forEach((option, index) => {
+                const selected = index === 0 ? 'selected' : '';
+                optionsHtml += `<option value="${option}" ${selected}>${option}</option>`;
+            });
+            
+            // 대안 키워드 태그들
+            let alternativesHtml = '';
+            alternatives.forEach((alt, index) => {
+                alternativesHtml += `<span class="alternative-tag" onclick="selectAlternative('${elementId}', '${alt}')">${alt}</span>`;
+            });
+            
+            const html = `
+                <div class="keyword-section">
+                    <div class="keyword-dropdown">
+                        <select id="${elementId}_select" onchange="updateKeyword('${elementId}', '${type}', this.value)">
+                            ${optionsHtml}
+                        </select>
+                        <span class="dropdown-arrow">▼</span>
+                    </div>
+                    <div class="alternatives-section">
+                        <span class="alternatives-label">대안:</span>
+                        <div class="alternatives-tags">
+                            ${alternativesHtml}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            element.innerHTML = html;
+        }
+
+        // 키워드 업데이트 함수
+        function updateKeyword(elementId, type, newValue) {
+            console.log(`키워드 업데이트: ${type} -> ${newValue}`);
+            
+            // 현재 키워드 저장소 업데이트
+            if (window.currentKeywords) {
+                const keywordIndex = window.currentKeywords.findIndex(k => k.type === type);
+                if (keywordIndex !== -1) {
+                    window.currentKeywords[keywordIndex].main = newValue;
+                    console.log('업데이트된 키워드:', window.currentKeywords);
+                }
+            }
+            
+            // 최종 추천 버튼 상태 업데이트
+            updateFinalRecommendButton();
+        }
+
+        // 대안 키워드 선택 함수
+        function selectAlternative(elementId, alternativeValue) {
+            const selectElement = document.getElementById(elementId + '_select');
+            if (selectElement) {
+                selectElement.value = alternativeValue;
+                const type = elementId.replace('Result', '');
+                updateKeyword(elementId, type, alternativeValue);
+            }
+        }
+
         function displayKeywordSection(elementId, keywords, alternatives) {
             const element = document.getElementById(elementId);
             if (!keywords || keywords.length === 0) {
@@ -591,7 +938,9 @@
             let html = '';
             keywords.forEach((keyword, index) => {
                 const dimension = elementId.replace('Result', ''); // emotions, situations, moods, colors
-                const alternativesList = alternatives || [];
+                // alternatives는 디멘션별 배열이므로 dimension으로 접근
+                const alternativesList = alternatives && alternatives[dimension] ? alternatives[dimension] : [];
+                console.log(`디멘션: ${dimension}, 대안키워드:`, alternativesList);
                 const allOptions = [keyword, ...alternativesList];
                 
                 html += `
@@ -717,6 +1066,138 @@
                 finalButton.style.background = hasChanges ? '#27ae60' : '#3498db';
                 finalButton.style.color = 'white';
             }
+            
+            // 추천받기 버튼 활성화/비활성화
+            const recommendBtn = document.getElementById('recommendBtn');
+            const hasKeywords = window.currentKeywords && Object.keys(window.currentKeywords).length > 0;
+            if (recommendBtn) {
+                recommendBtn.disabled = !hasKeywords;
+                console.log('추천받기 버튼 상태:', !hasKeywords ? '비활성화' : '활성화', '키워드:', window.currentKeywords);
+            }
+        }
+        
+        // 추천받기 함수
+        async function getRecommendation() {
+            const story = document.getElementById('storyInput').value;
+            if (!story.trim()) {
+                alert('사연을 입력해주세요.');
+                return;
+            }
+            
+            const recommendBtn = document.getElementById('recommendBtn');
+            const originalText = recommendBtn.textContent;
+            recommendBtn.disabled = true;
+            recommendBtn.textContent = '🌸 추천 중...';
+            
+            try {
+                const response = await fetch('/api/v1/recommend', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        story: story,
+                        preferred_colors: [],
+                        excluded_flowers: [],
+                        updated_context: window.updatedContext || {}
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                displayRecommendationResult(result);
+                
+            } catch (error) {
+                console.error('추천 요청 실패:', error);
+                alert('추천 요청에 실패했습니다: ' + error.message);
+            } finally {
+                recommendBtn.disabled = false;
+                recommendBtn.textContent = originalText;
+            }
+        }
+        
+        // 추천 결과 표시 함수
+        function displayRecommendationResult(result) {
+            const section = document.getElementById('recommendationSection');
+            const flowerResult = document.getElementById('flowerResult');
+            
+            if (!result.success) {
+                flowerResult.innerHTML = '<div class="error">추천 결과를 가져올 수 없습니다.</div>';
+                section.classList.add('show');
+                return;
+            }
+            
+            const emotions = result.emotions || [];
+            const flowerBlend = result.flower_blend || {};
+            const seasonInfo = result.season_info || {};
+            const englishMessage = result.flower_card_message || {};
+            const hashtags = result.hashtags || [];
+            
+            flowerResult.innerHTML = `
+                <div class="flower-image">
+                    <img src="${result.flower_image_url || '/images/default-flower.webp'}" 
+                         alt="${flowerBlend.main_flower || '추천 꽃'}"
+                         onerror="this.src='/images/default-flower.webp'">
+                </div>
+                <div class="flower-details">
+                    <div class="flower-name">${flowerBlend.main_flower || '추천 꽃'}</div>
+                    
+                    <div class="story-id">
+                        <strong>스토리 ID:</strong> ${result.story_id || '-'}
+                    </div>
+                    
+                    <div class="your-story">
+                        <strong>Your Story:</strong><br>
+                        ${result.your_story || '-'}
+                    </div>
+                    
+                    <div class="flower-composition">
+                        <strong>꽃다발 구성:</strong><br>
+                        메인: ${flowerBlend.main_flower || '-'}<br>
+                        서브: ${(flowerBlend.sub_flowers || []).join(', ')}<br>
+                        구성명: ${flowerBlend.composition_name || '-'}
+                    </div>
+                    
+                    <div class="emotion-bars">
+                        <strong>감정 분석:</strong>
+                        ${emotions.map(emotion => `
+                            <div class="emotion-bar">
+                                <div class="emotion-label">${emotion.emotion}</div>
+                                <div class="emotion-progress">
+                                    <div class="emotion-fill" style="width: ${emotion.percentage}%"></div>
+                                </div>
+                                <div class="emotion-percentage">${emotion.percentage}%</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="season-info">
+                        <strong>계절 정보:</strong> ${seasonInfo.season || '-'} (${seasonInfo.months || '-'})
+                    </div>
+                    
+                    <div class="english-message">
+                        <strong>영어 메시지:</strong><br>
+                        "${englishMessage.quote || '-'}"<br>
+                        <em>- ${englishMessage.source || '-'} -</em>
+                    </div>
+                    
+                    <div class="comment">
+                        <strong>추천 이유:</strong><br>
+                        ${result.comment || '-'}
+                    </div>
+                    
+                    <div class="hashtags">
+                        <strong>해시태그:</strong><br>
+                        ${hashtags.map(tag => `<span class="hashtag">${tag}</span>`).join('')}
+                    </div>
+                </div>
+            `;
+            
+            section.classList.add('show');
+            section.scrollIntoView({ behavior: 'smooth' });
         }
         
         // 페이지 로드 시 초기화

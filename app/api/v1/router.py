@@ -25,7 +25,7 @@ try:
 except Exception as e:
     print(f"❌ Recommend 라우터 등록 실패: {e}")
 
-# 2. 기타 API들
+# 2. 기타 API들 (필요시에만)
 try:
     api_v1_router.include_router(realtime_context.router, tags=["realtime-context"])
     print("✅ Realtime Context 라우터 등록 완료")

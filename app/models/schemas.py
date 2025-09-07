@@ -27,6 +27,17 @@ class FlowerCardMessage(BaseModel):
     quote: str      # 인용구
     source: str     # 출처
 
+class MatchedFlower(BaseModel):
+    """매칭된 꽃 정보"""
+    flower_name: str        # 영어 이름
+    korean_name: str        # 한국어 이름
+    scientific_name: str    # 학명
+    image_url: str          # 이미지 URL
+    confidence: float       # 신뢰도
+    match_reason: str       # 매칭 이유
+    color_keywords: List[str] = []  # 색상 키워드 (기존 시스템 호환성)
+    keywords: str = ""      # 꽃의 특성/꽃말 (추천 이유 생성용)
+
 class KeywordRequest(BaseModel):
     story: str
 

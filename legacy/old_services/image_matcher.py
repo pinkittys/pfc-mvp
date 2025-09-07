@@ -62,7 +62,11 @@ def _score_image(img: Dict[str, Any], bundle) -> float:
         '코크스콤': 'cockscomb', 'cockscomb': 'cockscomb',
         '베이비스브레스': 'babys-breath', 'babys-breath': 'babys-breath',
         '글로브아마란스': 'globe-amaranth', 'globe-amaranth': 'globe-amaranth',
-        '마거리트데이지': 'marguerite-daisy', 'marguerite-daisy': 'marguerite-daisy'
+        '마거리트데이지': 'marguerite-daisy', 'marguerite-daisy': 'marguerite-daisy',
+        '라넌큘러스': 'ranunculus', 'ranunculus': 'ranunculus',
+        '알스트로메리아': 'alstroemeria', 'alstroemeria': 'alstroemeria',
+        '태게테스': 'tagetes', 'tagetes': 'tagetes',
+        '해바라기': 'sunflower', 'sunflower': 'sunflower'
     }
     
     # 꽃 키워드 매칭 (강화)

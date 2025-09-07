@@ -16,8 +16,8 @@ from app.models.schemas import (
 )
 # from app.pipelines.integrated_recommendation_chain import IntegratedRecommendationChain
 from app.services.emotion_analyzer import EmotionAnalyzer
-from app.services.flower_matcher import FlowerMatcher
-from app.services.enhanced_flower_matcher import EnhancedFlowerMatcher
+# from app.services.flower_matcher import FlowerMatcher  # 레거시로 이동됨
+# from app.services.enhanced_flower_matcher import EnhancedFlowerMatcher  # 레거시로 이동됨
 from app.services.composition_recommender import CompositionRecommender
 from app.services.story_classifier import StoryClassifier
 from app.services.design_flower_matcher import DesignFlowerMatcher
@@ -77,10 +77,10 @@ def recommendations(req: RecommendRequest, chain = Depends(get_chain)):
 
 
 
-@router.post("/emotion-analysis", response_model=EmotionAnalysisResponse)
-def emotion_analysis(req: RecommendRequest):
-    """감정 분석 + 꽃 매칭 + 구성 추천 (사연 유형 분류 포함) - 중복 요청 방지 포함"""
-    
+# ===== 핵심 로직 함수들 (엔드포인트는 제거했지만 코드는 보존) =====
+
+def emotion_analysis_logic(req: RecommendRequest):
+    """감정 분석 + 꽃 매칭 + 구성 추천 로직 (엔드포인트 제거, 로직 보존)"""
     try:
         # 요청 ID 생성 (emotion-analysis용) - updated_context 포함
         base_request_id = request_deduplicator.generate_request_id(
@@ -252,12 +252,11 @@ def emotion_analysis(req: RecommendRequest):
         return result
         
     except Exception as e:
-        print(f"❌ 감정 분석 API 오류: {e}")
+        print(f"❌ 감정 분석 로직 오류: {e}")
         raise HTTPException(status_code=500, detail=f"감정 분석 실패: {str(e)}")
 
-@router.get("/flower-season/{flower_name}")
-def get_flower_season(flower_name: str):
-    """꽃별 계절 정보 반환"""
+def get_flower_season_logic(flower_name: str):
+    """꽃별 계절 정보 반환 로직 (엔드포인트 제거, 로직 보존)"""
     try:
         # flower_dictionary.json에서 꽃 정보 찾기
         with open("data/flower_dictionary.json", "r", encoding="utf-8") as f:
@@ -283,6 +282,97 @@ def get_flower_season(flower_name: str):
     except Exception as e:
         print(f"❌ 꽃 계절 정보 조회 실패: {e}")
         return {"seasonality": ["봄", "여름"]}
+
+def extract_context_logic(req: RecommendRequest):
+    """맥락 키워드 추출 로직 (엔드포인트 제거, 로직 보존)"""
+    try:
+        # 요청 ID 생성 (extract-context용) - updated_context 포함
+        base_request_id = request_deduplicator.generate_request_id(
+            req.story, 
+            req.preferred_colors, 
+            req.excluded_flowers
+        )
+        
+        # 업데이트된 컨텍스트가 있으면 요청 ID에 포함
+        if hasattr(req, 'updated_context') and req.updated_context:
+            import hashlib
+            context_str = str(req.updated_context)
+            context_hash = hashlib.md5(context_str.encode()).hexdigest()[:8]
+            request_id = f"{base_request_id}_{context_hash}_context"
+        else:
+            request_id = f"{base_request_id}_context"
+        
+        print(f"🔍 Extract Context 요청 ID 생성: {request_id}")
+        
+        # 업데이트된 컨텍스트가 있으면 캐시 무시하고 새로 처리
+        has_updated_context = hasattr(req, 'updated_context') and req.updated_context
+        
+        # 캐시된 결과가 있는지 확인 (업데이트된 컨텍스트가 없을 때만)
+        if not has_updated_context:
+            cached_result = request_deduplicator.get_cached_result(request_id)
+            if cached_result:
+                print(f"📋 Extract Context 캐시된 결과 반환: {request_id}")
+                return cached_result
+        
+        # 중복 요청인지 확인 (업데이트된 컨텍스트가 없을 때만)
+        if not has_updated_context and not request_deduplicator.should_process_request(request_id):
+            print(f"⏳ Extract Context 중복 요청 대기 중: {request_id}")
+            # 잠시 대기 후 다시 확인
+            import time
+            time.sleep(0.1)
+            cached_result = request_deduplicator.get_cached_result(request_id)
+            if cached_result:
+                return cached_result
+            else:
+                raise HTTPException(status_code=429, detail="요청이 너무 빠릅니다. 잠시 후 다시 시도해주세요.")
+        
+        # 실제 요청 처리
+        print(f"🚀 Extract Context 새로운 요청 처리 시작: {request_id}")
+        context_extractor = RealtimeContextExtractor()
+        context = context_extractor.extract_context_realtime(req.story)
+        
+        # 결과 캐시에 저장
+        request_deduplicator.mark_request_completed(request_id, context.dict())
+        
+        return context
+        
+    except Exception as e:
+        print(f"❌ Extract Context 로직 오류: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+async def extract_context_stream_logic(story: str):
+    """실시간 맥락 추출 SSE 로직 (엔드포인트 제거, 로직 보존)"""
+    async def generate():
+        try:
+            # 실시간 맥락 추출
+            context_extractor = RealtimeContextExtractor()
+            context = context_extractor.extract_context_realtime(story)
+            
+            # SSE 형식으로 데이터 전송
+            data = {
+                "type": "context_extracted",
+                "data": context
+            }
+            
+            yield f"data: {json.dumps(data, ensure_ascii=False)}\n\n"
+            
+        except Exception as e:
+            error_data = {
+                "type": "error",
+                "message": str(e)
+            }
+            yield f"data: {json.dumps(error_data, ensure_ascii=False)}\n\n"
+    
+    return StreamingResponse(
+        generate(),
+        media_type="text/plain",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "*",
+        }
+    )
 
 def _generate_unified_recommendation_reason(matched_flower: FlowerMatch, composition: FlowerComposition, emotions: List[EmotionAnalysis], story: str, context: Any, excluded_keywords: List[Dict[str, str]] = None) -> str:
     """통합 추천 이유 생성 (사연에 맞는 공감가는 설명, 제외된 키워드 고려)"""
@@ -426,10 +516,14 @@ Flower: {matched_flower.flower_name} ({matched_flower.korean_name})
 **Examples for Support/Comfort**:
 - "I'll be there for you."\\n- Friends -
 - "You are stronger than you know."\\n- The Princess Diaries -
-- "I believe in you always.\\n- The Little Engine That Could -
-- "You make every day beautiful.\\n- The Sound of Music -
+- "I believe in you always."\\n- The Little Engine That Could -
+- "You make every day beautiful."\\n- The Sound of Music -
 
-Choose a quote that DIRECTLY matches the customer's specific situation and emotions. Write only the message text in English with line break.
+**IMPORTANT**: Write EXACTLY two lines:
+Line 1: The quote only (no source)
+Line 2: The source in format "- Source Name -"
+
+Choose a quote that DIRECTLY matches the customer's specific situation and emotions.
 """
         
         response = client.chat.completions.create(
@@ -446,8 +540,40 @@ Choose a quote that DIRECTLY matches the customer's specific situation and emoti
         
         # 메시지 내용에서 라인 1과 라인 2를 분리
         lines = message_content.split('\n')
-        quote = lines[0] if len(lines) > 0 else ""
-        source = lines[1] if len(lines) > 1 else ""
+        quote = lines[0].strip() if len(lines) > 0 else ""
+        source = lines[1].strip() if len(lines) > 1 else ""
+        
+        # quote에서 \n 제거
+        quote = quote.replace('\\n', '').replace('\n', '')
+        
+        # quote에서 모든 따옴표 제거 (시작과 끝)
+        quote = quote.strip('"').strip("'").strip()
+        
+        # source에서 중복된 대시와 공백 정리
+        source = source.strip()
+        
+        # source가 비어있거나 "- Unknown -"이면 기본값 설정
+        if not source or source == "- Unknown -" or source == "- -" or source == "":
+            source = "- Unknown -"
+        else:
+            # source 정리 - 모든 대시와 공백 제거 후 다시 포맷팅
+            clean_source = source.replace('-', '').strip()
+            if clean_source:
+                source = f"- {clean_source} -"
+            else:
+                source = "- Unknown -"
+        
+        # 추가 검증: quote에 source가 포함되어 있는지 확인
+        if '"-' in quote or '- "' in quote:
+            # quote에서 source 부분 제거
+            if '"-' in quote:
+                quote = quote.split('"-')[0].strip()
+            elif '- "' in quote:
+                quote = quote.split('- "')[0].strip()
+            quote = quote.strip('"').strip("'").strip()
+        
+        print(f"🔍 꽃카드 메시지 생성: quote='{quote}', source='{source}'")
+        print(f"🔍 원본 메시지: '{message_content}'")
         
         return FlowerCardMessage(quote=quote, source=source)
         
@@ -502,37 +628,35 @@ def _fallback_flower_card_message(matched_flower: FlowerMatch, emotions: List[Em
 
 
 def _get_season_info(flower_name: str) -> Dict[str, str]:
-    """꽃의 계절 정보 가져오기 (시즌과 월 분리)"""
+    """꽃의 계절 정보 가져오기 (스프레드시트 데이터 기반)"""
     try:
-        # flower_dictionary.json에서 꽃 정보 찾기
-        with open("data/flower_dictionary.json", "r", encoding="utf-8") as f:
+        # spreadsheet_flowers.json에서 꽃 정보 찾기
+        with open("data/spreadsheet_flowers.json", "r", encoding="utf-8") as f:
             flower_data = json.load(f)
         
         # 꽃 이름으로 검색 (한글명 또는 영문명)
-        for flower_id, flower_info in flower_data["flowers"].items():
-            if (flower_info.get("korean_name") == flower_name or 
-                flower_info.get("scientific_name") == flower_name or
-                flower_name.lower() in flower_info.get("korean_name", "").lower()):
+        for flower_info in flower_data:
+            if (flower_info.get("name_ko") == flower_name or 
+                flower_info.get("name_en") == flower_name or
+                flower_name.lower() in flower_info.get("name_ko", "").lower()):
                 
-                seasonality = flower_info.get("seasonality", [])
-                if len(seasonality) == 4:
+                season_months = flower_info.get("season_months", "")
+                
+                # season_months 형식에 따른 분류
+                if "All Season" in season_months:
                     return {"season": "All Season", "months": "01-12"}
-                elif len(seasonality) == 2:
-                    seasons = " ".join(seasonality)
-                    if "봄" in seasons and "여름" in seasons:
-                        return {"season": "Spring/Summer", "months": "03-08"}
-                    elif "가을" in seasons and "겨울" in seasons:
-                        return {"season": "Fall/Winter", "months": "09-02"}
-                elif len(seasonality) == 1:
-                    season = seasonality[0]
-                    if season == "봄":
-                        return {"season": "Spring", "months": "03-05"}
-                    elif season == "여름":
-                        return {"season": "Summer", "months": "06-08"}
-                    elif season == "가을":
-                        return {"season": "Fall", "months": "09-11"}
-                    elif season == "겨울":
-                        return {"season": "Winter", "months": "12-02"}
+                elif "Spring/Summer" in season_months:
+                    return {"season": "Spring/Summer", "months": "03-08"}
+                elif "Summer/Fall" in season_months:
+                    return {"season": "Summer/Fall", "months": "06-11"}
+                elif "Spring" in season_months and "Summer" not in season_months:
+                    return {"season": "Spring", "months": "03-05"}
+                elif "Summer" in season_months and "Spring" not in season_months and "Fall" not in season_months:
+                    return {"season": "Summer", "months": "06-08"}
+                elif "Fall" in season_months and "Summer" not in season_months:
+                    return {"season": "Fall", "months": "09-11"}
+                elif "Winter" in season_months:
+                    return {"season": "Winter", "months": "12-02"}
                 break
         
         # 찾지 못한 경우 기본값 반환
@@ -543,95 +667,5 @@ def _get_season_info(flower_name: str) -> Dict[str, str]:
         return {"season": "Spring/Summer", "months": "03-08"}
 
 
-@router.post("/extract-context")
-def extract_context(req: RecommendRequest):
-    """맥락 키워드 추출 엔드포인트 (중복 요청 방지 포함)"""
-    try:
-        # 요청 ID 생성 (extract-context용) - updated_context 포함
-        base_request_id = request_deduplicator.generate_request_id(
-            req.story, 
-            req.preferred_colors, 
-            req.excluded_flowers
-        )
-        
-        # 업데이트된 컨텍스트가 있으면 요청 ID에 포함
-        if hasattr(req, 'updated_context') and req.updated_context:
-            import hashlib
-            context_str = str(req.updated_context)
-            context_hash = hashlib.md5(context_str.encode()).hexdigest()[:8]
-            request_id = f"{base_request_id}_{context_hash}_context"
-        else:
-            request_id = f"{base_request_id}_context"
-        
-        print(f"🔍 Extract Context 요청 ID 생성: {request_id}")
-        
-        # 업데이트된 컨텍스트가 있으면 캐시 무시하고 새로 처리
-        has_updated_context = hasattr(req, 'updated_context') and req.updated_context
-        
-        # 캐시된 결과가 있는지 확인 (업데이트된 컨텍스트가 없을 때만)
-        if not has_updated_context:
-            cached_result = request_deduplicator.get_cached_result(request_id)
-            if cached_result:
-                print(f"📋 Extract Context 캐시된 결과 반환: {request_id}")
-                return cached_result
-        
-        # 중복 요청인지 확인 (업데이트된 컨텍스트가 없을 때만)
-        if not has_updated_context and not request_deduplicator.should_process_request(request_id):
-            print(f"⏳ Extract Context 중복 요청 대기 중: {request_id}")
-            # 잠시 대기 후 다시 확인
-            import time
-            time.sleep(0.1)
-            cached_result = request_deduplicator.get_cached_result(request_id)
-            if cached_result:
-                return cached_result
-            else:
-                raise HTTPException(status_code=429, detail="요청이 너무 빠릅니다. 잠시 후 다시 시도해주세요.")
-        
-        # 실제 요청 처리
-        print(f"🚀 Extract Context 새로운 요청 처리 시작: {request_id}")
-        context_extractor = RealtimeContextExtractor()
-        context = context_extractor.extract_context_realtime(req.story)
-        
-        # 결과 캐시에 저장
-        request_deduplicator.mark_request_completed(request_id, context.dict())
-        
-        return context
-        
-    except Exception as e:
-        print(f"❌ Extract Context API 오류: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-@router.get("/extract-context-stream")
-async def extract_context_stream(story: str):
-    """실시간 맥락 추출 SSE 엔드포인트"""
-    async def generate():
-        try:
-            # 실시간 맥락 추출
-            context_extractor = RealtimeContextExtractor()
-            context = context_extractor.extract_context_realtime(story)
-            
-            # SSE 형식으로 데이터 전송
-            data = {
-                "type": "context_extracted",
-                "data": context
-            }
-            
-            yield f"data: {json.dumps(data, ensure_ascii=False)}\n\n"
-            
-        except Exception as e:
-            error_data = {
-                "type": "error",
-                "message": str(e)
-            }
-            yield f"data: {json.dumps(error_data, ensure_ascii=False)}\n\n"
-    
-    return StreamingResponse(
-        generate(),
-        media_type="text/plain",
-        headers={
-            "Cache-Control": "no-cache",
-            "Connection": "keep-alive",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Headers": "*",
-        }
-    )
+# ===== 중복 엔드포인트 제거됨 =====
+# extract-context, extract-context-stream은 unified.py의 extract-keywords로 통합됨

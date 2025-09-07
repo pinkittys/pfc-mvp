@@ -43,9 +43,6 @@ class SmartWebSocketExtractor:
     def __init__(self):
         self.openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         
-        # 꽃 색상 풀 데이터 로드
-        self.flower_color_pools = self._load_flower_color_pools()
-        
         # 규칙 기반 키워드 매핑
         self.rule_keywords = {
             'emotions': ['사랑', '기쁨', '감사', '그리움', '위로', '축하', '희망', '설렘', '따뜻함'],
@@ -317,107 +314,6 @@ class SmartWebSocketExtractor:
             print(f"❌ LLM 응답 파싱 실패: {e}")
             return self._rule_based_extract(story)
     
-    def _load_flower_color_pools(self) -> Dict[str, List[str]]:
-        """꽃별 색상 풀 데이터 로드"""
-        try:
-            with open('data/spreadsheet_flowers.json', 'r', encoding='utf-8') as f:
-                flowers_data = json.load(f)
-            
-            flower_color_pools = {}
-            for flower_data in flowers_data:
-                flower_name = flower_data.get('name_ko', '')
-                flower_slug = flower_data.get('flower_slug', '')
-                color_code = flower_data.get('color_code', '')
-                
-                if (flower_name or flower_slug) and color_code:
-                    # 색상 코드를 한글 색상명으로 변환
-                    color_mapping = {
-                        'wh': '화이트', 'pk': '핑크', 'rd': '레드', 'yl': '옐로우',
-                        'or': '오렌지', 'bl': '블루', 'pu': '퍼플', 'll': '라벤더',
-                        'gr': '그린', 'cr': '크림'
-                    }
-                    
-                    color_name = color_mapping.get(color_code, color_code)
-                    
-                    # 꽃 이름 매핑 (영문 -> 한글)
-                    flower_mapping = {
-                        'gerbera': '거베라',
-                        'sunflower': '해바라기', 
-                        'rose': '장미',
-                        'lily': '백합',
-                        'tulip': '튤립',
-                        'hydrangea': '수국',
-                        'freesia': '프리지아',
-                        'marigold': '마리골드',
-                        'tagetes': '태게테스',
-                        'alstroemeria': '알스트로메리아',
-                        'lisianthus': '리시안셔스'
-                    }
-                    
-                    # 한글 이름이 있으면 사용, 없으면 영문 slug를 한글로 변환
-                    final_flower_name = flower_name if flower_name else flower_mapping.get(flower_slug, flower_slug)
-                    
-                    if final_flower_name not in flower_color_pools:
-                        flower_color_pools[final_flower_name] = []
-                    
-                    if color_name not in flower_color_pools[final_flower_name]:
-                        flower_color_pools[final_flower_name].append(color_name)
-            
-            print(f"🌸 꽃 색상 풀 로드 완료: {len(flower_color_pools)}개 꽃")
-            # 디버깅: 거베라 색상 풀 확인
-            if '거베라' in flower_color_pools:
-                print(f"🌸 거베라 색상 풀: {flower_color_pools['거베라']}")
-            else:
-                print(f"❌ 거베라가 색상 풀에 없음")
-                print(f"🔍 로드된 꽃들: {list(flower_color_pools.keys())}")
-            return flower_color_pools
-            
-        except Exception as e:
-            print(f"❌ 꽃 색상 풀 로드 실패: {e}")
-            return {}
-    
-    def _get_flower_color_pool(self, flower_name: str) -> List[str]:
-        """특정 꽃의 색상 풀 반환"""
-        return self.flower_color_pools.get(flower_name, [])
-    
-    def _get_mentioned_flower_colors(self, story: str) -> List[str]:
-        """스토리에서 언급된 꽃의 색상 풀 반환"""
-        story_lower = story.lower()
-        print(f"🔍 스토리에서 꽃 이름 검색: '{story_lower}'")
-        
-        # 꽃 이름 매핑 (한글 -> 한글, 한글 -> 영문)
-        flower_mapping = {
-            '거베라': ['거베라', 'gerbera'],
-            '해바라기': ['해바라기', 'sunflower'], 
-            '장미': ['장미', 'rose'],
-            '백합': ['백합', 'lily'],
-            '튤립': ['튤립', 'tulip'],
-            '수국': ['수국', 'hydrangea'],
-            '프리지아': ['프리지아', 'freesia'],
-            '마리골드': ['마리골드', 'marigold'],
-            '태게테스': ['태게테스', 'tagetes'],
-            '알스트로메리아': ['알스트로메리아', 'alstroemeria'],
-            '리시안셔스': ['리시안셔스', 'lisianthus']
-        }
-        
-        # 언급된 꽃 찾기
-        for flower_name, possible_names in flower_mapping.items():
-            if flower_name in story_lower:
-                print(f"✅ 언급된 꽃 발견: '{flower_name}'")
-                
-                # 가능한 모든 이름으로 색상 풀 찾기
-                for possible_name in possible_names:
-                    color_pool = self._get_flower_color_pool(possible_name)
-                    print(f"🔍 '{possible_name}'의 색상 풀: {color_pool}")
-                    if color_pool:
-                        print(f"🌸 언급된 꽃 '{flower_name}'의 색상 풀: {color_pool}")
-                        return color_pool
-                
-                print(f"❌ '{flower_name}'의 모든 가능한 이름에서 색상 풀을 찾을 수 없음")
-        
-        print(f"❌ 언급된 꽃을 찾을 수 없음")
-        return []
-    
     def _get_contextual_alternatives(self, main_keyword: str, dimension: str, story: str) -> List[str]:
         """맥락을 고려한 대안 키워드 생성"""
         if not main_keyword:
@@ -485,38 +381,20 @@ class SmartWebSocketExtractor:
                 alternatives.extend(['따뜻한', '부드러운', '차분한'])
         
         elif dimension == 'colors':
-            # 맥락을 고려한 색상 대안 생성 (유사한 느낌의 색상들)
-            story_lower = story.lower()
-            
-            # 언급된 꽃의 색상 풀 확인
-            mentioned_flower_colors = self._get_mentioned_flower_colors(story)
-            if mentioned_flower_colors:
-                alternatives = mentioned_flower_colors[:3]  # 언급된 꽃의 색상 풀 사용
-                print(f"🌸 언급된 꽃 색상 풀 사용: {alternatives}")
-            else:
-                # 위로/힐링/병문안 맥락
-                if any(word in story_lower for word in ['위로', '힐링', '병원', '입원', '편찮', '아프', '안부', '병문안', '치유', '회복', '안정', '평온', '차분', '조용', '편안']):
-                    alternatives = ['크림', '라벤더', '블루']  # 차분하고 위로가 되는 색상들
-                
-                # 축하/기쁨/생일 맥락
-                elif any(word in story_lower for word in ['축하', '기쁨', '생일', '합격', '성공', '졸업', '승진', '취업', '파티', '잔치']):
-                    alternatives = ['핑크', '옐로우', '오렌지']  # 밝고 축하하는 색상들
-                
-                # 로맨틱/사랑 맥락
-                elif any(word in story_lower for word in ['사랑', '로맨틱', '연인', '아내', '남편', '여자친구', '남자친구', '고백', '프로포즈', '결혼', '기념일']):
-                    alternatives = ['핑크', '레드', '크림']  # 로맨틱한 색상들
-                
-                # 감사/고마움 맥락
-                elif any(word in story_lower for word in ['감사', '고마워', '고생', '애써', '도움', '배려']):
-                    alternatives = ['크림', '화이트', '핑크']  # 따뜻하고 감사한 색상들
-                
-                # 우아함/고급스러움 맥락
-                elif any(word in story_lower for word in ['우아한', '고급스러운', '세련된', '품격', '신비로운', '아름다운']):
-                    alternatives = ['퍼플', '화이트', '크림']  # 우아하고 고급스러운 색상들
-                
-                # 기본값 (일반적인 상황)
-                else:
-                    alternatives = ['화이트', '핑크', '크림']  # 중성적이고 안전한 색상들
+            # 감정과 무드를 참조하여 색상 대안 생성
+            if '사랑' in story_lower or '로맨틱' in story_lower:
+                alternatives.extend(['라일락', '화이트'])
+            if '위로' in story_lower or '힐링' in story_lower:
+                alternatives.extend(['라벤더', '화이트'])
+            # 기본 대안이 없으면 추가
+            if not alternatives:
+                alternatives.extend(['화이트', '핑크', '라벤더'])
+            if '기쁨' in story_lower or '밝은' in story_lower:
+                alternatives.extend(['옐로우', '화이트'])
+            if '따뜻한' in story_lower or '위로' in story_lower:
+                alternatives.extend(['크림', '화이트'])
+            if '힘들' in story_lower or '지침' in story_lower:
+                alternatives.extend(['화이트', '크림', '라벤더'])
         
         # 중복 제거하고 최대 3개 반환
         unique_alternatives = list(dict.fromkeys(alternatives))
