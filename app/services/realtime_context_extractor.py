@@ -591,7 +591,7 @@ class RealtimeContextExtractor:
             
         except Exception as e:
             print(f"❌ LLM 응답 파싱 실패: {e}")
-            return self._fallback_extraction("", emotions, excluded_keywords)
+            return self._fallback_extraction("", emotions, None)
     
     def _fallback_extraction(self, story: str, emotions: List[dict] = None, excluded_keywords: List[Dict[str, str]] = None) -> ExtractedContext:
         """기본 추출기 (LLM 실패 시)"""
@@ -1168,7 +1168,7 @@ class RealtimeContextExtractor:
         
         if colors and len(colors) > 0:
             print(f"  색상 대안 생성: {colors[0]}")
-            colors_alternatives = self._generate_color_alternatives(colors[0], context)
+            colors_alternatives = self._generate_color_alternatives(colors[0], None)
             print(f"  색상 대안 결과: {colors_alternatives}")
         
         print(f"🎯 대안 키워드 생성:")

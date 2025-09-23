@@ -7,7 +7,7 @@ from datetime import datetime
 
 from app.services.emotion_analyzer import EmotionAnalyzer
 from app.services.realtime_context_extractor import RealtimeContextExtractor
-# from app.services.flower_matcher import FlowerMatcher  # 레거시로 이동됨
+from app.services.flower_matcher import FlowerMatcher
 from app.services.composition_recommender import CompositionRecommender
 from app.services.smart_websocket_extractor import SmartWebSocketExtractor
 from app.utils.request_deduplication import request_deduplicator
@@ -217,18 +217,18 @@ async def extract_final(req: ExtractKeywordsRequest):
         if req.updated_context.get('colors'):
             smart_context.colors = req.updated_context['colors']
         
-        return {
-            "success": True,
-            "mode": "final",
-            "keywords": [
-                {"type": "emotions", "main": smart_context.emotions[0] if smart_context.emotions else "기쁨", "alternatives": smart_context.emotions_alternatives},
-                {"type": "situations", "main": smart_context.situations[0] if smart_context.situations else "일상", "alternatives": smart_context.situations_alternatives},
-                {"type": "moods", "main": smart_context.moods[0] if smart_context.moods else "화려한", "alternatives": smart_context.moods_alternatives},
-                {"type": "colors", "main": smart_context.colors[0] if smart_context.colors else "레드", "alternatives": smart_context.colors_alternatives}
-            ],
-            "confidence": smart_context.confidence,
-            "extraction_method": smart_context.extraction_method
-        }
+    return {
+        "success": True,
+        "mode": "final",
+        "keywords": [
+            {"type": "emotions", "main": smart_context.emotions[0] if smart_context.emotions else "기쁨", "alternatives": smart_context.emotions_alternatives},
+            {"type": "situations", "main": smart_context.situations[0] if smart_context.situations else "일상", "alternatives": smart_context.situations_alternatives},
+            {"type": "moods", "main": smart_context.moods[0] if smart_context.moods else "화려한", "alternatives": smart_context.moods_alternatives},
+            {"type": "colors", "main": smart_context.colors[0] if smart_context.colors else "레드", "alternatives": smart_context.colors_alternatives}
+        ],
+        "confidence": smart_context.confidence,
+        "extraction_method": smart_context.extraction_method
+    }
 
 @router.post("/recommend")
 async def final_recommend(req: UnifiedRecommendRequest):
@@ -332,12 +332,16 @@ async def final_recommend(req: UnifiedRecommendRequest):
             "success": True,
             "story_id": story_id,
             "your_story": req.story,
+            "flower_name": matched_flower.flower_name,
+            "korean_name": matched_flower.korean_name,
+            "scientific_name": matched_flower.scientific_name,
             "flower_blend": {
                 "main_flower": matched_flower.korean_name,
                 "sub_flowers": composition.sub_flowers,
                 "composition_name": composition.composition_name
             },
             "flower_image_url": matched_flower.image_url,
+            "calligraphy_image_url": matched_flower.image_url,  # 캘리그래피 이미지 URL (현재는 동일한 이미지 사용)
             "flower_card_message": {
                 "quote": getattr(flower_card_message, 'quote', ''),
                 "source": getattr(flower_card_message, 'source', '')

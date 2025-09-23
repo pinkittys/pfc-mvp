@@ -4,6 +4,7 @@
 import os
 import json
 import random
+import requests
 from typing import List, Dict, Optional
 from app.models.schemas import EmotionAnalysis, FlowerMatch
 from app.services.realtime_context_extractor import RealtimeContextExtractor
@@ -1018,6 +1019,9 @@ class FlowerMatcher:
         """의미 기반 매칭: 꽃말과 꽃 특징 우선"""
         print("💭 의미 기반 매칭 시작")
         
+        # 스토리를 소문자로 변환 (매칭용)
+        story_lower = story.lower()
+        
         # 컬러 키워드 추출 (context에서 우선, 없으면 스토리에서 추출)
         if context and hasattr(context, 'colors') and context.colors:
             color_keywords = context.colors
@@ -1114,6 +1118,13 @@ class FlowerMatcher:
             # 제외된 키워드 확인
             excluded_texts = [kw.get('text', '') for kw in excluded_keywords] if excluded_keywords else []
             print(f"🚫 제외된 키워드: {excluded_texts}")
+            
+            # 모든 꽃말 수집 (보너스 점수 계산용)
+            flower_meanings = flower_dict.get('flower_meanings', {})
+            all_meanings = []
+            all_meanings.extend(flower_meanings.get('primary', []))
+            all_meanings.extend(flower_meanings.get('secondary', []))
+            all_meanings.extend(flower_meanings.get('other', []))
             
             # 1. 꽃말 매칭 점수 (최우선) - 제외된 키워드 제외
             flower_meanings = flower_dict.get('flower_meanings', {})
@@ -1730,7 +1741,9 @@ class FlowerMatcher:
             return random.choice(encouragement_flowers)
         else:
             # 점수 기반 선택
-            scores = self._calculate_flower_scores(emotions, story)
+            color_keywords = self._extract_contextual_colors(story)
+            current_season = self._extract_season_from_story(story)
+            scores = self._calculate_flower_scores(emotions, story, color_keywords, current_season)
             return max(scores, key=scores.get)
     
     def _calculate_flower_scores(self, emotions: List[EmotionAnalysis], story: str, color_keywords: List[str], current_season: str = None) -> Dict[str, float]:
@@ -2044,8 +2057,8 @@ class FlowerMatcher:
         context = self._extract_contextual_keywords(story)
         colors = context.get("colors", [])
         
-        # 위로/슬픔 상황에서 부적절한 색상 필터링
-        filtered_colors = self.comfort_matcher.filter_inappropriate_colors(story, colors)
+        # 위로/슬픔 상황에서 부적절한 색상 필터링 (comfort_matcher가 없으므로 기본 필터링 적용)
+        filtered_colors = self._filter_inappropriate_colors(story, colors)
         
         return filtered_colors
     
@@ -2209,7 +2222,7 @@ class FlowerMatcher:
                     # 성능 최적화: print문 제거
                 
                 # 꽃말과 감정 매칭 (더 중요)
-                flower_meanings = flower.get('flower_meanings', {})
+                flower_meanings = flower_data.get('flower_meanings', {})
                 all_meanings = []
                 all_meanings.extend(flower_meanings.get('primary', []))
                 all_meanings.extend(flower_meanings.get('secondary', []))
@@ -2269,9 +2282,9 @@ class FlowerMatcher:
             
             # 8. 옐로우 톤 꽃 우선순위 (밝은 기분을 위한)
             if any(keyword in story.lower() for keyword in ["흐린 날씨", "흐려서", "기분이 처져요", "처져", "우울", "침침한", "밝아질", "밝게", "활기", "기운"]):
-                if flower_data.get('color') in ['옐로우', '노랑', '골드']:
+                if flower.get('color') in ['옐로우', '노랑', '골드']:
                     score *= 1.5
-                    print(f"☀️ 옐로우 톤 우선순위: {flower_data['korean_name']} (점수: {score:.2f})")
+                    print(f"☀️ 옐로우 톤 우선순위: {flower['korean_name']} (점수: {score:.2f})")
             
             # 9. 부정적 감정 해결 꽃 우선순위
             negative_emotions = ["우울", "스트레스", "외로움", "불안", "슬픔", "걱정"]
@@ -2299,10 +2312,10 @@ class FlowerMatcher:
             # 색상 우선순위 조정 (요청된 색상과 정확히 일치하는 경우 최우선순위)
             if color_keywords and flower_data.get('color', '') in color_keywords:
                 score *= 5.0  # 색상 일치 시 점수 5배 (최우선순위)
-                print(f"🎯 색상 정확 매칭 (최우선순위): {flower_data['korean_name']} - {flower_data.get('color', '')} (점수: {score:.2f})")
-            elif color_keywords and flower_data.get('color', '') not in color_keywords:
+                print(f"🎯 색상 정확 매칭 (최우선순위): {flower['korean_name']} - {flower.get('color', '')} (점수: {score:.2f})")
+            elif color_keywords and flower.get('color', '') not in color_keywords:
                 score *= 0.1  # 색상 불일치 시 점수 대폭 감소 (거의 제외)
-                print(f"❌ 색상 불일치 (강한 페널티): {flower_data['korean_name']} - 요청: {color_keywords[0]}, 실제: {flower_data.get('color', '')} (점수: {score:.2f})")
+                print(f"❌ 색상 불일치 (강한 페널티): {flower['korean_name']} - 요청: {color_keywords[0]}, 실제: {flower.get('color', '')} (점수: {score:.2f})")
             
             scores[flower_id] = score
         
@@ -2497,3 +2510,26 @@ JSON 형식으로 응답:
                 print(f"❌ 화려한 색상 페널티: {flower_data['korean_name']} - {flower_color} (점수: {score:.2f})")
         
         return score
+    
+    def _filter_inappropriate_colors(self, story: str, colors: List[str]) -> List[str]:
+        """위로/슬픔 상황에서 부적절한 색상 필터링"""
+        story_lower = story.lower()
+        
+        # 위로/슬픔 상황 키워드 감지
+        comfort_keywords = ["위로", "슬픔", "아픔", "힘들", "우울", "눈물", "이별", "상실", "고통"]
+        is_comfort_situation = any(keyword in story for keyword in comfort_keywords)
+        
+        if not is_comfort_situation:
+            return colors
+        
+        # 위로 상황에서 부적절한 화려한 색상 제거
+        inappropriate_colors = ["빨강", "레드", "오렌지", "핑크", "노랑", "옐로우"]
+        filtered_colors = [color for color in colors if color not in inappropriate_colors]
+        
+        # 위로에 적합한 색상 우선 추가
+        comfort_colors = ["화이트", "블루", "라벤더", "퍼플", "아이보리", "크림"]
+        for comfort_color in comfort_colors:
+            if comfort_color not in filtered_colors:
+                filtered_colors.append(comfort_color)
+        
+        return filtered_colors[:5]  # 최대 5개 색상만 반환
