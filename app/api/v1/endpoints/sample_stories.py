@@ -551,44 +551,55 @@ async def recommend_from_sample_story(story_id: str):
         while len(hashtags) < 3:
             hashtags.append("#특별한")
         
-        # 응답 생성 (수정된 구조)
+        # 응답 생성 (unified.py와 동일한 구조로 통일)
         response = {
+            "success": True,
             "story_id": formatted_story_id,
-            "original_story": story["story"],
+            "your_story": story["story"],
             
-            # 해시태그 (감정과 무드 중심 3개)
-            "hashtags": hashtags[:3],
+            # 꽃 정보 (unified.py와 동일한 필드명)
+            "flower_name": matched_flower.flower_name,
+            "korean_name": matched_flower.korean_name,
+            "scientific_name": matched_flower.scientific_name,
             
-            # 감정 분석 결과 (3개로 확장, 100을 3개로 분리)
+            # 꽃 조합 정보 (unified.py와 동일한 구조)
+            "flower_blend": {
+                "main_flower": matched_flower.korean_name,
+                "sub_flowers": _ensure_two_sub_flowers(composition.sub_flowers),
+                "composition_name": composition.composition_name
+            },
+            
+            # 이미지 URL (unified.py와 동일한 필드명)
+            "flower_image_url": image_url,
+            "calligraphy_image_url": calligraphy_image_url,
+            
+            # 꽃 카드 메시지 (unified.py와 동일한 구조)
+            "flower_card_message": {
+                "quote": getattr(flower_card_message, 'quote', ''),
+                "source": getattr(flower_card_message, 'source', '')
+            },
+            
+            # 감정 분석 결과 (unified.py와 동일한 구조)
             "emotions": [
                 {
                     "emotion": emotion.emotion,
                     "percentage": emotion.percentage
-                } for emotion in emotions[:3]  # 최대 3개
+                } for emotion in emotions[:3]
             ],
             
-            # 꽃 정보
-            "flower_name": matched_flower.korean_name,
-            "flower_name_en": matched_flower.flower_name,
-            "scientific_name": matched_flower.scientific_name,
-            "flower_card_message": flower_card_message,
-            "flower_image_url": image_url,  # 직접 생성된 URL 사용
-            "calligraphy_image_url": calligraphy_image_url,
-            
-            # 꽃 조합 정보 (메인꽃 한글로 통일, 서브 플라워 2개로 확장)
-            "flower_blend": {
-                "main_flower": matched_flower.korean_name,  # 한글로 통일
-                "sub_flowers": _ensure_two_sub_flowers(composition.sub_flowers),  # 2개로 확장
-                "composition_name": composition.composition_name
+            # 계절 정보 (unified.py와 동일한 구조)
+            "season_info": {
+                "availability": season_info.get("season", "Spring/Summer"),
+                "best_season": season_info.get("months", "03-08")
             },
             
-            # 계절 정보
-            "season_info": season_info,
-            
-            # 추천 코멘트 (필드명 변경)
+            # 추천 코멘트 (unified.py와 동일한 필드명)
             "comment": recommendation_reason,
             
-            # 생성 날짜 (2025.09.23. 형식)
+            # 해시태그 (unified.py와 동일한 구조)
+            "hashtags": hashtags[:3],
+            
+            # 생성 날짜 (unified.py와 동일한 형식)
             "created_at": datetime.now().strftime('%Y.%m.%d.')
         }
         
