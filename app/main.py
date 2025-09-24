@@ -27,6 +27,7 @@ app.add_middleware(
 app.mount("/images", StaticFiles(directory="data/images_webp"), name="images")
 app.mount("/data", StaticFiles(directory="data"), name="data")
 app.mount("/frontend", StaticFiles(directory="frontend"), name="frontend")
+app.mount("/static", StaticFiles(directory="."), name="static")
 
 # API 라우터 등록
 app.include_router(api_v1_router, prefix="/api/v1")

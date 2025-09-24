@@ -28,6 +28,14 @@
       "dest": "/$1"
     },
     {
+      "src": "/sample_stories_test",
+      "dest": "/frontend/pages/sample_stories_test.html"
+    },
+    {
+      "src": "/realtime_keyword_test",
+      "dest": "/frontend/pages/realtime_keyword_test.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "app/main.py"
     }
