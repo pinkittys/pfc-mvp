@@ -9,6 +9,342 @@ from app.services.composition_recommender import CompositionRecommender
 from app.api.v1.endpoints.recommend import _generate_unified_recommendation_reason, _generate_flower_card_message
 import random
 
+def _generate_flower_image_url(korean_name: str, color_keywords: List[str]) -> str:
+    """꽃 이미지 URL 생성 (색상 키워드 기반)"""
+    base_url = "https://uylrydyjbnacbjumtxue.supabase.co"
+    bucket_name = "flowers"
+    
+    # 꽃 이름을 영문으로 변환
+    flower_mapping = {
+        '라넌큘러스': 'ranunculus',
+        '알스트로메리아': 'alstroemeria', 
+        '장미': 'rose',
+        '튤립': 'tulip',
+        '거베라': 'gerbera-daisy',
+        '백합': 'lily',
+        '수국': 'hydrangea',
+        '리시안서스': 'lisianthus',
+        '스위트피': 'sweet-pea',
+        '아스틸베': 'astilbe',
+        '부바르디아': 'bouvardia',
+        '베이비 브레스': 'babys-breath',
+        '아이리스': 'iris',
+        '아이리': 'iris',
+        '스카비오사': 'scabiosa',
+        '프리지아': 'freesia',
+        '드럼스틱 플라워': 'drumstick-flower',
+        '마거리트 데이지': 'marguerite-daisy'
+    }
+    
+    # 색상을 영문 코드로 변환
+    color_mapping = {
+        '핑크': 'pk', 'pink': 'pk',
+        '빨강': 'rd', 'red': 'rd', '레드': 'rd',
+        '화이트': 'wh', 'white': 'wh',
+        '옐로우': 'yl', 'yellow': 'yl',
+        '퍼플': 'pu', 'purple': 'pu',
+        '블루': 'bl', 'blue': 'bl',
+        '그린': 'gr', 'green': 'gr',
+        '오렌지': 'or', 'orange': 'or',
+        '라벤더': 'll', 'lavender': 'll',
+        '연보라': 'll', '크림': 'wh'
+    }
+    
+    mapped_flower = flower_mapping.get(korean_name, korean_name.lower())
+    
+    # 색상 키워드가 있으면 첫 번째 색상 사용, 없으면 화이트
+    if color_keywords:
+        color = color_keywords[0]
+        mapped_color = color_mapping.get(color, 'wh')
+    else:
+        mapped_color = 'wh'  # 기본값: 화이트
+    
+    return f"{base_url}/storage/v1/object/public/{bucket_name}/{mapped_flower}-{mapped_color}.webp"
+
+def _get_predefined_flower_for_sample_story(story_id: str) -> dict:
+    """샘플 스토리별 미리 정의된 꽃 정보"""
+    predefined_flowers = {
+        "S01": {
+            "korean_name": "카네이션",
+            "flower_name_en": "Carnation",
+            "scientific_name": "Dianthus caryophyllus",
+            "color_keywords": ["빨강", "레드"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/carnation-rd.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/carnation.png"
+        },
+        "S02": {
+            "korean_name": "가든 피오니",
+            "flower_name_en": "Garden Peony",
+            "scientific_name": "Paeonia lactiflora",
+            "color_keywords": ["핑크"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/garden-peony-pk.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/garden-peony.png"
+        },
+        "S03": {
+            "korean_name": "달리아",
+            "flower_name_en": "Dahlia",
+            "scientific_name": "Dahlia pinnata",
+            "color_keywords": ["핑크"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/dahlia-pk.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/dahlia.png"
+        },
+        "S04": {
+            "korean_name": "라넌큘러스",
+            "flower_name_en": "Ranunculus",
+            "scientific_name": "Ranunculus asiaticus",
+            "color_keywords": ["핑크"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/ranunculus-pk.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/ranunculus.png"
+        },
+        "S05": {
+            "korean_name": "드럼스틱 플라워",
+            "flower_name_en": "Drumstick Flower",
+            "scientific_name": "Craspedia globosa",
+            "color_keywords": ["옐로우"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/drumstick-flower-yl.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/drumstick-flower.png"
+        },
+        "S06": {
+            "korean_name": "장미",
+            "flower_name_en": "Rose",
+            "scientific_name": "Rosa hybrida",
+            "color_keywords": ["오렌지"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/rose-or.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/rose.png"
+        },
+        "S07": {
+            "korean_name": "글라디올러스",
+            "flower_name_en": "Gladiolus",
+            "scientific_name": "Gladiolus spp",
+            "color_keywords": ["빨강", "레드"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/gladiolus-rd.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/gladiolus.png"
+        },
+        "S08": {
+            "korean_name": "스톡 플라워",
+            "flower_name_en": "Stock Flower",
+            "scientific_name": "Matthiola incana",
+            "color_keywords": ["화이트"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/stock-flower-wh.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/stock-flower.png"
+        },
+        "S09": {
+            "korean_name": "안스리움",
+            "flower_name_en": "Anthurium",
+            "scientific_name": "Anthurium andraeanum",
+            "color_keywords": ["핑크"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/anthurium-pk.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/anthurium.png"
+        },
+        "S10": {
+            "korean_name": "아스틸베",
+            "flower_name_en": "Astilbe",
+            "scientific_name": "Astilbe chinensis",
+            "color_keywords": ["핑크"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/astilbe-pk.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/astilbe.png"
+        },
+        "S11": {
+            "korean_name": "리시안서스",
+            "flower_name_en": "Lisianthus",
+            "scientific_name": "Eustoma grandiflorum",
+            "color_keywords": ["핑크"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/lisianthus-pk.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/lisianthus.png"
+        },
+        "S12": {
+            "korean_name": "부바르디아",
+            "flower_name_en": "Bouvardia",
+            "scientific_name": "Bouvardia ternifolia",
+            "color_keywords": ["화이트"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/bouvardia-wh.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/bouvardia.png"
+        },
+        "S13": {
+            "korean_name": "스위트피",
+            "flower_name_en": "Sweet Pea",
+            "scientific_name": "Lathyrus odoratus",
+            "color_keywords": ["핑크"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/sweet-pea-pk.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/sweet-pea.png"
+        },
+        "S14": {
+            "korean_name": "스위트피",
+            "flower_name_en": "Sweet Pea",
+            "scientific_name": "Lathyrus odoratus",
+            "color_keywords": ["블루"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/sweet-pea-bl.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/sweet-pea.png"
+        },
+        "S15": {
+            "korean_name": "프리지아",
+            "flower_name_en": "Freesia",
+            "scientific_name": "Freesia refracta",
+            "color_keywords": ["옐로우"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/freesia-yl.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/freesia.png"
+        },
+        "S16": {
+            "korean_name": "가든 피오니",
+            "flower_name_en": "Garden Peony",
+            "scientific_name": "Paeonia lactiflora",
+            "color_keywords": ["빨강", "레드"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/garden-peony-rd.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/garden-peony.png"
+        },
+        "S17": {
+            "korean_name": "마거리트 데이지",
+            "flower_name_en": "Marguerite Daisy",
+            "scientific_name": "Argyranthemum frutescens",
+            "color_keywords": ["화이트", "크림"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/marguerite-daisy-wh.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/marguerite-daisy.png"
+        },
+        "S18": {
+            "korean_name": "장미",
+            "flower_name_en": "Rose",
+            "scientific_name": "Rosa hybrida",
+            "color_keywords": ["핑크"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/rose-pk.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/rose.png"
+        },
+        "S19": {
+            "korean_name": "카네이션",
+            "flower_name_en": "Carnation",
+            "scientific_name": "Dianthus caryophyllus",
+            "color_keywords": ["핑크"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/carnation-pk.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/carnation.png"
+        },
+        "S20": {
+            "korean_name": "코튼 플랜트",
+            "flower_name_en": "Cotton Plant",
+            "scientific_name": "Gossypium hirsutum",
+            "color_keywords": ["화이트"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/cotton-plant-wh.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/cotton-plant.png"
+        },
+        "S21": {
+            "korean_name": "아이리스",
+            "flower_name_en": "Iris",
+            "scientific_name": "Iris germanica",
+            "color_keywords": ["퍼플"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/iris-pu.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/iris.png"
+        },
+        "S22": {
+            "korean_name": "장미",
+            "flower_name_en": "Rose",
+            "scientific_name": "Rosa hybrida",
+            "color_keywords": ["블루"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/rose-bl.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/rose.png"
+        },
+        "S23": {
+            "korean_name": "스카비오사",
+            "flower_name_en": "Scabiosa",
+            "scientific_name": "Scabiosa columbaria",
+            "color_keywords": ["블루"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/scabiosa-bl.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/scabiosa.png"
+        },
+        "S24": {
+            "korean_name": "프리지아",
+            "flower_name_en": "Freesia",
+            "scientific_name": "Freesia refracta",
+            "color_keywords": ["옐로우"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/freesia-yl.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/freesia.png"
+        },
+        "S25": {
+            "korean_name": "튤립",
+            "flower_name_en": "Tulip",
+            "scientific_name": "Tulipa gesneriana",
+            "color_keywords": ["화이트"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/tulip-wh.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/tulip.png"
+        },
+        "S26": {
+            "korean_name": "튤립",
+            "flower_name_en": "Tulip",
+            "scientific_name": "Tulipa gesneriana",
+            "color_keywords": ["빨강", "레드"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/tulip-rd.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/tulip.png"
+        },
+        "S27": {
+            "korean_name": "안스리움",
+            "flower_name_en": "Anthurium",
+            "scientific_name": "Anthurium andraeanum",
+            "color_keywords": ["빨강", "레드"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/anthurium-rd.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/anthurium.png"
+        },
+        "S28": {
+            "korean_name": "이베리스",
+            "flower_name_en": "Iberis",
+            "scientific_name": "Iberis sempervirens",
+            "color_keywords": ["화이트"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/iberis-wh.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/iberis.png"
+        },
+        "S29": {
+            "korean_name": "지니아",
+            "flower_name_en": "Zinnia",
+            "scientific_name": "Zinnia elegans",
+            "color_keywords": ["빨강", "레드"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/zinnia-rd.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/zinnia.png"
+        },
+        "S30": {
+            "korean_name": "지니아",
+            "flower_name_en": "Zinnia",
+            "scientific_name": "Zinnia elegans",
+            "color_keywords": ["핑크"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/zinnia-pk.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/zinnia.png"
+        },
+        "S31": {
+            "korean_name": "글로브 아마란스",
+            "flower_name_en": "Globe Amaranth",
+            "scientific_name": "Gomphrena globosa",
+            "color_keywords": ["퍼플"],
+            "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/globe-amaranth-pu.webp",
+            "calligraphy_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/globe-amaranth.png"
+        }
+    }
+    return predefined_flowers.get(story_id, None)
+
+def _generate_calligraphy_url(korean_name: str) -> str:
+    """캘리그래피 이미지 URL 생성"""
+    base_url = "https://uylrydyjbnacbjumtxue.supabase.co"
+    bucket_name = "calligraphy-images"
+    
+    # 꽃 이름을 영문으로 변환
+    flower_mapping = {
+        '라넌큘러스': 'ranunculus',
+        '알스트로메리아': 'alstroemeria', 
+        '장미': 'rose',
+        '튤립': 'tulip',
+        '거베라': 'gerbera-daisy',
+        '백합': 'lily',
+        '수국': 'hydrangea',
+        '리시안서스': 'lisianthus',
+        '스위트피': 'sweet-pea',
+        '아스틸베': 'astilbe',
+        '부바르디아': 'bouvardia',
+        '베이비 브레스': 'babysbreath',
+        '아이리스': 'iris',
+        '아이리': 'iris',
+        '스카비오사': 'scabiosa',
+        '프리지아': 'freesia',
+        '드럼스틱 플라워': 'drumstick-flower',
+        '마거리트 데이지': 'marguerite-daisy'
+    }
+    
+    mapped_flower = flower_mapping.get(korean_name, korean_name.lower())
+    return f"{base_url}/storage/v1/object/public/{bucket_name}/{mapped_flower}.png"
+
 router = APIRouter()
 
 # 샘플 사연 데이터 로드
@@ -118,24 +454,39 @@ async def recommend_from_sample_story(story_id: str):
                 EmotionAnalysis(emotion="희망", percentage=25.0, description="희망찬 마음")
             ]
         
-        # 꽃 매칭 서비스 초기화
-        flower_matcher = FlowerMatcher()
+        # 먼저 룰셋으로 미리 정의된 꽃이 있는지 확인
+        predefined_flower = _get_predefined_flower_for_sample_story(story_id)
         
-        # 색상 키워드 추출
-        color_keywords = predefined_keywords.get("colors", [])
-        
-        # 꽃 추천 실행 (기존 match() 메서드 사용)
-        matched_flower = flower_matcher.match(
-            emotions=emotions,
-            story=story["story"],
-            user_intent="meaning_based",  # 의미 기반 매칭
-            excluded_keywords=None,
-            mentioned_flower=None,
-            context=None
-        )
-        
-        if not matched_flower:
-            raise HTTPException(status_code=404, detail="적합한 꽃을 찾을 수 없습니다.")
+        if predefined_flower:
+            # 룰셋으로 미리 정의된 꽃 사용
+            matched_flower = type('MatchedFlower', (), {
+                'korean_name': predefined_flower['korean_name'],
+                'flower_name': predefined_flower['korean_name'],  # flower_name 추가
+                'flower_name_en': predefined_flower['flower_name_en'],
+                'scientific_name': predefined_flower['scientific_name'],
+                'image_url': predefined_flower['image_url'],
+                'color_keywords': predefined_flower['color_keywords']  # color_keywords 추가
+            })()
+            color_keywords = predefined_flower['color_keywords']
+        else:
+            # 기존 로직: 꽃 매칭 서비스 초기화
+            flower_matcher = FlowerMatcher()
+            
+            # 색상 키워드 추출
+            color_keywords = predefined_keywords.get("colors", [])
+            
+            # 꽃 추천 실행 (기존 match() 메서드 사용)
+            matched_flower = flower_matcher.match(
+                emotions=emotions,
+                story=story["story"],
+                user_intent="meaning_based",  # 의미 기반 매칭
+                excluded_keywords=None,
+                mentioned_flower=None,
+                context=None
+            )
+            
+            if not matched_flower:
+                raise HTTPException(status_code=404, detail="적합한 꽃을 찾을 수 없습니다.")
         
         # 꽃 조합 추천
         composition_recommender = CompositionRecommender()
@@ -161,10 +512,15 @@ async def recommend_from_sample_story(story_id: str):
             story=story["story"]
         )
         
-        # 이미지 URL에서 spp 제거
-        image_url = matched_flower.image_url
-        if image_url and "-spp-" in image_url:
-            image_url = image_url.replace("-spp-", "-")
+        # 이미지 URL 생성
+        if predefined_flower:
+            # 룰셋으로 미리 정의된 이미지 URL 사용
+            image_url = predefined_flower['image_url']
+            calligraphy_image_url = predefined_flower['calligraphy_url']
+        else:
+            # 기존 로직: 직접 이미지 URL 생성 (색상 키워드 기반)
+            image_url = _generate_flower_image_url(matched_flower.korean_name, color_keywords)
+            calligraphy_image_url = _generate_calligraphy_url(matched_flower.korean_name)
         
         # 스토리 ID 생성 (S{순번}만 사용)
         story_number = story_id.replace("story_", "").replace("S", "")
@@ -213,7 +569,8 @@ async def recommend_from_sample_story(story_id: str):
             "flower_name_en": matched_flower.flower_name,
             "scientific_name": matched_flower.scientific_name,
             "flower_card_message": flower_card_message,
-            "flower_image_url": image_url,  # spp 제거된 URL 사용
+            "flower_image_url": image_url,  # 직접 생성된 URL 사용
+            "calligraphy_image_url": calligraphy_image_url,
             
             # 꽃 조합 정보 (메인꽃 한글로 통일, 서브 플라워 2개로 확장)
             "flower_blend": {
