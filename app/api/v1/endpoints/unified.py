@@ -326,15 +326,21 @@ async def final_recommend(req: UnifiedRecommendRequest):
 
         flower_code = matched_flower.flower_name.upper()[:3]
         sequence_number = _get_flower_recommendation_count(flower_code)
-        story_id = f"S{datetime.now().strftime('%y%m%d')}-{flower_code}-{sequence_number:06d}"
+        story_id = f"S{datetime.now().strftime('%y%m%d')}-{flower_code}-{sequence_number:05d}"
 
         return {
             "success": True,
+            "created_at": datetime.now().strftime('%Y.%m.%d.'),
             "story_id": story_id,
             "your_story": req.story,
-            "flower_name": matched_flower.flower_name,
-            "korean_name": matched_flower.korean_name,
-            "scientific_name": matched_flower.scientific_name,
+            
+            # 꽃 정보 (샘플 스토리와 동일한 구조)
+            "flower_info": {
+                "korean_name": matched_flower.korean_name,
+                "english_name": matched_flower.flower_name,
+                "scientific_name": matched_flower.scientific_name
+            },
+            
             "flower_blend": {
                 "main_flower": matched_flower.korean_name,
                 "sub_flowers": composition.sub_flowers,
@@ -353,13 +359,12 @@ async def final_recommend(req: UnifiedRecommendRequest):
                 }
                 for e in emotions
             ],
-            "season_info": {
+            "season_detail": {
                 "availability": season_info.get("season", "Spring/Summer"),
                 "best_season": season_info.get("months", "03-08")
             },
             "comment": reason,
-            "hashtags": [f"#{e.emotion}" for e in emotions[:3]],
-            "created_at": datetime.now().strftime('%Y.%m.%d.')
+            "hashtags": [f"#{e.emotion}" for e in emotions[:3]]
         }
         
     except Exception as e:
