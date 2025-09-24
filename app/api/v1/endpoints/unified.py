@@ -358,7 +358,8 @@ async def final_recommend(req: UnifiedRecommendRequest):
                 "best_season": season_info.get("months", "03-08")
             },
             "comment": reason,
-            "hashtags": [f"#{e.emotion}" for e in emotions[:3]]
+            "hashtags": [f"#{e.emotion}" for e in emotions[:3]],
+            "created_at": datetime.now().strftime('%Y.%m.%d.')
         }
         
     except Exception as e:

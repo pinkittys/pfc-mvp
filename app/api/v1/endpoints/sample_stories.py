@@ -7,6 +7,7 @@ from app.models.schemas import FlowerMatch, EmotionAnalysis, FlowerComposition
 from app.services.flower_matcher import FlowerMatcher
 from app.services.composition_recommender import CompositionRecommender
 from app.api.v1.endpoints.recommend import _generate_unified_recommendation_reason, _generate_flower_card_message
+from app.api.v1.endpoints.unified import _get_flower_recommendation_count
 import random
 
 def _generate_flower_image_url(korean_name: str, color_keywords: List[str]) -> str:
@@ -522,9 +523,11 @@ async def recommend_from_sample_story(story_id: str):
             image_url = _generate_flower_image_url(matched_flower.korean_name, color_keywords)
             calligraphy_image_url = _generate_calligraphy_url(matched_flower.korean_name)
         
-        # 스토리 ID 생성 (S{순번}만 사용)
+        # 스토리 ID 생성 (샘플 스토리 전용 형식: S250923-HYD-S0101)
+        flower_code = matched_flower.flower_name.upper()[:3]
+        sequence_number = _get_flower_recommendation_count(flower_code)
         story_number = story_id.replace("story_", "").replace("S", "")
-        formatted_story_id = f"S{story_number}"  # T01 제거
+        formatted_story_id = f"S{datetime.now().strftime('%y%m%d')}-{flower_code}-S{story_number}{sequence_number:02d}"
         
         # 계절 정보 생성 (시즌과 월 분리)
         season_info = {"season": "All Season", "months": "01-12"}  # 기본값, 실제로는 꽃 데이터에서 가져와야 함
@@ -583,7 +586,10 @@ async def recommend_from_sample_story(story_id: str):
             "season_info": season_info,
             
             # 추천 코멘트 (필드명 변경)
-            "comment": recommendation_reason
+            "comment": recommendation_reason,
+            
+            # 생성 날짜 (2025.09.23. 형식)
+            "created_at": datetime.now().strftime('%Y.%m.%d.')
         }
         
         return response
