@@ -523,7 +523,7 @@ async def recommend_from_sample_story(story_id: str):
             image_url = _generate_flower_image_url(matched_flower.korean_name, color_keywords)
             calligraphy_image_url = _generate_calligraphy_url(matched_flower.korean_name)
         
-        # 스토리 ID 생성 (샘플 스토리 전용 형식: S250923-HYD-S0101)
+        # 스토리 ID 생성 (샘플 스토리 전용 형식: S250924-ZIN-S2901)
         # 꽃 이름을 영문으로 변환하여 약어 생성
         flower_name_en = getattr(matched_flower, 'flower_name_en', matched_flower.korean_name)
         if hasattr(matched_flower, 'flower_name_en') and matched_flower.flower_name_en:
@@ -569,13 +569,16 @@ async def recommend_from_sample_story(story_id: str):
         # 응답 생성 (unified.py와 동일한 구조로 통일)
         response = {
             "success": True,
+            "created_at": datetime.now().strftime('%Y.%m.%d.'),
             "story_id": formatted_story_id,
             "your_story": story["story"],
             
-            # 꽃 정보 (unified.py와 동일한 필드명)
-            "flower_name": matched_flower.flower_name,
-            "korean_name": matched_flower.korean_name,
-            "scientific_name": matched_flower.scientific_name,
+            # 꽃 정보 (예전 구조로 개선)
+            "flower_info": {
+                "korean_name": matched_flower.korean_name,
+                "english_name": getattr(matched_flower, 'flower_name_en', matched_flower.korean_name),
+                "scientific_name": matched_flower.scientific_name
+            },
             
             # 꽃 조합 정보 (unified.py와 동일한 구조)
             "flower_blend": {
@@ -588,7 +591,7 @@ async def recommend_from_sample_story(story_id: str):
             "flower_image_url": image_url,
             "calligraphy_image_url": calligraphy_image_url,
             
-            # 꽃 카드 메시지 (unified.py와 동일한 구조)
+            # 꽃 카드 메시지 (예전 구조로 개선)
             "flower_card_message": {
                 "quote": getattr(flower_card_message, 'quote', ''),
                 "source": getattr(flower_card_message, 'source', '')
@@ -602,8 +605,8 @@ async def recommend_from_sample_story(story_id: str):
                 } for emotion in emotions[:3]
             ],
             
-            # 계절 정보 (unified.py와 동일한 구조)
-            "season_info": {
+            # 계절 정보 (예전 구조로 개선)
+            "season_detail": {
                 "availability": season_info.get("season", "Spring/Summer"),
                 "best_season": season_info.get("months", "03-08")
             },
@@ -611,11 +614,8 @@ async def recommend_from_sample_story(story_id: str):
             # 추천 코멘트 (unified.py와 동일한 필드명)
             "comment": recommendation_reason,
             
-            # 해시태그 (unified.py와 동일한 구조)
-            "hashtags": hashtags[:3],
-            
-            # 생성 날짜 (unified.py와 동일한 형식)
-            "created_at": datetime.now().strftime('%Y.%m.%d.')
+            # 해시태그 (예전 구조로 개선)
+            "hashtags": hashtags[:3]
         }
         
         return response
