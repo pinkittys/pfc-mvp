@@ -524,7 +524,22 @@ async def recommend_from_sample_story(story_id: str):
             calligraphy_image_url = _generate_calligraphy_url(matched_flower.korean_name)
         
         # 스토리 ID 생성 (샘플 스토리 전용 형식: S250923-HYD-S0101)
-        flower_code = matched_flower.flower_name.upper()[:3]
+        # 꽃 이름을 영문으로 변환하여 약어 생성
+        flower_name_en = getattr(matched_flower, 'flower_name_en', matched_flower.korean_name)
+        if hasattr(matched_flower, 'flower_name_en') and matched_flower.flower_name_en:
+            flower_code = matched_flower.flower_name_en.upper()[:3]
+        else:
+            # 한글 꽃 이름을 영문으로 매핑
+            korean_to_english = {
+                '지니아': 'ZIN', '장미': 'ROS', '튤립': 'TUL', '라넌큘러스': 'RAN',
+                '카네이션': 'CAR', '가든 피오니': 'PEA', '달리아': 'DAH', '드럼스틱 플라워': 'DRU',
+                '글라디올러스': 'GLA', '스톡 플라워': 'STO', '안스리움': 'ANT', '아스틸베': 'AST',
+                '리시안서스': 'LIS', '부바르디아': 'BOU', '스위트피': 'SWE', '프리지아': 'FRE',
+                '마거리트 데이지': 'MAR', '코튼 플랜트': 'COT', '아이리스': 'IRI', '스카비오사': 'SCA',
+                '이베리스': 'IBE', '글로브 아마란스': 'GLO'
+            }
+            flower_code = korean_to_english.get(matched_flower.korean_name, 'UNK')
+        
         sequence_number = _get_flower_recommendation_count(flower_code)
         story_number = story_id.replace("story_", "").replace("S", "")
         formatted_story_id = f"S{datetime.now().strftime('%y%m%d')}-{flower_code}-S{story_number}{sequence_number:02d}"
