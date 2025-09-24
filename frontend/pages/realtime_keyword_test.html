@@ -1130,28 +1130,41 @@
                 return;
             }
             
+            // 새로운 응답 구조에 맞게 데이터 추출
             const emotions = result.emotions || [];
             const flowerBlend = result.flower_blend || {};
-            const seasonInfo = result.season_info || {};
+            const seasonDetail = result.season_detail || {};
             const englishMessage = result.flower_card_message || {};
             const hashtags = result.hashtags || [];
+            const flowerInfo = result.flower_info || {};
             
             flowerResult.innerHTML = `
                 <div class="flower-image">
                     <img src="${result.flower_image_url || '/images/default-flower.webp'}" 
-                         alt="${flowerBlend.main_flower || '추천 꽃'}"
+                         alt="${flowerInfo.korean_name || flowerBlend.main_flower || '추천 꽃'}"
                          onerror="this.src='/images/default-flower.webp'">
                 </div>
                 <div class="flower-details">
-                    <div class="flower-name">${flowerBlend.main_flower || '추천 꽃'}</div>
+                    <div class="flower-name">${flowerInfo.korean_name || flowerBlend.main_flower || '추천 꽃'}</div>
                     
                     <div class="story-id">
                         <strong>스토리 ID:</strong> ${result.story_id || '-'}
                     </div>
                     
+                    <div class="created-at">
+                        <strong>생성일:</strong> ${result.created_at || '-'}
+                    </div>
+                    
                     <div class="your-story">
                         <strong>Your Story:</strong><br>
                         ${result.your_story || '-'}
+                    </div>
+                    
+                    <div class="flower-info">
+                        <strong>꽃 정보:</strong><br>
+                        한글명: ${flowerInfo.korean_name || '-'}<br>
+                        영문명: ${flowerInfo.english_name || '-'}<br>
+                        학명: ${flowerInfo.scientific_name || '-'}
                     </div>
                     
                     <div class="flower-composition">
@@ -1175,7 +1188,7 @@
                     </div>
                     
                     <div class="season-info">
-                        <strong>계절 정보:</strong> ${seasonInfo.season || '-'} (${seasonInfo.months || '-'})
+                        <strong>계절 정보:</strong> ${seasonDetail.availability || '-'} (${seasonDetail.best_season || '-'})
                     </div>
                     
                     <div class="english-message">
@@ -1192,6 +1205,14 @@
                     <div class="hashtags">
                         <strong>해시태그:</strong><br>
                         ${hashtags.map(tag => `<span class="hashtag">${tag}</span>`).join('')}
+                    </div>
+                    
+                    <div class="calligraphy-image">
+                        <strong>캘리그래피 이미지:</strong><br>
+                        <img src="${result.calligraphy_image_url || result.flower_image_url || '/images/default-flower.webp'}" 
+                             alt="캘리그래피" 
+                             style="max-width: 200px; max-height: 200px; border-radius: 8px; border: 1px solid #ddd;"
+                             onerror="this.src='/images/default-flower.webp'">
                     </div>
                 </div>
             `;

@@ -77,16 +77,36 @@ async def extract_realtime(req: ExtractKeywordsRequest):
 
     story_lower = req.story.lower()
     extraction_stage = _determine_extraction_stage(story_lower)
+    
+    # 중복 제거 로직 추가
+    def remove_duplicates(main_list, alt_list):
+        """메인 키워드와 대안 키워드에서 중복 제거"""
+        if not alt_list:
+            return alt_list
+        return [kw for kw in alt_list if kw not in main_list]
+    
+    # 각 카테고리별 중복 제거
+    emotions_main = smart_context.emotions[0] if smart_context.emotions else "기쁨"
+    emotions_alt = remove_duplicates([emotions_main], smart_context.emotions_alternatives)
+    
+    situations_main = smart_context.situations[0] if smart_context.situations else "일상"
+    situations_alt = remove_duplicates([situations_main], smart_context.situations_alternatives)
+    
+    moods_main = smart_context.moods[0] if smart_context.moods else "화려한"
+    moods_alt = remove_duplicates([moods_main], smart_context.moods_alternatives)
+    
+    colors_main = smart_context.colors[0] if smart_context.colors else "레드"
+    colors_alt = remove_duplicates([colors_main], smart_context.colors_alternatives)
         
     return {
         "success": True,
         "mode": "realtime",
         "extraction_stage": extraction_stage,
         "keywords": [
-            {"type": "emotions", "main": smart_context.emotions[0] if smart_context.emotions else "기쁨", "alternatives": smart_context.emotions_alternatives},
-            {"type": "situations", "main": smart_context.situations[0] if smart_context.situations else "일상", "alternatives": smart_context.situations_alternatives},
-            {"type": "moods", "main": smart_context.moods[0] if smart_context.moods else "화려한", "alternatives": smart_context.moods_alternatives},
-            {"type": "colors", "main": smart_context.colors[0] if smart_context.colors else "레드", "alternatives": smart_context.colors_alternatives}
+            {"type": "emotions", "main": emotions_main, "alternatives": emotions_alt},
+            {"type": "situations", "main": situations_main, "alternatives": situations_alt},
+            {"type": "moods", "main": moods_main, "alternatives": moods_alt},
+            {"type": "colors", "main": colors_main, "alternatives": colors_alt}
         ],
         "confidence": smart_context.confidence,
         "extraction_method": smart_context.extraction_method
@@ -200,6 +220,64 @@ def _extract_colors(story_lower: str) -> dict:
         return {"main": "화이트", "alternatives": ["크림", "라벤더", "블루"]}
     else:
         return {"main": "레드", "alternatives": ["핑크", "옐로우", "오렌지"]}
+
+def _extract_flower_mentions(story: str) -> List[str]:
+    """스토리에서 명시적으로 언급된 꽃 이름 추출"""
+    story_lower = story.lower()
+    mentioned_flowers = []
+    
+    # 꽃 이름 매핑 (한글 -> 영문)
+    flower_mapping = {
+        '장미': 'rose', '튤립': 'tulip', '라넌큘러스': 'ranunculus', '카네이션': 'carnation',
+        '지니아': 'zinnia', '달리아': 'dahlia', '글라디올러스': 'gladiolus', '안스리움': 'anthurium',
+        '아스틸베': 'astilbe', '리시안서스': 'lisianthus', '부바르디아': 'bouvardia', '스위트피': 'sweetpea',
+        '프리지아': 'freesia', '마거리트': 'marguerite', '코튼': 'cotton', '아이리스': 'iris',
+        '스카비오사': 'scabiosa', '이베리스': 'iberis', '글로브': 'globe', '수국': 'hydrangea',
+        '가든피오니': 'peony', '드럼스틱': 'drumstick', '스톡': 'stock'
+    }
+    
+    # 꽃 이름 패턴 검색
+    for korean_name, english_name in flower_mapping.items():
+        if korean_name in story_lower:
+            mentioned_flowers.append(english_name)
+    
+    # 추가 패턴: "~꽃", "~을", "~로" 등
+    flower_patterns = [
+        r'(\w+)꽃', r'(\w+)을', r'(\w+)로', r'(\w+)로 선물', r'(\w+)를 선물'
+    ]
+    
+    import re
+    for pattern in flower_patterns:
+        matches = re.findall(pattern, story_lower)
+        for match in matches:
+            if match in flower_mapping:
+                mentioned_flowers.append(flower_mapping[match])
+    
+    return list(set(mentioned_flowers))  # 중복 제거
+
+def _generate_calligraphy_url(flower_name: str) -> str:
+    """캘리그래피 이미지 URL 생성 (Supabase 기반)"""
+    try:
+        # 꽃 이름을 영문으로 변환
+        korean_to_english = {
+            '지니아': 'zinnia', '장미': 'rose', '튤립': 'tulip', '라넌큘러스': 'ranunculus',
+            '카네이션': 'carnation', '가든 피오니': 'peony', '달리아': 'dahlia', '드럼스틱 플라워': 'drumstick',
+            '글라디올러스': 'gladiolus', '스톡 플라워': 'stock', '안스리움': 'anthurium', '아스틸베': 'astilbe',
+            '리시안서스': 'lisianthus', '부바르디아': 'bouvardia', '스위트피': 'sweetpea', '프리지아': 'freesia',
+            '마거리트 데이지': 'marguerite', '코튼 플랜트': 'cotton', '아이리스': 'iris', '스카비오사': 'scabiosa',
+            '이베리스': 'iberis', '글로브 아마란스': 'globe', '수국': 'hydrangea', '해바라기': 'sunflower'
+        }
+        
+        flower_name_en = korean_to_english.get(flower_name, flower_name.lower())
+        
+        # Supabase 캘리그래피 이미지 URL 생성
+        calligraphy_url = f"https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/{flower_name_en}.png"
+        return calligraphy_url
+        
+    except Exception as e:
+        print(f"캘리그래피 URL 생성 실패: {e}")
+        return "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/default.png"
+
 async def extract_final(req: ExtractKeywordsRequest):
     """최종 맥락 파악 + 사용자 수정 지원 (정확한 분석)"""
     smart_extractor = SmartWebSocketExtractor()
@@ -216,15 +294,35 @@ async def extract_final(req: ExtractKeywordsRequest):
             smart_context.moods = req.updated_context['moods']
         if req.updated_context.get('colors'):
             smart_context.colors = req.updated_context['colors']
+    
+    # 중복 제거 로직 추가
+    def remove_duplicates(main_list, alt_list):
+        """메인 키워드와 대안 키워드에서 중복 제거"""
+        if not alt_list:
+            return alt_list
+        return [kw for kw in alt_list if kw not in main_list]
+    
+    # 각 카테고리별 중복 제거
+    emotions_main = smart_context.emotions[0] if smart_context.emotions else "기쁨"
+    emotions_alt = remove_duplicates([emotions_main], smart_context.emotions_alternatives)
+    
+    situations_main = smart_context.situations[0] if smart_context.situations else "일상"
+    situations_alt = remove_duplicates([situations_main], smart_context.situations_alternatives)
+    
+    moods_main = smart_context.moods[0] if smart_context.moods else "화려한"
+    moods_alt = remove_duplicates([moods_main], smart_context.moods_alternatives)
+    
+    colors_main = smart_context.colors[0] if smart_context.colors else "레드"
+    colors_alt = remove_duplicates([colors_main], smart_context.colors_alternatives)
         
     return {
         "success": True,
         "mode": "final",
         "keywords": [
-            {"type": "emotions", "main": smart_context.emotions[0] if smart_context.emotions else "기쁨", "alternatives": smart_context.emotions_alternatives},
-            {"type": "situations", "main": smart_context.situations[0] if smart_context.situations else "일상", "alternatives": smart_context.situations_alternatives},
-            {"type": "moods", "main": smart_context.moods[0] if smart_context.moods else "화려한", "alternatives": smart_context.moods_alternatives},
-            {"type": "colors", "main": smart_context.colors[0] if smart_context.colors else "레드", "alternatives": smart_context.colors_alternatives}
+            {"type": "emotions", "main": emotions_main, "alternatives": emotions_alt},
+            {"type": "situations", "main": situations_main, "alternatives": situations_alt},
+            {"type": "moods", "main": moods_main, "alternatives": moods_alt},
+            {"type": "colors", "main": colors_main, "alternatives": colors_alt}
         ],
         "confidence": smart_context.confidence,
         "extraction_method": smart_context.extraction_method
@@ -273,17 +371,35 @@ async def final_recommend(req: UnifiedRecommendRequest):
         print(f"   요청 색상: {req.preferred_colors}")
         print(f"   컨텍스트 색상: {context.colors if context else 'None'}")
         
+        # 명시적 꽃 지정 추출
+        explicit_flowers = _extract_flower_mentions(req.story)
+        print(f"🌸 명시적 꽃 지정: {explicit_flowers}")
+        
         # 스프레드시트 기반 매칭 (LLM 없이)
         print(f"🔍 스프레드시트 매칭 시작...")
         try:
-            spreadsheet_match_result = spreadsheet_matcher.match_flower(
-                story=req.story,
-                emotions=final_emotions,
-                situations=final_situations,
-                moods=final_moods,
-                preferred_colors=final_colors,
-                mentioned_flower=mentioned_flower
-            )
+            # 명시적 꽃 지정이 있으면 우선 필터링
+            if explicit_flowers:
+                print(f"🎯 명시적 꽃 지정으로 필터링: {explicit_flowers}")
+                # 꽃 이름으로 필터링된 매칭 시도
+                spreadsheet_match_result = spreadsheet_matcher.match_flower_with_explicit(
+                    story=req.story,
+                    emotions=final_emotions,
+                    situations=final_situations,
+                    moods=final_moods,
+                    preferred_colors=final_colors,
+                    explicit_flowers=explicit_flowers
+                )
+            else:
+                # 기존 로직 (명시적 꽃 지정 없음)
+                spreadsheet_match_result = spreadsheet_matcher.match_flower(
+                    story=req.story,
+                    emotions=final_emotions,
+                    situations=final_situations,
+                    moods=final_moods,
+                    preferred_colors=final_colors,
+                    mentioned_flower=mentioned_flower
+                )
             
             if spreadsheet_match_result:
                 print(f"✅ 스프레드시트 매칭 성공: {spreadsheet_match_result.flower_data.name_ko}")
@@ -347,7 +463,7 @@ async def final_recommend(req: UnifiedRecommendRequest):
                 "composition_name": composition.composition_name
             },
             "flower_image_url": matched_flower.image_url,
-            "calligraphy_image_url": matched_flower.image_url,  # 캘리그래피 이미지 URL (현재는 동일한 이미지 사용)
+            "calligraphy_image_url": _generate_calligraphy_url(matched_flower.korean_name),  # 캘리그래피 이미지 URL
             "flower_card_message": {
                 "quote": getattr(flower_card_message, 'quote', ''),
                 "source": getattr(flower_card_message, 'source', '')

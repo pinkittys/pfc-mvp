@@ -106,6 +106,87 @@ class SpreadsheetFlowerMatcher:
         # 쉼표로 구분된 문자열을 리스트로 변환
         return [item.strip() for item in str(data).split(',') if item.strip()]
     
+    def match_flower_with_explicit(self, story: str, emotions: List[str], situations: List[str], 
+                                  moods: List[str], preferred_colors: List[str], 
+                                  explicit_flowers: List[str]) -> Optional[SpreadsheetMatchResult]:
+        """명시적 꽃 지정이 있을 때의 매칭 로직"""
+        print(f"🎯 명시적 꽃 매칭 시작: {explicit_flowers}")
+        
+        # 1. 명시적 꽃 지정으로 필터링
+        filtered_flowers = []
+        for flower in self.flowers:
+            if any(explicit_flower.lower() in flower.name_en.lower() for explicit_flower in explicit_flowers):
+                filtered_flowers.append(flower)
+        
+        if not filtered_flowers:
+            print(f"❌ 명시적 꽃 지정에 해당하는 꽃이 없음: {explicit_flowers}")
+            return None
+        
+        print(f"✅ 명시적 꽃 필터링 결과: {len(filtered_flowers)}개")
+        
+        # 2. 4개 디멘션 기반 매칭 (감정, 상황, 무드, 컬러)
+        best_match = None
+        best_score = 0
+        
+        for flower in filtered_flowers:
+            score = 0
+            match_details = []
+            
+            # 감정 매칭
+            emotion_matches = set(emotions) & set(flower.emotions)
+            if emotion_matches:
+                score += len(emotion_matches) * 3
+                match_details.append(f"감정({', '.join(emotion_matches)})")
+            
+            # 상황 매칭
+            situation_matches = set(situations) & set(flower.contexts)
+            if situation_matches:
+                score += len(situation_matches) * 3
+                match_details.append(f"상황({', '.join(situation_matches)})")
+            
+            # 무드 매칭
+            mood_matches = set(moods) & set(flower.moods)
+            if mood_matches:
+                score += len(mood_matches) * 2
+                match_details.append(f"무드({', '.join(mood_matches)})")
+            
+            # 컬러 매칭
+            color_matches = set(preferred_colors) & set([flower.base_color] + flower.alt_colors)
+            if color_matches:
+                score += len(color_matches) * 2
+                match_details.append(f"컬러({', '.join(color_matches)})")
+            
+            # 꽃말 매칭 (보너스)
+            if flower.flower_language_short and any(keyword in flower.flower_language_short for keyword in emotions + situations):
+                score += 1
+                match_details.append("꽃말")
+            
+            print(f"  {flower.name_ko}: {score}점 ({', '.join(match_details)})")
+            
+            if score > best_score:
+                best_score = score
+                best_match = flower
+                best_match_details = match_details
+        
+        if best_match and best_score > 0:
+            # 이미지 URL 가져오기
+            image_url = self._get_flower_image_url(best_match)
+            
+            return SpreadsheetMatchResult(
+                flower_data=best_match,
+                image_url=image_url,
+                confidence=min(best_score / 10.0, 1.0),  # 최대 1.0
+                match_reason=f"명시적 꽃 지정 + 4개 디멘션 매칭: {', '.join(best_match_details)}",
+                color_matched=bool(set(preferred_colors) & set([best_match.base_color] + best_match.alt_colors)),
+                mood_matched=bool(set(moods) & set(best_match.moods)),
+                emotion_matched=bool(set(emotions) & set(best_match.emotions)),
+                context_matched=bool(set(situations) & set(best_match.contexts)),
+                flower_language_matched=bool(best_match.flower_language_short)
+            )
+        
+        print(f"❌ 명시적 꽃 매칭 실패: 점수 {best_score}")
+        return None
+
     def match_flower(self, 
                     story: str,
                     emotions: List[str] = None,
@@ -280,15 +361,34 @@ class SpreadsheetFlowerMatcher:
         return matches
     
     def _match_by_context(self, situations: List[str]) -> List[SpreadsheetFlowerData]:
-        """상황/컨텍스트 기반 매칭"""
+        """상황/컨텍스트 기반 매칭 - 강화된 매칭 로직"""
         matches = []
+        
+        # 특별한 상황 매칭 규칙 (우선순위 높음)
+        special_situation_rules = {
+            "새로운 시작": ["프리지아", "해바라기"],
+            "축하": ["프리지아", "해바라기", "장미"],
+            "성공": ["프리지아", "해바라기"],
+            "취업": ["프리지아", "해바라기"],
+            "합격": ["프리지아", "해바라기"],
+            "졸업": ["프리지아", "해바라기"],
+            "승진": ["프리지아", "해바라기"]
+        }
         
         for flower in self.flower_data:
             if not flower.is_main:
                 continue
             
-            # 컨텍스트 매칭
+            # 특별한 상황 매칭 (우선순위 높음)
             for situation in situations:
+                for special_keyword, preferred_flowers in special_situation_rules.items():
+                    if special_keyword in situation:
+                        if flower.name_ko in preferred_flowers:
+                            matches.append(flower)
+                            print(f"   🎯 특별 상황 매칭: {situation} → {flower.name_ko}")
+                            break
+                
+                # 일반 컨텍스트 매칭
                 if any(context in situation for context in flower.contexts):
                     matches.append(flower)
                     break
@@ -331,17 +431,37 @@ class SpreadsheetFlowerMatcher:
         return matches
     
     def _match_by_flower_language(self, story: str) -> List[SpreadsheetFlowerData]:
-        """꽃말 기반 매칭"""
+        """꽃말 기반 매칭 - 강화된 매칭 로직"""
         matches = []
         
         # 스토리에서 키워드 추출
         story_keywords = self._extract_story_keywords(story)
         
+        # 특별한 꽃말 매칭 규칙 (우선순위 높음)
+        special_flower_language_rules = {
+            "새로운 시작": ["프리지아"],
+            "축하": ["프리지아", "해바라기"],
+            "성공": ["프리지아", "해바라기"],
+            "취업": ["프리지아"],
+            "합격": ["프리지아"],
+            "졸업": ["프리지아"],
+            "승진": ["프리지아"]
+        }
+        
         for flower in self.flower_data:
             if not flower.is_main:
                 continue
             
-            # 꽃말 매칭
+            # 특별한 꽃말 매칭 (우선순위 높음)
+            for keyword in story_keywords:
+                for special_keyword, preferred_flowers in special_flower_language_rules.items():
+                    if special_keyword in keyword:
+                        if flower.name_ko in preferred_flowers:
+                            matches.append(flower)
+                            print(f"   🎯 특별 꽃말 매칭: {keyword} → {flower.name_ko}")
+                            break
+            
+            # 일반 꽃말 매칭
             flower_language = f"{flower.flower_language_short} {flower.flower_language_long}"
             
             for keyword in story_keywords:
@@ -353,7 +473,7 @@ class SpreadsheetFlowerMatcher:
         return matches
     
     def _extract_story_keywords(self, story: str) -> List[str]:
-        """스토리에서 키워드 추출"""
+        """스토리에서 키워드 추출 - 강화된 키워드 추출"""
         # 간단한 키워드 추출 (실제로는 더 정교한 NLP 사용 가능)
         keywords = []
         
@@ -363,11 +483,22 @@ class SpreadsheetFlowerMatcher:
             if keyword in story:
                 keywords.append(keyword)
         
-        # 상황 키워드
-        situation_keywords = ["생일", "기념일", "졸업", "승진", "합격", "고백", "결혼", "출산", "병문안"]
+        # 상황 키워드 (강화)
+        situation_keywords = [
+            "생일", "기념일", "졸업", "승진", "합격", "고백", "결혼", "출산", "병문안",
+            "새로운 시작", "취업", "성공", "파티", "잔치", "기념", "특별한날"
+        ]
         for keyword in situation_keywords:
             if keyword in story:
                 keywords.append(keyword)
+        
+        # 특별한 키워드 조합 (우선순위 높음)
+        special_combinations = [
+            "새로운 시작을 축하", "취업 성공", "합격 축하", "졸업 축하", "승진 축하"
+        ]
+        for combination in special_combinations:
+            if combination in story:
+                keywords.append(combination)
         
         return keywords
     
@@ -396,19 +527,59 @@ class SpreadsheetFlowerMatcher:
                 score += 10  # 색상 매칭 최우선
                 reasons.append("색상 정확 매칭")
             
-            # 2. 상황 매칭 점수 (두 번째 우선순위)
-            if situations and any(situation in flower.contexts for situation in situations):
-                score += 8
-                reasons.append("상황 매칭")
+            # 2. 상황 매칭 점수 (두 번째 우선순위) - 강화
+            if situations:
+                # 특별한 상황 매칭 (우선순위 높음)
+                special_situation_rules = {
+                    "새로운 시작": ["프리지아", "해바라기"],
+                    "축하": ["프리지아", "해바라기", "장미"],
+                    "성공": ["프리지아", "해바라기"],
+                    "취업": ["프리지아", "해바라기"],
+                    "합격": ["프리지아", "해바라기"],
+                    "졸업": ["프리지아", "해바라기"],
+                    "승진": ["프리지아", "해바라기"]
+                }
+                
+                for situation in situations:
+                    for special_keyword, preferred_flowers in special_situation_rules.items():
+                        if special_keyword in situation and flower.name_ko in preferred_flowers:
+                            score += 12  # 특별 상황 매칭 최우선
+                            reasons.append(f"특별 상황 매칭({special_keyword})")
+                            break
+                
+                # 일반 상황 매칭
+                if any(situation in flower.contexts for situation in situations):
+                    score += 8
+                    reasons.append("상황 매칭")
             
             # 3. 감정 매칭 점수 (세 번째 우선순위)
             if emotions and any(emotion in flower.emotions for emotion in emotions):
                 score += 6
                 reasons.append("감정 매칭")
             
-            # 4. 꽃말 매칭 점수 (네 번째 우선순위)
+            # 4. 꽃말 매칭 점수 (네 번째 우선순위) - 강화
             story_keywords = self._extract_story_keywords(story)
             flower_language = f"{flower.flower_language_short} {flower.flower_language_long}"
+            
+            # 특별한 꽃말 매칭 (우선순위 높음)
+            special_flower_language_rules = {
+                "새로운 시작": ["프리지아"],
+                "축하": ["프리지아", "해바라기"],
+                "성공": ["프리지아", "해바라기"],
+                "취업": ["프리지아"],
+                "합격": ["프리지아"],
+                "졸업": ["프리지아"],
+                "승진": ["프리지아"]
+            }
+            
+            for keyword in story_keywords:
+                for special_keyword, preferred_flowers in special_flower_language_rules.items():
+                    if special_keyword in keyword and flower.name_ko in preferred_flowers:
+                        score += 6  # 특별 꽃말 매칭 우선순위 높음
+                        reasons.append(f"특별 꽃말 매칭({special_keyword})")
+                        break
+            
+            # 일반 꽃말 매칭
             if any(keyword in flower_language for keyword in story_keywords):
                 score += 4
                 reasons.append("꽃말 매칭")
