@@ -29,7 +29,6 @@ def _get_flower_recommendation_count(flower_code: str) -> int:
 class ExtractKeywordsRequest(BaseModel):
     """키워드 추출 요청 모델"""
     story: str
-    updated_context: Optional[Dict[str, Any]] = None
 
 class UnifiedRecommendRequest(BaseModel):
     """통합 추천 요청 모델"""
