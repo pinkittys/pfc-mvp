@@ -55,18 +55,55 @@ class UnifiedRecommendResponse(BaseModel):
     story_id: Optional[str] = None
 
 @router.post("/extract-keywords")
-async def extract_keywords(
-    req: ExtractKeywordsRequest,
-    mode: str = "realtime"
-):
-    """통합 키워드 추출 엔드포인트 - mode에 따라 실시간/최종 구분"""
+async def extract_keywords(req: ExtractKeywordsRequest):
+    """통합 키워드 추출 엔드포인트 - 스마트 추출 방식으로 통합"""
     try:
-        if mode == "realtime":
-            return await extract_realtime(req)
-        else:
-            return await extract_final(req)
+        return await extract_smart(req)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"키워드 추출 실패: {str(e)}")
+
+async def extract_smart(req: ExtractKeywordsRequest):
+    """스마트 키워드 추출 - 실시간/최종 통합 방식"""
+    smart_extractor = SmartWebSocketExtractor()
+    
+    # 스마트 추출 실행
+    smart_context = await smart_extractor.extract_with_confidence(req.story)
+    
+    story_lower = req.story.lower()
+    extraction_stage = _determine_extraction_stage(story_lower)
+    
+    # 중복 제거 로직
+    def remove_duplicates(main_list, alt_list):
+        """메인 키워드와 대안 키워드에서 중복 제거"""
+        if not alt_list:
+            return alt_list
+        return [kw for kw in alt_list if kw not in main_list]
+    
+    # 각 카테고리별 중복 제거
+    emotions_main = smart_context.emotions[0] if smart_context.emotions else "기쁨"
+    emotions_alt = remove_duplicates([emotions_main], smart_context.emotions_alternatives)
+    
+    situations_main = smart_context.situations[0] if smart_context.situations else "일상"
+    situations_alt = remove_duplicates([situations_main], smart_context.situations_alternatives)
+    
+    moods_main = smart_context.moods[0] if smart_context.moods else "화려한"
+    moods_alt = remove_duplicates([moods_main], smart_context.moods_alternatives)
+    
+    colors_main = smart_context.colors[0] if smart_context.colors else "레드"
+    colors_alt = remove_duplicates([colors_main], smart_context.colors_alternatives)
+    
+    return {
+        "success": True,
+        "extraction_stage": extraction_stage,
+        "keywords": [
+            {"type": "emotions", "main": emotions_main, "alternatives": emotions_alt},
+            {"type": "situations", "main": situations_main, "alternatives": situations_alt},
+            {"type": "moods", "main": moods_main, "alternatives": moods_alt},
+            {"type": "colors", "main": colors_main, "alternatives": colors_alt}
+        ],
+        "confidence": smart_context.confidence,
+        "extraction_method": smart_context.extraction_method
+    }
 
 async def extract_realtime(req: ExtractKeywordsRequest):
     """실시간 키워드 추출 (빠른 응답) - 점진적 표시 지원"""
