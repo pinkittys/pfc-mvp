@@ -467,7 +467,8 @@ async def get_sample_story_recommendation(story_id: str):
                 'flower_name_en': predefined_flower['flower_name_en'],
                 'scientific_name': predefined_flower['scientific_name'],
                 'image_url': predefined_flower['image_url'],
-                'color_keywords': predefined_flower['color_keywords']  # color_keywords 추가
+                'color_keywords': predefined_flower['color_keywords'],  # color_keywords 추가
+                'keywords': predefined_flower.get('keywords', '아름다움과 마음을 담아 전해요')  # keywords 추가
             })()
             color_keywords = predefined_flower['color_keywords']
         else:

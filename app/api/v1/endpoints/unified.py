@@ -296,7 +296,7 @@ async def final_recommend(req: UnifiedRecommendRequest):
                     confidence=spreadsheet_match_result.confidence,
                     match_reason=spreadsheet_match_result.match_reason,
                     color_keywords=[spreadsheet_match_result.flower_data.base_color] + spreadsheet_match_result.flower_data.alt_colors,
-                    keywords=spreadsheet_match_result.flower_data.flower_language_short or "아름다움과 마음을 담아 전해요"
+                    keywords=spreadsheet_match_result.flower_data.flower_language_short or spreadsheet_match_result.flower_data.flower_language_long or "아름다움과 마음을 담아 전해요"
                 )
             else:
                 # 폴백: 기존 시스템 사용

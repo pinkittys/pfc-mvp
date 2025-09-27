@@ -342,6 +342,7 @@ class SmartWebSocketExtractor:
                     # 꽃 이름 매핑 (영문 -> 한글)
                     flower_mapping = {
                         'gerbera': '거베라',
+                        'gerbera-daisy': '거베라',  # 거베라 데이지 매핑 추가
                         'sunflower': '해바라기', 
                         'rose': '장미',
                         'lily': '백합',
@@ -355,7 +356,10 @@ class SmartWebSocketExtractor:
                     }
                     
                     # 한글 이름이 있으면 사용, 없으면 영문 slug를 한글로 변환
-                    final_flower_name = flower_name if flower_name else flower_mapping.get(flower_slug, flower_slug)
+                    if flower_name and flower_name.strip():
+                        final_flower_name = flower_name
+                    else:
+                        final_flower_name = flower_mapping.get(flower_slug, flower_slug)
                     
                     if final_flower_name not in flower_color_pools:
                         flower_color_pools[final_flower_name] = []
