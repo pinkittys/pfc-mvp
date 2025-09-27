@@ -342,6 +342,7 @@ class SmartWebSocketExtractor:
                     # 꽃 이름 매핑 (영문 -> 한글)
                     flower_mapping = {
                         'gerbera': '거베라',
+                        'gerbera-daisy': '거베라',  # 거베라 데이지 매핑 추가
                         'sunflower': '해바라기', 
                         'rose': '장미',
                         'lily': '백합',
