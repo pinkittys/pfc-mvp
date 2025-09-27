@@ -386,6 +386,7 @@ async def get_sample_stories():
         formatted_story = {
             "id": f"S{i:02d}",  # S01, S02, S03 형식
             "title": story.get("title", ""),
+            "story": story.get("story", ""),  # story 필드 추가
             "category": story.get("category", "기타"),
             "predefined_keywords": story.get("predefined_keywords", {})
         }
