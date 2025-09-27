@@ -407,6 +407,11 @@ async def get_sample_story(story_id: str):
     
     return story
 
+@router.get("/sample-stories/{story_id}/recommend")
+async def get_sample_story_recommendation(story_id: str):
+    """샘플 사연의 미리 설정된 키워드로 꽃을 추천합니다. (GET - 스냅샷 제공용)"""
+    return await recommend_from_sample_story(story_id)
+
 @router.post("/sample-stories/{story_id}/recommend")
 async def recommend_from_sample_story(story_id: str):
     """샘플 사연의 미리 설정된 키워드로 꽃을 추천합니다."""
