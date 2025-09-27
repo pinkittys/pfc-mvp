@@ -72,29 +72,56 @@ async def extract_smart(req: ExtractKeywordsRequest):
     story_lower = req.story.lower()
     extraction_stage = _determine_extraction_stage(story_lower)
     
-    # 중복 제거 로직
-    def remove_duplicates(main_list, alt_list):
-        """메인 키워드와 대안 키워드에서 중복 제거"""
+    # 중복 제거 및 3개 맞추기 로직
+    def ensure_three_alternatives(main_keyword, alt_list, default_alternatives):
+        """메인 키워드와 중복 제거 후 정확히 3개의 대안 키워드 제공"""
         if not alt_list:
-            return alt_list
-        return [kw for kw in alt_list if kw not in main_list]
+            alt_list = []
+        
+        # 중복 제거
+        filtered_alt = [kw for kw in alt_list if kw not in [main_keyword]]
+        
+        # 3개가 안 되면 기본값으로 채우기
+        while len(filtered_alt) < 3:
+            for default in default_alternatives:
+                if default not in filtered_alt and default != main_keyword:
+                    filtered_alt.append(default)
+                    if len(filtered_alt) >= 3:
+                        break
+        
+        return filtered_alt[:3]  # 정확히 3개만 반환
     
-    # 각 카테고리별 중복 제거
+    # 각 카테고리별 처리 (정확히 3개씩)
     emotions_main = smart_context.emotions[0] if smart_context.emotions else "기쁨"
-    emotions_alt = remove_duplicates([emotions_main], smart_context.emotions_alternatives)
+    emotions_alt = ensure_three_alternatives(
+        emotions_main, 
+        smart_context.emotions_alternatives,
+        ["행복", "즐거움", "설렘", "감사", "희망"]
+    )
     
     situations_main = smart_context.situations[0] if smart_context.situations else "일상"
-    situations_alt = remove_duplicates([situations_main], smart_context.situations_alternatives)
+    situations_alt = ensure_three_alternatives(
+        situations_main,
+        smart_context.situations_alternatives, 
+        ["축하", "성취", "기념일", "위로", "일상"]
+    )
     
     moods_main = smart_context.moods[0] if smart_context.moods else "화려한"
-    moods_alt = remove_duplicates([moods_main], smart_context.moods_alternatives)
+    moods_alt = ensure_three_alternatives(
+        moods_main,
+        smart_context.moods_alternatives,
+        ["따뜻한", "부드러운", "차분한", "우아한", "밝은"]
+    )
     
     colors_main = smart_context.colors[0] if smart_context.colors else "레드"
-    colors_alt = remove_duplicates([colors_main], smart_context.colors_alternatives)
+    colors_alt = ensure_three_alternatives(
+        colors_main,
+        smart_context.colors_alternatives,
+        ["핑크", "화이트", "오렌지", "퍼플", "블루"]
+    )
     
     return {
         "success": True,
-        "extraction_stage": extraction_stage,
         "keywords": [
             {"type": "emotions", "main": emotions_main, "alternatives": emotions_alt},
             {"type": "situations", "main": situations_main, "alternatives": situations_alt},
@@ -102,7 +129,8 @@ async def extract_smart(req: ExtractKeywordsRequest):
             {"type": "colors", "main": colors_main, "alternatives": colors_alt}
         ],
         "confidence": smart_context.confidence,
-        "extraction_method": smart_context.extraction_method
+        "extraction_method": smart_context.extraction_method,
+        "extraction_stage": extraction_stage  # UX용으로 optional로 유지
     }
 
 async def extract_realtime(req: ExtractKeywordsRequest):
