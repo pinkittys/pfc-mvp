@@ -407,6 +407,225 @@ async def get_sample_story(story_id: str):
     
     return story
 
+@router.get("/sample-stories/{story_id}/recommend")
+async def get_sample_story_recommendation(story_id: str):
+    """샘플 사연의 미리 설정된 키워드로 꽃을 추천합니다. (GET - 스냅샷 제공용)"""
+    # POST 엔드포인트와 동일한 로직을 직접 구현
+    try:
+        # 샘플 사연 로드
+        stories = load_sample_stories()
+        story = next((s for s in stories if s["id"] == story_id), None)
+        
+        if not story:
+            raise HTTPException(status_code=404, detail="사연을 찾을 수 없습니다.")
+        
+        # 미리 설정된 키워드 추출
+        predefined_keywords = story["predefined_keywords"]
+        
+        # EmotionAnalysis 객체 생성 (3개로 확장)
+        emotions = []
+        if predefined_keywords.get("emotions"):
+            emotion_list = predefined_keywords["emotions"]
+            # 최대 3개까지 처리
+            for i, emotion in enumerate(emotion_list[:3]):
+                if i == 0:
+                    percentage = 40.0  # 첫 번째 감정
+                elif i == 1:
+                    percentage = 35.0  # 두 번째 감정
+                else:
+                    percentage = 25.0  # 세 번째 감정
+                
+                emotions.append(EmotionAnalysis(
+                    emotion=emotion,
+                    percentage=percentage,
+                    description=f"{emotion}한 마음"
+                ))
+            
+            # 감정이 2개만 있는 경우 3번째 감정 추가
+            if len(emotions) == 2:
+                emotions.append(EmotionAnalysis(
+                    emotion="차분함",
+                    percentage=25.0,
+                    description="차분한 마음"
+                ))
+        else:
+            # 기본 감정 설정 (3개)
+            emotions = [
+                EmotionAnalysis(emotion="기쁨", percentage=40.0, description="기쁜 마음"),
+                EmotionAnalysis(emotion="감사", percentage=35.0, description="감사한 마음"),
+                EmotionAnalysis(emotion="희망", percentage=25.0, description="희망찬 마음")
+            ]
+        
+        # 먼저 룰셋으로 미리 정의된 꽃이 있는지 확인
+        predefined_flower = _get_predefined_flower_for_sample_story(story_id)
+        
+        if predefined_flower:
+            # 룰셋으로 미리 정의된 꽃 사용
+            matched_flower = type('MatchedFlower', (), {
+                'korean_name': predefined_flower['korean_name'],
+                'flower_name': predefined_flower['korean_name'],  # flower_name 추가
+                'flower_name_en': predefined_flower['flower_name_en'],
+                'scientific_name': predefined_flower['scientific_name'],
+                'image_url': predefined_flower['image_url'],
+                'color_keywords': predefined_flower['color_keywords'],  # color_keywords 추가
+                'keywords': predefined_flower.get('keywords', '아름다움과 마음을 담아 전해요')  # keywords 추가
+            })()
+            color_keywords = predefined_flower['color_keywords']
+        else:
+            # 기존 로직: 꽃 매칭 서비스 초기화
+            flower_matcher = FlowerMatcher()
+            
+            # 색상 키워드 추출
+            color_keywords = predefined_keywords.get("colors", [])
+            
+            # 꽃 추천 실행 (기존 match() 메서드 사용)
+            matched_flower = flower_matcher.match(
+                emotions=emotions,
+                story=story["story"],
+                user_intent="meaning_based",  # 의미 기반 매칭
+                excluded_keywords=None,
+                mentioned_flower=None,
+                context=None
+            )
+            
+            if not matched_flower:
+                raise HTTPException(status_code=404, detail="적합한 꽃을 찾을 수 없습니다.")
+        
+        # 꽃 조합 추천
+        composition_recommender = CompositionRecommender()
+        composition = composition_recommender.recommend(
+            matched_flower=matched_flower,
+            emotions=emotions
+        )
+        
+        # 추천 이유 생성 (GPT 사용)
+        recommendation_reason = _generate_unified_recommendation_reason(
+            matched_flower=matched_flower,
+            composition=composition,
+            emotions=emotions,
+            story=story["story"],
+            context=None,
+            excluded_keywords=[]
+        )
+        
+        # 꽃 카드 메시지 생성 (GPT 사용)
+        flower_card_message = _generate_flower_card_message(
+            matched_flower=matched_flower,
+            emotions=emotions,
+            story=story["story"]
+        )
+        
+        # 이미지 URL 생성
+        if predefined_flower:
+            # 룰셋으로 미리 정의된 이미지 URL 사용
+            image_url = predefined_flower['image_url']
+            calligraphy_image_url = predefined_flower['calligraphy_url']
+        else:
+            # 기존 로직: 직접 이미지 URL 생성 (색상 키워드 기반)
+            image_url = _generate_flower_image_url(matched_flower.korean_name, color_keywords)
+            calligraphy_image_url = _generate_calligraphy_url(matched_flower.korean_name)
+        
+        # 스토리 ID 생성 (샘플 스토리 전용 형식: S250924-ZIN-S2901)
+        # 꽃 이름을 영문으로 변환하여 약어 생성
+        flower_name_en = getattr(matched_flower, 'flower_name_en', matched_flower.korean_name)
+        if hasattr(matched_flower, 'flower_name_en') and matched_flower.flower_name_en:
+            flower_code = matched_flower.flower_name_en.upper()[:3]
+        else:
+            # 한글 꽃 이름을 영문으로 매핑
+            korean_to_english = {
+                '지니아': 'ZIN', '장미': 'ROS', '튤립': 'TUL', '라넌큘러스': 'RAN',
+                '카네이션': 'CAR', '가든 피오니': 'PEA', '달리아': 'DAH', '드럼스틱 플라워': 'DRU',
+                '글라디올러스': 'GLA', '스톡 플라워': 'STO', '안스리움': 'ANT', '아스틸베': 'AST',
+                '리시안서스': 'LIS', '부바르디아': 'BOU', '스위트피': 'SWE', '프리지아': 'FRE',
+                '마거리트 데이지': 'MAR', '코튼 플랜트': 'COT', '아이리스': 'IRI', '스카비오사': 'SCA',
+                '이베리스': 'IBE', '글로브 아마란스': 'GLO'
+            }
+            flower_code = korean_to_english.get(matched_flower.korean_name, 'UNK')
+        
+        sequence_number = _get_flower_recommendation_count(flower_code)
+        story_number = story_id.replace("story_", "").replace("S", "")
+        formatted_story_id = f"S{datetime.now().strftime('%y%m%d')}-{flower_code}-S{story_number}{sequence_number:02d}"
+        
+        # 계절 정보 생성 (시즌과 월 분리)
+        season_info = {"season": "All Season", "months": "01-12"}  # 기본값, 실제로는 꽃 데이터에서 가져와야 함
+        
+        # 해시태그 생성 (감정 2개, 무드 1개)
+        hashtags = []
+        
+        # 감정 2개 추가
+        if predefined_keywords.get("emotions"):
+            emotions_list = predefined_keywords["emotions"]
+            for i, emotion in enumerate(emotions_list[:2]):  # 최대 2개
+                hashtags.append(f"#{emotion}")
+        
+        # 무드 1개 추가
+        if predefined_keywords.get("moods"):
+            moods_list = predefined_keywords["moods"]
+            if moods_list:
+                hashtags.append(f"#{moods_list[0]}")
+        
+        # 3개가 안 되면 기본값 추가
+        while len(hashtags) < 3:
+            hashtags.append("#특별한")
+        
+        # 응답 생성 (unified.py와 동일한 구조로 통일)
+        response = {
+            "success": True,
+            "created_at": datetime.now().strftime('%Y.%m.%d.'),
+            "story_id": formatted_story_id,
+            "your_story": story["story"],
+            
+            # 꽃 정보 (예전 구조로 개선)
+            "flower_info": {
+                "korean_name": matched_flower.korean_name,
+                "english_name": getattr(matched_flower, 'flower_name_en', matched_flower.korean_name),
+                "scientific_name": matched_flower.scientific_name
+            },
+            
+            # 꽃 조합 정보 (unified.py와 동일한 구조)
+            "flower_blend": {
+                "main_flower": matched_flower.korean_name,
+                "sub_flowers": _ensure_two_sub_flowers(composition.sub_flowers),
+                "composition_name": composition.composition_name
+            },
+            
+            # 이미지 URL (unified.py와 동일한 필드명)
+            "flower_image_url": image_url,
+            "calligraphy_image_url": calligraphy_image_url,
+            
+            # 꽃 카드 메시지 (예전 구조로 개선)
+            "flower_card_message": {
+                "quote": getattr(flower_card_message, 'quote', ''),
+                "source": getattr(flower_card_message, 'source', '')
+            },
+            
+            # 감정 분석 결과 (unified.py와 동일한 구조)
+            "emotions": [
+                {
+                    "emotion": emotion.emotion,
+                    "percentage": emotion.percentage
+                } for emotion in emotions[:3]
+            ],
+            
+            # 계절 정보 (예전 구조로 개선)
+            "season_detail": {
+                "availability": season_info.get("season", "Spring/Summer"),
+                "best_season": season_info.get("months", "03-08")
+            },
+            
+            # 추천 코멘트 (unified.py와 동일한 필드명)
+            "comment": recommendation_reason,
+            
+            # 해시태그 (예전 구조로 개선)
+            "hashtags": hashtags[:3]
+        }
+        
+        return response
+        
+    except Exception as e:
+        print(f"❌ 샘플 사연 추천 실패: {e}")
+        raise HTTPException(status_code=500, detail=f"추천 처리 중 오류가 발생했습니다: {str(e)}")
+
 @router.post("/sample-stories/{story_id}/recommend")
 async def recommend_from_sample_story(story_id: str):
     """샘플 사연의 미리 설정된 키워드로 꽃을 추천합니다."""

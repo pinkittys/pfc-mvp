@@ -356,7 +356,10 @@ class SmartWebSocketExtractor:
                     }
                     
                     # 한글 이름이 있으면 사용, 없으면 영문 slug를 한글로 변환
-                    final_flower_name = flower_name if flower_name else flower_mapping.get(flower_slug, flower_slug)
+                    if flower_name and flower_name.strip():
+                        final_flower_name = flower_name
+                    else:
+                        final_flower_name = flower_mapping.get(flower_slug, flower_slug)
                     
                     if final_flower_name not in flower_color_pools:
                         flower_color_pools[final_flower_name] = []

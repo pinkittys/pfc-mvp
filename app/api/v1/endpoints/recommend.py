@@ -412,7 +412,7 @@ def _generate_unified_recommendation_reason(matched_flower: FlowerMatch, composi
 
 선택된 메인 꽃: {matched_flower.flower_name} ({matched_flower.korean_name})
 꽃 색상: {color_text}
-꽃의 특성/꽃말: {matched_flower.keywords}{excluded_text}
+꽃의 특성/꽃말: {', '.join(matched_flower.keywords) if isinstance(matched_flower.keywords, list) else matched_flower.keywords}{excluded_text}
 
 다음 조건을 만족하는 개인적이고 따뜻한 추천 이유를 작성해주세요:
 
