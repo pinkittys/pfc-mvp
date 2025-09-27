@@ -45,7 +45,11 @@ async def root():
 @app.get("/ping")
 async def ping():
     """간단한 헬스체크 엔드포인트 (빠른 응답)"""
-    return {"status": "ok", "timestamp": datetime.now().isoformat()}
+    try:
+        return {"status": "ok", "timestamp": datetime.now().isoformat()}
+    except Exception as e:
+        print(f"Ping endpoint error: {e}")
+        return {"status": "error", "message": str(e)}
 
 @app.get("/health")
 async def health_check():
@@ -54,6 +58,11 @@ async def health_check():
         "status": "healthy",
         "timestamp": datetime.now().isoformat()
     }
+
+@app.get("/ready")
+async def ready_check():
+    """Pod readiness probe용 간단한 엔드포인트"""
+    return {"ready": True}
 
 @app.get("/health/detailed")
 async def detailed_health_check():
