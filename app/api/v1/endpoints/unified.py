@@ -29,7 +29,6 @@ def _get_flower_recommendation_count(flower_code: str) -> int:
 class ExtractKeywordsRequest(BaseModel):
     """키워드 추출 요청 모델"""
     story: str
-    updated_context: Optional[Dict[str, Any]] = None
 
 class UnifiedRecommendRequest(BaseModel):
     """통합 추천 요청 모델"""
@@ -55,18 +54,83 @@ class UnifiedRecommendResponse(BaseModel):
     story_id: Optional[str] = None
 
 @router.post("/extract-keywords")
-async def extract_keywords(
-    req: ExtractKeywordsRequest,
-    mode: str = "realtime"
-):
-    """통합 키워드 추출 엔드포인트 - mode에 따라 실시간/최종 구분"""
+async def extract_keywords(req: ExtractKeywordsRequest):
+    """통합 키워드 추출 엔드포인트 - 스마트 추출 방식으로 통합"""
     try:
-        if mode == "realtime":
-            return await extract_realtime(req)
-        else:
-            return await extract_final(req)
+        return await extract_smart(req)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"키워드 추출 실패: {str(e)}")
+
+async def extract_smart(req: ExtractKeywordsRequest):
+    """스마트 키워드 추출 - 실시간/최종 통합 방식"""
+    smart_extractor = SmartWebSocketExtractor()
+    
+    # 스마트 추출 실행
+    smart_context = await smart_extractor.extract_with_confidence(req.story)
+    
+    story_lower = req.story.lower()
+    extraction_stage = _determine_extraction_stage(story_lower)
+    
+    # 중복 제거 및 3개 맞추기 로직
+    def ensure_three_alternatives(main_keyword, alt_list, default_alternatives):
+        """메인 키워드와 중복 제거 후 정확히 3개의 대안 키워드 제공"""
+        if not alt_list:
+            alt_list = []
+        
+        # 중복 제거
+        filtered_alt = [kw for kw in alt_list if kw not in [main_keyword]]
+        
+        # 3개가 안 되면 기본값으로 채우기
+        while len(filtered_alt) < 3:
+            for default in default_alternatives:
+                if default not in filtered_alt and default != main_keyword:
+                    filtered_alt.append(default)
+                    if len(filtered_alt) >= 3:
+                        break
+        
+        return filtered_alt[:3]  # 정확히 3개만 반환
+    
+    # 각 카테고리별 처리 (정확히 3개씩)
+    emotions_main = smart_context.emotions[0] if smart_context.emotions else "기쁨"
+    emotions_alt = ensure_three_alternatives(
+        emotions_main, 
+        smart_context.emotions_alternatives,
+        ["행복", "즐거움", "설렘", "감사", "희망"]
+    )
+    
+    situations_main = smart_context.situations[0] if smart_context.situations else "일상"
+    situations_alt = ensure_three_alternatives(
+        situations_main,
+        smart_context.situations_alternatives, 
+        ["축하", "성취", "기념일", "위로", "일상"]
+    )
+    
+    moods_main = smart_context.moods[0] if smart_context.moods else "화려한"
+    moods_alt = ensure_three_alternatives(
+        moods_main,
+        smart_context.moods_alternatives,
+        ["따뜻한", "부드러운", "차분한", "우아한", "밝은"]
+    )
+    
+    colors_main = smart_context.colors[0] if smart_context.colors else "레드"
+    colors_alt = ensure_three_alternatives(
+        colors_main,
+        smart_context.colors_alternatives,
+        ["핑크", "화이트", "오렌지", "퍼플", "블루"]
+    )
+    
+    return {
+        "success": True,
+        "keywords": [
+            {"type": "emotions", "main": emotions_main, "alternatives": emotions_alt},
+            {"type": "situations", "main": situations_main, "alternatives": situations_alt},
+            {"type": "moods", "main": moods_main, "alternatives": moods_alt},
+            {"type": "colors", "main": colors_main, "alternatives": colors_alt}
+        ],
+        "confidence": smart_context.confidence,
+        "extraction_method": smart_context.extraction_method,
+        "extraction_stage": extraction_stage  # UX용으로 optional로 유지
+    }
 
 async def extract_realtime(req: ExtractKeywordsRequest):
     """실시간 키워드 추출 (빠른 응답) - 점진적 표시 지원"""
