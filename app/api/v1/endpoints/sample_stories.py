@@ -8,6 +8,7 @@ from app.services.flower_matcher import FlowerMatcher
 from app.services.composition_recommender import CompositionRecommender
 from app.api.v1.endpoints.recommend import _generate_unified_recommendation_reason, _generate_flower_card_message
 from app.api.v1.endpoints.unified import _get_flower_recommendation_count
+from app.services.supabase_client import get_supabase_manager
 import random
 
 def _generate_flower_image_url(korean_name: str, color_keywords: List[str]) -> str:
@@ -348,15 +349,33 @@ def _generate_calligraphy_url(korean_name: str) -> str:
 
 router = APIRouter()
 
-# 샘플 사연 데이터 로드
+# 샘플 사연 데이터 로드 (Supabase)
 def load_sample_stories():
-    """샘플 사연 데이터를 로드합니다."""
+    """Supabase에서 샘플 사연 데이터를 로드합니다."""
     try:
-        with open("data/sample_stories.json", "r", encoding="utf-8") as f:
-            data = json.load(f)
-            return data.get("sample_stories", [])
+        supabase_manager = get_supabase_manager()
+        stories = supabase_manager.get_all_stories()
+        
+        # Supabase 데이터를 기존 JSON 형식으로 변환
+        formatted_stories = []
+        for story in stories:
+            formatted_story = {
+                "id": story["id"],
+                "title": story["title"],
+                "story": story["story"],
+                "category": story["category"],
+                "predefined_keywords": {
+                    "emotions": story["emotions"],
+                    "situations": story["situations"],
+                    "moods": story["moods"],
+                    "colors": story["colors"]
+                }
+            }
+            formatted_stories.append(formatted_story)
+        
+        return formatted_stories
     except Exception as e:
-        print(f"❌ 샘플 사연 데이터 로드 실패: {e}")
+        print(f"❌ Supabase 샘플 사연 데이터 로드 실패: {e}")
         return []
 
 def _ensure_two_sub_flowers(sub_flowers: List[str]) -> List[str]:
