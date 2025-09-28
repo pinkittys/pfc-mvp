@@ -11,14 +11,18 @@ from app.services.flower_matcher import FlowerMatcher
 from app.services.composition_recommender import CompositionRecommender
 from app.services.smart_websocket_extractor import SmartWebSocketExtractor
 from app.utils.request_deduplication import request_deduplicator
+from app.services.supabase_client import get_supabase_manager
+from app.models.recommendation_schemas import (
+    RecommendationRequest, RecommendationResponse, SnapshotResponse
+)
 
 router = APIRouter()
 
-# 꽃별 추천 횟수 추적을 위한 전역 변수
+# 꽃별 추천 횟수 추적을 위한 전역 변수 (※ /recommend/final 에서만 사용 중)
 _flower_recommendation_counts = {}
 
 def _get_flower_recommendation_count(flower_code: str) -> int:
-    """꽃별 추천 횟수 증가 및 반환"""
+    """꽃별 추천 횟수 증가 및 반환 (메모리 카운터 - /recommend 최종 저장은 DB+1 방식을 사용)"""
     if flower_code not in _flower_recommendation_counts:
         _flower_recommendation_counts[flower_code] = 0
     _flower_recommendation_counts[flower_code] += 1
@@ -43,6 +47,7 @@ class UnifiedRecommendResponse(BaseModel):
     korean_name: str
     scientific_name: str
     image_url: str
+    calligraphy_image_url: str
     hashtags: List[str]
     english_description: str
     emotions: List[Dict[str, Any]]
@@ -64,84 +69,74 @@ async def extract_keywords(req: ExtractKeywordsRequest):
 async def extract_smart(req: ExtractKeywordsRequest):
     """스마트 키워드 추출 - 실시간/최종 통합 방식"""
     smart_extractor = SmartWebSocketExtractor()
-    
-    # 스마트 추출 실행
     smart_context = await smart_extractor.extract_with_confidence(req.story)
-    
+
     story_lower = req.story.lower()
     extraction_stage = _determine_extraction_stage(story_lower)
-    
+
     # 중복 제거 및 3개 맞추기 로직
     def ensure_three_alternatives(main_keyword, alt_list, default_alternatives):
         """메인 키워드와 중복 제거 후 정확히 3개의 대안 키워드 제공"""
         if not alt_list:
             alt_list = []
-        
-        # 중복 제거
         filtered_alt = [kw for kw in alt_list if kw not in [main_keyword]]
-        
-        # 3개가 안 되면 기본값으로 채우기
         while len(filtered_alt) < 3:
             for default in default_alternatives:
                 if default not in filtered_alt and default != main_keyword:
                     filtered_alt.append(default)
                     if len(filtered_alt) >= 3:
                         break
-        
-        return filtered_alt[:3]  # 정확히 3개만 반환
-    
-    # 각 카테고리별 처리 (정확히 3개씩)
+        return filtered_alt[:3]
+
     emotions_main = smart_context.emotions[0] if smart_context.emotions else "기쁨"
     emotions_alt = ensure_three_alternatives(
-        emotions_main, 
+        emotions_main,
         smart_context.emotions_alternatives,
         ["행복", "즐거움", "설렘", "감사", "희망"]
     )
-    
+
     situations_main = smart_context.situations[0] if smart_context.situations else "일상"
     situations_alt = ensure_three_alternatives(
         situations_main,
-        smart_context.situations_alternatives, 
+        smart_context.situations_alternatives,
         ["축하", "성취", "기념일", "위로", "일상"]
     )
-    
+
     moods_main = smart_context.moods[0] if smart_context.moods else "화려한"
     moods_alt = ensure_three_alternatives(
         moods_main,
         smart_context.moods_alternatives,
         ["따뜻한", "부드러운", "차분한", "우아한", "밝은"]
     )
-    
+
     colors_main = smart_context.colors[0] if smart_context.colors else "레드"
     colors_alt = ensure_three_alternatives(
         colors_main,
         smart_context.colors_alternatives,
         ["핑크", "화이트", "오렌지", "퍼플", "블루"]
     )
-    
+
     return {
         "success": True,
         "keywords": [
             {"type": "emotions", "main": emotions_main, "alternatives": emotions_alt},
             {"type": "situations", "main": situations_main, "alternatives": situations_alt},
             {"type": "moods", "main": moods_main, "alternatives": moods_alt},
-            {"type": "colors", "main": colors_main, "alternatives": colors_alt}
+            {"type": "colors", "main": colors_main, "alternatives": colors_alt},
         ],
         "confidence": smart_context.confidence,
         "extraction_method": smart_context.extraction_method,
-        "extraction_stage": extraction_stage  # UX용으로 optional로 유지
+        "extraction_stage": extraction_stage
     }
 
 async def extract_realtime(req: ExtractKeywordsRequest):
     """실시간 키워드 추출 (빠른 응답) - 점진적 표시 지원"""
     smart_extractor = SmartWebSocketExtractor()
-    
-    
     smart_context = await smart_extractor.extract_with_confidence(req.story)
 
     story_lower = req.story.lower()
     extraction_stage = _determine_extraction_stage(story_lower)
-        
+
     return {
         "success": True,
         "mode": "realtime",
@@ -150,7 +145,7 @@ async def extract_realtime(req: ExtractKeywordsRequest):
             {"type": "emotions", "main": smart_context.emotions[0] if smart_context.emotions else "기쁨", "alternatives": smart_context.emotions_alternatives},
             {"type": "situations", "main": smart_context.situations[0] if smart_context.situations else "일상", "alternatives": smart_context.situations_alternatives},
             {"type": "moods", "main": smart_context.moods[0] if smart_context.moods else "화려한", "alternatives": smart_context.moods_alternatives},
-            {"type": "colors", "main": smart_context.colors[0] if smart_context.colors else "레드", "alternatives": smart_context.colors_alternatives}
+            {"type": "colors", "main": smart_context.colors[0] if smart_context.colors else "레드", "alternatives": smart_context.colors_alternatives},
         ],
         "confidence": smart_context.confidence,
         "extraction_method": smart_context.extraction_method
@@ -163,23 +158,23 @@ def _determine_extraction_stage(story: str) -> dict:
         "has_situation": False,
         "has_mood": False,
         "has_complete_context": False,
-        "stage_number": 0
+        "stage_number": 0,
     }
 
     subjects = ['친구', '어머니', '아버지', '나', '저', '우리', '가족', '연인', '동료']
     if any(subject in story for subject in subjects):
         stage["has_subject"] = True
-        stage["stage_number"] = 1
+        stage["stage_number"] = max(stage["stage_number"], 1)
 
     situations = ['번아웃', '힘들', '스트레스', '생일', '이직', '합격', '결혼', '졸업', '기념일']
     if any(situation in story for situation in situations):
         stage["has_situation"] = True
-        stage["stage_number"] = 2
+        stage["stage_number"] = max(stage["stage_number"], 2)
 
     moods = ['위로', '힐링', '조용', '따뜻', '부드럽', '차분', '로맨틱', '활기']
     if any(mood in story for mood in moods):
         stage["has_mood"] = True
-        stage["stage_number"] = 3
+        stage["stage_number"] = max(stage["stage_number"], 3)
 
     if len(story) > 30 and stage["has_subject"] and stage["has_situation"] and stage["has_mood"]:
         stage["has_complete_context"] = True
@@ -190,19 +185,10 @@ def _determine_extraction_stage(story: str) -> dict:
 def _extract_keywords_from_story(story: str) -> tuple:
     """스토리 내용을 분석하여 키워드를 추출"""
     story_lower = story.lower()
-    
-    # 감정 키워드 추출
     emotions = _extract_emotions(story_lower)
-    
-    # 상황 키워드 추출
     situations = _extract_situations(story_lower)
-    
-    # 무드 키워드 추출
     moods = _extract_moods(story_lower)
-    
-    # 색상 키워드 추출
     colors = _extract_colors(story_lower)
-    
     return emotions, situations, moods, colors
 
 def _extract_emotions(story_lower: str) -> dict:
@@ -211,7 +197,7 @@ def _extract_emotions(story_lower: str) -> dict:
         return {"main": "위로", "alternatives": ["안타까움", "걱정", "따뜻함"]}
     elif any(word in story_lower for word in ['축하', '기쁘', '행복', '즐거워', '신나']):
         return {"main": "기쁨", "alternatives": ["행복", "즐거움", "신남"]}
-    elif any(word in story_lower for word in ['사랑', '연인', '아내', '남편', '여자친구', '남자친구']):
+    elif any(word in story_lower for word in ['사랑', '연인', 'अ내', '남편', '여자친구', '남자친구']):
         return {"main": "사랑", "alternatives": ["따뜻함", "애정", "로맨틱"]}
     elif any(word in story_lower for word in ['감사', '고마워', '고생', '애써']):
         return {"main": "감사", "alternatives": ["고마움", "따뜻함", "애정"]}
@@ -264,11 +250,10 @@ def _extract_colors(story_lower: str) -> dict:
         return {"main": "화이트", "alternatives": ["크림", "라벤더", "블루"]}
     else:
         return {"main": "레드", "alternatives": ["핑크", "옐로우", "오렌지"]}
+
 async def extract_final(req: ExtractKeywordsRequest):
     """최종 맥락 파악 + 사용자 수정 지원 (정확한 분석)"""
     smart_extractor = SmartWebSocketExtractor()
-    
-    
     smart_context = await smart_extractor.extract_with_confidence(req.story)
 
     if req.updated_context:
@@ -280,7 +265,7 @@ async def extract_final(req: ExtractKeywordsRequest):
             smart_context.moods = req.updated_context['moods']
         if req.updated_context.get('colors'):
             smart_context.colors = req.updated_context['colors']
-        
+
     return {
         "success": True,
         "mode": "final",
@@ -288,24 +273,24 @@ async def extract_final(req: ExtractKeywordsRequest):
             {"type": "emotions", "main": smart_context.emotions[0] if smart_context.emotions else "기쁨", "alternatives": smart_context.emotions_alternatives},
             {"type": "situations", "main": smart_context.situations[0] if smart_context.situations else "일상", "alternatives": smart_context.situations_alternatives},
             {"type": "moods", "main": smart_context.moods[0] if smart_context.moods else "화려한", "alternatives": smart_context.moods_alternatives},
-            {"type": "colors", "main": smart_context.colors[0] if smart_context.colors else "레드", "alternatives": smart_context.colors_alternatives}
+            {"type": "colors", "main": smart_context.colors[0] if smart_context.colors else "레드", "alternatives": smart_context.colors_alternatives},
         ],
         "confidence": smart_context.confidence,
         "extraction_method": smart_context.extraction_method
     }
 
-@router.post("/recommend")
+@router.post("/recommend/final")
 async def final_recommend(req: UnifiedRecommendRequest):
-    """최종 키워드를 받아서 꽃 추천하는 엔드포인트"""
+    """최종 키워드를 받아서 꽃 추천하는 엔드포인트 (저장은 하지 않음)"""
     try:
         emotion_analyzer = EmotionAnalyzer()
         emotions = emotion_analyzer.analyze(req.story)
-        
+
         # 실시간 컨텍스트 추출
         context_extractor = RealtimeContextExtractor()
         excluded_keywords = req.excluded_flowers if req.excluded_flowers else []
         context = context_extractor.extract_context_realtime(req.story, emotions, excluded_keywords)
-        
+
         if req.updated_context:
             if req.updated_context.get('emotions'):
                 context.emotions = req.updated_context['emotions']
@@ -315,30 +300,26 @@ async def final_recommend(req: UnifiedRecommendRequest):
                 context.moods = req.updated_context['moods']
             if req.updated_context.get('colors'):
                 context.colors = req.updated_context['colors']
-        
+
         # 스프레드시트 기반 매칭 시스템 사용 (LLM 없이)
         from app.services.spreadsheet_flower_matcher import SpreadsheetFlowerMatcher
         spreadsheet_matcher = SpreadsheetFlowerMatcher()
-        
-        # 사용자 수정 컨텍스트가 있으면 우선 사용, 없으면 추출된 컨텍스트 사용
+
         final_emotions = context.emotions if context.emotions else []
         final_situations = context.situations if context.situations else []
         final_moods = context.moods if context.moods else []
-        # 색상은 사용자 요청을 우선 사용
         final_colors = req.preferred_colors if req.preferred_colors else (context.colors if context.colors else [])
-        # 언급된 꽃 정보
         mentioned_flower = context.mentioned_flower if hasattr(context, 'mentioned_flower') else None
-        
-        print(f"🎯 최종 매칭 컨텍스트:")
+
+        print("🎯 최종 매칭 컨텍스트:")
         print(f"   감정: {final_emotions}")
         print(f"   상황: {final_situations}")
         print(f"   무드: {final_moods}")
         print(f"   색상: {final_colors}")
         print(f"   요청 색상: {req.preferred_colors}")
         print(f"   컨텍스트 색상: {context.colors if context else 'None'}")
-        
-        # 스프레드시트 기반 매칭 (LLM 없이)
-        print(f"🔍 스프레드시트 매칭 시작...")
+
+        print("🔍 스프레드시트 매칭 시작...")
         try:
             spreadsheet_match_result = spreadsheet_matcher.match_flower(
                 story=req.story,
@@ -348,7 +329,7 @@ async def final_recommend(req: UnifiedRecommendRequest):
                 preferred_colors=final_colors,
                 mentioned_flower=mentioned_flower
             )
-            
+
             if spreadsheet_match_result:
                 print(f"✅ 스프레드시트 매칭 성공: {spreadsheet_match_result.flower_data.name_ko}")
                 from app.models.schemas import MatchedFlower
@@ -363,25 +344,23 @@ async def final_recommend(req: UnifiedRecommendRequest):
                     keywords=spreadsheet_match_result.flower_data.flower_language_short or spreadsheet_match_result.flower_data.flower_language_long or "아름다움과 마음을 담아 전해요"
                 )
             else:
-                # 폴백: 기존 시스템 사용
-                print(f"⚠️ 스프레드시트 매칭 실패, 기존 시스템 사용")
+                print("⚠️ 스프레드시트 매칭 실패, 기존 시스템 사용")
                 flower_matcher = FlowerMatcher()
                 mentioned_flower = getattr(context, 'mentioned_flower', None)
                 matched_flower = flower_matcher.match(emotions, req.story, context.user_intent, excluded_keywords, mentioned_flower, context)
         except Exception as e:
             print(f"❌ 스프레드시트 매칭 오류: {e}")
-            # 폴백: 기존 시스템 사용
-            print(f"⚠️ 오류로 인해 기존 시스템 사용")
+            print("⚠️ 오류로 인해 기존 시스템 사용")
             flower_matcher = FlowerMatcher()
             mentioned_flower = getattr(context, 'mentioned_flower', None)
             matched_flower = flower_matcher.match(emotions, req.story, context.user_intent, excluded_keywords, mentioned_flower, context)
 
         composition_recommender = CompositionRecommender()
         composition = composition_recommender.recommend(matched_flower, emotions)
-        
+
         from app.api.v1.endpoints.recommend import _generate_unified_recommendation_reason
         reason = _generate_unified_recommendation_reason(matched_flower, composition, emotions, req.story, context, excluded_keywords)
-        
+
         from app.api.v1.endpoints.recommend import _generate_flower_card_message
         flower_card_message = _generate_flower_card_message(matched_flower, emotions, req.story)
 
@@ -405,40 +384,154 @@ async def final_recommend(req: UnifiedRecommendRequest):
                 "composition_name": composition.composition_name
             },
             "flower_image_url": matched_flower.image_url,
-            "calligraphy_image_url": matched_flower.image_url,  # 캘리그래피 이미지 URL (현재는 동일한 이미지 사용)
+            "calligraphy_image_url": matched_flower.image_url,
             "flower_card_message": {
                 "quote": getattr(flower_card_message, 'quote', ''),
                 "source": getattr(flower_card_message, 'source', '')
             },
             "emotions": [
-                {
-                    "emotion": e.emotion,
-                    "percentage": e.percentage
-                }
+                {"emotion": e.emotion, "percentage": e.percentage}
                 for e in emotions
             ],
             "season_info": {
                 "availability": season_info.get("season", "Spring/Summer"),
-                "best_season": season_info.get("months", "03-08")
+                "best_season": season_info.get("months", "03-08"),
             },
             "comment": reason,
             "hashtags": [f"#{e.emotion}" for e in emotions[:3]],
             "created_at": datetime.now().strftime('%Y.%m.%d.')
         }
-        
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"최종 추천 실패: {str(e)}")
 
-# ===== 핵심 로직 함수들 (엔드포인트는 제거했지만 코드는 보존) =====
-# 실행되지 않도록 완전히 비활성화
-if False:
-    def unified_recommend_logic(req: UnifiedRecommendRequest):
-        """통합 추천 결과 로직 (엔드포인트 제거, 로직 보존)"""
-        # ... (레거시 로직 전체, 필요시 복원)
-        pass
+# ===== 유틸리티 =====
+
+def to_plain(obj):
+    """Pydantic 모델/리스트/딕트/기본형을 Supabase insert 가능한 평범한 타입으로 변환"""
+    from pydantic import BaseModel
+    if isinstance(obj, BaseModel):
+        # Pydantic v2
+        if hasattr(obj, "model_dump"):
+            return obj.model_dump()
+        # v1 fallback
+        if hasattr(obj, "dict"):
+            return obj.dict()
+    if isinstance(obj, dict):
+        return {k: to_plain(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [to_plain(v) for v in obj]
+    return obj  # str, int, float, bool, None
+
+# ===== 핵심 로직 함수들 =====
+
+async def unified_recommend_logic(req: UnifiedRecommendRequest):
+    """통합 추천 결과 로직 - 저장은 하지 않고 추천 결과만 생성"""
+    print(f"🔍 unified_recommend_logic 시작: {req}")
+    try:
+        print("🔍 감정 분석 시작")
+        emotion_analyzer = EmotionAnalyzer()
+        print("🔍 EmotionAnalyzer 생성 완료")
+        emotions = emotion_analyzer.analyze(req.story)
+        print(f"✅ 감정 분석 완료: {emotions}")
+
+        print("🔍 컨텍스트 추출 시작")
+        context_extractor = RealtimeContextExtractor()
+        excluded_keywords = req.excluded_flowers if req.excluded_flowers else []
+        context = context_extractor.extract_context_realtime(req.story, emotions, excluded_keywords)
+        print(f"✅ 컨텍스트 추출 완료: {context}")
+
+        if req.updated_context:
+            if req.updated_context.get('emotions'):
+                context.emotions = req.updated_context['emotions']
+            if req.updated_context.get('situations'):
+                context.situations = req.updated_context['situations']
+            if req.updated_context.get('moods'):
+                context.moods = req.updated_context['moods']
+            if req.updated_context.get('colors'):
+                context.colors = req.updated_context['colors']
+
+        from app.services.spreadsheet_flower_matcher import SpreadsheetFlowerMatcher
+        spreadsheet_matcher = SpreadsheetFlowerMatcher()
+
+        final_emotions = context.emotions if context.emotions else []
+        final_situations = context.situations if context.situations else []
+        final_moods = context.moods if context.moods else []
+        final_colors = req.preferred_colors if req.preferred_colors else (context.colors if context.colors else [])
+        mentioned_flower = context.mentioned_flower if hasattr(context, 'mentioned_flower') else None
+
+        print("🎯 최종 매칭 컨텍스트:")
+        print(f"   감정: {final_emotions}")
+        print(f"   상황: {final_situations}")
+        print(f"   무드: {final_moods}")
+        print(f"   색상: {final_colors}")
+        print(f"   언급된 꽃: {mentioned_flower}")
+
+        try:
+            spreadsheet_match_result = spreadsheet_matcher.match_flower_with_explicit(
+                story=req.story,
+                emotions=final_emotions,
+                situations=final_situations,
+                moods=final_moods,
+                colors=final_colors,
+                excluded_flowers=excluded_keywords,
+                mentioned_flower=mentioned_flower
+            )
+
+            if spreadsheet_match_result and spreadsheet_match_result.flower_data:
+                print(f"✅ 스프레드시트 매칭 성공: {spreadsheet_match_result.flower_data.korean_name}")
+                matched_flower = spreadsheet_match_result.flower_data
+            else:
+                print("⚠️ 스프레드시트 매칭 실패, 기존 시스템 사용")
+                flower_matcher = FlowerMatcher()
+                matched_flower = flower_matcher.match(emotions, req.story, context.user_intent, excluded_keywords, mentioned_flower, context)
+        except Exception as e:
+            print(f"❌ 스프레드시트 매칭 오류: {e}")
+            print("⚠️ 오류로 인해 기존 시스템 사용")
+            flower_matcher = FlowerMatcher()
+            matched_flower = flower_matcher.match(emotions, req.story, context.user_intent, excluded_keywords, mentioned_flower, context)
+
+        composition_recommender = CompositionRecommender()
+        composition = composition_recommender.recommend(matched_flower, emotions)
+
+        from app.api.v1.endpoints.recommend import _generate_unified_recommendation_reason
+        reason = _generate_unified_recommendation_reason(matched_flower, composition, emotions, req.story, context, excluded_keywords)
+
+        from app.api.v1.endpoints.recommend import _generate_flower_card_message
+        flower_card_message = _generate_flower_card_message(matched_flower, emotions, req.story)
+
+        from app.api.v1.endpoints.recommend import _get_season_info
+        season_info = _get_season_info(matched_flower.flower_name)
+
+        # UnifiedRecommendResponse 형식으로 변환
+        from app.models.schemas import UnifiedRecommendResponse
+
+        return UnifiedRecommendResponse(
+            flower_name=matched_flower.flower_name,
+            korean_name=matched_flower.korean_name,
+            scientific_name=matched_flower.scientific_name,
+            image_url=matched_flower.image_url,
+            calligraphy_image_url=f"https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/{matched_flower.flower_name.lower()}.png",
+            hashtags=[f"#{emotion}" for emotion in final_emotions[:3]],
+            english_description=f"Beautiful {matched_flower.flower_name} flower",
+            emotions=[{"emotion": emotion, "percentage": 100.0 / len(final_emotions)} for emotion in final_emotions] if final_emotions else [],
+            season_detail=season_info,
+            composition=composition,
+            created_at=datetime.now().strftime("%Y.%m.%d."),
+            your_story=req.story,
+            comment=reason
+        )
+
+    except Exception as e:
+        print(f"❌ unified_recommend_logic에서 예외 발생: {e}")
+        print(f"❌ 오류 타입: {type(e)}")
+        print(f"❌ 오류 상세: {str(e)}")
+        import traceback
+        print(f"❌ 스택 트레이스: {traceback.format_exc()}")
+        raise
 
 def _generate_english_description(flower: Any, context: Any) -> str:
-    """영문 설명 생성"""
+    """영문 설명 생성 (폴백 포함)"""
     try:
         import openai
         client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -485,11 +578,158 @@ def _convert_season_format(season_months: str) -> List[str]:
             seasons.append(season_mapping[season])
     return seasons if seasons else ["봄", "여름"]
 
-def _save_story(story: str, emotions: List, flower: Any, composition: Any, reason: str) -> str:
-    """스토리 저장"""
+def _save_story(story: str, emotions: List, flower: Any, composition: Any, reason: str) -> Optional[str]:
+    """스토리 저장 (레거시 경로 - 현재는 미사용)"""
     try:
         from app.api.v1.endpoints.recommend import _save_story_to_database
         return _save_story_to_database(story, emotions, flower, composition, reason)
     except Exception as e:
         print(f"스토리 저장 실패: {e}")
         return None
+
+# ===== 새로운 스냅샷 추천 엔드포인트 =====
+
+@router.post("/recommend", response_model=RecommendationResponse)
+async def create_recommendation_snapshot(request: RecommendationRequest):
+    """새로운 추천 요청 - 스냅샷 저장 후 응답 (story_id는 DB 기준 +1 자동 생성)"""
+    try:
+        # 1) 기존 추천 로직 사용
+        unified_request = UnifiedRecommendRequest(
+            story=request.story,
+            preferred_colors=[request.selected_keywords.colors],
+            excluded_flowers=request.excluded_keywords,
+            updated_context={
+                "emotions": [request.selected_keywords.emotions],
+                "situations": [request.selected_keywords.situations],
+                "moods": [request.selected_keywords.moods],
+                "colors": [request.selected_keywords.colors],
+            },
+        )
+
+        print("🔍 추천 로직 실행 시작")
+        try:
+            print("🔍 unified_recommend_logic 호출 전")
+            recommendation_result = await unified_recommend_logic(unified_request)
+            print(f"✅ 추천 로직 실행 완료: {recommendation_result}")
+        except Exception as e:
+            print(f"❌ 추천 로직 실행 실패: {e}")
+            import traceback
+            print(f"❌ 스택 트레이스: {traceback.format_exc()}")
+            raise HTTPException(status_code=500, detail=f"추천 로직 실행 실패: {str(e)}")
+
+        # 2) 꽃 코드 계산
+        flower_code = _get_flower_code_from_name(recommendation_result.korean_name)
+
+        # 3) 스냅샷 데이터 준비 (id는 여기서 지정하지 않음 → SupabaseManager가 DB+1로 생성)
+        snapshot_data = {
+            "story": request.story,
+            "selected_keywords": to_plain({
+                "emotions": request.selected_keywords.emotions,
+                "situations": request.selected_keywords.situations,
+                "moods": request.selected_keywords.moods,
+                "colors": request.selected_keywords.colors
+            }),
+            "excluded_keywords": to_plain(request.excluded_keywords),
+            "flower_name": recommendation_result.flower_name,
+            "korean_name": recommendation_result.korean_name,
+            "scientific_name": recommendation_result.scientific_name,
+            "image_url": recommendation_result.image_url,
+            "calligraphy_image_url": recommendation_result.calligraphy_image_url,
+            "hashtags": to_plain(recommendation_result.hashtags),
+            "english_description": recommendation_result.english_description,
+            "emotions": to_plain(recommendation_result.emotions),
+            "season_detail": to_plain(recommendation_result.season_detail),
+            "composition": to_plain(recommendation_result.composition),
+            "recommendation_reason": recommendation_result.comment,
+        }
+
+        # 4) Supabase에 스냅샷 저장 (DB에서 다음 번호 +1로 story_id 생성)
+        print(f"🔍 스냅샷 데이터: {snapshot_data}")
+        supabase_manager = get_supabase_manager()
+        saved_snapshot = supabase_manager.insert_snapshot_autoinc(snapshot_data, flower_code)
+
+        if not saved_snapshot:
+            print("❌ 스냅샷 저장 실패")
+            raise HTTPException(status_code=500, detail="스냅샷 저장 실패")
+
+        print(f"✅ 스냅샷 저장 성공: {saved_snapshot}")
+
+        # 5) 저장된 story_id 사용
+        story_id = saved_snapshot["id"]
+
+        # 6) 통합 응답
+        return RecommendationResponse(
+            success=True,
+            created_at=datetime.now().strftime("%Y.%m.%d."),
+            story_id=story_id,
+            your_story=request.story,
+            flower_info={
+                "korean_name": recommendation_result.korean_name,
+                "english_name": recommendation_result.flower_name,
+                "scientific_name": recommendation_result.scientific_name,
+            },
+            flower_blend=to_plain(recommendation_result.composition),
+            flower_image_url=recommendation_result.image_url,
+            calligraphy_image_url=recommendation_result.calligraphy_image_url,
+            flower_card_message={"quote": "인용구", "source": "출처"},
+            emotions=recommendation_result.emotions,
+            season_detail=recommendation_result.season_detail,
+            comment=recommendation_result.comment,
+            hashtags=recommendation_result.hashtags,
+        )
+
+    except Exception as e:
+        print(f"❌ 추천 스냅샷 생성 실패: {e}")
+        raise HTTPException(status_code=500, detail=f"추천 생성 실패: {str(e)}")
+
+@router.get("/recommend/{story_id}", response_model=SnapshotResponse)
+async def get_recommendation_snapshot(story_id: str):
+    """스냅샷 조회"""
+    try:
+        supabase_manager = get_supabase_manager()
+        snapshot = supabase_manager.get_recommendation_snapshot(story_id)
+
+        if not snapshot:
+            raise HTTPException(status_code=404, detail="스냅샷을 찾을 수 없습니다")
+
+        return SnapshotResponse(
+            success=True,
+            created_at=snapshot["created_at"][:10].replace("-", ".") + ".",
+            story_id=snapshot["id"],
+            your_story=snapshot["story"],
+            flower_info={
+                "korean_name": snapshot["korean_name"],
+                "english_name": snapshot["flower_name"],
+                "scientific_name": snapshot["scientific_name"],
+            },
+            flower_blend=snapshot["composition"],
+            flower_image_url=snapshot["image_url"],
+            calligraphy_image_url=snapshot["calligraphy_image_url"],
+            flower_card_message={"quote": "인용구", "source": "출처"},
+            emotions=snapshot["emotions"],
+            season_detail=snapshot["season_detail"],
+            comment=snapshot["recommendation_reason"],
+            hashtags=snapshot["hashtags"],
+        )
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"❌ 스냅샷 조회 실패: {e}")
+        raise HTTPException(status_code=500, detail=f"스냅샷 조회 실패: {str(e)}")
+
+def _get_flower_code_from_name(korean_name: str) -> str:
+    """한글 꽃 이름을 영문 코드로 변환"""
+    flower_mapping = {
+        "지니아": "ZIN",
+        "장미": "ROS",
+        "튤립": "TUL",
+        "해바라기": "SUN",
+        "프리지아": "FRE",
+        "카네이션": "CAR",
+        "백합": "LIL",
+        "수국": "HYD",
+        "아네모네": "ANE",
+        "안스리움": "ANT",
+    }
+    return flower_mapping.get(korean_name, "DEF")

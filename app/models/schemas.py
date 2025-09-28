@@ -6,14 +6,14 @@ from datetime import datetime
 class KeywordWithAlternatives(BaseModel):
     """메인 키워드와 대안 키워드를 포함하는 구조"""
     main: str  # 메인 키워드
-    alternatives: List[str]  # 대안 키워드 2-3개
+    alternatives: List[str] = Field(default_factory=list)  # 대안 키워드 2-3개
 
 class KeywordDimension(BaseModel):
     """각 디멘션별 키워드 구조"""
-    emotions: List[KeywordWithAlternatives] = []      # 감정 디멘션
-    situations: List[KeywordWithAlternatives] = []    # 상황 디멘션
-    moods: List[KeywordWithAlternatives] = []         # 무드 디멘션
-    colors: List[KeywordWithAlternatives] = []        # 색상 디멘션
+    emotions: List[KeywordWithAlternatives] = Field(default_factory=list)      # 감정 디멘션
+    situations: List[KeywordWithAlternatives] = Field(default_factory=list)    # 상황 디멘션
+    moods: List[KeywordWithAlternatives] = Field(default_factory=list)         # 무드 디멘션
+    colors: List[KeywordWithAlternatives] = Field(default_factory=list)        # 색상 디멘션
 
 class KeywordExtractionResponse(BaseModel):
     """키워드 추출 응답"""
@@ -35,7 +35,7 @@ class MatchedFlower(BaseModel):
     image_url: str          # 이미지 URL
     confidence: float       # 신뢰도
     match_reason: str       # 매칭 이유
-    color_keywords: List[str] = []  # 색상 키워드 (기존 시스템 호환성)
+    color_keywords: List[str] = Field(default_factory=list)  # 색상 키워드 (기존 시스템 호환성)
     keywords: str = ""      # 꽃의 특성/꽃말 (추천 이유 생성용)
 
 class KeywordRequest(BaseModel):
@@ -48,8 +48,8 @@ class KeywordResponse(BaseModel):
 
 class RecommendRequest(BaseModel):
     story: str
-    preferred_colors: List[str] = []
-    excluded_flowers: List[str] = []
+    preferred_colors: List[str] = Field(default_factory=list)
+    excluded_flowers: List[str] = Field(default_factory=list)
     top_k: int = Field(default=1, ge=1, le=3)  # MVP에서는 1개만 추천
     selected_keywords: Optional[Dict[str, List[str]]] = None  # 선택된 키워드 (emotions, situations, moods, colors)
     excluded_keywords: Optional[List[Dict[str, str]]] = None  # 제외된 키워드 (text, type)
@@ -235,3 +235,19 @@ class StoryShareResponse(BaseModel):
     message: str
     data: Optional[StoryData] = None
     share_url: Optional[str] = None
+
+class UnifiedRecommendResponse(BaseModel):
+    """통합 추천 응답"""
+    flower_name: str
+    korean_name: str
+    scientific_name: str
+    image_url: str
+    calligraphy_image_url: str
+    hashtags: List[str]
+    english_description: str
+    emotions: List[Dict[str, Any]]
+    season_detail: Dict[str, str]
+    composition: FlowerComposition
+    created_at: str
+    your_story: str
+    comment: str
