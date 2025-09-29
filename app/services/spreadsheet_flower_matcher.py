@@ -136,7 +136,7 @@ class SpreadsheetFlowerMatcher:
         if preferred_colors:
             color_matches = self._match_by_color(preferred_colors)
             if color_matches:
-                best_match = self._select_best_match(color_matches, emotions, situations, moods, story)
+                best_match = self._select_best_match(color_matches, emotions, situations, moods, story, preferred_colors)
                 if best_match:
                     return best_match
         
@@ -144,7 +144,7 @@ class SpreadsheetFlowerMatcher:
         if situations:
             context_matches = self._match_by_context(situations)
             if context_matches:
-                best_match = self._select_best_match(context_matches, emotions, situations, moods, story)
+                best_match = self._select_best_match(context_matches, emotions, situations, moods, story, preferred_colors)
                 if best_match:
                     return best_match
         
@@ -152,7 +152,7 @@ class SpreadsheetFlowerMatcher:
         if emotions:
             emotion_matches = self._match_by_emotion(emotions)
             if emotion_matches:
-                best_match = self._select_best_match(emotion_matches, emotions, situations, moods, story)
+                best_match = self._select_best_match(emotion_matches, emotions, situations, moods, story, preferred_colors)
                 if best_match:
                     return best_match
         
@@ -160,14 +160,14 @@ class SpreadsheetFlowerMatcher:
         if moods:
             mood_matches = self._match_by_mood(moods)
             if mood_matches:
-                best_match = self._select_best_match(mood_matches, emotions, situations, moods, story)
+                best_match = self._select_best_match(mood_matches, emotions, situations, moods, story, preferred_colors)
                 if best_match:
                     return best_match
         
         # 5단계: 꽃말 매칭
         flower_language_matches = self._match_by_flower_language(story)
         if flower_language_matches:
-            best_match = self._select_best_match(flower_language_matches, emotions, situations, moods, story)
+            best_match = self._select_best_match(flower_language_matches, emotions, situations, moods, story, preferred_colors)
             if best_match:
                 return best_match
         
@@ -203,14 +203,25 @@ class SpreadsheetFlowerMatcher:
             if not flower.is_main:
                 continue
             
+            # 디버깅: 알스트로메리아 확인
+            if flower.name_ko == "알스트로메리아":
+                print(f"   🔍 알스트로메리아 디버깅:")
+                print(f"     - base_color: {flower.base_color}")
+                print(f"     - alt_colors: {flower.alt_colors}")
+                print(f"     - mapped_colors: {mapped_colors}")
+                print(f"     - 매칭 결과: {flower.base_color in mapped_colors}")
+                print(f"     - 대체 색상 매칭: {any(color in mapped_colors for color in flower.alt_colors)}")
+            
             # 기본 색상 매칭 (영문 코드)
             if flower.base_color in mapped_colors:
                 matches.append(flower)
+                print(f"   ✅ 기본 색상 매칭: {flower.name_ko} ({flower.base_color})")
                 continue
             
             # 대체 색상 매칭 (영문 코드)
             if any(color in mapped_colors for color in flower.alt_colors):
                 matches.append(flower)
+                print(f"   ✅ 대체 색상 매칭: {flower.name_ko} ({flower.alt_colors})")
                 continue
         
         print(f"   🎨 색상 매칭: {len(matches)}개")
@@ -376,7 +387,8 @@ class SpreadsheetFlowerMatcher:
                           emotions: List[str],
                           situations: List[str],
                           moods: List[str],
-                          story: str) -> Optional[SpreadsheetMatchResult]:
+                          story: str,
+                          preferred_colors: List[str] = None) -> Optional[SpreadsheetMatchResult]:
         """최적 매칭 선택 (명확한 우선순위 시스템)"""
         if not candidates:
             return None
@@ -392,7 +404,7 @@ class SpreadsheetFlowerMatcher:
             reasons = []
             
             # 1. 색상 매칭 점수 (최우선)
-            if emotions and any(color in [flower.base_color] + flower.alt_colors for color in emotions):
+            if preferred_colors and any(color in [flower.base_color] + flower.alt_colors for color in preferred_colors):
                 score += 10  # 색상 매칭 최우선
                 reasons.append("색상 정확 매칭")
             
@@ -461,6 +473,25 @@ class SpreadsheetFlowerMatcher:
             )
         
         return None
+    
+    def match_flower_with_explicit(self, 
+                                 story: str,
+                                 emotions: List[str],
+                                 situations: List[str], 
+                                 moods: List[str],
+                                 colors: List[str],
+                                 excluded_flowers: List[str] = None,
+                                 mentioned_flower: str = None) -> Optional[SpreadsheetMatchResult]:
+        """명시적 매개변수로 꽃 매칭"""
+        return self.match_flower(
+            story=story,
+            emotions=emotions,
+            situations=situations,
+            moods=moods,
+            preferred_colors=colors,
+            excluded_flowers=excluded_flowers or [],
+            mentioned_flower=mentioned_flower
+        )
     
     def _fallback_match(self) -> SpreadsheetMatchResult:
         """기본 매칭"""

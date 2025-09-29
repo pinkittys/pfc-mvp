@@ -9,6 +9,7 @@ import os
 from typing import List, Dict, Any, Optional
 from datetime import datetime
 from supabase import create_client, Client
+from postgrest.exceptions import APIError
 
 # ──────────────────────────────────────────────────────────────
 # 직렬화 유틸: Pydantic 모델/중첩 구조를 파이썬 기본형으로 변환
@@ -126,7 +127,7 @@ class SupabaseManager:
 
         for attempt in range(max_retries):
             story_id = self._next_story_id(flower_code)
-            payload = dict(snapshot_data)
+            payload = to_plain(snapshot_data)  # JSON 직렬화를 위해 to_plain 적용
             payload["id"] = story_id
 
             try:

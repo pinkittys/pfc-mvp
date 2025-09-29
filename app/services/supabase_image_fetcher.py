@@ -52,7 +52,8 @@ class SupabaseImageFetcher:
             FlowerImage("scabiosa-bl.webp", "scabiosa", "블루", f"{self.base_url}/storage/v1/object/public/{self.bucket_name}/scabiosa-bl.webp"),
             
             # 스위트피
-            FlowerImage("sweet-pea-bl.webp", "sweet", "블루", f"{self.base_url}/storage/v1/object/public/{self.bucket_name}/sweet-pea-bl.webp"),
+            FlowerImage("sweet-pea-bl.webp", "sweet-pea", "블루", f"{self.base_url}/storage/v1/object/public/{self.bucket_name}/sweet-pea-bl.webp"),
+            FlowerImage("sweet-pea-pk.webp", "sweet-pea", "핑크", f"{self.base_url}/storage/v1/object/public/{self.bucket_name}/sweet-pea-pk.webp"),
             
             # 튤립
             FlowerImage("tulip-pk.webp", "tulip", "핑크", f"{self.base_url}/storage/v1/object/public/{self.bucket_name}/tulip-pk.webp"),
@@ -147,7 +148,10 @@ class SupabaseImageFetcher:
             '부바르디아': 'bouvardia',
             '베이비스브레스': 'babys-breath',
             '칼라릴리': 'calla-lily',
-            '안스리움': 'anthurium'
+            '안스리움': 'anthurium',
+            '스위트피': 'sweet-pea',  # 스위트피 매핑 추가
+            'Lathyrus Odoratus': 'sweet-pea',  # 학명도 매핑
+            'sweet': 'sweet-pea'  # 기존 sweet도 매핑
         }
         
         # 색상 매핑 (한글 -> 한글)
@@ -174,6 +178,13 @@ class SupabaseImageFetcher:
             if image.flower_name == mapped_flower and image.color == mapped_color:
                 print(f"✅ 정확한 꽃+색상 매칭: {image.filename}")
                 return image
+        
+        # 디버깅: 매칭된 꽃 이름과 색상 출력
+        print(f"🔍 매칭 시도: {mapped_flower} - {mapped_color}")
+        print(f"🔍 사용 가능한 이미지들:")
+        for image in images:
+            if image.color == mapped_color:
+                print(f"  - {image.flower_name} ({image.color}): {image.filename}")
         
         # 색상 대체 매칭 시도 (요청된 색상이 없을 때 유사한 색상으로 대체)
         color_alternatives = self._get_color_alternatives(mapped_color)
