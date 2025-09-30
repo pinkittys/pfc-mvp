@@ -20,7 +20,7 @@ httpcore==1.0.9
 httpx==0.28.1
 hyperframe==6.1.0
 idna==3.10
-numpy==1.21.6
+numpy==1.24.3
 openai==1.99.9
 packaging==25.0
 pandas==2.0.3
