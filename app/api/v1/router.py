@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.api.v1.endpoints import recommend, admin, stories, unified, sample_stories, realtime_context
+from app.api.v1.endpoints import recommend, admin, stories, unified, sample_stories, realtime_context, advanced
 import os
 
 api_v1_router = APIRouter()
@@ -19,6 +19,13 @@ try:
     print("✅ Unified 라우터 등록 완료")
 except Exception as e:
     print(f"❌ Unified 라우터 등록 실패: {e}")
+
+# 고급 옵션 API들 (문서에 표시)
+try:
+    api_v1_router.include_router(advanced.router, prefix="/advanced", tags=["advanced"])
+    print("✅ Advanced 라우터 등록 완료")
+except Exception as e:
+    print(f"❌ Advanced 라우터 등록 실패: {e}")
 
 # 2. 기타 API들 (문서에서 숨김 - 코드는 유지)
 try:
