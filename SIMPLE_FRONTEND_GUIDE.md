@@ -25,21 +25,23 @@ POST /api/v1/extract-keywords
 ```json
 {
   "emotions": {
-    "main": "기쁨",
-    "alternatives": ["행복", "즐거움"]
+    "main": "설렘",
+    "alternatives": ["따뜻함", "기쁨", "감사"]
   },
   "situations": {
     "main": "축하", 
-    "alternatives": ["경사", "축하파티"]
+    "alternatives": ["일상", "축하", "위로"]
   },
   "moods": {
-    "main": "밝은",
-    "alternatives": ["활기찬", "경쾌한"]
+    "main": "로맨틱한",
+    "alternatives": ["사랑스러운", "따뜻한", "우아한"]
   },
   "colors": {
     "main": "핑크",
-    "alternatives": ["라일락", "화이트"]
-  }
+    "alternatives": ["핑크", "레드", "화이트"]
+  },
+  "confidence": 0.9,
+  "extraction_method": "full_llm"
 }
 ```
 
@@ -65,13 +67,30 @@ POST /api/v1/recommend
 **응답:**
 ```json
 {
-  "matched_flower": {
-    "name_ko": "장미",
-    "color": "핑크",
-    "image_url": "https://...",
-    "flower_language": "사랑, 진심, 아름다움"
+  "flower_name": "장미",
+  "korean_name": "장미",
+  "scientific_name": "Rosa spp.",
+  "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/rose-pk.webp",
+  "calligraphy_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/rose-pk.webp",
+  "hashtags": ["#사랑", "#기쁨", "#축하"],
+  "english_description": "Beautiful Rose flower",
+  "emotions": [
+    {"emotion": "사랑", "percentage": 40.0},
+    {"emotion": "기쁨", "percentage": 30.0},
+    {"emotion": "축하", "percentage": 30.0}
+  ],
+  "season_detail": {
+    "availability": "Spring/Summer",
+    "best_season": "03-08"
   },
-  "recommendation_reason": "첫사랑에게 고백하는 특별한 순간을 위해 장미를 선택했습니다..."
+  "composition": {
+    "main_flower": "장미",
+    "sub_flowers": ["리시안셔스", "안개꽃"],
+    "composition_name": "로맨틱 부케"
+  },
+  "created_at": "2025.09.30.",
+  "your_story": "첫사랑에게 고백하려고 해요. 수줍고 설레는 마음을 담아서 핑크나 화이트 톤이 좋겠어요.",
+  "comment": "첫사랑에게 고백하는 특별한 순간을 위해 장미를 선택했습니다. 장미는 사랑과 진심을 상징하며, 핑크 색상은 수줍고 설레는 마음을 아름답게 표현합니다."
 }
 ```
 
@@ -126,10 +145,25 @@ POST /api/v1/advanced/extract-final
 POST /api/v1/advanced/recommend/final
 ```
 
-### 추천 결과 조회
+### 추천 결과 조회 (공유용)
+```javascript
+GET /api/v1/recommend/{story_id}
+```
+
+**사용 시나리오:**
+- 추천 생성 후 `story_id`를 받아서 저장
+- 공유할 때 `story_id`로 추천 결과 조회
+- 저장된 스냅샷 데이터 반환
+
+### 고급 조회 (분석용)
 ```javascript
 GET /api/v1/advanced/recommend/{story_id}
 ```
+
+**고급 기능:**
+- 기본 조회 + 추가 메타데이터
+- `retrieved_at`, `status` 등 분석 정보
+- 추천 품질 평가 데이터
 
 ### 고급 통계 조회
 ```javascript
