@@ -210,17 +210,29 @@ def build_image_and_calli_urls(
 
 @router.post("/extract-keywords")
 async def extract_keywords(req: ExtractKeywordsRequest):
-    """스토리에서 키워드 추출"""
+    """스토리에서 키워드 추출 (메인 키워드 + 대안 키워드 구조)"""
     try:
         # 실시간 컨텍스트 추출기 사용
         smart_extractor = SmartWebSocketExtractor()
-        smart_context = await smart_extractor.extract_context(req.story)
+        smart_context = await smart_extractor.extract_with_confidence(req.story)
         
         return {
-            "emotions": smart_context.emotions,
-            "situations": smart_context.situations,
-            "moods": smart_context.moods,
-            "colors": smart_context.colors,
+            "emotions": {
+                "main": smart_context.emotions[0] if smart_context.emotions else "",
+                "alternatives": smart_context.emotions_alternatives
+            },
+            "situations": {
+                "main": smart_context.situations[0] if smart_context.situations else "",
+                "alternatives": smart_context.situations_alternatives
+            },
+            "moods": {
+                "main": smart_context.moods[0] if smart_context.moods else "",
+                "alternatives": smart_context.moods_alternatives
+            },
+            "colors": {
+                "main": smart_context.colors[0] if smart_context.colors else "",
+                "alternatives": smart_context.colors_alternatives
+            },
             "confidence": smart_context.confidence,
             "extraction_method": smart_context.extraction_method
         }
@@ -230,17 +242,28 @@ async def extract_keywords(req: ExtractKeywordsRequest):
 
 @router.post("/extract-final")
 async def extract_final(req: ExtractKeywordsRequest):
-    """최종 키워드 추출 (UI에서 선택된 키워드 기반)"""
+    """최종 키워드 추출 (UI에서 선택된 키워드 기반) - 메인 키워드 + 대안 키워드 구조"""
     try:
         smart_extractor = SmartWebSocketExtractor()
-        # 만약 실제 메서드명이 extract_with_confidence 라면 아래 줄을 그걸로 바꿔주세요.
-        smart_context = await smart_extractor.extract_context(req.story)
+        smart_context = await smart_extractor.extract_with_confidence(req.story)
 
         return {
-            "emotions": smart_context.emotions,
-            "situations": smart_context.situations,
-            "moods": smart_context.moods,
-            "colors": smart_context.colors,
+            "emotions": {
+                "main": smart_context.emotions[0] if smart_context.emotions else "",
+                "alternatives": smart_context.emotions_alternatives
+            },
+            "situations": {
+                "main": smart_context.situations[0] if smart_context.situations else "",
+                "alternatives": smart_context.situations_alternatives
+            },
+            "moods": {
+                "main": smart_context.moods[0] if smart_context.moods else "",
+                "alternatives": smart_context.moods_alternatives
+            },
+            "colors": {
+                "main": smart_context.colors[0] if smart_context.colors else "",
+                "alternatives": smart_context.colors_alternatives
+            },
             "confidence": smart_context.confidence,
             "extraction_method": smart_context.extraction_method,
         }
