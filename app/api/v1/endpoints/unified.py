@@ -593,16 +593,43 @@ async def create_recommendation_snapshot(request: UnifiedRecommendRequest):
 
 @router.get("/recommend/{story_id}", response_model=SnapshotResponse)
 async def get_recommendation_snapshot(story_id: str):
-    """스냅샷 조회"""
+    """스냅샷 조회 - story_id로 저장된 추천 결과 조회"""
     try:
         supabase_manager = get_supabase_manager()
-        snapshot = supabase_manager.get_snapshot_by_id(story_id)
         
-        if not snapshot:
-            raise HTTPException(status_code=404, detail="스냅샷을 찾을 수 없습니다")
+        # Supabase에서 스냅샷 조회
+        result = supabase_manager.read.table("recommendation_snapshots").select("*").eq("id", story_id).execute()
         
-        return SnapshotResponse(**snapshot)
+        if not result.data or len(result.data) == 0:
+            raise HTTPException(status_code=404, detail="추천 결과를 찾을 수 없습니다")
         
+        snapshot = result.data[0]
+        
+        # SnapshotResponse 형식으로 변환
+        return SnapshotResponse(
+            success=True,
+            created_at=snapshot.get("created_at", ""),
+            story_id=snapshot.get("id", story_id),
+            your_story=snapshot.get("story", ""),
+            flower_info={
+                "korean_name": snapshot.get("korean_name", ""),
+                "english_name": snapshot.get("english_name", ""),
+                "scientific_name": snapshot.get("scientific_name", "")
+            },
+            flower_blend=snapshot.get("composition", {}),
+            flower_image_url=snapshot.get("image_url", ""),
+            calligraphy_image_url=snapshot.get("calligraphy_image_url", ""),
+            flower_card_message=snapshot.get("flower_card_message", {"quote": "", "source": ""}),
+            emotions=snapshot.get("emotions", []),
+            season_detail=snapshot.get("season_detail", {}),
+            comment=snapshot.get("recommendation_reason", ""),
+            hashtags=snapshot.get("hashtags", [])
+        )
+        
+    except HTTPException:
+        raise
     except Exception as e:
         print(f"❌ 스냅샷 조회 실패: {e}")
+        import traceback
+        print(traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"스냅샷 조회 실패: {str(e)}")
