@@ -333,9 +333,9 @@ async def unified_recommend_logic(req: UnifiedRecommendRequest):
                     if mentioned_lower != matched_ko and mentioned_lower != matched_en:
                         # 라벤더 특별 처리
                         if mentioned_flower.lower() in ['라벤더', '라벤다', 'lavender']:
-                            alternative_flower_notice = f"💜 '{mentioned_flower}'은(는) 현재 꽃 풀에 없어서, 비슷한 진정 효과를 가진 '{match_result.flower_data.name_ko}'을(를) 추천드려요. 라벤더의 차분한 향기처럼 마음을 진정시켜줄 거예요."
+                            alternative_flower_notice = f"💜 '{mentioned_flower}'은(는) 현재 준비 중이에요. 비슷한 진정 효과를 가진 '{match_result.flower_data.name_ko}'을(를) 추천드려요. 라벤더의 차분한 향기처럼 마음을 진정시켜줄 거예요."
                         else:
-                            alternative_flower_notice = f"💡 '{mentioned_flower}'은(는) 현재 준비중입니다. 비슷한 느낌의 '{match_result.flower_data.name_ko}'을(를) 추천드려요."
+                            alternative_flower_notice = f"💡 '{mentioned_flower}'은(는) 현재 준비 중이에요. 비슷한 느낌의 '{match_result.flower_data.name_ko}'을(를) 추천드려요."
                         print(f"💡 대체 꽃 추천: {mentioned_flower} → {match_result.flower_data.name_ko}")
                     else:
                         print(f"✅ 언급된 꽃과 매칭된 꽃이 동일: {mentioned_flower} = {match_result.flower_data.name_ko}")
