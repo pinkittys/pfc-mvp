@@ -35,11 +35,18 @@ class SelectedKeywords(BaseModel):
     moods: str
     colors: str
 
+class ExcludedKeywords(BaseModel):
+    """제외된 키워드 모델 (각 디멘션별로 여러개 가능)"""
+    emotions: Optional[List[str]] = None
+    situations: Optional[List[str]] = None
+    moods: Optional[List[str]] = None
+    colors: Optional[List[str]] = None
+
 class UnifiedRecommendRequest(BaseModel):
     """통합 추천 요청 모델"""
     story: str
-    selected_keywords: SelectedKeywords   # ✅ 필수
-    excluded_keywords: List[str] = []    # ✅ 옵션
+    selected_keywords: SelectedKeywords   # ✅ 필수 (4개)
+    excluded_keywords: Optional[ExcludedKeywords] = None  # ✅ 옵션 (유연한 개수)
     updated_context: Optional[Dict[str, Any]] = None  # 옵션
 
 print("[BOOT] unified.py loaded, fields=", list(UnifiedRecommendRequest.model_fields.keys()))
@@ -285,11 +292,64 @@ async def unified_recommend_logic(req: UnifiedRecommendRequest):
             if req.updated_context.get('colors'):
                 context.colors = req.updated_context['colors']
 
-        # 3) 최종 컨텍스트
-        final_emotions = context.emotions or []
-        final_situations = context.situations or []
-        final_moods = context.moods or []
-        final_colors = [req.selected_keywords.colors] if (req.selected_keywords and req.selected_keywords.colors) else (context.colors or [])
+        # 3) 충돌 검사 및 최종 컨텍스트
+        print("🔍 selected_keywords와 excluded_keywords 충돌 검사")
+        
+        # 충돌 검사 (excluded 우선 처리)
+        if req.excluded_keywords and req.selected_keywords:
+            excluded = req.excluded_keywords
+            
+            # 감정 충돌 검사 - excluded 우선
+            if excluded.emotions and req.selected_keywords.emotions in excluded.emotions:
+                print(f"⚠️ 감정 충돌: '{req.selected_keywords.emotions}'이(가) 제외 목록에 있음 (excluded 우선)")
+                print(f"🚫 '{req.selected_keywords.emotions}' 제외 처리됨")
+                # selected에서 제외된 키워드 제거하고 다른 키워드로 대체
+                req.selected_keywords.emotions = None  # 또는 기본값으로 대체
+                
+            # 상황 충돌 검사 - excluded 우선
+            if excluded.situations and req.selected_keywords.situations in excluded.situations:
+                print(f"⚠️ 상황 충돌: '{req.selected_keywords.situations}'이(가) 제외 목록에 있음 (excluded 우선)")
+                print(f"🚫 '{req.selected_keywords.situations}' 제외 처리됨")
+                req.selected_keywords.situations = None
+                
+            # 무드 충돌 검사 - excluded 우선
+            if excluded.moods and req.selected_keywords.moods in excluded.moods:
+                print(f"⚠️ 무드 충돌: '{req.selected_keywords.moods}'이(가) 제외 목록에 있음 (excluded 우선)")
+                print(f"🚫 '{req.selected_keywords.moods}' 제외 처리됨")
+                req.selected_keywords.moods = None
+                
+            # 색상 충돌 검사 - excluded 우선
+            if excluded.colors and req.selected_keywords.colors in excluded.colors:
+                print(f"⚠️ 색상 충돌: '{req.selected_keywords.colors}'이(가) 제외 목록에 있음 (excluded 우선)")
+                print(f"🚫 '{req.selected_keywords.colors}' 제외 처리됨")
+                req.selected_keywords.colors = None
+        
+        # 최종 컨텍스트 구성 (excluded 우선 처리 후)
+        final_emotions = []
+        final_situations = []
+        final_moods = []
+        final_colors = []
+        
+        # selected_keywords에서 None이 아닌 것들만 사용
+        if req.selected_keywords:
+            if req.selected_keywords.emotions:
+                final_emotions = [req.selected_keywords.emotions]
+            if req.selected_keywords.situations:
+                final_situations = [req.selected_keywords.situations]
+            if req.selected_keywords.moods:
+                final_moods = [req.selected_keywords.moods]
+            if req.selected_keywords.colors:
+                final_colors = [req.selected_keywords.colors]
+        
+        # selected에서 None인 경우 context에서 가져오기
+        if not final_emotions:
+            final_emotions = context.emotions or []
+        if not final_situations:
+            final_situations = context.situations or []
+        if not final_moods:
+            final_moods = context.moods or []
+        if not final_colors:
+            final_colors = context.colors or []
         mentioned_flower = getattr(context, 'mentioned_flower', None)
 
         print("🎯 최종 매칭 컨텍스트:")
@@ -309,6 +369,18 @@ async def unified_recommend_logic(req: UnifiedRecommendRequest):
             
             spreadsheet_matcher = SpreadsheetFlowerMatcher()
             
+            # excluded_keywords를 딕셔너리 형태로 변환
+            excluded_dict = {}
+            if req.excluded_keywords:
+                if req.excluded_keywords.emotions:
+                    excluded_dict['emotions'] = req.excluded_keywords.emotions
+                if req.excluded_keywords.situations:
+                    excluded_dict['situations'] = req.excluded_keywords.situations
+                if req.excluded_keywords.moods:
+                    excluded_dict['moods'] = req.excluded_keywords.moods
+                if req.excluded_keywords.colors:
+                    excluded_dict['colors'] = req.excluded_keywords.colors
+            
             # 스프레드시트 매칭 실행
             match_result = spreadsheet_matcher.match_flower(
                 story=req.story,
@@ -316,6 +388,7 @@ async def unified_recommend_logic(req: UnifiedRecommendRequest):
                 situations=final_situations,
                 moods=final_moods,
                 preferred_colors=final_colors,
+                excluded_keywords=excluded_dict,
                 mentioned_flower=mentioned_flower
             )
             
@@ -557,7 +630,7 @@ async def create_recommendation_snapshot(request: UnifiedRecommendRequest):
                 "moods": request.selected_keywords.moods,
                 "colors": request.selected_keywords.colors,
             },
-            "excluded_keywords": request.excluded_keywords,
+            "excluded_keywords": to_plain(request.excluded_keywords) if request.excluded_keywords else {},
             "flower_name": recommendation_result.flower_name,
             "korean_name": recommendation_result.korean_name,
             "scientific_name": recommendation_result.scientific_name,

@@ -112,6 +112,7 @@ class SpreadsheetFlowerMatcher:
                     situations: List[str] = None,
                     moods: List[str] = None,
                     preferred_colors: List[str] = None,
+                    excluded_keywords: Dict[str, List[str]] = None,
                     mentioned_flower: str = None) -> SpreadsheetMatchResult:
         """스프레드시트 데이터 기반 꽃 매칭"""
         
@@ -121,7 +122,25 @@ class SpreadsheetFlowerMatcher:
         print(f"   😊 감정: {emotions}")
         print(f"   📍 상황: {situations}")
         print(f"   🌟 무드: {moods}")
+        print(f"   🚫 제외 키워드: {excluded_keywords}")
         print(f"   🌸 언급된 꽃: {mentioned_flower}")
+        
+        # 제외 키워드 처리
+        if excluded_keywords:
+            print(f"🔍 제외 키워드 필터링 시작")
+            # 각 디멘션별로 제외 키워드가 있으면 매칭에서 제외
+            if excluded_keywords.get('emotions'):
+                emotions = [e for e in (emotions or []) if e not in excluded_keywords['emotions']]
+                print(f"   🚫 제외된 감정: {excluded_keywords['emotions']}")
+            if excluded_keywords.get('situations'):
+                situations = [s for s in (situations or []) if s not in excluded_keywords['situations']]
+                print(f"   🚫 제외된 상황: {excluded_keywords['situations']}")
+            if excluded_keywords.get('moods'):
+                moods = [m for m in (moods or []) if m not in excluded_keywords['moods']]
+                print(f"   🚫 제외된 무드: {excluded_keywords['moods']}")
+            if excluded_keywords.get('colors'):
+                preferred_colors = [c for c in (preferred_colors or []) if c not in excluded_keywords['colors']]
+                print(f"   🚫 제외된 색상: {excluded_keywords['colors']}")
         
         # 0단계: 언급된 꽃 우선 매칭 (최우선순위)
         if mentioned_flower:
