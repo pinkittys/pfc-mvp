@@ -391,11 +391,32 @@ async def unified_recommend_logic(req: UnifiedRecommendRequest):
         print("⚡ 병렬 처리 시작: 구성 + 추천 이유 + 시즌 정보")
         
         async def get_composition_async():
-            # 간단한 구성 생성
+            # 감정과 상황에 따른 동적 구성 생성
+            emotion = final_emotions[0] if final_emotions else "따뜻함"
+            situation = final_situations[0] if final_situations else "소중한 순간"
+            
+            # 감정별 구성 매핑
+            composition_mapping = {
+                "위로": {"sub_flowers": ["안개꽃", "유칼립투스"], "name": "위로의 꽃다발"},
+                "축하": {"sub_flowers": ["베이비브레스", "스톡"], "name": "축하의 꽃다발"},
+                "사랑": {"sub_flowers": ["핑크장미", "베이비브레스"], "name": "사랑의 꽃다발"},
+                "기쁨": {"sub_flowers": ["해바라기", "옐로우데이지"], "name": "기쁨의 꽃다발"},
+                "감사": {"sub_flowers": ["화이트장미", "안개꽃"], "name": "감사의 꽃다발"},
+                "슬픔": {"sub_flowers": ["화이트백합", "유칼립투스"], "name": "위로의 꽃다발"},
+                "설렘": {"sub_flowers": ["핑크튤립", "베이비브레스"], "name": "설레는 꽃다발"},
+                "희망": {"sub_flowers": ["옐로우장미", "그린유칼립투스"], "name": "희망의 꽃다발"}
+            }
+            
+            # 기본값
+            default_composition = {"sub_flowers": ["안개꽃", "유칼립투스"], "name": "따뜻한 꽃다발"}
+            
+            # 감정에 맞는 구성 선택
+            composition = composition_mapping.get(emotion, default_composition)
+            
             return {
                 "main_flower": matched_flower.korean_name,
-                "sub_flowers": ["안개꽃", "유칼립투스"],
-                "composition_name": "위로의 꽃다발"
+                "sub_flowers": composition["sub_flowers"],
+                "composition_name": composition["name"]
             }
         
         async def generate_reason_async():

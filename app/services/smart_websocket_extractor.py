@@ -401,7 +401,9 @@ class SmartWebSocketExtractor:
             '마리골드': ['마리골드', 'marigold'],
             '태게테스': ['태게테스', 'tagetes'],
             '알스트로메리아': ['알스트로메리아', 'alstroemeria'],
-            '리시안셔스': ['리시안셔스', 'lisianthus']
+            '리시안셔스': ['리시안셔스', 'lisianthus'],
+            '라벤더': ['라벤더', 'lavender'],
+            '라벤다': ['라벤다', 'lavender']
         }
         
         # 언급된 꽃 찾기
