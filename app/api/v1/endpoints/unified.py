@@ -331,7 +331,11 @@ async def unified_recommend_logic(req: UnifiedRecommendRequest):
                     
                     # 언급된 꽃이 매칭된 꽃의 한글/영어 이름과 모두 다른 경우에만 안내
                     if mentioned_lower != matched_ko and mentioned_lower != matched_en:
-                        alternative_flower_notice = f"'{mentioned_flower}'은(는) 현재 준비중입니다. 비슷한 느낌의 '{match_result.flower_data.name_ko}'을(를) 추천드려요."
+                        # 라벤더 특별 처리
+                        if mentioned_flower.lower() in ['라벤더', '라벤다', 'lavender']:
+                            alternative_flower_notice = f"💜 '{mentioned_flower}'은(는) 현재 꽃 풀에 없어서, 비슷한 진정 효과를 가진 '{match_result.flower_data.name_ko}'을(를) 추천드려요. 라벤더의 차분한 향기처럼 마음을 진정시켜줄 거예요."
+                        else:
+                            alternative_flower_notice = f"💡 '{mentioned_flower}'은(는) 현재 준비중입니다. 비슷한 느낌의 '{match_result.flower_data.name_ko}'을(를) 추천드려요."
                         print(f"💡 대체 꽃 추천: {mentioned_flower} → {match_result.flower_data.name_ko}")
                     else:
                         print(f"✅ 언급된 꽃과 매칭된 꽃이 동일: {mentioned_flower} = {match_result.flower_data.name_ko}")
@@ -391,32 +395,26 @@ async def unified_recommend_logic(req: UnifiedRecommendRequest):
         print("⚡ 병렬 처리 시작: 구성 + 추천 이유 + 시즌 정보")
         
         async def get_composition_async():
-            # 감정과 상황에 따른 동적 구성 생성
-            emotion = final_emotions[0] if final_emotions else "따뜻함"
-            situation = final_situations[0] if final_situations else "소중한 순간"
+            # 원래 CompositionRecommender 사용
+            from app.services.composition_recommender import CompositionRecommender
+            from app.models.schemas import EmotionAnalysis
             
-            # 감정별 구성 매핑
-            composition_mapping = {
-                "위로": {"sub_flowers": ["안개꽃", "유칼립투스"], "name": "위로의 꽃다발"},
-                "축하": {"sub_flowers": ["베이비브레스", "스톡"], "name": "축하의 꽃다발"},
-                "사랑": {"sub_flowers": ["핑크장미", "베이비브레스"], "name": "사랑의 꽃다발"},
-                "기쁨": {"sub_flowers": ["해바라기", "옐로우데이지"], "name": "기쁨의 꽃다발"},
-                "감사": {"sub_flowers": ["화이트장미", "안개꽃"], "name": "감사의 꽃다발"},
-                "슬픔": {"sub_flowers": ["화이트백합", "유칼립투스"], "name": "위로의 꽃다발"},
-                "설렘": {"sub_flowers": ["핑크튤립", "베이비브레스"], "name": "설레는 꽃다발"},
-                "희망": {"sub_flowers": ["옐로우장미", "그린유칼립투스"], "name": "희망의 꽃다발"}
-            }
+            # EmotionAnalysis 객체 생성
+            emotion_objects = []
+            for i, emotion in enumerate(final_emotions[:3]):  # 상위 3개 감정만 사용
+                emotion_objects.append(EmotionAnalysis(
+                    emotion=emotion,
+                    percentage=100.0 / len(final_emotions[:3])  # 균등 분배
+                ))
             
-            # 기본값
-            default_composition = {"sub_flowers": ["안개꽃", "유칼립투스"], "name": "따뜻한 꽃다발"}
-            
-            # 감정에 맞는 구성 선택
-            composition = composition_mapping.get(emotion, default_composition)
+            # CompositionRecommender로 구성 생성
+            composition_recommender = CompositionRecommender()
+            composition = composition_recommender.recommend(matched_flower, emotion_objects)
             
             return {
                 "main_flower": matched_flower.korean_name,
-                "sub_flowers": composition["sub_flowers"],
-                "composition_name": composition["name"]
+                "sub_flowers": composition.sub_flowers,
+                "composition_name": composition.composition_name
             }
         
         async def generate_reason_async():
