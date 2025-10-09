@@ -1,159 +1,81 @@
-# Floiy-Reco 🌸
+# 🌸 Floiy 이미지 생성 실험
 
-꽃 추천 시스템 - 실시간 키워드 추출 및 꽃 매칭 API
+Gemini + NanoBana API를 이용한 꽃 이미지 생성 실험 프로젝트
 
-## 🚀 배포 정보
+## 🎯 실험 목표
 
-### 백엔드 (FastAPI)
-- **프레임워크**: FastAPI + Python 3.11
-- **데이터베이스**: Supabase (PostgreSQL)
-- **이미지 스토리지**: Supabase Storage
-- **배포**: Cloudtype
+- **Gemini API**: 꽃 이미지 생성 프롬프트 최적화
+- **NanoBana API**: 실제 이미지 생성 및 품질 테스트
+- **파이프라인**: 자동화된 이미지 생성 워크플로우 구축
 
-### 프론트엔드
-- **기술**: HTML/CSS/JavaScript
-- **배포**: Vercel
+## 🚀 시작하기
+
+### 1. 환경 설정
+```bash
+# 패키지 설치
+pip install -r requirements.txt
+
+# 환경 변수 설정
+cp config/env_example.txt .env
+# .env 파일에 API 키 입력
+```
+
+### 2. API 키 설정
+```bash
+# .env 파일에 추가
+GEMINI_API_KEY=your_gemini_api_key_here
+NANOBANA_API_KEY=your_nanobana_api_key_here
+```
+
+### 3. 실험 실행
+```bash
+python pipeline_test.py
+```
 
 ## 📁 프로젝트 구조
 
 ```
-floiy-reco/
-├── app/                    # 메인 애플리케이션
-│   ├── api/               # API 엔드포인트
-│   ├── core/              # 핵심 설정
-│   ├── models/            # 데이터 모델
-│   ├── pipelines/         # 데이터 파이프라인
-│   ├── services/          # 비즈니스 로직
-│   └── utils/             # 유틸리티
-├── data/                  # 꽃 데이터
-│   ├── flower_dictionary.json
-│   ├── images_webp/       # 꽃 이미지들
-│   └── stories.json       # 스토리 데이터
-├── simple_test.html       # 프론트엔드 인터페이스
-├── requirements.txt       # Python 의존성
-├── Dockerfile            # Docker 설정
-└── .env.example          # 환경변수 예시
+floiy-image-experiment/
+├── config/
+│   ├── settings.py          # 설정 파일
+│   └── env_example.txt      # 환경 변수 예시
+├── gemini_prompts/          # Gemini 생성 프롬프트들
+├── nanobana_generation/     # NanoBana 생성 이미지들
+├── test_results/            # 실험 결과 JSON
+├── logs/                    # 실험 로그
+├── pipeline_test.py         # 메인 실험 파이프라인
+└── requirements.txt         # 패키지 목록
 ```
 
-## 🔧 설치 및 실행
+## 🧪 실험 시나리오
 
-### 로컬 개발
+### 테스트 케이스
+1. **장미** (사랑, 핑크) - 로맨틱한 상황
+2. **해바라기** (기쁨, 옐로우) - 축하 상황  
+3. **라벤더** (평온, 퍼플) - 위로 상황
 
-1. **의존성 설치**
-```bash
-pip install -r requirements.txt
-```
+### 이미지 스타일
+- `photorealistic`: 사진처럼 사실적
+- `artistic`: 예술적 스타일
+- `minimalist`: 미니멀 스타일
+- `vintage`: 빈티지 스타일
 
-2. **환경변수 설정**
-```bash
-cp .env.example .env
-# .env 파일에 실제 값들 입력
-```
+## 📊 결과 분석
 
-3. **서버 실행**
-```bash
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-```
+실험 결과는 다음 위치에 저장됩니다:
+- `test_results/`: JSON 형태의 상세 결과
+- `logs/`: 실험 과정 로그
+- `nanobana_generation/`: 생성된 이미지 파일들
 
-### Docker 실행
+## 🔧 커스터마이징
 
-```bash
-docker build -t floiy-reco .
-docker run -p 8000:8000 floiy-reco
-```
+`config/settings.py`에서 실험 설정을 수정할 수 있습니다:
+- 테스트할 꽃 종류
+- 이미지 스타일
+- API 설정
 
-## 🌐 API 엔드포인트
+## ⚠️ 주의사항
 
-### 주요 엔드포인트
-- `GET /` - API 상태 확인
-- `GET /health` - 헬스체크
-- `POST /api/v1/analyze` - 꽃 추천 분석
-- `GET /simple_test.html` - 웹 인터페이스
-
-### Swagger 문서
-- `GET /docs` - API 문서 (Swagger UI)
-
-## 🔑 환경변수
-
-```env
-# Supabase 설정
-SUPABASE_URL=your_supabase_url
-SUPABASE_ANON_KEY=your_supabase_anon_key
-SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
-
-# OpenAI 설정 (선택사항)
-OPENAI_API_KEY=your_openai_api_key
-
-# Google Drive 설정 (선택사항)
-GOOGLE_APPLICATION_CREDENTIALS=path_to_credentials.json
-```
-
-## 📊 주요 기능
-
-### 1. 실시간 키워드 추출
-- 감정 분석
-- 상황 인식
-- 색상 선호도 추출
-- 무드 분석
-
-### 2. 꽃 매칭 알고리즘
-- 의미 기반 매칭
-- 색상 기반 매칭
-- 계절 기반 매칭
-- 감정 기반 매칭
-
-### 3. 이미지 관리
-- Supabase Storage 연동
-- 자동 이미지 URL 생성
-- 표준화된 파일명 체계
-
-### 4. 스토리 관리
-- 사용자 스토리 저장
-- 추천 이력 관리
-- 스토리 ID 체계
-
-## 🚀 배포
-
-### Cloudtype 배포
-
-1. **GitHub 저장소 연결**
-2. **환경변수 설정**
-3. **자동 배포**
-
-### 환경변수 설정 (Cloudtype)
-- `SUPABASE_URL`
-- `SUPABASE_ANON_KEY`
-- `SUPABASE_SERVICE_ROLE_KEY`
-- `OPENAI_API_KEY` (선택사항)
-
-## 📈 모니터링
-
-### 헬스체크
-```bash
-curl https://your-domain.com/health
-```
-
-### 로그 확인
-- Cloudtype 대시보드에서 실시간 로그 확인
-
-## 🔄 업데이트
-
-### 데이터 업데이트
-- `flower_dictionary.json` 수동 업데이트
-- Supabase 데이터베이스 직접 수정
-- 이미지 추가 시 Supabase Storage에 업로드
-
-### 코드 업데이트
-- GitHub에 push하면 자동 배포
-- 환경변수 변경 시 수동 재배포 필요
-
-## 📞 지원
-
-- **기술 지원**: 개발팀
-- **문서**: `/docs` 엔드포인트
-- **이슈**: GitHub Issues
-
----
-
-**버전**: 1.0.0  
-**최종 업데이트**: 2024년 8월
+- 이 프로젝트는 **실험용**입니다
+- 프로덕션 환경과 완전히 분리되어 있습니다
+- API 사용량에 주의하세요

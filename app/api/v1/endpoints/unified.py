@@ -299,14 +299,72 @@ async def unified_recommend_logic(req: UnifiedRecommendRequest):
         print(f"   색상: {final_colors}")
         print(f"   언급된 꽃: {mentioned_flower}")
 
-        # 4) 꽃 선택: 의미 기반 매칭만 사용
+        # 4) 꽃 선택: SpreadsheetFlowerMatcher 사용 (정교한 매칭)
         excluded_keywords = req.excluded_keywords or []
+        alternative_flower_notice = None  # 대체 꽃 안내 메시지
+        
         try:
-            # 의미 기반/기존 FlowerMatcher로 선택
-            flower_matcher = FlowerMatcher()
-            matched_flower = flower_matcher.match(emotions, req.story, context.user_intent, excluded_keywords, mentioned_flower, context)
+            # SpreadsheetFlowerMatcher 사용 (문자열 리스트 지원)
+            from app.services.spreadsheet_flower_matcher import SpreadsheetFlowerMatcher
+            
+            spreadsheet_matcher = SpreadsheetFlowerMatcher()
+            
+            # 스프레드시트 매칭 실행
+            match_result = spreadsheet_matcher.match_flower(
+                story=req.story,
+                emotions=final_emotions,
+                situations=final_situations,
+                moods=final_moods,
+                preferred_colors=final_colors,
+                mentioned_flower=mentioned_flower
+            )
+            
+            if match_result:
+                print(f"✅ 스프레드시트 매칭 성공: {match_result.flower_data.name_ko}")
+                
+                # 언급된 꽃과 매칭된 꽃이 다른 경우 안내 메시지 추가
+                # (한글 이름과 영어 이름 모두 비교)
+                if mentioned_flower:
+                    mentioned_lower = mentioned_flower.lower()
+                    matched_ko = match_result.flower_data.name_ko.lower()
+                    matched_en = match_result.flower_data.name_en.lower()
+                    
+                    # 언급된 꽃이 매칭된 꽃의 한글/영어 이름과 모두 다른 경우에만 안내
+                    if mentioned_lower != matched_ko and mentioned_lower != matched_en:
+                        alternative_flower_notice = f"'{mentioned_flower}'은(는) 현재 준비중입니다. 비슷한 느낌의 '{match_result.flower_data.name_ko}'을(를) 추천드려요."
+                        print(f"💡 대체 꽃 추천: {mentioned_flower} → {match_result.flower_data.name_ko}")
+                    else:
+                        print(f"✅ 언급된 꽃과 매칭된 꽃이 동일: {mentioned_flower} = {match_result.flower_data.name_ko}")
+                
+                # SpreadsheetMatchResult를 MatchedFlower로 변환
+                from app.models.schemas import MatchedFlower
+                matched_flower = MatchedFlower(
+                    flower_name=match_result.flower_data.name_en,
+                    korean_name=match_result.flower_data.name_ko,
+                    scientific_name=match_result.flower_data.scientific_name,
+                    image_url=match_result.image_url,
+                    confidence=match_result.confidence,
+                    match_reason=match_result.match_reason,
+                    color_keywords=[match_result.flower_data.base_color] + match_result.flower_data.alt_colors,
+                    keywords=match_result.flower_data.flower_language_short or match_result.flower_data.flower_language_long or "아름다움과 마음을 담아 전해요"
+                )
+            else:
+                print("⚠️ 스프레드시트 매칭 실패, 기본 꽃 사용")
+                # 폴백: 기본 꽃 선택
+                from app.models.schemas import MatchedFlower
+                matched_flower = MatchedFlower(
+                    flower_name="Lavender",
+                    korean_name="라벤더", 
+                    scientific_name="Lavandula spp.",
+                    image_url="https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/lavender-purple.webp",
+                    confidence=0.8,
+                    match_reason="위로와 평온을 상징하는 라벤더",
+                    color_keywords=["퍼플", "라벤더"],
+                    keywords="위로, 평온, 힐링"
+                )
+            
         except Exception as e:
-            print(f"❌ 의미 기반 FlowerMatcher 오류: {e}")
+            print(f"❌ 꽃 매칭 오류: {e}")
             raise HTTPException(status_code=500, detail="꽃 매칭 실패")
 
         # 5) 이미지/캘리그래피 URL은 규칙 기반 시스템으로 생성
@@ -333,16 +391,69 @@ async def unified_recommend_logic(req: UnifiedRecommendRequest):
         print("⚡ 병렬 처리 시작: 구성 + 추천 이유 + 시즌 정보")
         
         async def get_composition_async():
-            composition_recommender = CompositionRecommender()
-            return composition_recommender.recommend(matched_flower, emotions)
+            # 간단한 구성 생성
+            return {
+                "main_flower": matched_flower.korean_name,
+                "sub_flowers": ["안개꽃", "유칼립투스"],
+                "composition_name": "위로의 꽃다발"
+            }
         
         async def generate_reason_async():
-            from app.api.v1.endpoints.recommend import _generate_unified_recommendation_reason
-            return _generate_unified_recommendation_reason(matched_flower, None, emotions, req.story, context, excluded_keywords)
+            # GPT를 사용한 추천 이유 생성
+            from openai import AsyncOpenAI
+            import os
+            
+            try:
+                client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+                
+                # 프롬프트 구성
+                prompt = f"""당신은 꽃집 전문가입니다. 고객의 사연에 맞춰 왜 이 꽃을 추천하는지 따뜻하고 진심 어린 이유를 2-3문장으로 작성해주세요.
+
+**고객 사연**: {req.story}
+
+**선택된 감정**: {", ".join(final_emotions[:3]) if final_emotions else "특별한 마음"}
+**상황**: {final_situations[0] if final_situations else "소중한 순간"}
+**무드**: {final_moods[0] if final_moods else "따뜻한"}
+
+**추천 꽃**: {matched_flower.korean_name}
+**꽃말**: {matched_flower.keywords if matched_flower.keywords else "아름다움과 진심"}
+
+**중요**: 
+- 반말이 아닌 "~에요", "~예요" 존댓말 사용
+- "~습니다" 같은 격식 있는 어투 사용 금지
+- 담백하고 진솔하게, 친구에게 말하듯 편안한 어조
+- 불필요하게 과장하지 말고 진심 어린 추천"""
+
+                response = await client.chat.completions.create(
+                    model="gpt-4o-mini",
+                    messages=[
+                        {"role": "system", "content": "당신은 감성적이고 따뜻한 꽃집 전문가입니다."},
+                        {"role": "user", "content": prompt}
+                    ],
+                    temperature=0.8,
+                    max_tokens=200
+                )
+                
+                base_reason = response.choices[0].message.content.strip()
+                
+            except Exception as e:
+                print(f"❌ GPT 추천 이유 생성 실패: {e}")
+                # 폴백: 간단한 템플릿 사용
+                emotion_text = ", ".join(final_emotions[:2]) if final_emotions else "특별한 마음"
+                base_reason = f"{matched_flower.korean_name}은(는) {emotion_text}을 담기에 완벽한 꽃입니다. {matched_flower.keywords if matched_flower.keywords else '진심을 전하기에 좋은 선택'}입니다."
+            
+            # 대체 꽃 안내 메시지가 있으면 앞에 추가
+            if alternative_flower_notice:
+                return f"{alternative_flower_notice}\n\n{base_reason}"
+            
+            return base_reason
         
         async def get_season_info_async():
-            from app.api.v1.endpoints.recommend import _get_season_info
-            return _get_season_info(matched_flower.flower_name)
+            # 간단한 계절 정보
+            return {
+                "season": "Spring/Summer",
+                "months": "04-09"
+            }
         
         # 병렬 실행
         composition, reason, season_info = await asyncio.gather(
@@ -356,12 +467,11 @@ async def unified_recommend_logic(req: UnifiedRecommendRequest):
         
         # 감정 분석 결과를 올바른 형태로 변환
         emotion_list = []
-        if emotions:
-            for emotion in emotions:
-                emotion_list.append({
-                    "emotion": emotion.emotion,
-                    "percentage": emotion.percentage
-                })
+        for emotion in final_emotions:
+            emotion_list.append({
+                "emotion": emotion,
+                "percentage": 100.0 / len(final_emotions) if final_emotions else 100.0
+            })
         
         # 해시태그 생성 (감정 3개만)
         hashtag_list = [f"#{emotion_data['emotion']}" for emotion_data in emotion_list]

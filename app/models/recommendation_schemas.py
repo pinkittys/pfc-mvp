@@ -76,6 +76,9 @@ class RecommendationResponse(BaseModel):
     # 추천 이유
     comment: str
     hashtags: List[str]
+    
+    # 대체 꽃 안내 (옵션)
+    alternative_flower_notice: Optional[str] = None  # "라벤더는 현재 준비중입니다. 비슷한 느낌의 수국을 추천드려요."
 
 class SnapshotResponse(BaseModel):
     """스냅샷 조회 응답 모델 (RecommendationResponse와 동일한 구조)"""

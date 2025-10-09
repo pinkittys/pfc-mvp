@@ -5,7 +5,7 @@
 https://api.plainflowerclub.com/api/v1
 ```
 
-## 📋 실제로 필요한 API는 2개뿐!
+## 📋 실제로 필요한 API는 3개뿐!
 
 > **참고**: 고급 기능이 필요한 경우 `/api/v1/advanced/` 엔드포인트를 사용하세요.
 
@@ -45,7 +45,7 @@ POST /api/v1/extract-keywords
 }
 ```
 
-### 2️⃣ 꽃 추천
+### 2️⃣ 꽃 추천 (스냅샷 저장)
 ```javascript
 POST /api/v1/recommend
 ```
@@ -67,30 +67,45 @@ POST /api/v1/recommend
 **응답:**
 ```json
 {
-  "flower_name": "장미",
-  "korean_name": "장미",
-  "scientific_name": "Rosa spp.",
-  "image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/rose-pk.webp",
+  "success": true,
+  "created_at": "2025.09.30.",
+  "story_id": "S250930-ROS-000001",
+  "your_story": "첫사랑에게 고백하려고 해요. 수줍고 설레는 마음을 담아서 핑크나 화이트 톤이 좋겠어요.",
+  
+  "flower_info": {
+    "korean_name": "장미",
+    "english_name": "Rose",
+    "scientific_name": "Rosa spp."
+  },
+  
+  "flower_blend": {
+    "main_flower": "장미",
+    "sub_flowers": ["리시안셔스", "안개꽃"],
+    "composition_name": "로맨틱 부케"
+  },
+  
+  "flower_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/flowers/rose-pk.webp",
   "calligraphy_image_url": "https://uylrydyjbnacbjumtxue.supabase.co/storage/v1/object/public/calligraphy-images/rose-pk.webp",
-  "hashtags": ["#사랑", "#기쁨", "#축하"],
-  "english_description": "Beautiful Rose flower",
+  
+  "flower_card_message": {
+    "quote": "사랑은 언제나 아름답습니다",
+    "source": "꽃말"
+  },
+  
   "emotions": [
     {"emotion": "사랑", "percentage": 40.0},
     {"emotion": "기쁨", "percentage": 30.0},
     {"emotion": "축하", "percentage": 30.0}
   ],
+  
   "season_detail": {
     "availability": "Spring/Summer",
     "best_season": "03-08"
   },
-  "composition": {
-    "main_flower": "장미",
-    "sub_flowers": ["리시안셔스", "안개꽃"],
-    "composition_name": "로맨틱 부케"
-  },
-  "created_at": "2025.09.30.",
-  "your_story": "첫사랑에게 고백하려고 해요. 수줍고 설레는 마음을 담아서 핑크나 화이트 톤이 좋겠어요.",
-  "comment": "첫사랑에게 고백하는 특별한 순간을 위해 장미를 선택했습니다. 장미는 사랑과 진심을 상징하며, 핑크 색상은 수줍고 설레는 마음을 아름답게 표현합니다."
+  
+  "comment": "첫사랑에게 고백하는 특별한 순간을 위해 장미를 선택했습니다. 장미는 사랑과 진심을 상징하며, 핑크 색상은 수줍고 설레는 마음을 아름답게 표현합니다.",
+  
+  "hashtags": ["#사랑", "#기쁨", "#축하"]
 }
 ```
 
@@ -122,12 +137,22 @@ const getRecommendation = async (story, selectedKeywords) => {
 };
 ```
 
+### 3️⃣ 추천 결과 조회 (공유용)
+```javascript
+GET /api/v1/recommend/{story_id}
+```
+**사용 시나리오:**
+- 추천 생성 후 `story_id`를 받아서 저장
+- 공유할 때 `story_id`로 추천 결과 조회
+- 저장된 스냅샷 데이터 반환
+
 ## 🎯 사용법
 
 1. 사용자가 스토리 입력
 2. `extract-keywords`로 키워드 추출
 3. 사용자가 키워드 선택 (UI에서)
-4. `recommend`로 꽃 추천받기
+4. `recommend`로 꽃 추천받기 (스냅샷 저장)
+5. `story_id`로 언제든지 결과 조회 가능
 
 **끝!** 🎉
 
@@ -145,15 +170,6 @@ POST /api/v1/advanced/extract-final
 POST /api/v1/advanced/recommend/final
 ```
 
-### 추천 결과 조회 (공유용)
-```javascript
-GET /api/v1/recommend/{story_id}
-```
-
-**사용 시나리오:**
-- 추천 생성 후 `story_id`를 받아서 저장
-- 공유할 때 `story_id`로 추천 결과 조회
-- 저장된 스냅샷 데이터 반환
 
 ### 고급 조회 (분석용)
 ```javascript
