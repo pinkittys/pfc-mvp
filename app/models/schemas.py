@@ -248,6 +248,7 @@ class UnifiedRecommendResponse(BaseModel):
     emotions: List[Dict[str, Any]]
     season_detail: Dict[str, str]
     composition: FlowerComposition
+    flower_card_message: Dict[str, str]  # {"quote": "인용구", "source": "출처"}
     created_at: str
     your_story: str
     comment: str

@@ -63,6 +63,7 @@ class UnifiedRecommendResponse(BaseModel):
     emotions: List[Dict[str, Any]]
     season_detail: Dict[str, str]
     composition: Dict[str, Any]
+    flower_card_message: Dict[str, str]  # {"quote": "인용구", "source": "출처"}
     created_at: str
     your_story: str
     comment: str
@@ -343,11 +344,11 @@ async def unified_recommend_logic(req: UnifiedRecommendRequest):
         
         # selected에서 None인 경우 context에서 가져오기
         if not final_emotions:
-            final_emotions = context.emotions or []
+        final_emotions = context.emotions or []
         if not final_situations:
-            final_situations = context.situations or []
+        final_situations = context.situations or []
         if not final_moods:
-            final_moods = context.moods or []
+        final_moods = context.moods or []
         if not final_colors:
             final_colors = context.colors or []
         mentioned_flower = getattr(context, 'mentioned_flower', None)
@@ -547,11 +548,17 @@ async def unified_recommend_logic(req: UnifiedRecommendRequest):
                 "months": "04-09"
             }
         
+        async def generate_flower_card_message_async():
+            # 꽃카드 메시지 생성
+            from app.api.v1.endpoints.recommend import _generate_flower_card_message
+            return _generate_flower_card_message(matched_flower, emotions, req.story)
+        
         # 병렬 실행
-        composition, reason, season_info = await asyncio.gather(
+        composition, reason, season_info, flower_card_message = await asyncio.gather(
             get_composition_async(),
             generate_reason_async(),
-            get_season_info_async()
+            get_season_info_async(),
+            generate_flower_card_message_async()
         )
 
         # 7) 응답
@@ -602,6 +609,10 @@ async def unified_recommend_logic(req: UnifiedRecommendRequest):
             emotions=emotion_list,
             season_detail=season_info,
             composition=composition,
+            flower_card_message={
+                "quote": flower_card_message.quote,
+                "source": flower_card_message.source
+            },
             created_at=datetime.now().strftime("%Y.%m.%d."),
             your_story=req.story,
             comment=reason
@@ -695,7 +706,7 @@ async def create_recommendation_snapshot(request: UnifiedRecommendRequest):
             flower_blend=to_plain(recommendation_result.composition),
             flower_image_url=recommendation_result.image_url,
             calligraphy_image_url=recommendation_result.calligraphy_image_url,
-            flower_card_message={"quote": "인용구", "source": "출처"},
+            flower_card_message=recommendation_result.flower_card_message,
             emotions=recommendation_result.emotions,
             season_detail=recommendation_result.season_detail,
             comment=recommendation_result.comment,
