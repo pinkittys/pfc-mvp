@@ -925,45 +925,6 @@
             }
         }
 
-        function displayKeywordSection(elementId, keywords, alternatives) {
-            const element = document.getElementById(elementId);
-            if (!keywords || keywords.length === 0) {
-                element.innerHTML = '<div class="loading">키워드를 찾을 수 없습니다</div>';
-                return;
-            }
-            
-            let html = '';
-            keywords.forEach((keyword, index) => {
-                const dimension = elementId.replace('Result', ''); // emotions, situations, moods, colors
-                // alternatives는 디멘션별 배열이므로 dimension으로 접근
-                const alternativesList = alternatives && alternatives[dimension] ? alternatives[dimension] : [];
-                console.log(`디멘션: ${dimension}, 대안키워드:`, alternativesList);
-                const allOptions = [keyword, ...alternativesList];
-                
-                html += `
-                    <div class="keyword-item">
-                        <div class="keyword-header">
-                            <span class="keyword-main">${keyword}</span>
-                            <div class="keyword-selector">
-                                <select class="keyword-dropdown" onchange="updateKeyword('${dimension}', ${index}, this.value)">
-                                    ${allOptions.map(option => 
-                                        `<option value="${option}" ${option === keyword ? 'selected' : ''}>${option}</option>`
-                                    ).join('')}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="keyword-alternatives">
-                            <strong>대안:</strong> 
-                            ${alternativesList.map(alt => 
-                                `<span class="alternative-tag">${alt}</span>`
-                            ).join('')}
-                        </div>
-                    </div>
-                `;
-            });
-            
-            element.innerHTML = html;
-        }
         
         function displayKeywordSectionFinal(elementId, keywordData) {
             const element = document.getElementById(elementId);
@@ -1088,12 +1049,22 @@
             
             try {
                 // 선택된 키워드 수집
+                console.log('🔍 현재 저장된 키워드:', window.currentKeywords);
+                console.log('🔍 각 드롭다운 값:', {
+                    emotions: document.getElementById('emotionsResult_select')?.value,
+                    situations: document.getElementById('situationsResult_select')?.value,
+                    moods: document.getElementById('moodsResult_select')?.value,
+                    colors: document.getElementById('colorsResult_select')?.value
+                });
+                
                 const selectedKeywords = {
-                    emotions: window.currentKeywords.emotions || '',
-                    situations: window.currentKeywords.situations || '',
-                    moods: window.currentKeywords.moods || '',
-                    colors: window.currentKeywords.colors || ''
+                    emotions: document.getElementById('emotionsResult_select')?.value || window.currentKeywords.emotions || '기쁨',
+                    situations: document.getElementById('situationsResult_select')?.value || window.currentKeywords.situations || '일상',
+                    moods: document.getElementById('moodsResult_select')?.value || window.currentKeywords.moods || '편안한',
+                    colors: document.getElementById('colorsResult_select')?.value || window.currentKeywords.colors || '화이트'
                 };
+                
+                console.log('🔍 최종 선택된 키워드:', selectedKeywords);
                 
                 const response = await fetch('/api/v1/recommend', {
                     method: 'POST',
@@ -1103,7 +1074,7 @@
                     body: JSON.stringify({
                         story: story,
                         selected_keywords: selectedKeywords,
-                        excluded_keywords: []
+                        excluded_keywords: {}
                     })
                 });
                 
