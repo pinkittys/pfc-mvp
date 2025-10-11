@@ -344,11 +344,11 @@ async def unified_recommend_logic(req: UnifiedRecommendRequest):
         
         # selected에서 None인 경우 context에서 가져오기
         if not final_emotions:
-        final_emotions = context.emotions or []
+            final_emotions = context.emotions or []
         if not final_situations:
-        final_situations = context.situations or []
+            final_situations = context.situations or []
         if not final_moods:
-        final_moods = context.moods or []
+            final_moods = context.moods or []
         if not final_colors:
             final_colors = context.colors or []
         mentioned_flower = getattr(context, 'mentioned_flower', None)
