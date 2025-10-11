@@ -557,16 +557,39 @@ async def unified_recommend_logic(req: UnifiedRecommendRequest):
         # 7) 응답
         from app.models.schemas import UnifiedRecommendResponse
         
-        # 감정 분석 결과를 올바른 형태로 변환
+        # 감정 분석 결과를 올바른 형태로 변환 (하이브리드 + 안전)
         emotion_list = []
-        for emotion in final_emotions:
-            emotion_list.append({
-                "emotion": emotion,
-                "percentage": 100.0 / len(final_emotions) if final_emotions else 100.0
-            })
         
-        # 해시태그 생성 (감정 3개만)
-        hashtag_list = [f"#{emotion_data['emotion']}" for emotion_data in emotion_list]
+        # LLM 분석 결과가 있으면 사용 (3개 감정)
+        if emotions and len(emotions) > 0:
+            # 사용자 선택 감정 확인
+            if req.selected_keywords and req.selected_keywords.emotions:
+                selected_emotion = req.selected_keywords.emotions
+                # 선택 감정이 LLM 결과에 있는지 확인
+                found = any(e.emotion == selected_emotion for e in emotions)
+                
+                if found:
+                    # LLM 비중 그대로 사용
+                    emotion_list = [{"emotion": e.emotion, "percentage": e.percentage} for e in emotions[:3]]
+                else:
+                    # 선택 감정 50% + LLM 상위 2개 각 25%
+                    emotion_list.append({"emotion": selected_emotion, "percentage": 50.0})
+                    for e in emotions[:2]:
+                        emotion_list.append({"emotion": e.emotion, "percentage": 25.0})
+            else:
+                # 선택 없으면 LLM 결과 그대로
+                emotion_list = [{"emotion": e.emotion, "percentage": e.percentage} for e in emotions[:3]]
+        else:
+            # LLM 실패 시 안전장치: 최소 1개 보장
+            if final_emotions and len(final_emotions) > 0:
+                for emotion in final_emotions[:3]:
+                    emotion_list.append({"emotion": emotion, "percentage": 100.0 / len(final_emotions)})
+            else:
+                # 최후의 폴백
+                emotion_list = [{"emotion": "기쁨", "percentage": 100.0}]
+        
+        # 해시태그 생성 (감정 최대 3개)
+        hashtag_list = [f"#{emotion_data['emotion']}" for emotion_data in emotion_list[:3]]
         
         return UnifiedRecommendResponse(
             flower_name=matched_flower.flower_name,
