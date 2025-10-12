@@ -35,18 +35,13 @@ class SelectedKeywords(BaseModel):
     moods: str
     colors: str
 
-class ExcludedKeywords(BaseModel):
-    """제외된 키워드 모델 (각 디멘션별로 여러개 가능)"""
-    emotions: Optional[List[str]] = None
-    situations: Optional[List[str]] = None
-    moods: Optional[List[str]] = None
-    colors: Optional[List[str]] = None
+# ExcludedKeywords 클래스 제거 - 프론트엔드에서 단순 배열로 보내기로 변경
 
 class UnifiedRecommendRequest(BaseModel):
     """통합 추천 요청 모델"""
     story: str
     selected_keywords: SelectedKeywords   # ✅ 필수 (4개)
-    excluded_keywords: Optional[ExcludedKeywords] = None  # ✅ 옵션 (유연한 개수)
+    excluded_keywords: Optional[List[str]] = None  # ✅ 옵션 (단순 배열: ["오렌지", "차분한"])
     updated_context: Optional[Dict[str, Any]] = None  # 옵션
 
 print("[BOOT] unified.py loaded, fields=", list(UnifiedRecommendRequest.model_fields.keys()))
@@ -296,31 +291,30 @@ async def unified_recommend_logic(req: UnifiedRecommendRequest):
         # 3) 충돌 검사 및 최종 컨텍스트
         print("🔍 selected_keywords와 excluded_keywords 충돌 검사")
         
-        # 충돌 검사 (excluded 우선 처리)
+        # 충돌 검사 (excluded 우선 처리) - 배열 기반
         if req.excluded_keywords and req.selected_keywords:
-            excluded = req.excluded_keywords
+            excluded_list = req.excluded_keywords
             
             # 감정 충돌 검사 - excluded 우선
-            if excluded.emotions and req.selected_keywords.emotions in excluded.emotions:
+            if req.selected_keywords.emotions in excluded_list:
                 print(f"⚠️ 감정 충돌: '{req.selected_keywords.emotions}'이(가) 제외 목록에 있음 (excluded 우선)")
                 print(f"🚫 '{req.selected_keywords.emotions}' 제외 처리됨")
-                # selected에서 제외된 키워드 제거하고 다른 키워드로 대체
-                req.selected_keywords.emotions = None  # 또는 기본값으로 대체
+                req.selected_keywords.emotions = None
                 
             # 상황 충돌 검사 - excluded 우선
-            if excluded.situations and req.selected_keywords.situations in excluded.situations:
+            if req.selected_keywords.situations in excluded_list:
                 print(f"⚠️ 상황 충돌: '{req.selected_keywords.situations}'이(가) 제외 목록에 있음 (excluded 우선)")
                 print(f"🚫 '{req.selected_keywords.situations}' 제외 처리됨")
                 req.selected_keywords.situations = None
                 
             # 무드 충돌 검사 - excluded 우선
-            if excluded.moods and req.selected_keywords.moods in excluded.moods:
+            if req.selected_keywords.moods in excluded_list:
                 print(f"⚠️ 무드 충돌: '{req.selected_keywords.moods}'이(가) 제외 목록에 있음 (excluded 우선)")
                 print(f"🚫 '{req.selected_keywords.moods}' 제외 처리됨")
                 req.selected_keywords.moods = None
                 
             # 색상 충돌 검사 - excluded 우선
-            if excluded.colors and req.selected_keywords.colors in excluded.colors:
+            if req.selected_keywords.colors in excluded_list:
                 print(f"⚠️ 색상 충돌: '{req.selected_keywords.colors}'이(가) 제외 목록에 있음 (excluded 우선)")
                 print(f"🚫 '{req.selected_keywords.colors}' 제외 처리됨")
                 req.selected_keywords.colors = None
@@ -370,17 +364,40 @@ async def unified_recommend_logic(req: UnifiedRecommendRequest):
             
             spreadsheet_matcher = SpreadsheetFlowerMatcher()
             
-            # excluded_keywords를 딕셔너리 형태로 변환
+            # excluded_keywords를 딕셔너리 형태로 변환 (단순 배열에서 디멘션별로 분류)
             excluded_dict = {}
             if req.excluded_keywords:
-                if req.excluded_keywords.emotions:
-                    excluded_dict['emotions'] = req.excluded_keywords.emotions
-                if req.excluded_keywords.situations:
-                    excluded_dict['situations'] = req.excluded_keywords.situations
-                if req.excluded_keywords.moods:
-                    excluded_dict['moods'] = req.excluded_keywords.moods
-                if req.excluded_keywords.colors:
-                    excluded_dict['colors'] = req.excluded_keywords.colors
+                # 감정, 상황, 무드, 색상 키워드 목록 (한국어)
+                emotion_keywords = ['사랑', '기쁨', '슬픔', '화남', '걱정', '두려움', '놀람', '혐오', '부러움', '질투', '감사', '희망', '절망', '안도', '만족', '실망', '긴장', '편안함', '설렘', '우울', '분노', '행복', '불안', '평온', '흥분', '피곤', '에너지', '따뜻함', '차가움', '애정', '미움', '동경', '질투', '부끄러움', '자랑', '후회', '만족', '불만', '기대', '실망']
+                situation_keywords = ['일상', '생일', '결혼', '이별', '취업', '시험', '여행', '운동', '식사', '쇼핑', '영화', '독서', '게임', '음악', '춤', '그림', '요리', '청소', '세탁', '공부', '업무', '회의', '프레젠테이션', '인터뷰', '데이트', '만남', '이사', '입학', '졸업', '퇴직', '휴가', '휴일', '주말', '저녁', '아침', '점심', '새벽', '밤', '낮', '봄', '여름', '가을', '겨울', '비', '눈', '맑음', '흐림', '바람', '더위', '추위']
+                mood_keywords = ['밝은', '어두운', '따뜻한', '차가운', '부드러운', '거친', '편안한', '긴장된', '활기찬', '침착한', '신나는', '조용한', '시끄러운', '평화로운', '격렬한', '온화한', '강렬한', '은은한', '화사한', '우아한', '자연스러운', '인위적인', '고급스러운', '촌스러운', '모던한', '빈티지한', '클래식한', '트렌디한', '로맨틱한', '쿨한', '귀여운', '멋진', '세련된', '단순한', '복잡한', '명확한', '모호한', '정확한', '부정확한', '빠른', '느린', '가벼운', '무거운', '작은', '큰', '짧은', '긴', '좁은', '넓은']
+                color_keywords = ['빨강', '주황', '노랑', '초록', '파랑', '보라', '분홍', '검정', '흰색', '회색', '갈색', '핑크', '레드', '오렌지', '옐로우', '그린', '블루', '퍼플', '화이트', '블랙', '그레이', '브라운', '크림', '베이지', '실버', '골드', '로즈', '라벤더', '민트', '터콰이즈', '코랄', '새먼', '피치', '아이보리', '차분한', '밝은', '어두운', '따뜻한', '차가운', '부드러운', '강렬한', '은은한', '화사한', '우아한', '자연스러운', '고급스러운', '모던한', '빈티지한', '클래식한', '트렌디한', '로맨틱한', '쿨한', '귀여운', '멋진', '세련된']
+                
+                # 각 키워드를 디멘션별로 분류
+                excluded_emotions = []
+                excluded_situations = []
+                excluded_moods = []
+                excluded_colors = []
+                
+                for keyword in req.excluded_keywords:
+                    if keyword in emotion_keywords:
+                        excluded_emotions.append(keyword)
+                    elif keyword in situation_keywords:
+                        excluded_situations.append(keyword)
+                    elif keyword in mood_keywords:
+                        excluded_moods.append(keyword)
+                    elif keyword in color_keywords:
+                        excluded_colors.append(keyword)
+                
+                # 비어있지 않은 것만 딕셔너리에 추가
+                if excluded_emotions:
+                    excluded_dict['emotions'] = excluded_emotions
+                if excluded_situations:
+                    excluded_dict['situations'] = excluded_situations
+                if excluded_moods:
+                    excluded_dict['moods'] = excluded_moods
+                if excluded_colors:
+                    excluded_dict['colors'] = excluded_colors
             
             # 스프레드시트 매칭 실행
             match_result = spreadsheet_matcher.match_flower(
@@ -664,7 +681,7 @@ async def create_recommendation_snapshot(request: UnifiedRecommendRequest):
                 "moods": request.selected_keywords.moods,
                 "colors": request.selected_keywords.colors,
             },
-            "excluded_keywords": to_plain(request.excluded_keywords) if request.excluded_keywords else {},
+            "excluded_keywords": request.excluded_keywords if request.excluded_keywords else [],
             "flower_name": recommendation_result.flower_name,
             "korean_name": recommendation_result.korean_name,
             "scientific_name": recommendation_result.scientific_name,
