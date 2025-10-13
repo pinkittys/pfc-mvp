@@ -121,6 +121,7 @@ FLOWER_SLUG: Dict[str, str] = {
     "스카비오사": "scabiosa", "리시안서스": "lisianthus", "아이리스": "iris",
     "릴리": "lily", "마거리트 데이지": "marguerite-daisy", "라넌큘러스": "ranunculus",
     "마리골드": "marigold", "옥시페탈럼": "oxypetalum", "패트리니아": "patrinia",
+    "거베라": "gerbera-daisy",
     # English
     "Sweet Pea": "sweet-pea", "Rose": "rose", "Alstroemeria": "alstroemeria",
     "Anemone": "anemone", "Anthurium": "anthurium", "Astilbe": "astilbe",
