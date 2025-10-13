@@ -140,6 +140,7 @@ FLOWER_SLUG: Dict[str, str] = {
 CALLI_FILENAME_OVERRIDE: Dict[str, str] = {
     # slug -> exact filename in bucket
     "patrinia": "Patrinia.png",  # 버킷에 대문자 파일
+    "gerbera": "gerbera-daisy.png",  # 거베라는 gerbera-daisy.png
     # 필요시 계속 추가
 }
 
