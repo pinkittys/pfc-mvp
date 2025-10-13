@@ -338,11 +338,11 @@ async def unified_recommend_logic(req: UnifiedRecommendRequest):
         
         # selected에서 None인 경우 context에서 가져오기
         if not final_emotions:
-            final_emotions = context.emotions or []
+        final_emotions = context.emotions or []
         if not final_situations:
-            final_situations = context.situations or []
+        final_situations = context.situations or []
         if not final_moods:
-            final_moods = context.moods or []
+        final_moods = context.moods or []
         if not final_colors:
             final_colors = context.colors or []
         mentioned_flower = getattr(context, 'mentioned_flower', None)
@@ -559,10 +559,12 @@ async def unified_recommend_logic(req: UnifiedRecommendRequest):
             return base_reason
         
         async def get_season_info_async():
-            # 간단한 계절 정보
+            # 계절 정보 (sample_stories.py와 동일한 필드명 사용)
+            from app.api.v1.endpoints.recommend import _get_season_info
+            season_data = _get_season_info(matched_flower.korean_name)
             return {
-                "season": "Spring/Summer",
-                "months": "04-09"
+                "availability": season_data.get("season", "Spring/Summer"),
+                "best_season": season_data.get("months", "03-08")
             }
         
         async def generate_flower_card_message_async():
